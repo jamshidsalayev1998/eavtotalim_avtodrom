@@ -66,7 +66,7 @@ const ShowPracticalExamResults = (props) => {
     const hasResult = (elementId) => {
         let fdata = resultData?.practical_result?.filter((data) => {
             return data?.sensor_id == elementId
-        })
+        });
         if (fdata?.length > 0) {
             return 1;
         } else {

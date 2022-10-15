@@ -323,6 +323,12 @@ const ExaminationUserLinks = (props) => {
                         </Link>
                     </li>
                     <li className="" name="asosiy">
+                        <Link to="/examination-instructor/monitoring-page" className="waves-effect">
+                            <i className="fas fa-layer-group"/>
+                            <span>Monitoring sahifasi</span>
+                        </Link>
+                    </li>
+                    <li className="" name="asosiy">
                         <Link to="/examination-instructor/exam-ended-students" className="waves-effect">
                             <i className="fas fa-layer-group"/>
                             <span>Amaliy topshirganlar</span>

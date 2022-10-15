@@ -71,6 +71,8 @@ import ExaminationAreaSensorShow from "../pages/examinationUser/ExaminationAreaS
 import ExamProcessStudents from "../pages/examinationUser/FinalAccessAdminCrud/Pages/ExamProcessStudents";
 import ShowPracticalExamResultByRecord
     from "../pages/examinationUser/InstructorCrud/pages/ExamEdeds/ShowPracticalExamResultByRecord";
+import InstructorMonitoringPage
+    from "../pages/examinationUser/InstructorCrud/pages/MonitoringPages/InstructorMonitoringPage";
 // import PracticalTestResult from "../pages/PracticalTestResult/PracticalTestResult";
 
 const userRoutes = [
@@ -250,6 +252,10 @@ const examinationUserRoutes = [
     {
         path: "/examination-instructor/merged-students",
         component: ExaminationInstructorMergedStudents,
+    },
+    {
+        path: "/examination-instructor/monitoring-page",
+        component: InstructorMonitoringPage,
     },
     {
         path: "/examination-instructor/exam-ended-students/:id",

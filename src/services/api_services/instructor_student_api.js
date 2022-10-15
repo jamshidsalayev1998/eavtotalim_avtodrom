@@ -7,7 +7,7 @@ export const getAllStudents = async (params = {}) => {
         const response = await API({
             url: "/examination-instructor/students",
             method: "GET",
-            params:params
+            params: params
         })
         if (response?.data) {
             return response;
@@ -19,7 +19,7 @@ export const getAllStudents = async (params = {}) => {
 export const getExaminationAreaInstructorCars = async (params = {}) => {
     try {
         const token = localStorage.getItem("token");
-        Object.assign(params, {token:token})
+        Object.assign(params, {token: token})
         const response = await API({
             url: "/examination-instructor/cars",
             method: "GET",
@@ -141,5 +141,48 @@ export const instructorStudentCarFinishExam = async (data) => {
     } catch (error) {
 
     }
-}
+};
 
+
+export const getMonitoringData = async () => {
+    try {
+        const token = localStorage.getItem("token");
+        const response = await API({
+            url: "/examination-instructor/monitoring-page",
+            method: "GET",
+            params: {
+                'token': token
+            },
+            headers: {
+                'Content-Type': 'application/json',
+                'accept': 'application/json'
+            },
+        })
+        if (response?.data) {
+            return response?.data?.data;
+        }
+    } catch (error) {
+        return error;
+    }
+};
+export const getMonitoringResultData = async () => {
+    try {
+        const token = localStorage.getItem("token");
+        const response = await API({
+            url: "/examination-instructor/monitoring-page-results",
+            method: "GET",
+            params: {
+                'token': token
+            },
+            headers: {
+                'Content-Type': 'application/json',
+                'accept': 'application/json'
+            },
+        })
+        if (response?.data) {
+            return response?.data?.data;
+        }
+    } catch (error) {
+        return error;
+    }
+};
