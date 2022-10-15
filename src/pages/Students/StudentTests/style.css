@@ -1,0 +1,18 @@
+/* .ant-modal-body{
+  padding: 0 !important;
+}
+.ant-modal-header{
+  background-color: transparent !important;
+  display: none !important;
+}
+.ant-modal-close-icon svg path{
+  color: red !important;
+} */
+.unLooked_btn{
+  background-color: transparent;
+  outline: none !important;
+  border: none !important;
+}
+.unLooked_btn img{
+  height: 35px;
+}

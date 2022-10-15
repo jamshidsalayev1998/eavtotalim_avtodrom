@@ -1,0 +1,33 @@
+/*@import "../../../../../assets/fonts/f25_bank_printer/F25_Bank_Printer.otf";*/
+/*@import "./f25_bank_printer/F25_Bank_Printer.ttf";*/
+/*@import "../../../../../assets/fonts/f25_bank_printer/F25_Bank_Printer_Bold.otf";*/
+/*@import "./f25_bank_printer/F25_Bank_Printer_Bold.ttf";*/
+/*@font-face {*/
+/*  font-family: 'Bank';*/
+/*  src: url('./f25_bank_printer/F25_Bank_Printer.ttf') format('truetype'); !* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ *!*/
+/*}*/
+/*@font-face {*/
+/*  font-family: 'Printer';*/
+/*  src: url('./f25_bank_printer/F25_Bank_Printer.ttf') format('truetype'); !* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ *!*/
+/*}*/
+/*@font-face {*/
+/*  font-family: 'F25r';*/
+/*  src: url('./f25_bank_printer/F25_Bank_Printer.ttf') format('truetype'); !* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ *!*/
+/*}*/
+.print_div {
+    display: none;
+}
+
+@media print {
+    .print_div {
+        display: block;
+        font-family: 'sans-serif';
+    }
+
+
+    @page {
+        size: portrait;
+        padding: 0;
+    }
+}
+

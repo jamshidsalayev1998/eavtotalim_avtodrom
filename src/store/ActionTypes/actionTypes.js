@@ -1,0 +1,2 @@
+export const ADD_CONTENT_ITEM = "ADD_CONTENT_ITEM";
+export const GLOBAL_REFRESH = "GLOBAL_REFRESH";

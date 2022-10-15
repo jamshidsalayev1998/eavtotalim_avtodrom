@@ -1,0 +1,88 @@
+.animation_errors {
+  font-size: 13px;
+  color: #f46a6a;
+  font-weight: 400;
+}
+
+.top_links_page_box a {
+  color: black;
+  text-decoration: none;
+}
+
+.top_links_page_box a:hover {
+  color: #005ed0;
+}
+
+.c_font_weight {
+  font-weight: 500 !important;
+}
+
+.top_links_page_title {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.top_links_page_title span:nth-child(1) {
+  height: 100%;
+  cursor: pointer;
+  vertical-align: middle;
+}
+
+.top_links_page_title span:nth-child(1) i {
+  font-size: 20px;
+  font-weight: bold;
+  vertical-align: middle;
+}
+
+.top_links_page_title span:nth-child(2) {
+  font-size: 18px;
+  border-color: black;
+  font-weight: 550;
+}
+
+.top_links_page_title a {
+  text-decoration: none;
+  color: black;
+}
+
+.top_links_page_title a:hover {
+  color: #005ed0;
+}
+
+.custom_validation_inputs_error {
+  border-color: #f46a6a;
+}
+
+.custom_validation_inputs_noerror {
+  border-color: #ced4da;
+}
+
+.custom_table_head {
+  font-weight: 450 !important;
+  color: black;
+}
+
+.lesson_select_box {
+  height: 500px;
+  overflow-y: auto;
+}
+
+.lesson_select_box::-webkit-scrollbar {
+  width: 4px;
+  background-color: #fafafa;
+}
+
+.lesson_select_box::-webkit-scrollbar-thumb {
+  background-color: #d9d9d9;
+  border-radius: 6px;
+}
+
+.lesson_select_box .lesson_select_items:hover {
+  background-color: #fafafa;
+  cursor: pointer;
+}
+/*# sourceMappingURL=style.css.map */

@@ -1,0 +1,7 @@
+.last-td{
+    width: 1px;
+}
+.hover-tr-success:hover {
+    background-color: #b7eb8f !important;
+    /*color: white !important;*/
+}

@@ -1,0 +1,38 @@
+/*@media print {*/
+    .printBox {
+        display: block;
+        background-color: white !important;
+        height: 100vh;
+        padding: 50px;
+        letter-spacing: 2px;
+    }
+
+    .pageBreak {
+        page-break-after: always;
+    }
+/*}*/
+
+.pageBreak {
+    page-break-after: always;
+}
+.textCenter{
+    text-align: center;
+}
+.textLeft{
+    text-align: left;
+}
+.textRight{
+    text-align: right;
+}
+.inline{
+    display: inline-block;
+}
+.inlineDivs div{
+    display: inline-block;
+    /*background-color: green;*/
+}
+.borderBox{
+    padding: 12px;
+    border: 1px solid black;
+
+}

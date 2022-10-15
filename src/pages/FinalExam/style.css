@@ -1,0 +1,230 @@
+.final_test_div {
+  padding: 0 200px;
+  min-height: 100vh;
+  width: 100%;
+}
+.final_test_div .time_counter {
+  font-size: 18px;
+  font-weight: 500;
+}
+.final_test_div .buttons {
+  text-align: center;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+.final_test_div .buttons .span_test_number {
+  height: 42px;
+  width: 42px;
+  margin: 0 4px;
+  border-radius: 50%;
+  cursor: pointer;
+  color: #000;
+  box-shadow: 0px 0px 5px #a8a8a8;
+  font-weight: 500;
+}
+.final_test_div .buttons .danger_test {
+  background: #EB5757;
+  opacity: 0.6;
+  color: #fff;
+}
+.final_test_div .buttons .danger_active_test {
+  background: #EB5757 !important;
+  color: #fff;
+}
+.final_test_div .buttons .success_test {
+  background: #27AE60;
+  color: #fff;
+  opacity: 0.6;
+}
+.final_test_div .buttons .success_active_test {
+  background: #27AE60 !important;
+  color: #fff;
+}
+.final_test_div .buttons .active_test {
+  background: linear-gradient(199.13deg, #FFE297 9.59%, #FFCC47 92.43%);
+}
+.final_test_div .buttons a {
+  font-size: 16px;
+  color: #005ED0;
+  margin: 0px 5px;
+}
+.final_test_div .buttons a i {
+  margin: 0 10px;
+}
+.final_test_div .question p {
+  font-size: 17px;
+}
+.final_test_div .answers .answer {
+  width: 100%;
+  background-color: #fff;
+  border-radius: 4px;
+  padding: 20px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  border: 0.1px solid #fcfcfc;
+  box-shadow: 2px 2px 5px #e2e2e2;
+}
+.final_test_div .answers .answer:hover {
+  box-shadow: 0px 0px 10px #c4c4c4;
+}
+.final_test_div .answers .answer span {
+  font-size: 17px;
+}
+.final_test_div .answers .answer .empty-icon {
+  color: #bbbbbb;
+}
+.final_test_div .answers .answer_correct {
+  width: 100%;
+  background-color: #ECF4F0;
+  border-radius: 4px;
+  padding: 20px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  box-shadow: 3px 3px 5px #e2e2e2;
+}
+.final_test_div .answers .answer_correct:hover {
+  box-shadow: 0px 0px 10px #c4c4c4;
+}
+.final_test_div .answers .answer_correct span {
+  font-size: 17px;
+}
+.final_test_div .answers .answer_correct .empty-icon {
+  color: #27AE60;
+}
+.final_test_div .answers .answer_incorrect {
+  width: 100%;
+  background-color: #F4ECEC;
+  border-radius: 4px;
+  padding: 20px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  box-shadow: 3px 3px 5px #e2e2e2;
+}
+.final_test_div .answers .answer_incorrect:hover {
+  box-shadow: 0px 0px 10px #c4c4c4;
+}
+.final_test_div .answers .answer_incorrect span {
+  font-size: 17px;
+}
+.final_test_div .answers .answer_incorrect .empty-icon {
+  color: #EB5757;
+}
+
+.select-test-lang {
+  border-radius: 10px;
+  box-shadow: 0px 0px 5px #e0e0e0;
+  padding: 10px;
+  text-align: center;
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+.select-test-lang:hover {
+  background-color: whitesmoke;
+}
+
+.image {
+  width: 496px !important;
+  border-radius: 5px;
+  margin-top: 30px;
+}
+
+.BigTimeDiv {
+  position: absolute;
+  right: 200px;
+  top: 23px;
+}
+.BigTimeDiv .timebar {
+  position: relative;
+  width: max-content;
+}
+.BigTimeDiv .timebar .time_counter {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.num_test2 {
+  display: none;
+}
+
+.buttons2 {
+  text-align: right;
+}
+.buttons2 a {
+  font-size: 16px;
+  color: #005ED0;
+  margin: 0px 5px;
+}
+.buttons2 a i {
+  margin: 0 10px;
+}
+
+.isCheck {
+  pointer-events: none;
+}
+
+.isCheck_button {
+  pointer-events: none;
+  opacity: 0.4;
+}
+
+@media only screen and (max-width: 1500px) and (min-width: 1200px) {
+  .final_test_div {
+    padding: 0 100px;
+  }
+
+  .image {
+    width: 450px !important;
+  }
+
+  .BigTimeDiv {
+    right: 100px;
+  }
+}
+@media only screen and (max-width: 1200px) and (min-width: 900px) {
+  .final_test_div {
+    padding: 0 80px;
+  }
+
+  .image {
+    width: 400px !important;
+  }
+
+  .BigTimeDiv {
+    right: 80px;
+  }
+}
+@media only screen and (max-width: 900px) and (min-width: 500px) {
+  .final_test_div {
+    padding: 0 50px;
+  }
+
+  .image {
+    width: 350px !important;
+  }
+
+  .BigTimeDiv {
+    right: 50px;
+  }
+}
+@media only screen and (max-width: 500px) {
+  .final_test_div {
+    padding: 0 20px;
+  }
+
+  .BigTimeDiv {
+    right: 20px;
+  }
+}
+@media only screen and (max-width: 1080px) {
+  .num_test {
+    display: none !important;
+  }
+
+  .num_test2 {
+    display: inline-block;
+  }
+}
+
+/*# sourceMappingURL=style.css.map */

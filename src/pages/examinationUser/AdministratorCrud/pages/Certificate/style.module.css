@@ -1,0 +1,108 @@
+.img_box {
+    background-image: url('../../../../../assets/images/intalim-avtodrom/certificates/certificate-frame-2.jpg');
+    /*background-position:center;*/
+    background-size: 90%;
+    /*width: 100%;*/
+    height: 1110px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    text-align: center
+}
+
+.firstBox {
+    height: 11%;
+    /*background-color: #0fb780;*/
+    opacity: 0.5;
+    vertical-align: middle;
+}
+
+.secondBox {
+    opacity: 0.7;
+    /*background-color: #1d39c4;*/
+    color: black;
+}
+
+.secondBoxP {
+    font-size: 80px;
+    text-transform: uppercase !important;
+}
+
+.secondBoxPname {
+    font-size: 20px;
+    display: inline-block;
+    padding: 0 20px 0 20px;
+    background-color: white;
+    transform: translateY(-17px);
+    text-transform: uppercase !important;
+}
+
+.thirdBox {
+    opacity: 0.7;
+    /*background-color: #857b26;*/
+
+}
+
+.fourthBoxP {
+    font-size: 60px;
+    font-family: Arial;
+    font-weight: bold;
+    color: rgb(0, 0, 0) !important;
+}
+
+.fifthBoxP {
+    font-size: 20px;
+}
+
+.hrBox {
+    width: 50%;
+    border-top: 1px solid #E8CB87;
+    display: flex;
+    justify-content: center;
+}
+.sentenceBox{
+    width:50%;
+}
+
+.borderDemo {
+border: 1px dashed #000000;
+border-radius: 7px;
+}
+
+.tashkilotNomi {
+    padding-top: 50px;
+
+}
+.tashkilotNomiLabel{
+    border-top: 1px solid black;
+    padding-top: 8px;
+    width: 50%;
+}
+.tashkilotNomiLabel80{
+    border-top: 1px solid black;
+    padding-top: 8px;
+    width: 90%;
+}
+@media print {
+    .secondBoxP {
+        font-size: 40px;
+    }
+
+    .fourthBoxP {
+        font-size: 30px;
+    }
+    .sentenceBox{
+    width:80%;
+}
+}
+.xl6{
+    width: 20%;
+}
+.xl5{
+    width: 45%;
+}
+.xl3{
+    width: 30%;
+}
+.xl12{
+    width: 54%;
+}

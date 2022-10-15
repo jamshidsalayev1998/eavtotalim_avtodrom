@@ -1,0 +1,33 @@
+.defaultlang_page {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 100vh;
+}
+
+.defaultlang_page > div {
+  height: -webkit-max-content;
+  height: -moz-max-content;
+  height: max-content;
+}
+
+.defaultlang_page > div .defaultlang_box {
+  width: 300px;
+  margin: 20px auto;
+  cursor: pointer;
+}
+
+.defaultlang_page > div .defaultlang_box:hover {
+  background-color: #F6F6F6;
+}
+
+.defaultlang_page > div .defaultlang_box:active {
+  background-color: #EAEAEA;
+}
+/*# sourceMappingURL=style.module.css.map */

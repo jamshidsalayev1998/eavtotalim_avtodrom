@@ -1,0 +1,136 @@
+.forcard {
+    height: 75vh;
+  }
+ 
+  
+  .searchc {
+    border: 1px solid #3333;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 4px;
+    padding: 2px 8px;
+    height: 34px;
+    font-size: 14px;
+  }
+  
+  .searchc input {
+    border: none;
+    width: 100%;
+  }
+  
+  .searchc input:focus {
+    outline: none;
+  }
+  .top-organizations {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .table_body {
+    font-weight: 300 !important;
+  }
+
+
+
+  .table_bottom_part {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .search_input {
+    border-radius: 1px solid #CED4DA;
+  }
+
+  .search_input {
+    outline: none;
+  }
+
+
+
+  /* <------=====Organization views starts=====------> */
+  .view_details {
+    
+  }
+  .view_details_text_about {
+    font-size: 15px;
+    font-weight: 500;
+    color: #304346;
+    text-align: justify;
+  }
+  /* <------=====Organization views ends=====------> */
+
+
+  .limit_languages {
+    width: 100%;
+    background-color: #FF9800;
+    border-radius: 6px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    color: white;
+    font-size: 16px;
+  }
+
+  .organization_views {
+
+
+    .info_card_box {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+
+    
+      .info_card_roganization {
+        width: 320px;
+        height: 200px;
+        background-color: white;
+        border-radius: 6px;
+        padding: 16px;
+
+        &:hover {
+          cursor: pointer;
+        }
+
+        &:hover  .org_bg_title{
+          color:#005ED0 !important;
+        }
+
+        > div:nth-child(1) {
+          display: flex;
+          justify-content: space-between;
+        }
+
+        .org_bg_title {
+          font-size: 24px;
+          font-weight: 500;
+        }
+
+        h5 {
+          font-size: 16px;
+          font-weight: 500;
+        }
+
+        .org_cards_sm_titles {
+          font-size: 14px;
+          font-weight: 500;
+        }
+      }
+    }
+  }
+
+
+  @media print {
+  .mkpagebreack{
+    page-break-after: always;
+  }
+  .mkprint{
+    display: none;
+  }
+  .shuprint{
+    display: block !important;
+    font-size: 18px;
+  }
+  
+}

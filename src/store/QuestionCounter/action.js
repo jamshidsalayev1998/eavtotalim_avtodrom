@@ -1,0 +1,2 @@
+export const CHANGE_COUNTER = "CHANGE_COUNTER";
+export const TOTAL_COUNT = "TOTAL_COUNT";

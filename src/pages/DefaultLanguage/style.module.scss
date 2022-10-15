@@ -1,0 +1,22 @@
+.defaultlang_page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    & > div {
+        height: max-content;
+        .defaultlang_box {
+            width: 300px;
+            margin: 20px auto;
+            cursor: pointer;
+
+            &:hover {
+                background-color: #F6F6F6;
+            }
+
+            &:active {
+                background-color: #EAEAEA;
+            }
+        }
+    }
+}

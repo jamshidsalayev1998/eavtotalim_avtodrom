@@ -1,0 +1,25 @@
+.input-label {
+  min-width: 200px;
+  margin-bottom: 24px;
+  margin-right: 16px;
+  font-size: 14px;
+  font-weight: normal;
+}
+
+.input-row {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-bottom: 0;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .input-row {
+    display: block;
+  }
+}
+/*# sourceMappingURL=styles.css.map */

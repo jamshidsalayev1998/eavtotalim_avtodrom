@@ -1,0 +1,29 @@
+@page{
+    padding: 50px;
+}
+.password-card{
+    width: 33%;
+    display: inline-block;
+    padding: 15px;
+    min-height: 100px;
+    /* text-align: center; */
+    border: 1px solid black;
+}
+.password-card-part{
+    display: inline-block;
+}
+.part1{
+    width: 15%;
+    position: relative;
+    vertical-align: top;
+}
+.part1 img{
+    transform: rotate(90deg);
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform:  translateX(-50%) translateY(170%) rotate(90deg);
+}
+.part2{
+    width: 85%;
+}

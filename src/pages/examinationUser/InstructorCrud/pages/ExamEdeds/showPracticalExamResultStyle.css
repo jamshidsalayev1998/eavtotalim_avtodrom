@@ -1,0 +1,58 @@
+.bg-success-box{
+    background-color: #b7eb8f;
+    color:black;
+}
+.bg-danger-box{
+    background-color: #ffa39e;
+    color:black;
+}
+.bg-warning-box{
+    background-color: #ffd591;
+    color:black;
+}
+.hover-result-box:hover {
+    -webkit-box-shadow: 0px 0px 16px 6px rgba(79, 164, 229, 0.57);
+-moz-box-shadow: 0px 0px 16px 6px rgba(79, 164, 229, 0.57);
+box-shadow: 0px 0px 16px 6px rgba(79, 164, 229, 0.57);
+}
+
+.number-box {
+    padding: 5px;
+    border-radius: 2px;
+    background-color: #1890ff;
+    color: white;
+    font-size: 20px;
+}
+
+.success-sensor {
+    background-color: #d9f7be;
+}
+
+.danger-sensor {
+    background-color: #ffccc7;
+}
+
+.warning-sensor {
+    background-color: #ffe7ba;
+}
+
+::-webkit-scrollbar {
+    width: 2px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey;
+    border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: black;
+    border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #b30000;
+}
