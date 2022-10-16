@@ -15,10 +15,10 @@ const InstructorMonitoringPage = (props) => {
         getStudentSensorData();
         let intervalId = setInterval(() => {
             getStudentResultData();
-        }, 1000);
-            return (() => {
-                clearInterval(intervalId)
-            })
+        }, 3000);
+        return (() => {
+            clearInterval(intervalId)
+        })
     }, [reload]);
     const getStudentSensorData = () => {
         (async () => {
@@ -28,12 +28,10 @@ const InstructorMonitoringPage = (props) => {
         })()
     };
     const getStudentResultData = () => {
-        if (studentSensorData?.length > 0) {
             (async () => {
                 const responseResult = await getMonitoringResultData();
                 setStudentResultData(responseResult);
             })()
-        }
     };
     const [data, setData] = useState();
     const {hasLayout, setHasLayout} = useContext(MainContext);
@@ -65,13 +63,15 @@ const InstructorMonitoringPage = (props) => {
                     <Card>
                         <CardBody>
                             <Row className="d-flex justify-content-end">
-                                <button className="btn btn-outline-light" onClick={() => setHasLayout(!hasLayout)}><i
+                                <button className="btn btn-outline-light" onClick={() => {
+                                    setHasLayout(!hasLayout) , setReload(!reload)
+                                }}><i
                                     class={hasLayout ? `fa fa-expand` : `fa fa-compress`} aria-hidden="true"/>
                                 </button>
                             </Row>
                             {
                                 hasLayout ?
-                                    <div className="top-organizations d-flex justify-content-between" >
+                                    <div className="top-organizations d-flex justify-content-between">
                                         <h5 className="text-dark">Monitoring sahifasi</h5>
                                         <div className={'d-flex'}>
                                         </div>
@@ -118,9 +118,11 @@ const InstructorMonitoringPage = (props) => {
                                                                                          src={PATH_PREFIX_FILE + elementSensor?.image}
                                                                                          alt=""/>
                                                                                 </div>
-                                                                                <div style={{width: '100%'}} >
+                                                                                <div style={{width: '100%'}}>
                                                                                     <div className={'d-flex '}>
-                                                                                        <b><h6>{elementSensor?.name}</h6></b>
+                                                                                        <b>
+                                                                                            <h6>{elementSensor?.name}</h6>
+                                                                                        </b>
                                                                                     </div>
                                                                                 </div>
                                                                             </Col>
