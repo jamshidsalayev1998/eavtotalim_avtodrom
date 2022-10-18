@@ -90,7 +90,7 @@ const App = () => {
                     });
                     data.append("error", JSON.stringify(error?.response?.data));
                     let params = {};
-                    const res = storeApiBugs(params, data);
+                    // const res = storeApiBugs(params, data);
                 })();
             }
         }
