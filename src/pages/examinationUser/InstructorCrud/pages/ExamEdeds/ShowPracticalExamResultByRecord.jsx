@@ -8,7 +8,7 @@ import {
 } from "../../../../../services/api_services/student_practical_exam_result";
 import "./showPracticalExamResultStyle.css"
 import {Card, CardBody, Container, Badge} from "reactstrap";
-import {Button, Col, Row} from "antd";
+import {Button, Col, Row, List} from "antd";
 
 const ShowPracticalExamResultByRecord = (props) => {
     console.log('props', props);
@@ -31,7 +31,7 @@ const ShowPracticalExamResultByRecord = (props) => {
             }
             getPracticalResult();
         })()
-            getPracticalResult()
+        getPracticalResult()
     }, [])
 
     const getPracticalResult = () => {
@@ -93,16 +93,17 @@ const ShowPracticalExamResultByRecord = (props) => {
                                     Passport: <b>{resultData?.student_passport}</b>
                                 </Col>
                                 <Col xl={8} md={12} sm={24} className={'text-center'}>
-                                    Jarima bali: <b>{resultData?.thisRecord?.penalty_ball?resultData?.thisRecord?.penalty_ball:0}</b>
+                                    Jarima
+                                    bali: <b>{resultData?.thisRecord?.penalty_ball ? resultData?.thisRecord?.penalty_ball : 0}</b>
                                 </Col>
                                 <Col xl={8} md={12} sm={24} className={'text-center'}>
-                                    Avtomobil nomi: <b>{resultData?.merged_data?.examination_car?.name}</b>
+                                    Avtomobil nomi: <b>{resultData?.thisRecord?.examination_area_car?.name}</b>
                                 </Col>
                                 <Col xl={8} md={12} sm={24} className={'text-center'}>
-                                    Avtomobil raqami: <b>{resultData?.merged_data?.examination_car?.number}</b>
+                                    Avtomobil raqami: <b>{resultData?.thisRecord?.examination_area_car?.number}</b>
                                 </Col>
                                 <Col xl={8} md={12} sm={24} className={'text-center'}>
-                                    Avtomobil gps raqami: <b>{resultData?.merged_data?.examination_car?.gps_id}</b>
+                                    Avtomobil gps raqami: <b>{resultData?.thisRecord?.examination_area_car?.gps_id}</b>
                                 </Col>
                             </Row>
                             <Row className={'p-3 border'}>
@@ -115,13 +116,13 @@ const ShowPracticalExamResultByRecord = (props) => {
                                             >
                                                 <Row className={'w-100 justify-content-between'}>
                                                     <Col xl={18} md={18} className={'d-flex '}>
-                                                        <div style={{width:'33%'}}>
+                                                        <div style={{width: '33%'}}>
                                                             <img style={{width: '100%'}}
                                                                  src={PATH_PREFIX_FILE + element?.image}
                                                                  alt=""/>
 
                                                         </div>
-                                                        <div style={{width:'66%'}}>
+                                                        <div style={{width: '66%'}}>
                                                             <div className={'d-flex'}>
                                                                 <h4>{element?.name}</h4>
                                                             </div>
@@ -146,7 +147,7 @@ const ShowPracticalExamResultByRecord = (props) => {
                                                     <Col xl={6} md={6}>
 
                                                         <div className={'p-1 w-100 text-center border '}>
-                                                            <h1>{index+1}</h1>
+                                                            <h1>{index + 1}</h1>
                                                         </div>
                                                         <div className={'p-1 w-100 text-center border '}>
                                                             <b>{hasResult(element?.sensor_id) ? getResult(element?.sensor_id) ? 'TOPSHIRDI' : 'TOPSHIRMADI' : 'KUTILMOQDA'}</b>
@@ -162,6 +163,30 @@ const ShowPracticalExamResultByRecord = (props) => {
                                         )
                                     })}
                             </Row>
+                            {
+                                resultData?.listOfPenalties?.length > 0 ?
+                                    <Row className={'p-3 border'}>
+
+                                        <Col xl={24} className={'text-center'}><b>Avtomobil bortidagi
+                                            jarimalar</b></Col>
+                                        <Col xl={24}>
+                                            <List
+                                                itemLayout="horizontal"
+                                                dataSource={resultData?.listOfPenalties}
+                                                renderItem={(item) => (
+                                                    <List.Item>
+                                                        <List.Item.Meta
+                                                            title={<span>{item?.name}</span>}
+                                                            description={item?.penalty_ball+' jarima bali'}
+                                                        />
+                                                    </List.Item>
+                                                )}
+                                            />
+                                        </Col>
+
+
+                                    </Row> : ''
+                            }
                         </div>
                     </CardBody>
                 </Card>
