@@ -7,6 +7,7 @@ import {PATH_PREFIX} from "Utils/AppVariables";
 import {Modal, Button, Select, Tabs, Row, Col, Input, message, Form} from "antd";
 import {getFinalAccessStudentById} from "../../../../services/api_services/getFinalAccessStudentById";
 import {allowSeparatelyStudent} from "../../../../services/api_services/final_test_admin_api";
+import {parse} from "echarts/extension-src/dataTool/gexf";
 
 const FinalAccessAdminQrCodeScanner = props => {
     const history = useHistory();
@@ -30,15 +31,26 @@ const FinalAccessAdminQrCodeScanner = props => {
     }
 
     const key_up = (keyCode) => {
-        if (keyCode?.keyCode == 13) {
+        if (parseInt(keyCode?.keyCode) === 13) {
             if (inputValue) {
-                getData()
+                getData(inputValue)
+            } else {
+                if (data != null) {
+                    if (parseInt(data?.status) === 1) {
+                        if (parseInt(data?.payment_status) === 1) {
+                            allowFinalExam(data?.id)
+                        }
+                        else{
+                            message.error('To`lov tasdiqlanmagan');
+                        }
+                    }
+                }
             }
         }
     }
-    const getData = () => {
+    const getData = (inputValueParam) => {
         (async () => {
-            const response = await getFinalAccessStudentById(inputValue);
+            const response = await getFinalAccessStudentById(inputValueParam);
             if (response?.data?.status == 1) {
                 setData(response?.data?.data);
                 message.success('Ma`lumot topildi');
@@ -65,23 +77,39 @@ const FinalAccessAdminQrCodeScanner = props => {
             }
             setInputValue(null)
         })()
-    }
+    };
 
     const clearAllData = () => {
         setData(null);
         setInputValue('');
 
-    }
+    };
 
     const allowFinalExam = (student_id) => {
         (async () => {
             const response = await allowSeparatelyStudent(student_id);
             if (response?.data) {
-                history.push(`/come-examination/allow-students/separately/${response?.data?.final_access_student?.id}`);
+                if (parseInt(response?.data?.status) === 0) {
+                    message.error(response?.data?.message[0])
+                } else {
+                    getData(data?.student_passport)
+
+                }
+                // history.push(`/come-examination/allow-students/separately/${response?.data?.final_access_student?.id}`);
             }
         })()
 
-    }
+    };
+    // const handleKeyBtn = event => {
+    //     event.preventDefault();
+    //     if (event.keyCode === 13) {
+    //         if (data != null) {
+    //             if (parseInt(data?.status) === 1) {
+    //                 allowFinalExam(data?.id)
+    //             }
+    //         }
+    //     }
+    // };
 
     return (
         <>
@@ -92,16 +120,16 @@ const FinalAccessAdminQrCodeScanner = props => {
                         <CardBody>
                             <div className="top-organizations">
                                 <h5 className="text-dark">{t("O`quvchiga testga ruxsat berish(Nazariy)")}</h5>
-                                 <Col xl={6} className={'d-flex justify-content-end'}>
-                                        <button className={'btn btn-outline-danger'} onClick={clearAllData}><i
-                                            className={'fa fa-times'}></i></button>
-                                    </Col>
+                                <Col xl={6} className={'d-flex justify-content-end'}>
+                                    <button className={'btn btn-outline-danger'} onClick={clearAllData}><i
+                                        className={'fa fa-times'}></i></button>
+                                </Col>
                             </div>
                             <div className="crypto-buy-sell-nav mt-3">
                                 <Row className="justify-content-between">
                                     <Col xl={6}>
                                         <Input
-                                            style={{opacity:'0'}}
+                                            style={{opacity: '0'}}
                                             ref={inputEl}
                                             onChange={e => setInputValue(e?.target?.value)}
                                             onBlur={focusInput}
@@ -116,7 +144,7 @@ const FinalAccessAdminQrCodeScanner = props => {
                                 {
                                     data != null &&
                                     <Row className={'pt-5'} style={{fontSize: '25px'}}>
-                                        <Col xl={12}>
+                                        <Col xl={12} className={'border p-3'}>
                                             <p>
                                                 F.I.O:
                                                 <b>
@@ -139,7 +167,7 @@ const FinalAccessAdminQrCodeScanner = props => {
 
                                             </p>
                                         </Col>
-                                        <Col xl={12} className={' justify-content-end'}>
+                                        <Col xl={6} className={' justify-content-end border p-3'}>
                                             <div className={'w-100'}>
                                                 {data?.payment_status ?
                                                     <Badge color={'success'}>Nazariy imtihonga to`lov
@@ -150,8 +178,14 @@ const FinalAccessAdminQrCodeScanner = props => {
 
                                             </div>
                                         </Col>
+                                        <Col xl={6} className={' justify-content-end  border p-3 text-center'}>
+                                            <b>Kompyuter</b>
+                                            <div style={{fontSize: '50px'}}>
+                                                <b>{data?.merged_computer?.computer?.order}</b>
+                                            </div>
+                                        </Col>
                                         <Col xl={24} className={'text-center'}>
-                                            <Col xl={6} className={'ml-auto mr-auto'}>
+                                            <Col xl={24} className={'ml-auto mr-auto'}>
                                                 {
                                                     data?.status == 1 &&
 

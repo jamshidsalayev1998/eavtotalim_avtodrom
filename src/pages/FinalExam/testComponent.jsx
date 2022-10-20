@@ -253,7 +253,7 @@ const TestComponent = ({
         setIsVisibleAnswerDescriptionModal(false);
     };
     return (
-        <div className="final_test_div" onKeyDown={handleKeyBtn} tabIndex={0} autofocus={true} style={{zIndex:1006}}>
+        <div className="final_test_div" onKeyDown={handleKeyBtn} tabIndex={0} autofocus={true} style={{zIndex: 1006}}>
             <div>
                 <div
                     className="buttons  align-items-center justify-content-center    "

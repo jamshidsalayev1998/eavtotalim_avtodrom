@@ -5,6 +5,7 @@ import {NavLink} from "react-router-dom";
 import MainContext from "../../../../../Context/MainContext";
 import {getMonitoringData, getMonitoringResultData} from "../../../../../services/api_services/instructor_student_api";
 import {PATH_PREFIX_FILE} from "../../../../../Utils/AppVariables";
+import ReloadOutlined from "@ant-design/icons/lib/icons/ReloadOutlined";
 
 const InstructorMonitoringPage = (props) => {
 
@@ -56,6 +57,11 @@ const InstructorMonitoringPage = (props) => {
             return 0;
         }
     };
+    const reloadPage =  () => {
+        setStudentSensorData([]);
+        setStudentResultData([]);
+        setReload(!reload);
+    };
     return (
         <>
             <div className="page-content" style={!hasLayout ? {padding: '1px'} : {}}>
@@ -63,6 +69,9 @@ const InstructorMonitoringPage = (props) => {
                     <Card>
                         <CardBody>
                             <Row className="d-flex justify-content-end">
+                                <button className="btn btn-outline-light"  onClick={reloadPage}>
+                                    <ReloadOutlined />
+                                </button>
                                 <button className="btn btn-outline-light" onClick={() => {
                                     setHasLayout(!hasLayout) , setReload(!reload)
                                 }}><i
@@ -87,7 +96,6 @@ const InstructorMonitoringPage = (props) => {
                                                     <Row className={'justify-content-between'}>
                                                         <Col xl={6}>
                                                             <b>{element?.student_fio}</b>
-
                                                         </Col>
                                                         <Col xl={6}>
                                                             <b>{element?.student_passport}</b>
@@ -107,19 +115,13 @@ const InstructorMonitoringPage = (props) => {
                                                             element?.sensors?.map((elementSensor, indexSensor) => {
                                                                 return (
                                                                     <Col xl={6} md={6}
-                                                                         className={`d-flex border shadow p-3 ${hasResult(element?.id, elementSensor?.sensor_id) ? getResult(element?.id, elementSensor?.sensor_id) ? 'success-sensor' : 'danger-sensor' : 'warning-sensor'}`}
+                                                                         className={`d-flex border shadow p-2 ${hasResult(element?.id, elementSensor?.sensor_id) ? getResult(element?.id, elementSensor?.sensor_id) ? 'success-sensor' : 'danger-sensor' : 'warning-sensor'}`}
                                                                     >
                                                                         <Row
                                                                             className={'w-100 justify-content-between'}>
                                                                             <Col xl={24} md={24} className={'d-flex '}>
-                                                                                <div style={{width: '16%'}}>
-
-                                                                                    <img style={{width: '100%'}}
-                                                                                         src={PATH_PREFIX_FILE + elementSensor?.image}
-                                                                                         alt=""/>
-                                                                                </div>
-                                                                                <div style={{width: '100%'}}>
-                                                                                    <div className={'d-flex '}>
+                                                                                <div style={{width: '100%'}} >
+                                                                                    <div className={'d-flex'}>
                                                                                         <b>
                                                                                             <h6>{elementSensor?.name}</h6>
                                                                                         </b>
@@ -128,7 +130,7 @@ const InstructorMonitoringPage = (props) => {
                                                                             </Col>
                                                                             <Col xl={24} md={24} className={'d-flex'}>
                                                                                 <div
-                                                                                    className={'p-1 w-100 text-center '}>
+                                                                                    className={'p-1 w-100 text-center '} style={{fontSize:'10px'}}>
                                                                                     <b>{hasResult(element?.id, elementSensor?.sensor_id) ? getResult(element?.id, elementSensor?.sensor_id) ? 'TOPSHIRDI' : 'TOPSHIRMADI' : 'KUTILMOQDA'}</b>
                                                                                 </div>
 

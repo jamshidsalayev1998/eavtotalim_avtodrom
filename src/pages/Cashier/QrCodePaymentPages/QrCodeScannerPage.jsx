@@ -47,7 +47,7 @@ const QrCodeScannerPage = props => {
         console.log('pop', keyCode?.keyCode)
         if (keyCode?.keyCode == 13) {
             if (inputValue) {
-                getData()
+                getData(inputValue)
             }
         }
         if (keyCode?.keyCode == 27) {
@@ -70,9 +70,9 @@ const QrCodeScannerPage = props => {
             }
         })()
     }
-    const getData = () => {
+    const getData = (inputValueParam) => {
         (async () => {
-            const response = await getFinalAccessStudentById(inputValue);
+            const response = await getFinalAccessStudentById(inputValueParam);
             if (response?.data?.status == 1) {
                 handleCancel();
                 setData(response?.data?.data);
@@ -120,7 +120,8 @@ const QrCodeScannerPage = props => {
                 if (res?.data?.status == 1) {
                     message.success(res?.data?.message);
                     handleCancel();
-                    history.push('/cashier/student-payments/' + res?.data?.data?.id)
+                    getData(data?.student_passport)
+                    // history.push('/cashier/student-payments/' + res?.data?.data?.id)
                 } else if (res?.data?.status == 0) {
                     message.error(res?.data?.message);
                     setIsLoading(false)
