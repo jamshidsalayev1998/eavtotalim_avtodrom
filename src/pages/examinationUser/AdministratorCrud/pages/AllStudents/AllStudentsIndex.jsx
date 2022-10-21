@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useRef} from "react";
 import {Badge, Card, CardBody, Container,} from "reactstrap";
 import {withTranslation} from "react-i18next";
 import {Row, Col, Select, Input, Pagination, Table, Modal, Form, message, Popconfirm, Tooltip} from "antd";
@@ -7,8 +7,9 @@ import {PATH_PREFIX} from "../../../../../Utils/AppVariables";
 import useDebounce from "../../../../../components/CustomHooks/useDebounce";
 import QRCode from "qrcode";
 import QrCodeToPrint from "./QrCodeToPrint";
-import ReactToPrint from 'react-to-print';
-import {NavLink} from "react-router-dom";
+import {NavLink, useHistory, useLocation} from "react-router-dom";
+import "./key_styles.css"
+
 
 const AllStudentsIndex = props => {
     const [data, setData] = useState([]);
@@ -22,6 +23,10 @@ const AllStudentsIndex = props => {
     const [selectedStudent, setSelectedStudent] = useState();
     const [src, setSrc] = useState('');
     const [editStudent, setEditStudent] = useState();
+    const urlStudentAdd = '/examination-administrator/all-students/add';
+    const inputEl = useRef();
+    const history = useHistory();
+    const location = useLocation();
 
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -41,6 +46,13 @@ const AllStudentsIndex = props => {
                 setTotal(response?.data?.data?.total)
                 setPage(response?.data?.data?.current_page)
                 setIsloading(false)
+            }
+        })
+        window.addEventListener("keyup", (event) => {
+            if (event?.code === 'F2'){
+                if (location?.pathname === '/examination-administrator/all-students'){
+                    history.push(urlStudentAdd)
+                }
             }
         })
     }, [reload, waitWord]);
@@ -121,7 +133,8 @@ const AllStudentsIndex = props => {
             title: 'Amallar',
             render: (index, element) => <>
                 <Tooltip title={'O\'zgartirish'}>
-                    <NavLink to={'/examination-administrator/edit-students/'+element?.id}><i className={'bx bx-edit'}></i></NavLink>
+                    <NavLink to={'/examination-administrator/edit-students/' + element?.id}><i
+                        className={'bx bx-edit'}></i></NavLink>
                 </Tooltip>
             </>
         }
@@ -156,6 +169,7 @@ const AllStudentsIndex = props => {
         });
     }
 
+
     return (
         <>
             <div className="page-content">
@@ -164,16 +178,17 @@ const AllStudentsIndex = props => {
                         <CardBody>
                             <div className="top-organizations">
                                 <h5>Barcha keluvchilar </h5>
-                                <NavLink to={'/examination-administrator/all-students/add'}>
-                                    <button className="btn btn-outline-success"> + Qo'shish</button>
+                                <NavLink to={urlStudentAdd}>
+                                    <button className="btn btn-outline-success"> + Qo'shish </button><span
+                                        className={'keyboard-style'}>F2</span>
                                 </NavLink>
                             </div>
                             <div className="crypto-buy-sell-nav mt-3">
                                 <Row>
                                     <Col xl={18}>
                                         <Col xl={24} className={'d-flex justify-content-end'}>
-                                            <Col xl={6}><Input allowClear={true}
-                                                               onChange={e => changeWord(e?.target?.value)}></Input></Col>
+                                            <Col xl={6}><Input allowClear={true} autoFocus={true}
+                                                               onChange={e => changeWord(e?.target?.value)}/></Col>
                                         </Col>
                                         <Col xl={24}>
                                             <Table bordered={true} columns={columns} dataSource={data}

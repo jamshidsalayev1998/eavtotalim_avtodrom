@@ -1,11 +1,11 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useRef} from "react";
 import {Card, CardBody, Container,} from "reactstrap";
 import {withTranslation} from "react-i18next";
 import {Row, Col, Select, Input, Form, message, Popconfirm, Alert, DatePicker} from "antd";
 import axios from "axios";
 import {PATH_PREFIX} from "../../../../../Utils/AppVariables";
 import MaskedInput from 'antd-mask-input'
-import {useHistory} from "react-router";
+import {useHistory, useLocation} from "react-router";
 import {
     sendStudentToResubmit,
     sendStudentToResubmitAllResponse
@@ -13,21 +13,21 @@ import {
 import {getEduTypesForAll} from "../../../../../services/api_services/edu_types_api";
 import {addStudentToComes, getOrganizations} from "../../../../../services/api_services/administrator_students_api";
 import InputMask from 'react-input-mask';
+import EnterOutlined from "@ant-design/icons/lib/icons/EnterOutlined";
 
 const AddStudentToComes = props => {
 
     const history = useHistory();
     const [addForm] = Form.useForm();
-    const {Option} = Select
+    const {Option} = Select;
     const [validatorErrors, setValidatorErrors] = useState([]);
     const [dataHas, setDataHas] = useState(null);
     const [eduTypes, setEduTypes] = useState([]);
     const [organizations, setOrganizations] = useState([]);
-
+    const location = useLocation();
     function onFinishAddFailed() {
 
     }
-
     useEffect(() => {
         (async () => {
             let params = {};
@@ -35,7 +35,14 @@ const AddStudentToComes = props => {
             getOrganizationsFunction();
             console.log(res?.data?.data);
             setEduTypes(res?.data?.data);
-        })()
+        })();
+        window.addEventListener("keypress", (event) => {
+            if (event?.code === 'Enter') {
+                if (location?.pathname === '/examination-administrator/all-students/add') {
+                    saveStudent()
+                }
+            }
+        })
     }, []);
 
     const getOrganizationsFunction = () => {
@@ -96,7 +103,7 @@ const AddStudentToComes = props => {
             'a': '[A-Za-z]',
         },
 
-        permanents: [2, 5] // permanents is an array of indexes of the non-editable characters in the mask
+        permanents: [2, 5]
     }
     const maskInputNumber = {
         mask: '(99) 9999999',
@@ -107,8 +114,8 @@ const AddStudentToComes = props => {
             'a': '[A-Za-z]',
         },
 
-        permanents: [2, 5] // permanents is an array of indexes of the non-editable characters in the mask
-    }
+        permanents: [2, 5]
+    };
     return (
         <>
             <div className="page-content">
@@ -122,9 +129,12 @@ const AddStudentToComes = props => {
                                       </span>
                                     <h5>O'quvchi qo'shish </h5>
                                 </div>
-                                <button className={'btn btn-success'} onClick={saveStudent}><i
-                                    className={'fa fa-save'}></i> Saqlash
+                                <div className={'d-flex'}>
+                                    <button className={'btn btn-success'} onClick={saveStudent}><i
+                                    className={'fa fa-save'}/> Saqlash
                                 </button>
+                                <span className={'keyboard-style'}> <EnterOutlined /> </span>
+                                </div>
                             </div>
                             <div className="crypto-buy-sell-nav mt-3">
 
@@ -165,14 +175,6 @@ const AddStudentToComes = props => {
                                             <Form.Item
                                                 name="student_passport"
                                                 label="Pasport seria va raqami"
-                                                // hasFeedback={passport ? true : false}
-                                                // validateStatus={
-                                                //     isValidPassport === null
-                                                //         ? success
-                                                //         : isValidPassport === false
-                                                //         ? "error"
-                                                //         : "success"
-                                                // }
                                                 rules={[
                                                     {
                                                         required: true,
@@ -186,7 +188,6 @@ const AddStudentToComes = props => {
                                                     className={'ant-input'}
                                                     onChange={(e) => onPassportHandle(e)}
                                                 />
-                                                {/*<Input onChange={(e) => onPassportHandle(e)}/>*/}
                                             </Form.Item>
                                         </Col>
                                         <Col xl={6}>
@@ -201,7 +202,6 @@ const AddStudentToComes = props => {
                                                     },
                                                 ]}
                                             >
-                                                {/*<MaskedInput mask="(11) 1111111"/>*/}
                                                 <InputMask
                                                     {...maskInputNumber}
                                                     className={'ant-input'}

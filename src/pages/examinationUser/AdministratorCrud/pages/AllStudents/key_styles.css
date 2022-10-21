@@ -1,0 +1,10 @@
+.keyboard-style {
+    border: 1px solid #000;
+    border-radius: 4px;
+    margin: 2px;
+    padding: 6px;
+    display: inline-block;
+    color: black;
+    background-color: #f0f0f0;
+    font-weight: bold;
+}

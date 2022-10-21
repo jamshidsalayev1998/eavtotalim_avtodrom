@@ -135,12 +135,13 @@ const QrCodeScannerPage = props => {
     };
     const confirm_payment = () => {
         setIsModalVisible(true)
-    }
+    };
     const clearAllData = () => {
         setData(null);
-        setInputValue('');
+        setInputValue(undefined);
+    };
 
-    }
+
 
     return (
         <>
@@ -154,7 +155,8 @@ const QrCodeScannerPage = props => {
                    footer={[
                        <div className={'d-flex'}>
                            <Button className={'w-50'} key={'back'} onClick={handleCancel}>Bekor qilish</Button>
-                           <Button className={'w-50 btn-success bg-success'} key={'submit'} style={{color: 'white'}}
+                           <Button htmlType={'submit'} className={'w-50 btn-success bg-success'} key={'submit'}
+                                   style={{color: 'white'}}
                                    loading={isLoading} onClick={handleOk}>Saqlash</Button>
                        </div>
                    ]}

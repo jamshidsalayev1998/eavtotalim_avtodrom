@@ -418,16 +418,16 @@ const TestComponent = ({
                                                         : "answer"
                                             }`}
                                         >
-                      <span className="mr-2">
-                        {checked_test?.result == 0 &&
-                        checked_test?.selected_answer_id == item?.id ? (
-                            <i className="fas fa-times-circle empty-icon"></i>
-                        ) : checked_test?.right_answer_id == item?.id ? (
-                            <i className="fas fa-check-circle empty-icon"></i>
-                        ) : (
-                            <i className="far fa-circle empty-icon"></i>
-                        )}
-                      </span>
+                                                  <span className="mr-2">
+                                                    {checked_test?.result == 0 &&
+                                                    checked_test?.selected_answer_id == item?.id ? (
+                                                        <i className="fas fa-times-circle empty-icon"></i>
+                                                    ) : checked_test?.right_answer_id == item?.id ? (
+                                                        <i className="fas fa-check-circle empty-icon"></i>
+                                                    ) : (
+                                                        <i className="far fa-circle empty-icon"></i>
+                                                    )}
+                                                  </span>
 
                                             {Object.keys(item?.body)?.map((keyName, i) =>
                                                 item?.body[keyName]?.type == "1" ? (
