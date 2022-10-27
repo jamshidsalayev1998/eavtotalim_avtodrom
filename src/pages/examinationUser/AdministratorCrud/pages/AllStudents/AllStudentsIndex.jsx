@@ -79,7 +79,7 @@ const AllStudentsIndex = props => {
                     title: 'Nazariy',
                     render: (index, element) => <>
                         {
-                            element?.payment_status ?
+                            parseInt(element?.payment_status) ?
                                 <Badge color={'success'}>To'lov qilingan</Badge> :
                                 <Badge color={'danger'}>To'lov qilinmagan</Badge>
                         }
@@ -89,7 +89,7 @@ const AllStudentsIndex = props => {
                     title: 'Amaliy',
                     render: (index, element) => <>
                         {
-                            element?.practical_payment_status ?
+                            parseInt(element?.practical_payment_status) ?
                                 <Badge color={'success'}>To'lov qilingan</Badge> :
                                 <Badge color={'danger'}>To'lov qilinmagan</Badge>
                         }
