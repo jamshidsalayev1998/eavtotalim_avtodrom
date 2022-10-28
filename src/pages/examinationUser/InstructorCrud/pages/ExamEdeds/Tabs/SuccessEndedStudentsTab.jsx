@@ -41,8 +41,8 @@ const SuccessEndedStudentsTab = () => {
                                     </div>
                                     <div>Jarima bali: <b>{elementMap?.penalty_ball ? elementMap?.penalty_ball : 0}</b>
                                     </div>
-                                    <div>Natija: <b>{elementMap?.result === 1 ?
-                                        <Badge color={'success'}>O`tgan</Badge> : elementMap?.result === 0 ?
+                                    <div>Natija: <b>{parseInt(elementMap?.result) === 1 ?
+                                        <Badge color={'success'}>O`tgan</Badge> : parseInt(elementMap?.result) === 0 ?
                                             <Badge color={'danger'}>Yiqilgan</Badge> :
                                             <Badge color={'warning'}>Topshirmagan</Badge>}</b></div>
                                 </div>
@@ -116,5 +116,5 @@ const SuccessEndedStudentsTab = () => {
             </Row>
         </>
     )
-}
+};
 export default SuccessEndedStudentsTab
