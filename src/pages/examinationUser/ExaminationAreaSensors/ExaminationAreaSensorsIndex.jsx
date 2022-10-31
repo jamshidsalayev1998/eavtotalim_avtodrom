@@ -64,6 +64,15 @@ const ExaminationAreaSensorsIndex = props => {
     console.log('eee', eduTypes)
 
     function edit_payment(element) {
+        Object.assign(element,{
+            light:parseInt(element?.light)?true:false,
+            right:parseInt(element?.right)?true:false,
+            left:parseInt(element?.left)?true:false,
+            arg1:parseInt(element?.arg1)?true:false,
+            remen:parseInt(element?.remen)?true:false,
+            engine:parseInt(element?.engine)?true:false,
+        });
+        // console.log(element)
         editForm.setFieldsValue(element);
         setFileEditList([{
             uid: '-1',
@@ -78,8 +87,8 @@ const ExaminationAreaSensorsIndex = props => {
         (
             async () => {
                 const response = await deleteExaminationAreaSensor(element);
-                if (response?.data?.status == 1) {
-                    setReload(!reload)
+                if (parseInt(response?.data?.status) === 1) {
+                    setReload(!reload);
                     message.success(response?.data?.message);
                 }
             }
