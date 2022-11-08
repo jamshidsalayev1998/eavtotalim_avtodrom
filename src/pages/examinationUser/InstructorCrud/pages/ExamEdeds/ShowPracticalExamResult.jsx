@@ -51,7 +51,7 @@ const ShowPracticalExamResults = (props) => {
         let fdata = resultData?.practical_result?.filter((data) => {
             return data?.sensor_id == elementId
         })
-        if (fdata[0]?.result) {
+        if (parseInt(fdata[0]?.result)) {
             return 1
         } else {
             return 0

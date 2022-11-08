@@ -17,10 +17,10 @@ const ExamResultIndexTable = ({tableData, reload, setreload}) => {
             let data = new FormData();
             data.append('student_id', student?.id);
             const res = await sendStudentResultBySms(data);
-            if (res?.status == 1) {
+            if (parseInt(res?.status) === 1) {
                 message.success(res?.message);
             }
-            if (res?.status == 0) {
+            if (parseInt(res?.status) === 0) {
                 message.error(res?.message);
             }
             setreload(!reload)
@@ -70,9 +70,9 @@ const ExamResultIndexTable = ({tableData, reload, setreload}) => {
                     title: 'Nazariy',
                     render: (index, element) => <>
                         {
-                            element?.exam_result == 1 ?
+                            parseInt(element?.exam_result) === 1 ?
                                 <Badge color={'success'}>O`tgan</Badge> :
-                                element?.exam_result == 0 ?
+                                parseInt(element?.exam_result) === 0 ?
                                     <Badge color={'danger'}>Yiqilgan</Badge> :
                                     <Badge color={'warning'}>Topshirmagan</Badge>
 
@@ -82,9 +82,9 @@ const ExamResultIndexTable = ({tableData, reload, setreload}) => {
                 {
                     title: 'Amaliy',
                     render: (index, element) => <>{
-                        element?.practical_exam_result == 1 ?
+                        parseInt(element?.practical_exam_result) === 1 ?
                             <Badge color={'success'}>O`tgan</Badge> :
-                            element?.practical_exam_result == 0 ?
+                            parseInt(element?.practical_exam_result) === 0 ?
                                 <Badge color={'danger'}>Yiqilgan</Badge> :
                                 <Badge color={'warning'}>Topshirmagan</Badge>
 
@@ -100,9 +100,9 @@ const ExamResultIndexTable = ({tableData, reload, setreload}) => {
                     onConfirm={() => sendTestResult(element)}
                     title={'Test natijasi haqidagi habar jo`natilsinmi'} placement={'topLeft'}><span
                     style={{cursor: 'pointer', color: 'green'}}> <i
-                    className={'fa fa-envelope'}></i> </span></Popconfirm> </> :
+                    className={'fa fa-envelope'}/> </span></Popconfirm> </> :
                 <Tooltip placement="left" title={'Jo`natilgan'}><span> <i
-                    className={'fa fa-envelope'}></i> </span></Tooltip>}</>
+                    className={'fa fa-envelope'}/> </span></Tooltip>}</>
         }
         // {
         //     title: 'Bayonnoma',

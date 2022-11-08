@@ -147,18 +147,18 @@ const NotAllowedSeparatelyAllowStudentsTable = ({}) => {
             title: 'Ruxsat berish',
             className: 'last-td',
             render: (index, element) => <>{
-                element?.payment_status ?
+                parseInt(element?.payment_status) ?
                     <Popconfirm title={'O`quvchiga testga ruxsat berilsinmi'}
                                 onConfirm={() => allow_student(element?.id)} okText={'Ruxsat berish'}
                                 cancelText={'Bekor qilish'}>
-                        <Button disabled={!element?.payment_status}
-                                className={element?.payment_status == '1' ? 'btn btn-outline-success text-success' : 'btn btn-outline-dark'}>
-                            <i className={'fa fa-check'}></i>
+                        <Button disabled={!parseInt(element?.payment_status)}
+                                className={parseInt(element?.payment_status) === 1 ? 'btn btn-outline-success text-success' : 'btn btn-outline-dark'}>
+                            <i className={'fa fa-check'}/>
                         </Button>
                     </Popconfirm> :
-                    <Button disabled={!element?.payment_status}
-                            className={element?.payment_status == '1' ? 'btn btn-outline-success text-success' : 'btn btn-outline-dark'}>
-                        <i className={'fa fa-check'}></i>
+                    <Button disabled={!parseInt(element?.payment_status)}
+                            className={parseInt(element?.payment_status) === 1 ? 'btn btn-outline-success text-success' : 'btn btn-outline-dark'}>
+                        <i className={'fa fa-check'}/>
                     </Button>
             }
 

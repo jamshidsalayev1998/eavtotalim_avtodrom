@@ -73,13 +73,14 @@ const Login = () => {
           setRegion_id(String(response?.data?.user?.profession?.region_id));
           setUserType(String(response?.data?.user?.online));
           setAdditional(response?.data?.user?.additional);
+          const tempRole = parseInt(response?.data?.user?.role);
           if (
-            response?.data?.user?.role != "13" &&
-            response?.data?.user?.role != "15" &&
-            response?.data?.user?.role != "16" &&
-            response?.data?.user?.role != "17" &&
-            response?.data?.user?.role != "18" &&
-            response?.data?.user?.role != "19"
+            tempRole !== 13 &&
+            tempRole !== 15 &&
+            tempRole !== 16 &&
+            tempRole !== 17 &&
+            tempRole !== 18 &&
+            tempRole !== 19
           ) {
             localStorage.removeItem("token");
             message.warning(
