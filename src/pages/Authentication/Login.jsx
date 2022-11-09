@@ -19,7 +19,7 @@ import { Modal } from "reactstrap";
 import "./login.css";
 import API from "../../api/";
 import { useTranslation } from "react-i18next";
-import { message } from "antd";
+import { message, Spin } from "antd";
 // import {fileServerReadKey} from "../../services/api_services/file_server/file_server_function";
 import axios from "axios";
 import { PATH_PREFIX } from "../../Utils/AppVariables";
@@ -44,6 +44,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [ptype, setPtype] = useState("password");
   const [customchkPrimary, setcustomchkPrimary] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const loginUser = async () => {
     // fileServerReadKey();
@@ -55,6 +56,7 @@ const Login = () => {
     if (key) {
       Object.assign(params, { computer_key: key });
     }
+    setLoading(true);
     return await axios({
       url: PATH_PREFIX + "/login",
       method: "POST",
@@ -98,6 +100,7 @@ const Login = () => {
         }
       })
       .catch(error => {
+        setLoading(false);
         if (error?.response?.data?.error) {
           message.error(error?.response?.data?.error);
         } else {
@@ -112,124 +115,126 @@ const Login = () => {
 
   return (
     <React.Fragment>
-      <div>
-        <img className="logo-img" src={loginBlue} alt="" />
+      <Spin spinning={loading}>
+        <div>
+          <img className="logo-img" src={loginBlue} alt="" />
 
-        <div className="language">
-          <LanguageDropDown />
-          <NavLink to={"/computer-test"}>
-            <button className={"btn btn-primary px-3"}>TEST</button>
-          </NavLink>
-        </div>
-        <div></div>
+          <div className="language">
+            <LanguageDropDown />
+            <NavLink to={"/computer-test"}>
+              <button className={"btn btn-primary px-3"}>TEST</button>
+            </NavLink>
+          </div>
+          <div></div>
 
-        <div className="container-login">
-          <div className="container-login-1">
-            <img className="login-circle" src={circle} alt="circle" />
+          <div className="container-login">
+            <div className="container-login-1">
+              <img className="login-circle" src={circle} alt="circle" />
 
-            <div className="login-heading">
-              <h2 className="login-heading-h2">
-                <img src={logoIntalim} alt="logo" />
-              </h2>
-              <img className="login-sharp" src={sharp} alt="sharp" />
+              <div className="login-heading">
+                <h2 className="login-heading-h2">
+                  <img src={logoIntalim} alt="logo" />
+                </h2>
+                <img className="login-sharp" src={sharp} alt="sharp" />
+              </div>
             </div>
-          </div>
 
-          <img className="login-sharp-2" src={sharp} alt="sharp" />
+            <img className="login-sharp-2" src={sharp} alt="sharp" />
 
-          <div className="backgroundCar">
-            {/* <img className="w-100" src={smartCar} alt="car" /> */}
-          </div>
+            <div className="backgroundCar">
+              {/* <img className="w-100" src={smartCar} alt="car" /> */}
+            </div>
 
-          <div className="container-login-2">
-            <div className="form_login">
-              {/* {
+            <div className="container-login-2">
+              <div className="form_login">
+                {/* {
                 auth?
                 <h3 className="text-danger alert-message">Server bilan aloqa yo'q !</h3>:""
               } */}
-              <div className="login_form">
-                <div className="text-center">
-                  <label htmlFor="username" className="font-size-18">
-                    {t("Log in")}
-                  </label>
-                </div>
-                <form onSubmit={e => e.preventDefault()}>
-                  <label htmlFor="username" className="font-size-14">
-                    Login
-                  </label>
-                  <p className="login_username">
-                    <input
-                      className="form-control w-100"
-                      type="text"
-                      id="username"
-                      required
-                      placeholder="Login ni kiriting"
-                      value={username}
-                      onChange={e => setUsername(e.target.value)}
-                    />
-                  </p>
-                  <label htmlFor="password" className="font-size-14 mt-2">
-                    Parol
-                  </label>
-                  <p className="login_password w-100">
-                    <input
-                      className="form-control w-100"
-                      type={ptype}
-                      id="password"
-                      value={password}
-                      required
-                      placeholder="Parol ni kiriting"
-                      onChange={e => setPassword(e.target.value)}
-                    />
-                    {ptype === "password" ? (
-                      <i
-                        className="bx bx-show-alt font-size-20 mr-2 i-position"
-                        onClick={() => setPtype("text")}
-                      ></i>
-                    ) : (
-                      <i
-                        className="bx bxs-chevron-right-square font-size-20 mr-2 i-position"
-                        onClick={() => setPtype("password")}
-                      ></i>
-                    )}
-                  </p>
-                  <div className="custom-control custom-checkbox custom-checkbox-success mt-3 mb-0 w-100 d-flex justify-content-between">
-                    <div>
-                      <input
-                        type="checkbox"
-                        className=" custom-control-input w-100 "
-                        id="customCheckcolor1"
-                        checked={customchkPrimary}
-                        onChange={() => {
-                          setcustomchkPrimary(!customchkPrimary);
-                        }}
-                      />
-
-                      <label
-                        className="custom-control-label"
-                        htmlFor="customCheckcolor1"
-                      >
-                        {t("Remember me")}
-                      </label>
-                    </div>
-
-                    <div className=" ">
-                      <Link to="/forgot-password" className="text-muted">
-                        <i className="mdi mdi-lock mr-1" />
-                        {t("Forgot password")}?
-                      </Link>
-                    </div>
+                <div className="login_form">
+                  <div className="text-center">
+                    <label htmlFor="username" className="font-size-18">
+                      {t("Log in")}
+                    </label>
                   </div>
-                  <p className="login_button">
-                    <button
-                      type="submit"
-                      tabindex="13"
-                      className="login_submit"
-                      onClick={loginUser}
-                    >
-                      {t("Login")}
-                    </button>
-                    {/* <button
+                  <form onSubmit={e => e.preventDefault()}>
+                    <label htmlFor="username" className="font-size-14">
+                      Login
+                    </label>
+                    <p className="login_username">
+                      <input
+                        className="form-control w-100"
+                        type="text"
+                        id="username"
+                        required
+                        placeholder="Login ni kiriting"
+                        value={username}
+                        onChange={e => setUsername(e.target.value)}
+                      />
+                    </p>
+                    <label htmlFor="password" className="font-size-14 mt-2">
+                      Parol
+                    </label>
+                    <p className="login_password w-100">
+                      <input
+                        className="form-control w-100"
+                        type={ptype}
+                        id="password"
+                        value={password}
+                        required
+                        placeholder="Parol ni kiriting"
+                        onChange={e => setPassword(e.target.value)}
+                      />
+                      {ptype === "password" ? (
+                        <i
+                          className="bx bx-show-alt font-size-20 mr-2 i-position"
+                          onClick={() => setPtype("text")}
+                        ></i>
+                      ) : (
+                        <i
+                          className="bx bxs-chevron-right-square font-size-20 mr-2 i-position"
+                          onClick={() => setPtype("password")}
+                        ></i>
+                      )}
+                    </p>
+                    <div className="custom-control custom-checkbox custom-checkbox-success mt-3 mb-0 w-100 d-flex justify-content-between">
+                      <div>
+                        <input
+                          type="checkbox"
+                          className=" custom-control-input w-100 "
+                          id="customCheckcolor1"
+                          checked={customchkPrimary}
+                          onChange={() => {
+                            setcustomchkPrimary(!customchkPrimary);
+                          }}
+                        />
+
+                        <label
+                          className="custom-control-label"
+                          htmlFor="customCheckcolor1"
+                        >
+                          {t("Remember me")}
+                        </label>
+                      </div>
+
+                      <div className=" ">
+                        <Link to="/forgot-password" className="text-muted">
+                          <i className="mdi mdi-lock mr-1" />
+                          {t("Forgot password")}?
+                        </Link>
+                      </div>
+                    </div>
+                    <p className="login_button">
+                      <button
+                        type="submit"
+                        tabindex="13"
+                        className="login_submit"
+                        onClick={loginUser}
+                      >
+                        {t("Login")}
+                      </button>
+
+                      {/* <button
                      type="submit"
                      tabindex="13"
                      className="login_submit"
@@ -237,35 +242,36 @@ const Login = () => {
                     >
                      {t("Login")}
                     </button> */}
-                  </p>
-                  <NavLink to={"/third-application"}>
-                    Testga ro'yhatdan o'tish
-                  </NavLink>
-                </form>
-              </div>
+                    </p>
+                    <NavLink to={"/third-application"}>
+                      Testga ro'yhatdan o'tish
+                    </NavLink>
+                  </form>
+                </div>
 
-              <div className="copyright pull-right d-flex  ">
-                <p className={"px-5"}>{t("LoginFooter")}</p>
-                <NavLink
-                  to={"/computer-config-settings"}
-                  style={{ cursor: "pointer" }}
-                >
-                  <i className={"fa fa-cog"}> </i>
-                </NavLink>
+                <div className="copyright pull-right d-flex  ">
+                  <p className={"px-5"}>{t("LoginFooter")}</p>
+                  <NavLink
+                    to={"/computer-config-settings"}
+                    style={{ cursor: "pointer" }}
+                  >
+                    <i className={"fa fa-cog"}> </i>
+                  </NavLink>
+                </div>
               </div>
             </div>
-          </div>
 
-          <div className="login-heading-div d-none d-md-block">
-            <img src={commalogo} alt="comma-logo" />
-            <p>
-              {t(
-                "Increase your knowledge through the Intalim.uz platform Implementation of the system of distance learning of software products is designed for remote using this program implementation of education, its management and e-learning It will be possible to form a system. All in the system data is stored centrally and based on user requests (or relevance) data is displayed."
-              )}
-            </p>
+            <div className="login-heading-div d-none d-md-block">
+              <img src={commalogo} alt="comma-logo" />
+              <p>
+                {t(
+                  "Increase your knowledge through the Intalim.uz platform Implementation of the system of distance learning of software products is designed for remote using this program implementation of education, its management and e-learning It will be possible to form a system. All in the system data is stored centrally and based on user requests (or relevance) data is displayed."
+                )}
+              </p>
+            </div>
           </div>
         </div>
-      </div>
+      </Spin>
     </React.Fragment>
   );
 };
