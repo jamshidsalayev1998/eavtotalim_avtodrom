@@ -23,6 +23,8 @@ import { message, Spin } from "antd";
 // import {fileServerReadKey} from "../../services/api_services/file_server/file_server_function";
 import axios from "axios";
 import { PATH_PREFIX } from "../../Utils/AppVariables";
+import { LoopCircleLoading } from "react-loadingg";
+import res_logo from "../../assets/images/res_gai.svg";
 
 const languagesList = ["uz", "kiril", "qq", "ru", "en"];
 
@@ -115,7 +117,25 @@ const Login = () => {
 
   return (
     <React.Fragment>
-      <Spin spinning={loading}>
+      <Spin
+        style={{ height: "100vh", position: "absolute", top: "25%" }}
+        spinning={loading}
+        indicator={
+          <div className="d-flex justify-content-center align-items-center">
+            <img
+              style={{
+                width: "200px",
+                height: "200px",
+                opacity: "0.5",
+                paddingLeft: "25px",
+              }}
+              src={res_logo}
+              alt="Yuklanmoqda..."
+            />
+            <LoopCircleLoading color="#FECA20" />
+          </div>
+        }
+      >
         <div>
           <img className="logo-img" src={loginBlue} alt="" />
 

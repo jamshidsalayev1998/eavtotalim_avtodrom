@@ -48,55 +48,54 @@ const App = () => {
   const refresh = useSelector(state => state.content_state);
   const [i18, setI18] = useState(localStorage.getItem("I18N_LANGUAGE"));
   const [hasLayout, setHasLayout] = useState(true);
-  const [additional, setAdditional] = useState([]);
+  const [additional, setAdditional] = useState([]);  
   const [computerKey, setComputerKey] = useState(
     localStorage.getItem("computer_key")
   );
 
   console.log(location);
 
-  // axios.interceptors.response.use(
-  //     response => {
-  //         return response;
-  //     },
+//   axios.interceptors.response.use(
+//     response => {
+//       return response;
+//     },
 
-  //     error => {
-  //         if (error?.response?.status === 429) {
-  //             alert("to many request 429");
+//     error => {
+//       if (error?.response?.status === 429) {
+//         alert("to many request 429");
 
-  //             caches.clear();
-  //             window.location.reload();
-  //         } else if (error?.response?.status === 401) {
-  //             message.error(error?.response?.data?.error)
+//         caches.clear();
+//         window.location.reload();
+//       } else if (error?.response?.status === 401) {
+//         message.error(error?.response?.data?.error);        
 
-  //             localStorage.removeItem("token");
-  //             setAuth(false);
-  //             if (localStorage.getItem('computer_key')) {
-  //                 // history.push("/computer-test");
-  //             } else {
-  //                 history.push("/login");
-
-  //             }
-  //         } else if (error?.response?.status === 404) {
-  //             alert("not found 404");
-  //             history.push("/notfound");
-  //         }
-  //         console.log("err mes", error?.response);
-  //         if (error?.response?.status != 401) {
-  //             (async () => {
-  //                 const data = new FormData();
-  //                 data.append("status_code", error?.response?.status);
-  //                 delete error?.response?.data?.trace;
-  //                 Object.assign(error?.response?.data, {
-  //                     api_url: error?.response?.config?.url,
-  //                 });
-  //                 data.append("error", JSON.stringify(error?.response?.data));
-  //                 let params = {};
-  //                 // const res = storeApiBugs(params, data);
-  //             })();
-  //         }
-  //     }
-  // );
+//         localStorage.removeItem("token");
+//         setAuth(false);
+//         if (localStorage.getItem("computer_key")) {
+//           // history.push("/computer-test");
+//         } else {
+//           history.push("/login");
+//         }
+//       } else if (error?.response?.status === 404) {
+//         alert("not found 404");
+//         history.push("/notfound");
+//       }
+//       console.log("err mes", error?.response);
+//       if (error?.response?.status != 401) {
+//         (async () => {
+//           const data = new FormData();
+//           data.append("status_code", error?.response?.status);
+//           delete error?.response?.data?.trace;
+//           Object.assign(error?.response?.data, {
+//             api_url: error?.response?.config?.url,
+//           });
+//           data.append("error", JSON.stringify(error?.response?.data));
+//           let params = {};
+//           // const res = storeApiBugs(params, data);
+//         })();
+//       }
+//     }
+//   );
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -224,7 +223,7 @@ const App = () => {
               hasLayout,
               setHasLayout,
               additional,
-              setAdditional,
+              setAdditional,              
             }}
           >
             <Router>
