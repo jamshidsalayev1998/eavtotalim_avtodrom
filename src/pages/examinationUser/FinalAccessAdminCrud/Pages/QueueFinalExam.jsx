@@ -13,6 +13,7 @@ import { getQueueList } from "../../../../services/api_services/queue_api";
 import QueueNumbersComponent from "./QueueNumbersComponent";
 import ringer from "../../../../assets/music/sound_queue.mp3";
 import { BsCheckCircle, BsClockHistory } from "react-icons/bs";
+import ShowQueueNumber from "./ShowQueueNumber";
 
 const QueueFinalExam = props => {
   const [data, setData] = useState([]);
@@ -44,6 +45,7 @@ const QueueFinalExam = props => {
         audio.play();
         // alert('bitta oshdi')
       }
+      setFreeComputers(accessArray);
       setAccessedData(accessArray);
       setData(response?.data);
     })();
@@ -62,7 +64,8 @@ const QueueFinalExam = props => {
           {/* Queue body */}
           <div className="">
             {!isloading ? (
-              <Row className="queue-wrap">
+              // Waiting side
+              <Row className="queue-wrap  position-relative">
                 <Col
                   xs={24}
                   sm={24}
@@ -98,6 +101,24 @@ const QueueFinalExam = props => {
                   <QueueNumbersComponent data={waitingData} />
                 </Col>
 
+                {/* Show queue numbers*/}
+                <div
+                  style={{
+                    position: "absolute",
+                    top: "50%",
+                    left: "40%",
+                    transform: "translate(0, -50%)",
+                    padding: "10px",
+                    zIndex: "1000",
+                  }}
+                >
+                  <ShowQueueNumber
+                    data={freeComputers}
+                    backgroundColor={"#7cb305"}
+                  />
+                </div>
+
+                {/* Ready side */}
                 <Col
                   xs={24}
                   sm={24}
@@ -117,21 +138,6 @@ const QueueFinalExam = props => {
                     data={accessedData}
                     // bgColor={"bg-success"}
                   />
-                </Col>
-
-                <Col xl={12} className={"border-right"}>
-                  {/*<QueuePageIndexTable tableData={data}/>*/}
-                  {/* <QueueNumbersComponent
-                        data={waitingData}
-                        bgColor={"bg-warning"}
-                      /> */}
-                </Col>
-                <Col xl={12} className={"border-left"}>
-                  {/*<QueuePageIndexTable tableData={data}/>*/}
-                  {/* <QueueNumbersComponent
-                        data={accessedData}
-                        bgColor={"bg-success"}
-                      /> */}
                 </Col>
               </Row>
             ) : (
