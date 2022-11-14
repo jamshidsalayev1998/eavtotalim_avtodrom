@@ -45,7 +45,7 @@ const QueueFinalExam = props => {
         audio.play();
         // alert('bitta oshdi')
       }
-      setFreeComputers(accessArray);
+      setFreeComputers(accessArray.slice(-1));
       setAccessedData(accessArray);
       setData(response?.data);
     })();
