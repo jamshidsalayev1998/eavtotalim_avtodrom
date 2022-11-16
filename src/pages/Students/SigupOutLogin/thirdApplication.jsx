@@ -34,6 +34,8 @@ import axios from "axios";
 import { PATH_PREFIX } from "Utils/AppVariables";
 
 const { Option } = Select;
+const ageCategoryA = moment().diff(moment("01/01/2006", "MM/DD/YYYY"), "years");
+console.log(ageCategoryA);
 
 const thirdApplication = () => {
   const [form] = Form.useForm();
@@ -133,6 +135,8 @@ const thirdApplication = () => {
       student_passport: e?.target?.value?.toUpperCase(),
     });
   };
+
+  
 
   const maskInputNumber = {
     mask: "(99) 9999999",

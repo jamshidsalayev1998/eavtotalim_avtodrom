@@ -9,11 +9,12 @@ import {
   setComputerConfigNoAuth,
 } from "../../../../services/api_services/computer_config/config";
 import { DesktopOutlined } from "@ant-design/icons";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import {
   AiOutlineLeft,
   AiOutlineRight,
   AiOutlineDesktop,
+  AiOutlineEnter,
 } from "react-icons/ai";
 import { BsFillFileEarmarkMedicalFill } from "react-icons/bs";
 import { TbHandClick } from "react-icons/tb";
@@ -27,6 +28,7 @@ const UserComputerConfigPage = () => {
   const [data, setData] = useState();
   const [errorData, setErrorData] = useState();
   const [reload, setReload] = useState(false);
+  const history = useHistory();
   useEffect(() => {
     (async () => {
       getConfig();
@@ -57,7 +59,7 @@ const UserComputerConfigPage = () => {
     (async () => {
       const res = await setComputerConfigNoAuth(key);
       if (parseInt(res?.status) === 1) {
-        message.success("Saqlandi");
+        message.success("Kalit saqlandi");
         localStorage.setItem("computer_key", res?.data?.computer_key);
         setReload(!reload);
       } else {
@@ -167,13 +169,29 @@ const UserComputerConfigPage = () => {
                       </p>
                     </Dragger>
                   </Form.Item>
-                  <Button
-                    htmlType="submit"
-                    type={"primary"}
-                    className={"btn btn-primary w-100"}
-                  >
-                    Kalitni saqlash
-                  </Button>
+                  {localStorage.getItem("computer_key") !== null ? (
+                    <Link
+                      htmlType="submit"
+                      type={"primary"}
+                      className={
+                        "btn btn-primary w-100 d-flex justify-content-center align-items-center"
+                      }
+                      to={"/computer-test"}
+                    >
+                      Testni boshlashga o'tish
+                      {/* <span className="bg-dark p-1 rounded">
+                        Enter <AiOutlineEnter />
+                      </span> */}
+                    </Link>
+                  ) : (
+                    <Button
+                      htmlType="submit"
+                      type={"primary"}
+                      className={"btn btn-primary w-100"}
+                    >
+                      Kalitni saqlash
+                    </Button>
+                  )}
                 </Form>
                 {data ? (
                   <div
@@ -185,7 +203,7 @@ const UserComputerConfigPage = () => {
                       className=""
                       style={{
                         fontSize: "200px",
-                        color: "#bfbfbf",                        
+                        color: "#bfbfbf",
                       }}
                     />
                     <h1

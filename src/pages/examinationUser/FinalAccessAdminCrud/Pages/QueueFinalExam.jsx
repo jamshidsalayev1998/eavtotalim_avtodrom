@@ -23,6 +23,7 @@ const QueueFinalExam = props => {
   const [waitingData, setWaitingData] = useState();
   const [accessedData, setAccessedData] = useState();
   const [freeComputers, setFreeComputers] = useState();
+  const [showQueueNumber, setShowQueueNumber] = useState(true);
 
   useEffect(() => {
     (async () => {
@@ -34,7 +35,7 @@ const QueueFinalExam = props => {
       let accessArray = [];
       response?.data?.map((element, index) => {
         if (index + 1 > response?.freeComputers?.length) {
-          waitArray.push(element);
+          waitArray.push(element);          
         } else {
           accessArray.push(element);
         }
@@ -45,9 +46,9 @@ const QueueFinalExam = props => {
         audio.play();
         // alert('bitta oshdi')
       }
-      setFreeComputers(accessArray.slice(-1));
       setAccessedData(accessArray);
       setData(response?.data);
+      setFreeComputers(accessArray.slice(-1));
     })();
     setTimeout(() => {
       setReload(!reload);
@@ -64,7 +65,6 @@ const QueueFinalExam = props => {
           {/* Queue body */}
           <div className="">
             {!isloading ? (
-              // Waiting side
               <Row className="queue-wrap  position-relative">
                 <Col
                   xs={24}
@@ -98,6 +98,8 @@ const QueueFinalExam = props => {
                     </h1>
                   </div>
 
+                  <div></div>
+
                   <QueueNumbersComponent data={waitingData} />
                 </Col>
 
@@ -112,10 +114,14 @@ const QueueFinalExam = props => {
                     zIndex: "1000",
                   }}
                 >
-                  <ShowQueueNumber
-                    data={freeComputers}
-                    backgroundColor={"#7cb305"}
-                  />
+                  {showQueueNumber ? (
+                    <ShowQueueNumber
+                      data={freeComputers}
+                      backgroundColor={"#7cb305"}
+                    />
+                  ) : (
+                    <></>
+                  )}
                 </div>
 
                 {/* Ready side */}
