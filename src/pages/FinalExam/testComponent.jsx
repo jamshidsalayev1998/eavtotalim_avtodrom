@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useRef } from "react";
 import "./style.scss";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -18,6 +18,7 @@ import qqFlag from "../../assets/images/flags/qq.jpg";
 import ruFlag from "../../assets/images/flags/russia.jpg";
 import { useTranslation } from "react-i18next";
 import { AiOutlineEnter } from "react-icons/ai";
+import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
 
 const TestComponent = ({
   settest_time,
@@ -67,6 +68,7 @@ const TestComponent = ({
 
   const { setI18 } = useContext(MainContext);
   const { t } = useTranslation();
+  let autoFocusDivRef=useRef();
   const [dataBody, setDataBody] = useState([]);
   const [dataAnswers, setdataAnswers] = useState([]);
   const [historys, sethistorys] = useState([]);
@@ -90,6 +92,16 @@ const TestComponent = ({
     answer_description: "",
     answer_video: "",
   });
+
+  useEffect(()=>{
+    if(autoFocusDivRef.current){
+        autoFocusDivRef.current.autofocus=true;
+        console.log(autoFocusDivRef);
+        
+    }
+  },[accessModal])
+
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -195,6 +207,14 @@ const TestComponent = ({
       startTest(9);
     } else if (event.keyCode === 96 && isStarted) {
       startTest(10);
+    } else if (event.keyCode === 107 && isStarted) {
+      if (dataBody["2"]) {
+        setOpen(true);
+      }
+    } else if (event.keyCode === 109 && isStarted) {
+      if (open) {
+        setOpen(false);
+      }
     } else if (event?.keyCode) {
       const key = event?.keyCode - 112;
       if (dataAnswers?.length) {
@@ -266,6 +286,7 @@ const TestComponent = ({
   }, [checkTime]);
   const [isVisibleAnswerDescriptionModal, setIsVisibleAnswerDescriptionModal] =
     useState(false);
+
   const showAnswerDescription = () => {
     if (rightAnswerData?.answer_description) {
       setIsVisibleAnswerDescriptionModal(true);
@@ -281,7 +302,7 @@ const TestComponent = ({
       onKeyDown={handleKeyBtn}
       tabIndex={0}
       style={{ zIndex: 1006 }}
-      autoFocus
+      ref={autoFocusDivRef}
     >
       <div>
         <div
@@ -491,21 +512,33 @@ const TestComponent = ({
             className="col-12 col-md-7 d-flex justify-content-center image_box"
             style={{ objectFit: "cover" }}
           >
-            {Object.keys(dataBody).map((keyName, i) =>
-              dataBody[keyName]?.type == "2" ? (
-                <div>
-                  <img
-                    className="image"
-                    src={
-                      PATH_PREFIX_INTALIM_TEST_FILES + dataBody[keyName]?.value
-                    }
-                    alt=""
-                  />
+            {Object.keys(dataBody).map((keyName, i) => {
+              console.log(dataBody);
+              console.log(dataBody[question_order]);
+              return dataBody[keyName]?.type == "2" ? (
+                <div onClick={() => setOpen(true)}>
+                  <TransformWrapper
+                    defaultScale={1}
+                    defaultPositionX={100}
+                    defaultPositionY={200}
+                  >
+                    <TransformComponent>
+                      <img
+                        className="image"
+                        src={
+                          PATH_PREFIX_INTALIM_TEST_FILES +
+                          dataBody[keyName]?.value
+                        }
+                        alt=""
+                        onClick={() => setOpen(true)}
+                      />
+                    </TransformComponent>
+                  </TransformWrapper>
                 </div>
               ) : (
                 ""
-              )
-            )}
+              );
+            })}
           </div>
         </div>
       </div>
@@ -694,6 +727,43 @@ const TestComponent = ({
         )}
 
         {/*<video src={PATH_PREFIX_FILE + rightAnswerData?.answer_video}></video>*/}
+      </Modal>
+
+      {/* press full screen image button */}
+      <Modal
+        centered
+        open={open}
+        onOk={() => setOpen(false)}
+        onCancel={() => setOpen(false)}
+        width={"70%"}
+        style={{ border: "0", padding: "0", margin: "0" }}
+        className="fullsizeimg"
+        footer={false}
+      >
+        {Object.keys(dataBody).map((keyName, i) =>
+          dataBody[keyName]?.type == "2" ? (
+            <div style={{ objectFit: "cover" }}>
+              <TransformWrapper
+                defaultScale={1}
+                defaultPositionX={100}
+                defaultPositionY={200}
+              >
+                <TransformComponent>
+                  <img
+                    className="image"
+                    style={{ width: "100%" }}
+                    src={
+                      PATH_PREFIX_INTALIM_TEST_FILES + dataBody[keyName]?.value
+                    }
+                    alt=""
+                  />
+                </TransformComponent>
+              </TransformWrapper>
+            </div>
+          ) : (
+            ""
+          )
+        )}
       </Modal>
     </div>
   );

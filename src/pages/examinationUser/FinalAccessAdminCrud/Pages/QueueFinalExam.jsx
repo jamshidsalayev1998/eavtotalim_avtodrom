@@ -35,7 +35,7 @@ const QueueFinalExam = props => {
       let accessArray = [];
       response?.data?.map((element, index) => {
         if (index + 1 > response?.freeComputers?.length) {
-          waitArray.push(element);          
+          waitArray.push(element);
         } else {
           accessArray.push(element);
         }
@@ -47,11 +47,24 @@ const QueueFinalExam = props => {
         // alert('bitta oshdi')
       }
       setAccessedData(accessArray);
+      console.log(freeComputers,accessArray.slice(-1));
+      if (
+        freeComputers.length > 0 &&
+        accessArray.slice(-1)[0].id !== freeComputers[0].id
+      ) {
+        setShowQueueNumber(true);
+      }
       setData(response?.data);
       setFreeComputers(accessArray.slice(-1));
     })();
     setTimeout(() => {
       setReload(!reload);
+    }, 5000);
+  }, [reload]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setShowQueueNumber(false);
     }, 5000);
   }, [reload]);
 

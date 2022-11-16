@@ -12,6 +12,7 @@ import {
   DatePicker,
   Space,
   message,
+  Upload,
 } from "antd";
 import { NavLink, useHistory } from "react-router-dom";
 import { IoMdArrowRoundBack } from "react-icons/io";
@@ -44,6 +45,8 @@ const thirdApplication = () => {
   const [organisations, setOrganisations] = useState([]);
   const [type, setType] = useState([]);
   const [examinationAreas, setExaminationAreas] = useState([]);
+  const [currentAge, setCurrentAge] = useState(16);
+  const [uploadFile, setUploadFile] = useState(false);
   const history = useHistory();
 
   const onFinish = async values => {
@@ -135,8 +138,6 @@ const thirdApplication = () => {
       student_passport: e?.target?.value?.toUpperCase(),
     });
   };
-
-  
 
   const maskInputNumber = {
     mask: "(99) 9999999",
@@ -292,6 +293,17 @@ const thirdApplication = () => {
                       }}
                       placeholder="Toifani tanlang"
                       disabled={!form.getFieldValue("organization_id")}
+                      onChange={e => {
+                        console.log(e);
+                        if (e == 1) {
+                          setCurrentAge(18);
+                          setUploadFile(true);
+                        } else if (e == 2) {
+                          setCurrentAge(16);
+                        } else {
+                          setUploadFile(false);
+                        }
+                      }}
                     >
                       {type?.map((item, i) => (
                         <Option key={i} value={item?.id}>
@@ -440,12 +452,41 @@ const thirdApplication = () => {
                     ]}
                   >
                     <DatePicker
+                      disabled={!form.getFieldValue("edu_type_id")}
+                      disabledDate={current => {
+                        console.log(current.diff(new Date(), "years"));
+                        return -current.diff(new Date(), "years") < currentAge;
+                      }}
+                      defaultPickerValue={moment(
+                        new Date().getTime() - 86400 * 1000 * 365 * currentAge
+                      )}
                       style={{
                         width: "100%",
                       }}
                     />
                   </Form.Item>
                 </Col>
+
+                {uploadFile ? (
+                  <Col xs={24} md={12} lg={8} xl={8} xxl={6}>
+                    <Form.Item
+                      label="File"
+                      name="file"
+                      rules={[
+                        {
+                          required: true,
+                          message: "Please input your birth date!",
+                        },
+                      ]}
+                    >
+                      <Upload>
+                        <Button>Upload</Button>
+                      </Upload>
+                    </Form.Item>
+                  </Col>
+                ) : (
+                  ""
+                )}
               </Row>
 
               {/* save and deny */}
