@@ -24,6 +24,7 @@ import { message, Spin } from "antd";
 import axios from "axios";
 import { PATH_PREFIX } from "../../Utils/AppVariables";
 import { LoopCircleLoading } from "react-loadingg";
+import { RiComputerLine } from "react-icons/ri";
 
 const languagesList = ["uz", "kiril", "qq", "ru", "en"];
 
@@ -132,11 +133,18 @@ const Login = () => {
         <div>
           <img className="logo-img" src={loginBlue} alt="" />
 
-          <div className="language">
+          <div className="language d-flex justify-content-center align-items-center">
             <LanguageDropDown />
-            <NavLink to={"/computer-test"}>
-              <button className={"btn btn-primary px-3"}>TEST</button>
-            </NavLink>
+            {localStorage.getItem("computer_key") !== null ? (
+              <NavLink to={"/computer-test"} className={"btn btn-warning"}>
+                <span className="mr-2">TEST</span>
+                <RiComputerLine />
+              </NavLink>
+            ) : (
+              <NavLink to={"/computer-test"} className={"btn btn-primary"}>
+                <span className="mr-2">TEST</span>
+              </NavLink>
+            )}
           </div>
           <div></div>
 
