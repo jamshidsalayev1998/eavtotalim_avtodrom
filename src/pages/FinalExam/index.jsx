@@ -58,6 +58,7 @@ const FinalExamDashboard = () => {
   }, [isFinishedTime]);
   const history = useHistory();
   const logout = () => {
+    window.location.reload(false);
     const token = localStorage.getItem("token");
     axios({
       url: PATH_PREFIX + "/logout",
@@ -76,6 +77,7 @@ const FinalExamDashboard = () => {
           timer: 1500,
         }).then(() => {
           history.push("/login");
+          window.location.reload(false);
         });
       }
     });
