@@ -59,13 +59,13 @@ const QueueFinalExam = props => {
     })();
     setTimeout(() => {
       setReload(!reload);
-    }, 10000);
+    }, 5000);
   }, [reload]);
 
   useEffect(() => {
     setTimeout(() => {
       setShowQueueNumber(false);
-    }, 5000);
+    }, 10000);
   }, [reload]);
 
   return (
