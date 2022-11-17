@@ -7,7 +7,7 @@ import {
   PATH_PREFIX_FILE,
   PATH_PREFIX_INTALIM_TEST_FILES,
 } from "Utils/AppVariables";
-import { Modal, Button, Divider, Col, Badge } from "antd";
+import { Modal, Button, Divider, Col, Badge, Spin } from "antd";
 import MainContext from "Context/MainContext";
 import i18n from "i18n";
 import CountDownTimer from "../Students/StudentTests/CountDownTimer";
@@ -18,7 +18,8 @@ import qqFlag from "../../assets/images/flags/qq.jpg";
 import ruFlag from "../../assets/images/flags/russia.jpg";
 import { useTranslation } from "react-i18next";
 import { AiOutlineEnter } from "react-icons/ai";
-import { BsZoomIn, BsZoomOut } from "react-icons/bs";
+import { BsZoomIn, BsZoomOut, BsSearch } from "react-icons/bs";
+import { GiMouse } from "react-icons/gi";
 import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
 
 const TestComponent = ({
@@ -93,6 +94,8 @@ const TestComponent = ({
     answer_description: "",
     answer_video: "",
   });
+  const [languageLoader, setLenguageLoader] = useState(false);
+  const [startTestLoader, setStartTestLoader] = useState(false);
 
   useEffect(() => {
     if (autoFocusDivRef.current) {
@@ -137,6 +140,7 @@ const TestComponent = ({
   }, [lang_id]);
 
   const startTest = num => {
+    setStartTestLoader(true);
     const token = localStorage.getItem("token");
     axios({
       url: PATH_PREFIX + "/final-test-user/next-question",
@@ -236,6 +240,7 @@ const TestComponent = ({
         const selectedLang = languages[key];
         changeLanguageAction(selectedLang.value);
         setLang_id(selectedLang.id);
+        setLenguageLoader(true);
       }
     }
     if (accessModal) {
@@ -427,7 +432,7 @@ const TestComponent = ({
             <div className="test_content ">
               <div className="d-flex justify-content-end ">
                 <Button
-                  className={""}
+                  className={"rounded"}
                   style={{ fontSize: "20px", height: "45px" }}
                   type="primary"
                   disabled={
@@ -438,7 +443,7 @@ const TestComponent = ({
                   onClick={() => checkTest(selectedAnswerId)}
                   icon={
                     pressedKey && (
-                      <span className={"functional_key_small"}>
+                      <span className={"functional_key_small"} autoFocus>
                         {functionalKeys[pressedKey - 112]}
                       </span>
                     )
@@ -516,16 +521,19 @@ const TestComponent = ({
               console.log(dataBody);
               console.log(dataBody[question_order]);
               return dataBody[keyName]?.type == "2" ? (
-                <div onClick={() => setOpen(true)}>
+                <div onClick={() => setOpen(true)} autoFocus>
                   <TransformWrapper
                     defaultScale={1}
                     defaultPositionX={100}
                     defaultPositionY={200}
                   >
                     <Badge.Ribbon
+                      style={{ height: "35px" }}
+                      className="d-flex justify-content-center align-items-center"
                       text={
                         <>
-                          <BsZoomIn style={{fontSize: "20px"}} /> <BsZoomOut style={{fontSize: "20px"}} />{" "}
+                          <BsZoomIn style={{ fontSize: "20px" }} />{" "}
+                          <BsZoomOut style={{ fontSize: "20px" }} />{" "}
                         </>
                       }
                       color="black"
@@ -552,6 +560,58 @@ const TestComponent = ({
           </div>
         </div>
       </div>
+      {/* press full screen image button */}
+      <Modal
+        zIndex={10000}
+        centered
+        open={open}
+        onOk={() => setOpen(false)}
+        onCancel={() => setOpen(false)}
+        width={"70%"}
+        style={{ border: "0", padding: "0", margin: "0" }}
+        className="fullsizeimg"
+        footer={false}
+      >
+        {Object.keys(dataBody).map((keyName, i) =>
+          dataBody[keyName]?.type == "2" ? (
+            <div style={{ objectFit: "cover" }}>
+              <TransformWrapper
+                defaultScale={1}
+                defaultPositionX={100}
+                defaultPositionY={200}
+              >
+                <Badge.Ribbon
+                  style={{ height: "35px" }}
+                  className="d-flex justify-content-center align-items-center"
+                  placement="start"
+                  text={
+                    <>
+                      <GiMouse style={{ fontSize: "30px" }} />{" "}
+                      <BsSearch style={{ fontSize: "20px" }} />
+                    </>
+                  }
+                  color="black"
+                >
+                  <TransformComponent>
+                    <img
+                      className="image"
+                      style={{ width: "100%" }}
+                      src={
+                        PATH_PREFIX_INTALIM_TEST_FILES +
+                        dataBody[keyName]?.value
+                      }
+                      alt=""
+                    />
+                  </TransformComponent>
+                </Badge.Ribbon>
+              </TransformWrapper>
+            </div>
+          ) : (
+            ""
+          )
+        )}
+      </Modal>
+
       <Modal
         zIndex={10000}
         width={900}
@@ -561,49 +621,51 @@ const TestComponent = ({
         closable={false}
         centered
       >
-        <div className="row">
-          <Col span={24} className={"text-center"}>
-            <h3>
-              <b>{student ? student?.student_fio : ""}</b>
-            </h3>
-          </Col>
-          <Col span={24}>
-            <Divider orientation="center mb-4">
+        <Spin spinning={languageLoader} tip="Yuklanmoqda...">
+          <div className="row">
+            <Col span={24} className={"text-center"}>
               <h3>
-                <b>Tilni tanlang/Выберите язык</b>
+                <b>{student ? student?.student_fio : ""}</b>
               </h3>
-            </Divider>
-          </Col>
-          {languages?.map((item, index) => (
-            <div key={index} className="col-12 px-5 d-flex">
-              <div
-                className={
-                  "select-test-lang d-flex justify-content-center align-items-center"
-                }
-                style={{ backgroundColor: "#595959", color: "white" }}
-                autoFocus
-              >
-                {item?.functionalKey}
+            </Col>
+            <Col span={24}>
+              <Divider orientation="center mb-4">
+                <h3>
+                  <b>Tilni tanlang / Выберите язык</b>
+                </h3>
+              </Divider>
+            </Col>
+            {languages?.map((item, index) => (
+              <div key={index} className="col-12 px-5 d-flex">
+                <div
+                  className={
+                    "select-test-lang d-flex justify-content-center align-items-center"
+                  }
+                  style={{ backgroundColor: "#595959", color: "white" }}
+                  autoFocus
+                >
+                  {item?.functionalKey}
+                </div>
+                <div
+                  className="select-test-lang d-flex justify-content-center align-items-center"
+                  onClick={() => {
+                    changeLanguageAction(item.value), setLang_id(item.id);
+                  }}
+                  style={{ width: "100%" }}
+                  autoFocus
+                >
+                  <img
+                    style={{ width: "25px" }}
+                    className="mr-1"
+                    src={item.image}
+                    alt=""
+                  />
+                  <h4 className="m-0 p-0">{item.language}</h4>
+                </div>
               </div>
-              <div
-                className="select-test-lang d-flex justify-content-center align-items-center"
-                onClick={() => {
-                  changeLanguageAction(item.value), setLang_id(item.id);
-                }}
-                style={{ width: "100%" }}
-                autoFocus
-              >
-                <img
-                  style={{ width: "25px" }}
-                  className="mr-1"
-                  src={item.image}
-                  alt=""
-                />
-                <h4 className="m-0 p-0">{item.language}</h4>
-              </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        </Spin>
       </Modal>
 
       {/* access modal */}
@@ -616,7 +678,7 @@ const TestComponent = ({
         footer={false}
         closable={false}
       >
-        <div>
+        <Spin spinning={startTestLoader}>
           <Divider orientation="center">
             <h3>
               <b>{t("Test haqida")}</b>
@@ -683,7 +745,7 @@ const TestComponent = ({
               </span>
             </button>
           </div>
-        </div>
+        </Spin>
       </Modal>
 
       {/* time finished modal */}
@@ -737,43 +799,6 @@ const TestComponent = ({
         )}
 
         {/*<video src={PATH_PREFIX_FILE + rightAnswerData?.answer_video}></video>*/}
-      </Modal>
-
-      {/* press full screen image button */}
-      <Modal
-        centered
-        open={open}
-        onOk={() => setOpen(false)}
-        onCancel={() => setOpen(false)}
-        width={"70%"}
-        style={{ border: "0", padding: "0", margin: "0" }}
-        className="fullsizeimg"
-        footer={false}
-      >
-        {Object.keys(dataBody).map((keyName, i) =>
-          dataBody[keyName]?.type == "2" ? (
-            <div style={{ objectFit: "cover" }}>
-              <TransformWrapper
-                defaultScale={1}
-                defaultPositionX={100}
-                defaultPositionY={200}
-              >
-                <TransformComponent>
-                  <img
-                    className="image"
-                    style={{ width: "100%" }}
-                    src={
-                      PATH_PREFIX_INTALIM_TEST_FILES + dataBody[keyName]?.value
-                    }
-                    alt=""
-                  />
-                </TransformComponent>
-              </TransformWrapper>
-            </div>
-          ) : (
-            ""
-          )
-        )}
       </Modal>
     </div>
   );

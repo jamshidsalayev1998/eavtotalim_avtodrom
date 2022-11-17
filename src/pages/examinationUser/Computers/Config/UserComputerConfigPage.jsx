@@ -174,12 +174,14 @@ const UserComputerConfigPage = () => {
                       htmlType="submit"
                       type={"primary"}
                       className={
-                        "btn btn-primary w-100 d-flex justify-content-center align-items-center"
+                        "btn btn-warning w-100 d-flex justify-content-center align-items-center"
                       }
                       to={"/computer-test"}
                     >
                       Test sahifasiga o'tish
-                      <RiComputerLine style={{ marginLeft: "5px" }} />
+                      <RiComputerLine
+                        style={{ marginLeft: "5px", fontSize: "20px" }}
+                      />
                     </Link>
                   ) : (
                     <Button
