@@ -18,7 +18,7 @@ import {
 } from "react-icons/ai";
 import { BsFillFileEarmarkMedicalFill } from "react-icons/bs";
 import { TbHandClick } from "react-icons/tb";
-import { RiComputerFill } from "react-icons/ri";
+import { RiComputerFill, RiComputerLine } from "react-icons/ri";
 
 const { Dragger } = Upload;
 
@@ -178,10 +178,8 @@ const UserComputerConfigPage = () => {
                       }
                       to={"/computer-test"}
                     >
-                      Testni boshlashga o'tish
-                      {/* <span className="bg-dark p-1 rounded">
-                        Enter <AiOutlineEnter />
-                      </span> */}
+                      Test sahifasiga o'tish
+                      <RiComputerLine style={{ marginLeft: "5px" }} />
                     </Link>
                   ) : (
                     <Button

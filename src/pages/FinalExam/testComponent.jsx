@@ -7,7 +7,7 @@ import {
   PATH_PREFIX_FILE,
   PATH_PREFIX_INTALIM_TEST_FILES,
 } from "Utils/AppVariables";
-import { Modal, Button, Divider, Col } from "antd";
+import { Modal, Button, Divider, Col, Badge } from "antd";
 import MainContext from "Context/MainContext";
 import i18n from "i18n";
 import CountDownTimer from "../Students/StudentTests/CountDownTimer";
@@ -18,6 +18,7 @@ import qqFlag from "../../assets/images/flags/qq.jpg";
 import ruFlag from "../../assets/images/flags/russia.jpg";
 import { useTranslation } from "react-i18next";
 import { AiOutlineEnter } from "react-icons/ai";
+import { BsZoomIn, BsZoomOut } from "react-icons/bs";
 import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
 
 const TestComponent = ({
@@ -68,7 +69,7 @@ const TestComponent = ({
 
   const { setI18 } = useContext(MainContext);
   const { t } = useTranslation();
-  let autoFocusDivRef=useRef();
+  let autoFocusDivRef = useRef();
   const [dataBody, setDataBody] = useState([]);
   const [dataAnswers, setdataAnswers] = useState([]);
   const [historys, sethistorys] = useState([]);
@@ -93,13 +94,12 @@ const TestComponent = ({
     answer_video: "",
   });
 
-  useEffect(()=>{
-    if(autoFocusDivRef.current){
-        autoFocusDivRef.current.autofocus=true;
-        console.log(autoFocusDivRef);
-        
+  useEffect(() => {
+    if (autoFocusDivRef.current) {
+      autoFocusDivRef.current.autofocus = true;
+      console.log(autoFocusDivRef);
     }
-  },[accessModal])
+  }, [accessModal]);
 
   const [open, setOpen] = useState(false);
 
@@ -522,18 +522,28 @@ const TestComponent = ({
                     defaultPositionX={100}
                     defaultPositionY={200}
                   >
-                    <TransformComponent>
-                      <img
-                        className="image"
-                        src={
-                          PATH_PREFIX_INTALIM_TEST_FILES +
-                          dataBody[keyName]?.value
-                        }
-                        alt=""
-                        onClick={() => setOpen(true)}
-                      />
-                    </TransformComponent>
+                    <Badge.Ribbon
+                      text={
+                        <>
+                          <BsZoomIn style={{fontSize: "20px"}} /> <BsZoomOut style={{fontSize: "20px"}} />{" "}
+                        </>
+                      }
+                      color="black"
+                    >
+                      <TransformComponent>
+                        <img
+                          className="image"
+                          src={
+                            PATH_PREFIX_INTALIM_TEST_FILES +
+                            dataBody[keyName]?.value
+                          }
+                          alt=""
+                          onClick={() => setOpen(true)}
+                        />
+                      </TransformComponent>
+                    </Badge.Ribbon>
                   </TransformWrapper>
+                  <div></div>
                 </div>
               ) : (
                 ""
