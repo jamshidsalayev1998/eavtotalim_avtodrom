@@ -99,6 +99,10 @@ const Login = () => {
             history.push("/");
           }
         }
+        else if(parseInt(response?.data?.status) === 0){
+            message.error(response?.data?.message);
+             setLoading(false);
+        }
       })
       .catch(error => {
         setLoading(false);
@@ -120,7 +124,7 @@ const Login = () => {
         style={{ height: "100vh", position: "absolute", top: "25%" }}
         spinning={loading}
         indicator={
-          <div className="d-flex justify-content-center align-items-center">            
+          <div className="d-flex justify-content-center align-items-center">
             <LoopCircleLoading color="#FECA20" />
           </div>
         }
