@@ -44,6 +44,9 @@ const LatestTranaction = ({data}) => {
                             ))}
                             </tbody>
                         </table>
+
+                        <h4>Api doc</h4>
+                        <a href="http://95.46.96.49/ti_api_doc.pdf">Api doc yuklab olish</a>
                     </div>
                 </CardBody>
             </Card>

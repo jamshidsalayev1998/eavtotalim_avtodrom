@@ -1,10 +1,15 @@
 import React, {useContext, useEffect, useState} from "react";
 import {withTranslation} from "react-i18next";
-import {Table, Row, Col, Tabs} from "antd";
+import {Table, Row, Col, Tabs, message} from "antd";
 import {getExamProcessStudents} from "../../../../services/api_services/final_test_admin_api";
 import {Card, CardBody, Container,} from "reactstrap";
 import ExamProcessByComputerTab from "./ExamProcessStudentTabs/ExamProcessByComputerTab";
 import ExamProcessByStudentTab from "./ExamProcessStudentTabs/ExamProcessByStudentTab";
+import socketIO from 'socket.io-client';
+
+const socket = socketIO.connect('http://localhost:4000', {
+    rejectUnauthorized: false // WARN: please do not do this in production
+});
 
 const ExamProcessStudents = () => {
     const [data, setData] = useState();
@@ -12,6 +17,21 @@ const ExamProcessStudents = () => {
     const refresh = () => {
         setReload(!reload);
     };
+    const handleSendMessage = () => {
+        socket.emit('message', {
+            text: 'qalay lan',
+            name: 'hihi',
+            id: `${socket.id}${Math.random()}`,
+            socketID: socket.id,
+        });
+
+    };
+    useEffect(() => {
+        handleSendMessage();
+         socket.on('messageResponse', (data) => {
+            message.info(data?.message+' | '+data?.userName)
+        });
+    }, [])
     return (
         <div className="page-content">
             <Container fluid>
@@ -27,7 +47,7 @@ const ExamProcessStudents = () => {
                                 <ExamProcessByComputerTab reload={reload} setReload={setReload}/>
                             </Tabs.TabPane>
                             <Tabs.TabPane tab="O'quvchilar bo'yicha" key="2">
-                                <ExamProcessByStudentTab reload={reload}  />
+                                <ExamProcessByStudentTab reload={reload}/>
                             </Tabs.TabPane>
                         </Tabs>
                     </CardBody>

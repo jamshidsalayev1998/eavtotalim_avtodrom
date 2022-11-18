@@ -100,6 +100,10 @@ const Login = () => {
             history.push("/");
           }
         }
+        else if(parseInt(response?.data?.status) === 0){
+            message.error(response?.data?.message);
+             setLoading(false);
+        }
       })
       .catch(error => {
         setLoading(false);

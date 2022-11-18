@@ -1,10 +1,9 @@
 import PropTypes from 'prop-types'
-import React, {useState, useEffect} from "react"
+import React, {useState, useEffect, useContext} from "react"
 import {
     Container,
     Row,
     Col,
-    Button,
     Card,
     CardBody,
     CardTitle,
@@ -15,32 +14,27 @@ import {
     Media,
     Table,
 } from "reactstrap"
-import {Link} from "react-router-dom"
-
-//import Charts
+import {Button, message, Popconfirm} from "antd"
 import StackedColumnChart from "./StackedColumnChart"
-
-
-// Pages Components
 import WelcomeComp from "./WelcomeComp"
 import MonthlyEarning from "./MonthlyEarning"
-import SocialSource from "./SocialSource"
-import ActivityComp from "./ActivityComp"
-import TopCities from "./TopCities"
 import LatestTranaction from "./LatestTranaction"
-
-//Import Breadcrumb
-import Breadcrumbs from "../../components/Common/Breadcrumb"
-
-//i18n
 import {withTranslation} from "react-i18next"
 import axios from "axios";
 import {PATH_PREFIX} from "../../Utils/AppVariables";
+import {Tooltip} from "antd";
+import {changeExaminationAreaStatus} from "../../services/api_services/examination_director/examination_area_status_api";
+import PoweroffOutlined from "@ant-design/icons/lib/icons/PoweroffOutlined";
+import MainContext from "../../Context/MainContext";
+import {parse} from "echarts/extension-src/dataTool/gexf";
 
 const ExamDashboard = props => {
     const [modal, setmodal] = useState(false)
     const token = localStorage.getItem('token');
-    const [data, setData] = useState()
+    const [data, setData] = useState();
+    const [reload, setReload] = useState(false);
+    const mainContext = useContext(MainContext);
+    console.log('con', mainContext)
 
     useEffect(() => {
         axios({
@@ -50,11 +44,20 @@ const ExamDashboard = props => {
                 token
             }
         }).then(res => {
-            if (res?.data?.status == 1) {
+            if (parseInt(res?.data?.status) === 1) {
                 setData(res?.data?.data);
             }
         })
-    }, [])
+    }, [reload]);
+    const changeStatusWork = () => {
+        (async () => {
+            const response = await changeExaminationAreaStatus();
+            if (response) {
+                message.success(response?.message);
+                setReload(!reload)
+            }
+        })()
+    };
     const reports = [
         {title: "Test topshirganlar", iconClass: "bx-copy-alt", description: data?.count_statuses?.all_count},
         {title: "O'tganlar", iconClass: "bx bx-comment-minus", description: data?.count_statuses?.succesed_count},
@@ -63,12 +66,12 @@ const ExamDashboard = props => {
             iconClass: "bx bx-rotate-left",
             description: data?.count_statuses?.returned_count,
         },
-    ]
+    ];
     const email = [
         {title: "Week", linkto: "#", isActive: false},
         {title: "Month", linkto: "#", isActive: false},
         {title: "Year", linkto: "#", isActive: true},
-    ]
+    ];
 
     return (
         <React.Fragment>
@@ -84,12 +87,12 @@ const ExamDashboard = props => {
                             <Row>
                                 {/* Reports Render */}
                                 {reports.map((report, key) => (
-                                    <Col md="4" key={"_col_" + key}>
+                                    <Col md="3" key={"_col_" + key}>
                                         <Card className="mini-stats-wid">
                                             <CardBody>
                                                 <Media>
                                                     <Media body>
-                                                        <p className="text-muted font-weight-medium">
+                                                        <p classN ame="text-muted font-weight-medium">
                                                             {report.title}
                                                         </p>
                                                         <h4 className="mb-0">{report.description}</h4>
@@ -101,7 +104,7 @@ const ExamDashboard = props => {
                                                           className={
                                                               "bx " + report.iconClass + " font-size-24"
                                                           }
-                                                      ></i>
+                                                      />
                                                     </span>
                                                     </div>
                                                 </Media>
@@ -109,6 +112,41 @@ const ExamDashboard = props => {
                                         </Card>
                                     </Col>
                                 ))}
+                                {
+                                    parseInt(mainContext?.role) === 13 ?
+                                        <Col md="3">
+                                            <Card
+                                                className={`${parseInt(data?.examination_area?.status_work) ? 'bg-success' : 'bg-danger'} mini-stats-wid`}>
+                                                <CardBody>
+                                                    <Media>
+                                                        <Media body>
+                                                            <p className="text-muted font-weight-medium">
+                                                                {parseInt(data?.examination_area?.status_work) ? 'Tizim faol holatda' : 'Tizim faol holat emas'}
+                                                            </p>
+                                                            <h4 className="mb-0"/>
+                                                        </Media>
+                                                        <Tooltip placement={'top'}
+                                                                 title={parseInt(data?.examination_area?.status_work) ? "Tizimni o'chirish" : "Tizimni yoqish"}>
+                                                            <Popconfirm placement={'left'}
+                                                                        onConfirm={changeStatusWork}
+                                                                        okText={parseInt(data?.examination_area?.status_work) ? "O'chirish" : "Yoqish"}
+                                                                        cancelText={'Bekor qilish'}
+                                                                        title={parseInt(data?.examination_area?.status_work) ? "Tizimni o'chirasizmi?" : "Tizimni yoqasizmi?"}>
+                                                                <div
+                                                                    className="mini-stat-icon avatar-sm rounded-circle  align-self-center"
+                                                                    style={{cursor: 'pointer'}}>
+                                                            <span className="avatar-title">
+                                                              <PoweroffOutlined/>
+                                                            </span>
+                                                                </div>
+                                                            </Popconfirm>
+                                                        </Tooltip>
+                                                    </Media>
+                                                </CardBody>
+                                            </Card>
+                                        </Col> : ''
+                                }
+
                             </Row>
 
                             <Card>
@@ -141,10 +179,10 @@ const ExamDashboard = props => {
 
         </React.Fragment>
     )
-}
+};
 
 ExamDashboard.propTypes = {
     t: PropTypes.any
-}
+};
 
 export default withTranslation()(ExamDashboard)

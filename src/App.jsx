@@ -33,6 +33,7 @@ import ComputerSettingsPage from "./pages/examinationUser/Computers/Config/Compu
 import UserComputerConfigPage from "./pages/examinationUser/Computers/Config/UserComputerConfigPage";
 import thirdApplication from "pages/Students/SigupOutLogin/thirdApplication";
 
+
 const languagesList = ["uz", "kiril", "qq", "ru", "en"];
 
 const App = () => {
@@ -48,7 +49,7 @@ const App = () => {
   const refresh = useSelector(state => state.content_state);
   const [i18, setI18] = useState(localStorage.getItem("I18N_LANGUAGE"));
   const [hasLayout, setHasLayout] = useState(true);
-  const [additional, setAdditional] = useState([]);  
+  const [additional, setAdditional] = useState([]);
   const [computerKey, setComputerKey] = useState(
     localStorage.getItem("computer_key")
   );
@@ -67,7 +68,7 @@ const App = () => {
 //         caches.clear();
 //         window.location.reload();
 //       } else if (error?.response?.status === 401) {
-//         message.error(error?.response?.data?.error);        
+//         message.error(error?.response?.data?.error);
 
 //         localStorage.removeItem("token");
 //         setAuth(false);
@@ -223,7 +224,7 @@ const App = () => {
               hasLayout,
               setHasLayout,
               additional,
-              setAdditional,              
+              setAdditional,
             }}
           >
             <Router>
