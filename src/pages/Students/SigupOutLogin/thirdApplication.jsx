@@ -57,7 +57,8 @@ const thirdApplication = () => {
   const [type, setType] = useState([]);
   const [examinationAreas, setExaminationAreas] = useState([]);
   const [currentAge, setCurrentAge] = useState(16);
-  const [uploadFile, setUploadFile] = useState(false);
+  const [medicalForm, setMedicalForm] = useState(false);
+  const [workBookFile, setWorkBookFile] = useState(false);
   const [requiredDocsFirst, setRequiredDocsFirst] = useState(false);
   const [requiredDocsSecond, setRequiredDocsSecond] = useState(false);
   const history = useHistory();
@@ -314,26 +315,37 @@ const thirdApplication = () => {
                         console.log(e);
                         if (e == 1) {
                           setCurrentAge(18);
-                          setUploadFile(true);
+                          setMedicalForm(true);
                           setRequiredDocsFirst(true);
                         } else if (e == 2) {
                           setCurrentAge(16);
+                          setMedicalForm(true);
                           setRequiredDocsFirst(true);
                         } else if (e == 3) {
                           setCurrentAge(18);
+                          setMedicalForm(true);
+
                           setRequiredDocsFirst(true);
                         } else if (e == 4) {
                           setCurrentAge(18);
+                          setMedicalForm(true);
+
                           setRequiredDocsFirst(true);
                         } else if (e == 5) {
                           setCurrentAge(18);
+                          setMedicalForm(true);
+
                           setRequiredDocsFirst(true);
                         } else if (e == 8) {
                           setCurrentAge(18);
+                          setMedicalForm(true);
                           setRequiredDocsFirst(true);
                         } else if (e == 7) {
                           setCurrentAge(18);
+                          setMedicalForm(true);
+                          setWorkBookFile(true);
                           setRequiredDocsSecond(true);
+                          setRequiredDocsFirst(false);
                         } else {
                           setUploadFile(false);
                           setRequiredDocsFirst(false);
@@ -590,10 +602,10 @@ const thirdApplication = () => {
                   </Form.Item>
                 </Col>
 
-                {uploadFile ? (
+                {medicalForm ? (
                   <Col xs={24} md={12} lg={8} xl={8} xxl={6}>
                     <Form.Item
-                      label="File"
+                      label="083 Forma"
                       name="file"
                       rules={[
                         {
@@ -603,7 +615,28 @@ const thirdApplication = () => {
                       ]}
                     >
                       <Upload>
-                        <Button>Upload</Button>
+                        <Button>Yuklash</Button>
+                      </Upload>
+                    </Form.Item>
+                  </Col>
+                ) : (
+                  ""
+                )}
+
+                {workBookFile ? (
+                  <Col xs={24} md={12} lg={8} xl={8} xxl={6}>
+                    <Form.Item
+                      label="Mehnat daftarcha"
+                      name="file"
+                      rules={[
+                        {
+                          required: true,
+                          message: "Please input your birth date!",
+                        },
+                      ]}
+                    >
+                      <Upload>
+                        <Button>Yuklash</Button>
                       </Upload>
                     </Form.Item>
                   </Col>
