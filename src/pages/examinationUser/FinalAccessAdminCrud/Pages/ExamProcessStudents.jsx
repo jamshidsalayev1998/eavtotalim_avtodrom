@@ -1,37 +1,40 @@
 import React, {useContext, useEffect, useState} from "react";
 import {withTranslation} from "react-i18next";
-import {Table, Row, Col, Tabs, message} from "antd";
+import {Table, Row, Col, Tabs, message, notification} from "antd";
 import {getExamProcessStudents} from "../../../../services/api_services/final_test_admin_api";
 import {Card, CardBody, Container,} from "reactstrap";
 import ExamProcessByComputerTab from "./ExamProcessStudentTabs/ExamProcessByComputerTab";
 import ExamProcessByStudentTab from "./ExamProcessStudentTabs/ExamProcessByStudentTab";
-import socketIO from 'socket.io-client';
-
-const socket = socketIO.connect('http://localhost:4000', {
-    rejectUnauthorized: false // WARN: please do not do this in production
-});
+import {socketParam} from "../../../../App";
+import MainContext from "../../../../Context/MainContext";
 
 const ExamProcessStudents = () => {
     const [data, setData] = useState();
     const [reload, setReload] = useState(false);
+    const mainContext = useContext(MainContext);
+    // console.log('uy' , context);
+    const eventName = 'examination_area_event_' + mainContext?.profession?.examination_area_id;
     const refresh = () => {
         setReload(!reload);
     };
-    const handleSendMessage = () => {
-        socket.emit('message', {
-            text: 'qalay lan',
-            name: 'hihi',
-            id: `${socket.id}${Math.random()}`,
-            socketID: socket.id,
+    const openNotification = (description, message) => {
+        notification.success({
+            message: message,
+            description: description,
         });
-
     };
     useEffect(() => {
-        handleSendMessage();
-         socket.on('messageResponse', (data) => {
-            message.info(data?.message+' | '+data?.userName)
-        });
-    }, [])
+        if (parseInt(mainContext?.profession?.examination_area_id)) {
+            socketParam.on(eventName, (data) => {
+                openNotification(data?.message, data?.userName)
+                console.log('keldi', data?.userName)
+            });
+            return () => {
+                socketParam.off('messageResponse');
+            }
+        }
+
+    }, [mainContext?.profession?.examination_area_id]);
     return (
         <div className="page-content">
             <Container fluid>
