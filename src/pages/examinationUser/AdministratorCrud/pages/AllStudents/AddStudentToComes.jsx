@@ -48,8 +48,6 @@ const AddStudentToComes = props => {
   const [eduTypes, setEduTypes] = useState([]);
   const [organizations, setOrganizations] = useState([]);
   const [currentAge, setCurrentAge] = useState(16);
-  const [medicalForm, setMedicalForm] = useState(false);
-  const [workBookFile, setWorkBookFile] = useState(false);
   const [requiredDocsFirst, setRequiredDocsFirst] = useState(false);
   const [requiredDocsSecond, setRequiredDocsSecond] = useState(false);
   const location = useLocation();
@@ -280,38 +278,30 @@ const AddStudentToComes = props => {
                           onChange={e => {
                             if (e == 1) {
                               setCurrentAge(18);
-                              setMedicalForm(true);
                               setRequiredDocsFirst(true);
                               setRequiredDocsSecond(false);
                             } else if (e == 2) {
                               setCurrentAge(16);
-                              setMedicalForm(true);
                               setRequiredDocsFirst(true);
                               setRequiredDocsSecond(false);
                             } else if (e == 3) {
                               setCurrentAge(18);
-                              setMedicalForm(true);
                               setRequiredDocsFirst(true);
                               setRequiredDocsSecond(false);
                             } else if (e == 4) {
                               setCurrentAge(18);
-                              setMedicalForm(true);
                               setRequiredDocsFirst(true);
                               setRequiredDocsSecond(false);
                             } else if (e == 5) {
                               setCurrentAge(18);
-                              setMedicalForm(true);
                               setRequiredDocsFirst(true);
                               setRequiredDocsSecond(false);
                             } else if (e == 8) {
                               setCurrentAge(18);
-                              setMedicalForm(true);
                               setRequiredDocsFirst(true);
                               setRequiredDocsSecond(false);
                             } else if (e == 7) {
                               setCurrentAge(28);
-                              setMedicalForm(true);
-                              setWorkBookFile(true);
                               setRequiredDocsSecond(true);
                               setRequiredDocsFirst(false);
                             } else {
@@ -416,46 +406,6 @@ const AddStudentToComes = props => {
                         />
                       </Form.Item>
                     </Col>
-
-                    {medicalForm ? (
-                      <Col xs={24} md={12} lg={8} xl={8} xxl={6}>
-                        <Form.Item
-                          label={
-                            <div>
-                              083 Forma{" "}
-                              <span className="text-warning">(ixtiyoriy)</span>
-                            </div>
-                          }
-                          name="file"
-                        >
-                          <Upload>
-                            <Button>Yuklash</Button>
-                          </Upload>
-                        </Form.Item>
-                      </Col>
-                    ) : (
-                      ""
-                    )}
-
-                    {workBookFile ? (
-                      <Col xs={24} md={12} lg={8} xl={8} xxl={6}>
-                        <Form.Item
-                          label={
-                            <div>
-                              Mehnat daftarcha{" "}
-                              <span className="text-warning">(ixtiyoriy)</span>
-                            </div>
-                          }
-                          name="file"
-                        >
-                          <Upload>
-                            <Button>Yuklash</Button>
-                          </Upload>
-                        </Form.Item>
-                      </Col>
-                    ) : (
-                      ""
-                    )}
                   </Row>
                 </Form>
                 <Row>

@@ -305,36 +305,38 @@ const thirdApplication = () => {
                       placeholder="Toifani tanlang"
                       disabled={!form.getFieldValue("organization_id")}
                       onChange={e => {
-                        console.log(e);
                         if (e == 1) {
                           setCurrentAge(18);
                           setMedicalForm(true);
                           setRequiredDocsFirst(true);
+                          setRequiredDocsSecond(false);
                         } else if (e == 2) {
                           setCurrentAge(16);
                           setMedicalForm(true);
                           setRequiredDocsFirst(true);
+                          setRequiredDocsSecond(false);
                         } else if (e == 3) {
                           setCurrentAge(18);
                           setMedicalForm(true);
-
                           setRequiredDocsFirst(true);
+                          setRequiredDocsSecond(false);
                         } else if (e == 4) {
                           setCurrentAge(18);
                           setMedicalForm(true);
-
                           setRequiredDocsFirst(true);
+                          setRequiredDocsSecond(false);
                         } else if (e == 5) {
                           setCurrentAge(18);
                           setMedicalForm(true);
-
                           setRequiredDocsFirst(true);
+                          setRequiredDocsSecond(false);
                         } else if (e == 8) {
                           setCurrentAge(18);
                           setMedicalForm(true);
                           setRequiredDocsFirst(true);
+                          setRequiredDocsSecond(false);
                         } else if (e == 7) {
-                          setCurrentAge(18);
+                          setCurrentAge(28);
                           setMedicalForm(true);
                           setWorkBookFile(true);
                           setRequiredDocsSecond(true);
@@ -342,6 +344,7 @@ const thirdApplication = () => {
                         } else {
                           setUploadFile(false);
                           setRequiredDocsFirst(false);
+                          setRequiredDocsSecond(false);
                         }
                       }}
                     >
@@ -605,7 +608,7 @@ const thirdApplication = () => {
                         </div>
                       }
                     >
-                      <Upload>
+                      <Upload accept=".pdf">
                         <Button>Yuklash</Button>
                       </Upload>
                     </Form.Item>
@@ -616,8 +619,16 @@ const thirdApplication = () => {
 
                 {workBookFile ? (
                   <Col xs={24} md={12} lg={8} xl={8} xxl={6}>
-                    <Form.Item label="Mehnat daftarcha" name="file">
-                      <Upload>
+                    <Form.Item
+                      label={
+                        <div>
+                          Mehnat daftarcha{" "}
+                          <span className="text-warning">(ixtiyoriy)</span>
+                        </div>
+                      }
+                      name="file"
+                    >
+                      <Upload accept=".pdf">
                         <Button>Yuklash</Button>
                       </Upload>
                     </Form.Item>
