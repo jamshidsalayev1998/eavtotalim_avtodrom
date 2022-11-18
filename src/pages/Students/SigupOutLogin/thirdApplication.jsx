@@ -42,13 +42,6 @@ const { Option } = Select;
 const { Panel } = Collapse;
 const ageCategoryA = moment().diff(moment("01/01/2006", "MM/DD/YYYY"), "years");
 
-// test data
-const text = `
-  A dog is a type of domesticated animal.
-  Known for its loyalty and faithfulness,
-  it can be found as a welcome guest in many households across the world.
-`;
-
 const thirdApplication = () => {
   const [form] = Form.useForm();
   const [regions, setRegions] = useState([]);
@@ -605,14 +598,12 @@ const thirdApplication = () => {
                 {medicalForm ? (
                   <Col xs={24} md={12} lg={8} xl={8} xxl={6}>
                     <Form.Item
-                      label="083 Forma"
-                      name="file"
-                      rules={[
-                        {
-                          required: true,
-                          message: "Please input your birth date!",
-                        },
-                      ]}
+                      label={
+                        <div>
+                          083 Forma{" "}
+                          <span className="text-warning">(ixtiyoriy)</span>
+                        </div>
+                      }
                     >
                       <Upload>
                         <Button>Yuklash</Button>
@@ -625,16 +616,7 @@ const thirdApplication = () => {
 
                 {workBookFile ? (
                   <Col xs={24} md={12} lg={8} xl={8} xxl={6}>
-                    <Form.Item
-                      label="Mehnat daftarcha"
-                      name="file"
-                      rules={[
-                        {
-                          required: true,
-                          message: "Please input your birth date!",
-                        },
-                      ]}
-                    >
+                    <Form.Item label="Mehnat daftarcha" name="file">
                       <Upload>
                         <Button>Yuklash</Button>
                       </Upload>
