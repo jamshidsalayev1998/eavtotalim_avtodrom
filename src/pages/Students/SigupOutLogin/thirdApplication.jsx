@@ -13,12 +13,15 @@ import {
   Space,
   message,
   Upload,
+  Collapse,
 } from "antd";
 import { NavLink, useHistory } from "react-router-dom";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { FaSave } from "react-icons/fa";
+import { FcInfo } from "react-icons/fc";
 import { GrPowerReset } from "react-icons/gr";
 import InputMask from "react-input-mask";
+import { BsBoxArrowUpRight } from "react-icons/bs";
 import {
   getRegionsOnline,
   getDistrictsOnline,
@@ -33,10 +36,18 @@ import {
 import moment from "moment";
 import axios from "axios";
 import { PATH_PREFIX } from "Utils/AppVariables";
+import "./style.css";
 
 const { Option } = Select;
+const { Panel } = Collapse;
 const ageCategoryA = moment().diff(moment("01/01/2006", "MM/DD/YYYY"), "years");
-console.log(ageCategoryA);
+
+// test data
+const text = `
+  A dog is a type of domesticated animal.
+  Known for its loyalty and faithfulness,
+  it can be found as a welcome guest in many households across the world.
+`;
 
 const thirdApplication = () => {
   const [form] = Form.useForm();
@@ -47,6 +58,8 @@ const thirdApplication = () => {
   const [examinationAreas, setExaminationAreas] = useState([]);
   const [currentAge, setCurrentAge] = useState(16);
   const [uploadFile, setUploadFile] = useState(false);
+  const [requiredDocsFirst, setRequiredDocsFirst] = useState(false);
+  const [requiredDocsSecond, setRequiredDocsSecond] = useState(false);
   const history = useHistory();
 
   const onFinish = async values => {
@@ -149,6 +162,10 @@ const thirdApplication = () => {
     },
 
     permanents: [2, 5], // permanents is an array of indexes of the non-editable characters in the mask
+  };
+
+  const onChange = key => {
+    console.log(key);
   };
 
   return (
@@ -298,10 +315,28 @@ const thirdApplication = () => {
                         if (e == 1) {
                           setCurrentAge(18);
                           setUploadFile(true);
+                          setRequiredDocsFirst(true);
                         } else if (e == 2) {
                           setCurrentAge(16);
+                          setRequiredDocsFirst(true);
+                        } else if (e == 3) {
+                          setCurrentAge(18);
+                          setRequiredDocsFirst(true);
+                        } else if (e == 4) {
+                          setCurrentAge(18);
+                          setRequiredDocsFirst(true);
+                        } else if (e == 5) {
+                          setCurrentAge(18);
+                          setRequiredDocsFirst(true);
+                        } else if (e == 8) {
+                          setCurrentAge(18);
+                          setRequiredDocsFirst(true);
+                        } else if (e == 7) {
+                          setCurrentAge(18);
+                          setRequiredDocsSecond(true);
                         } else {
                           setUploadFile(false);
+                          setRequiredDocsFirst(false);
                         }
                       }}
                     >
@@ -339,6 +374,94 @@ const thirdApplication = () => {
                       ))}
                     </Select>
                   </Form.Item>
+                </Col>
+              </Row>
+
+              {/* Tegishli toifa uchun kerakli hujjatlar */}
+              <Row gutter={16}>
+                <Col span={24}>
+                  {requiredDocsFirst ? (
+                    <Collapse defaultActiveKey={["1"]} onChange={onChange}>
+                      <Panel
+                        header={
+                          <div className="d-flex justify-content-between align-items-center">
+                            <span>
+                              Tegishli toifa uchun taqdim etilishi kerak bo'lgan
+                              hujjatlar to'plami
+                            </span>
+                            <FcInfo style={{ fontSize: "20px" }} />
+                          </div>
+                        }
+                        key="1"
+                      >
+                        <p>1. Ariza (elektron)</p>
+                        <p>
+                          2. Pasport yoki uning o'rnini bosuvchi (shaxsini
+                          tasdiqlovchi) boshqa rasmiy hujjat
+                        </p>
+                        <p>3. 083 tibbiy ma'lumotnoma</p>
+                        <p>4. Yagona namunadagi guvohnoma</p>
+                        <p>5. Milliy haydaovchilik guvohnomasi</p>
+
+                        {/* Link to docs info */}
+                        <Divider className="m-0 p-0" orientation="right">
+                          <a
+                            href="https://lex.uz/docs/-3765833"
+                            style={{ fontSize: "15px" }}
+                          >
+                            <span> Asos </span> <BsBoxArrowUpRight />
+                          </a>
+                        </Divider>
+                      </Panel>
+                    </Collapse>
+                  ) : (
+                    ""
+                  )}
+
+                  {requiredDocsSecond ? (
+                    <Collapse defaultActiveKey={["1"]} onChange={onChange}>
+                      <Panel
+                        header={
+                          <div className="d-flex justify-content-between align-items-center">
+                            <span>
+                              Tegishli toifa uchun taqdim etilishi kerak bo'lgan
+                              hujjatlar to'plami
+                            </span>
+                            <FcInfo style={{ fontSize: "20px" }} />
+                          </div>
+                        }
+                        key="1"
+                      >
+                        <p>1. Ariza (elektron)</p>
+                        <p>
+                          2. Pasport yoki uning o'rnini bosuvchi (shaxsini
+                          tasdiqlovchi) boshqa rasmiy hujjat
+                        </p>
+                        <p>3. 083 tibbiy ma'lumotnoma</p>
+                        <p>
+                          4. Yagona namunadagi guvohnoma yoki uzluksiz
+                          haydovchilik mehnat faoliyati 10 yildan ortiq bo'lgan
+                          "B" va "C" tpifali haydovchilik guvohnomasi bo'lgan
+                          shaxslarning haydovchilik guvohnomasini "BE" va "CE"
+                          toifaga almashtirish haydovchining mehnat
+                          daftarchasidan ko'chirma asosida
+                        </p>
+                        <p>5. Milliy haydaovchilik guvohnomasi</p>
+
+                        {/* Link to docs info */}
+                        <Divider className="m-0 p-0" orientation="right">
+                          <a
+                            href="https://lex.uz/docs/-3765833"
+                            style={{ fontSize: "15px" }}
+                          >
+                            <span> Asos </span> <BsBoxArrowUpRight />
+                          </a>
+                        </Divider>
+                      </Panel>
+                    </Collapse>
+                  ) : (
+                    ""
+                  )}
                 </Col>
               </Row>
 
