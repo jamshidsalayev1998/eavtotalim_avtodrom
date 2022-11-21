@@ -17,21 +17,29 @@ const ExamProcessStudents = () => {
     const refresh = () => {
         setReload(!reload);
     };
-    const openNotification = (description, message) => {
-        notification.success({
-            message: message,
-            description: description,
-        });
+    const openNotification = (description, message, result) => {
+        if (parseInt(result)) {
+            notification.success({
+                message: message,
+                description: description,
+            });
+        }
+        else{
+            notification.error({
+                message: message,
+                description: description,
+            });
+        }
     };
     useEffect(() => {
         if (parseInt(mainContext?.profession?.examination_area_id)) {
-            console.log('eventName' , eventName)
+            console.log('eventName', eventName)
             socketParam.on(eventName, (data) => {
-                openNotification(data?.message, data?.userName)
+                openNotification(data?.message, data?.userName, data?.test_result);
                 console.log('keldi', data?.userName)
             });
             return () => {
-                socketParam.off('messageResponse');
+                socketParam.off(eventName);
             }
         }
 
