@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import {
   PATH_PREFIX,
-  PATH_PREFIX_FILE,
+  PATH_PREFIX_FILE, PATH_PREFIX_FILE_WITHOUT_SLESH,
   PATH_PREFIX_INTALIM_TEST_FILES,
 } from "Utils/AppVariables";
 import { Modal, Button, Divider, Col, Badge, Spin } from "antd";
@@ -542,7 +542,7 @@ const TestComponent = ({
                         <img
                           className="image"
                           src={
-                            PATH_PREFIX_INTALIM_TEST_FILES +
+                            PATH_PREFIX_FILE_WITHOUT_SLESH +
                             dataBody[keyName]?.value
                           }
                           alt=""
@@ -597,7 +597,7 @@ const TestComponent = ({
                       className="image"
                       style={{ width: "100%" }}
                       src={
-                        PATH_PREFIX_INTALIM_TEST_FILES +
+                        PATH_PREFIX_FILE_WITHOUT_SLESH +
                         dataBody[keyName]?.value
                       }
                       alt=""

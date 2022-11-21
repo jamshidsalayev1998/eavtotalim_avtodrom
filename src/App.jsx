@@ -34,7 +34,7 @@ import UserComputerConfigPage from "./pages/examinationUser/Computers/Config/Use
 import thirdApplication from "pages/Students/SigupOutLogin/thirdApplication";
 import socketIO from 'socket.io-client';
 
-export const socketParam = socketIO.connect('http://localhost:4000');
+export const socketParam = socketIO.connect('http://95.46.96.49:4000');
 
 const languagesList = ["uz", "kiril", "qq", "ru", "en"];
 
