@@ -33,8 +33,9 @@ import ComputerSettingsPage from "./pages/examinationUser/Computers/Config/Compu
 import UserComputerConfigPage from "./pages/examinationUser/Computers/Config/UserComputerConfigPage";
 import thirdApplication from "pages/Students/SigupOutLogin/thirdApplication";
 import socketIO from 'socket.io-client';
+import {NODEJS_SOCKET_URL} from "./Utils/AppVariables";
 
-export const socketParam = socketIO.connect('http://95.46.96.49:4000');
+export const socketParam = socketIO.connect(NODEJS_SOCKET_URL);
 
 const languagesList = ["uz", "kiril", "qq", "ru", "en"];
 
