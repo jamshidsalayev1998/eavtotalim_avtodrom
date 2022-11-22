@@ -164,12 +164,18 @@ const ExaminationUserLinks = (props) => {
                             <span>Avtomobilga biriktirilganlar</span>
                         </Link>
                     </li>
-                    <li className="" name="asosiy">
-                        <Link to="/examination-director/computer-config" className="waves-effect">
-                            <i className="fas fa-poll-h"/>
-                            <span>Kompyuter Config</span>
+                     <li className="" name="asosiy">
+                        <Link to="/examination-director/reports-by-organizations" className="waves-effect">
+                            <i className="fas fa-layer-group"/>
+                            <span>Avtomaktablar bo'yicha hisobot</span>
                         </Link>
                     </li>
+                    {/*<li className="" name="asosiy">*/}
+                    {/*    <Link to="/examination-director/computer-config" className="waves-effect">*/}
+                    {/*        <i className="fas fa-poll-h"/>*/}
+                    {/*        <span>Kompyuter Config</span>*/}
+                    {/*    </Link>*/}
+                    {/*</li>*/}
                 </ul>
             </div>
         </React.Fragment>);
@@ -335,11 +341,17 @@ const ExaminationUserLinks = (props) => {
                         </Link>
                     </li>
                     <li className="" name="asosiy">
-                        <Link to="/examination-director/computer-config" className="waves-effect">
-                            <i className="fas fa-poll-h"/>
-                            <span>Kompyuter Config</span>
+                        <Link to="/examination-director/reports-by-organizations" className="waves-effect">
+                            <i className="fas fa-layer-group"/>
+                            <span>Avtomaktablar bo'yicha hisobot</span>
                         </Link>
                     </li>
+                    {/*<li className="" name="asosiy">*/}
+                    {/*    <Link to="/examination-director/computer-config" className="waves-effect">*/}
+                    {/*        <i className="fas fa-poll-h"/>*/}
+                    {/*        <span>Kompyuter Config</span>*/}
+                    {/*    </Link>*/}
+                    {/*</li>*/}
                 </ul>
             </div>
         </React.Fragment>);

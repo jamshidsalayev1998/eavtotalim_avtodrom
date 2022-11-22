@@ -73,6 +73,7 @@ import ShowPracticalExamResultByRecord
     from "../pages/examinationUser/InstructorCrud/pages/ExamEdeds/ShowPracticalExamResultByRecord";
 import InstructorMonitoringPage
     from "../pages/examinationUser/InstructorCrud/pages/MonitoringPages/InstructorMonitoringPage";
+import ReportsIndexByOrganizations from "../pages/Reports/ByOrganization/ReportsIndexByOrganizations";
 // import PracticalTestResult from "../pages/PracticalTestResult/PracticalTestResult";
 
 const userRoutes = [
@@ -272,6 +273,10 @@ const examinationUserRoutes = [
     {
         path: "/examination-instructor/students",
         component: ExaminationInstructorAllStudents,
+    },
+    {
+        path: "/examination-director/reports-by-organizations",
+        component: ReportsIndexByOrganizations,
     },
 ]
 
