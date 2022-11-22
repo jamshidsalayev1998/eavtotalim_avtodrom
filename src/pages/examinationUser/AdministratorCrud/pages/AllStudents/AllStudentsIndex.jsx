@@ -9,6 +9,7 @@ import QRCode from "qrcode";
 import QrCodeToPrint from "./QrCodeToPrint";
 import {NavLink, useHistory, useLocation} from "react-router-dom";
 import "./key_styles.css"
+import {socketParam} from "../../../../../App";
 
 
 const AllStudentsIndex = props => {
@@ -31,6 +32,9 @@ const AllStudentsIndex = props => {
     useEffect(() => {
         const token = localStorage.getItem('token');
         setIsloading(true)
+         socketParam.on('practical_socket_ex_21_car_1' , (data) => {
+            alert('anaa muhammadjon ishladiku')
+        });
         axios({
             url: PATH_PREFIX + '/examination-administrator/all-students',
             method: 'GET',

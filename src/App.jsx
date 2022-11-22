@@ -104,6 +104,7 @@ const App = () => {
 
     useEffect(() => {
         const token = localStorage.getItem("token");
+
         const checkUser = async () => {
             return await API.post("/me", "", {params: {token}})
                 .then(res => {
