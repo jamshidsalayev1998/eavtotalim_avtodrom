@@ -169,29 +169,14 @@ const UserComputerConfigPage = () => {
                       </p>
                     </Dragger>
                   </Form.Item>
-                  {localStorage.getItem("computer_key") !== null ? (
-                    <Link
-                      htmlType="submit"
-                      type={"primary"}
-                      className={
-                        "btn btn-warning w-100 d-flex justify-content-center align-items-center"
-                      }
-                      to={"/computer-test"}
-                    >
-                      Test sahifasiga o'tish
-                      <RiComputerLine
-                        style={{ marginLeft: "5px", fontSize: "20px" }}
-                      />
-                    </Link>
-                  ) : (
-                    <Button
-                      htmlType="submit"
-                      type={"primary"}
-                      className={"btn btn-primary w-100"}
-                    >
-                      Kalitni saqlash
-                    </Button>
-                  )}
+
+                  <Button
+                    htmlType="submit"
+                    type={"primary"}
+                    className={"btn btn-primary w-100"}
+                  >
+                    Kalitni saqlash
+                  </Button>
                 </Form>
                 {data ? (
                   <div
