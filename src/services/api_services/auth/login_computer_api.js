@@ -40,5 +40,23 @@ export const checkByComputerKey = async (computerKey) => {
     }
 };
 
+export const faceRecognition = async (data,params = {}) => {
+    try {
+        const response = await API({
+            url: "/face-recognition",
+            method: "POST",
+            params: params,
+            headers: {
+                'Accept': 'application/json'
+            },
+            data
+        });
+        if (response?.data) {
+            return response?.data;
+        }
+    } catch (error) {
+        return error
+    }
+};
 
 

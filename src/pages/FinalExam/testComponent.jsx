@@ -269,6 +269,7 @@ const TestComponent = ({
         if (res?.data?.test_ended_status) {
           setIsTestEndedModalVisible(true);
           setTestResult(res?.data?.attempt_result);
+          localStorage.removeItem('face_recognition_key');
           setTimeout(() => handleCancelTestEndedModal(), 20000);
         }
         startTest(question_order + 1);
