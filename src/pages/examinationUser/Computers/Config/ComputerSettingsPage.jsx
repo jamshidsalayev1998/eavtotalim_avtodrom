@@ -1,5 +1,6 @@
 import React, {Fragment, useContext, useEffect, useState} from "react";
 import logoImg from "assets/images/logo-blue-big.png";
+import faceShape from "assets/images/face-recognition/face-shape.png";
 import {
     checkByComputerKey, faceRecognition,
     loginByComputerKey,
@@ -201,6 +202,9 @@ const ComputerSettingsPage = () => {
                             {/*take picture*/}
                             <div>
                                 <div className={'p-2'}>
+                                    <div className={'face-shape-box'} style={{position:'absolute',top:'50%' , left:'50%',transform:'translate(-50%,-50%)',width:'200px',height:'250px'}}>
+                                        <img src={faceShape} alt="" style={{width:'100%' , height:'100%'}}/>
+                                    </div>
                                     {picture == '' ? (
                                         <Webcam
                                             style={{borderRadius: '20px'}}
