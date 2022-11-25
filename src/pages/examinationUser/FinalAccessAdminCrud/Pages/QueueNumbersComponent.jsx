@@ -4,7 +4,7 @@ import { Col, Row } from "antd";
 const QueueNumbersComponent = props => {
   const { bgColor, data } = props;
   return (
-    <Row gutter={[20, 20]} className={""}>
+    <Row gutter={[20]} className={""}>
       {data
         ? data?.map((element, index) => {
             return (
@@ -18,7 +18,7 @@ const QueueNumbersComponent = props => {
               >
                 <p
                   className={`${bgColor}` + ""}
-                  style={{ fontSize: "45px", paddingLeft: "25px" }}
+                  style={{ fontSize: "35px", paddingLeft: "25px" }}
                 >
                   {element?.unikal_number}
                 </p>

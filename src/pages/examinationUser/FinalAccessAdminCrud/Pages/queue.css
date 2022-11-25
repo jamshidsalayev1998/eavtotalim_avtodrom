@@ -6,8 +6,12 @@
   background: #ffec3d;
   padding: 10px;
   height: 100vh;
+  overflow-y: auto;
+  overflow-x: auto;
 }
 .ready-wrap {
   background: #a0d911;
   padding: 10px;
+  overflow-y: auto;
+  overflow-x: auto;
 }

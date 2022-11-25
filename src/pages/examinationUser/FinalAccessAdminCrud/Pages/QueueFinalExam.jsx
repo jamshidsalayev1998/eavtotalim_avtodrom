@@ -111,7 +111,6 @@ const QueueFinalExam = props => {
                     </h1>
                   </div>
 
-                  <div></div>
 
                   <QueueNumbersComponent data={waitingData} />
                 </Col>
