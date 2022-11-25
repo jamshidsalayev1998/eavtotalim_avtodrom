@@ -1,0 +1,15 @@
+.scanning::after {
+  content: '';
+  position: absolute;
+    left:23%;
+  width: 400px;
+  height: 8px;
+  background-image: linear-gradient(to bottom,
+    rgba(170, 184, 190, 0),
+    rgba(170, 184, 190, .8));
+  animation: scanning 1.5s linear infinite;
+}
+
+@keyframes scanning {
+    100% { transform: translate(0, 380px); }
+}
