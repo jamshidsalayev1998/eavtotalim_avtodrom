@@ -173,7 +173,7 @@ const TestComponent = ({
         // console.log("pp", checked_test);
         setPressedKey(undefined);
         setRightAnswerData({
-          answer_video: res?.data?.data?.answer_video,
+          answer_video: res?.data?.data?.answer_video ? res?.data?.data?.answer_video : res?.data?.data?.link ? res?.data?.data?.link:'',
           answer_description: res?.data?.data?.answer_description,
         });
       }
@@ -786,18 +786,30 @@ const TestComponent = ({
         onCancel={handleCancelAnswerDescriptionModal}
       >
         <p>{rightAnswerData?.answer_description}</p>
-        {rightAnswerData?.answer_video && (
+        {rightAnswerData?.answer_video ? (
           <video
             width="100%"
             height="auto"
             controls
             autoPlay={true}
-            src={PATH_PREFIX_FILE + rightAnswerData?.answer_video}
-          >
+            src={PATH_PREFIX_FILE + rightAnswerData?.answer_video}>
             {/*<source src={PATH_PREFIX_FILE + rightAnswerData?.answer_video} type="video/mp4"/>*/}
             Your browser does not support the video tag.
           </video>
-        )}
+        ):
+            rightAnswerData?.link ?
+                (
+          <video
+            width="100%"
+            height="auto"
+            controls
+            autoPlay={true}
+            src={PATH_PREFIX_FILE + rightAnswerData?.link}>
+            {/*<source src={PATH_PREFIX_FILE + rightAnswerData?.answer_video} type="video/mp4"/>*/}
+            Your browser does not support the video tag.
+          </video>
+        ):''
+        }
 
         {/*<video src={PATH_PREFIX_FILE + rightAnswerData?.answer_video}></video>*/}
       </Modal>
