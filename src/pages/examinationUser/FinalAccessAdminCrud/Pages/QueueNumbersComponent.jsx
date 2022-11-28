@@ -18,7 +18,7 @@ const QueueNumbersComponent = props => {
               >
                 <p
                   className={`${bgColor}` + ""}
-                  style={{ fontSize: "35px", paddingLeft: "25px" }}
+                  style={{ fontSize: "40px", paddingLeft: "auto" }}
                 >
                   {element?.unikal_number}
                 </p>

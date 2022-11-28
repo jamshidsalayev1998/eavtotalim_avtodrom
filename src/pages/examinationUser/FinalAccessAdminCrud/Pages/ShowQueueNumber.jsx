@@ -13,7 +13,7 @@ const ShowQueueNumber = props => {
                 <p
                   style={{
                     backgroundColor: props?.backgroundColor,
-                    fontSize: "80px",
+                    fontSize: "100px",
                     color: "#fff",
                     padding: "10px",
                     borderRadius: "1px",
