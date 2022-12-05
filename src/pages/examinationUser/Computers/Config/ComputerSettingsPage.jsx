@@ -9,7 +9,15 @@ import {
   loginByComputerKey,
 } from "../../../../services/api_services/auth/login_computer_api";
 import { PATH_PREFIX_FILE } from "../../../../Utils/AppVariables";
-import { Button, Empty, message, Result, notification } from "antd";
+import {
+  Button,
+  Empty,
+  message,
+  Result,
+  notification,
+  Space,
+  Alert,
+} from "antd";
 import MainContext from "../../../../Context/MainContext";
 import { useHistory } from "react-router";
 import { Link, NavLink } from "react-router-dom";
@@ -21,6 +29,7 @@ import {
 import { BsFillFileEarmarkMedicalFill } from "react-icons/bs";
 import Webcam from "react-webcam";
 import "./style.css";
+import { FaArrowLeft } from "react-icons/fa";
 
 const WebcamComponent = () => <Webcam />;
 const videoConstraints = {
@@ -188,11 +197,11 @@ const ComputerSettingsPage = () => {
           width: "100vw",
           minHeight: "100vh",
           position: "relative",
-          backgroundColor: "#fff",
+          background: "#fff",
         }}
-        className="shadow border rounded"
       >
-        <div className={"d-flex justify-content-end "}>
+        {/* company logo */}
+        <div className={"d-flex justify-content-end"}>
           <div className={"w-100 d-flex justify-content-between px-1"}>
             {/* company logo */}
             <div>
@@ -208,149 +217,155 @@ const ComputerSettingsPage = () => {
                 )}
               </span>
             </div>
-
-            {/* computer order */}
-            <div className={"d-flex justify-content-center align-items-center"}>
-              {computerKey && computer ? (
-                <div
-                  className={"d-flex justify-content-center align-items-center"}
-                >
-                  <AiOutlineDesktop
-                    style={{ fontSize: "150px", color: "#bfbfbf" }}
-                  />
-                  <h1
-                    className={`${
-                      computer ? "rounded" : ""
-                    } px-5 position-absolute`}
-                    style={{ color: "#bfbfbf" }}
-                  >
-                    {computer ? computer?.order : ""}
-                  </h1>
-                </div>
-              ) : (
-                <div
-                  className={"d-flex justify-content-center align-items-center"}
-                >
-                  <AiOutlineDesktop
-                    className="text-warning"
-                    style={{ fontSize: "150px" }}
-                  />
-                  <span
-                    className={`${
-                      computer ? "rounded" : ""
-                    } px-5 position-absolute text-secondary`}
-                  >
-                    <strong>Tanlanmagan!!!</strong>
-                  </span>
-                </div>
-              )}
-            </div>
           </div>
         </div>
 
-        <div className={"d-flex justify-content-center align-items-center"}>
-          <div>
-            <div className={picture ? "scanning" : ""}></div>
-            {/* <div className={"text-center"}>
-              <img src={logoImg} style={{ width: "50%" }} alt="" />
-            </div> */}
-            <div className={"text-center"}>
-              {/*take picture*/}
-              <div>
-                <div style={{ position: "relative" }}>
-                  {computerKey && computer && picture == "" ? (
-                    <>
-                      <div
-                        className={"face-shape-box  "}
-                        style={{
-                          position: "absolute",
-                          top: "50%",
-                          left: "50%",
-                          transform: "translate(-50%,-50%)",
-                          width: "200px",
-                          height: "250px",
-                        }}
-                      >
-                        <img
-                          src={faceShape}
-                          alt=""
-                          style={{ width: "100%", height: "100%" }}
-                        />
-                      </div>
-                      <Webcam
-                        style={{ borderRadius: "4px", width: "100%" }}
-                        audio={false}
-                        height={400}
-                        ref={webcamRef}
-                        screenshotFormat="image/jpeg"
-                        videoConstraints={videoConstraints}
+        {/* computer order */}
+        <div className={"d-flex justify-content-end align-items-center"}>
+          {computerKey && computer ? (
+            <div className={"d-flex justify-content-center align-items-center"}>
+              <AiOutlineDesktop
+                className="text-success"
+                style={{ fontSize: "150px", color: "#bfbfbf" }}
+              />
+              <h1
+                className={`${
+                  computer ? "rounded" : ""
+                } px-5 position-absolute text-success`}
+                style={{ color: "#bfbfbf" }}
+              >
+                {computer ? computer?.order : ""}
+              </h1>
+            </div>
+          ) : (
+            <div className={"d-flex justify-content-center align-items-center"}>
+              <AiOutlineDesktop
+                className="text-warning"
+                style={{ fontSize: "150px" }}
+              />
+              <span
+                className={`${
+                  computer ? "rounded" : ""
+                } px-5 position-absolute text-secondary`}
+              >
+                <strong className="text-warning">Tanlanmagan!!!</strong>
+              </span>
+            </div>
+          )}
+        </div>
+
+        {/* face recognition */}
+        <div
+          className={"d-flex justify-content-center align-items-center"}
+          style={{ height: "400px" }}
+        >
+          <div
+            className={picture ? "scanning" : "border"}
+            style={{ width: "400px", height: "400px" }}
+          >
+            {/*take picture*/}
+            <div>
+              <div style={{ position: "relative" }}>
+                {computerKey && computer && picture == "" ? (
+                  <>
+                    <div
+                      className={"face-shape-box  "}
+                      style={{
+                        position: "absolute",
+                        top: "50%",
+                        left: "50%",
+                        transform: "translate(-50%,-50%)",
+                        width: "250px",
+                        height: "250px",
+                      }}
+                    >
+                      <img
+                        src={faceShape}
+                        alt=""
+                        style={{ width: "100%", height: "100%" }}
                       />
-                    </>
-                  ) : (
-                    <img style={{ borderRadius: "20px" }} src={picture} />
-                  )}
-                </div>
+                    </div>
+                    <Webcam
+                      style={{ borderRadius: "4px", width: "100%" }}
+                      audio={false}
+                      height={400}
+                      ref={webcamRef}
+                      screenshotFormat="image/jpeg"
+                      videoConstraints={videoConstraints}
+                    />
+                  </>
+                ) : (
+                  <img style={{ borderRadius: "4px" }} src={picture} />
+                )}
               </div>
             </div>
-            <div className={"text-center mt-2  d-flex justify-content-center"}>
-              {computerKey && computer ? (
-                <button
-                  className={
-                    "py-1 btn d-flex text-white justify-content-center"
-                  }
-                  onClick={
-                    faceRecognitionKey
-                      ? loginByComputer
-                      : takePictureAndRecognition
-                  }
-                  style={{
-                    backgroundColor: "#005ED0",
-                    width: "100%",
-                  }}
-                  autoFocus
-                >
-                  <span style={{ fontSize: "34px" }}>
-                    {faceRecognitionKey ? "Testni boshlash" : "Boshlash"}
-                  </span>{" "}
-                  <span
-                    className={"functional_key ml-3 "}
-                    style={{ width: "auto" }}
-                  >
-                    Enter <AiOutlineEnter />
-                  </span>
-                </button>
-              ) : (
-                <div>
-                  <Result
-                    className="p-0"
-                    status="warning"
-                    title={
-                      <span className="text-danger">
-                        Kompyuterga kalit fayl yuklanmagan !!!
-                      </span>
-                    }
-                    extra={
-                      <Button type="dashed" danger>
-                        <Link to={"/computer-config-settings"}>
-                          Kalitni yuklash{" "}
-                          <BsFillFileEarmarkMedicalFill className="font-size-18 text-warning" />
-                        </Link>
-                      </Button>
-                    }
-                  />
-                </div>
-              )}
-            </div>
+            <p className="d-none">Yuz tekshirilmoqda...</p>
           </div>
+
+          <div
+            className="text-center border"
+            style={{
+              width: "400px",
+              height: "400px",
+            }}
+          >
+            <h4 className="text-warning">Yuzni tanish paneli</h4>
+          </div>
+        </div>
+
+        <div className={"text-center mt-2  d-flex justify-content-center"}>
+          {computerKey && computer ? (
+            <button
+              className={"py-1 btn d-flex text-white justify-content-center"}
+              onClick={
+                faceRecognitionKey ? loginByComputer : takePictureAndRecognition
+              }
+              style={{
+                backgroundColor: "#005ED0",
+                minWidth: "800px",
+              }}
+              autoFocus
+            >
+              <span style={{ fontSize: "34px" }}>
+                {faceRecognitionKey ? "Testni boshlash" : "Tekshirish"}
+              </span>{" "}
+              <span
+                className={"functional_key ml-3 "}
+                style={{ width: "auto" }}
+              >
+                Enter <AiOutlineEnter />
+              </span>
+            </button>
+          ) : (
+            <div>
+              <Result
+                className="p-0"
+                status="warning"
+                title={
+                  <span className="text-danger">
+                    Kompyuterga kalit fayl yuklanmagan !!!
+                  </span>
+                }
+                extra={
+                  <Button type="dashed" danger>
+                    <Link to={"/computer-config-settings"}>
+                      Kalitni yuklash{" "}
+                      <BsFillFileEarmarkMedicalFill className="font-size-18 text-warning" />
+                    </Link>
+                  </Button>
+                }
+              />
+            </div>
+          )}
         </div>
 
         <Link
           className="fixed-bottom m-3 d-flex align-items-center"
-          style={{ fontSize: "20px", width: "120px" }}
+          style={{ fontSize: "18px" }}
           to={"/login"}
         >
-          <AiOutlineLeft />
-          <span className="p-1">Login</span>
+          <FaArrowLeft />
+          <span className="p-1">Qaytish</span>
         </Link>
       </div>
     </div>

@@ -178,14 +178,14 @@ const UserComputerConfigPage = () => {
                     Kalitni saqlash
                   </Button>
                 </Form>
-                {data ? (
+                {localStorage.getItem("computer_key") !== null ? (
                   <div
                     className={
                       "d-flex justify-content-center align-items-center"
                     }
                   >
                     <AiOutlineDesktop
-                      className=""
+                      className="text-success"
                       style={{
                         fontSize: "200px",
                         color: "#bfbfbf",
@@ -195,11 +195,29 @@ const UserComputerConfigPage = () => {
                       className="position-absolute"
                       style={{ color: "#bfbfbf" }}
                     >
-                      <strong>{data?.order}</strong>
+                      <strong className="text-success">{data?.order}</strong>
                     </h1>
                   </div>
                 ) : (
-                  "Kompyuterga kalit fayl yuklanmagan !!!"
+                  <div
+                    className={
+                      "d-flex justify-content-center align-items-center"
+                    }
+                  >
+                    <AiOutlineDesktop
+                      className="text-warning"
+                      style={{
+                        fontSize: "200px",
+                        color: "#bfbfbf",
+                      }}
+                    />
+                    <div
+                      className="position-absolute text-warning"
+                      style={{ color: "#bfbfbf" }}
+                    >
+                      <strong className="text-warning">Tanlanmagan</strong>
+                    </div>
+                  </div>
                 )}
               </Col>
             </CardBody>

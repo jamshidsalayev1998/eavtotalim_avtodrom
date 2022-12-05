@@ -1,15 +1,68 @@
-.scanning::after {
-  content: '';
-  position: absolute;
-    left:23%;
-  width: 350px;
-  height: 8px;
-  background-image: linear-gradient(to bottom,
-    rgba(170, 184, 190, 0),
-    rgba(170, 184, 190, .8));
-  animation: scanning 1.5s linear infinite;
+.scanning {
+  position: relative;
+  border: 1px solid #b7eb8f;
+  border-radius: 4px;
 }
 
-@keyframes scanning {
-    100% { transform: translate(0, 380px); }
+.scanning p {
+  display: block !important;
+  color: #18c89b;
+  width: 180px;
+  position: absolute;
+  bottom: 10px;
+  left: 110px;
+  font-size: 16px;
+  font-weight: 600;
+  animation: blinker 1.5s linear infinite;
+  font-family: sans-serif;
+}
+.scanning p::before {
+  content: "";
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: red;
+  position: relative;
+  right: 4px;
+}
+
+.scanning::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 20px;
+  right: 20px;
+  width: 2px;
+  background: rgba(170, 184, 190, 0.8);
+  box-shadow: 0 0 70px 20px rgba(170, 184, 190, 0.8);
+  clip-path: inset(0);
+  animation: x 0.5s ease-in-out infinite alternate, y 1s ease-in-out infinite;
+  animation-duration: 1.5s;
+  z-index: 10000;
+}
+@keyframes x {
+  to {
+    transform: translateX(-100%);
+    left: 95%;
+  }
+}
+
+@keyframes y {
+  33% {
+    clip-path: inset(0 0 0 -100px);
+  }
+  50% {
+    clip-path: inset(0 0 0 0);
+  }
+  83% {
+    clip-path: inset(0 -100px 0 0);
+  }
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
 }
