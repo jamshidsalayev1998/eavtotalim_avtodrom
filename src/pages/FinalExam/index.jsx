@@ -60,6 +60,9 @@ const FinalExamDashboard = () => {
     const logout = () => {
         window.location.reload(false);
         const token = localStorage.getItem("token");
+        localStorage.removeItem("token");
+        localStorage.removeItem("user_profile_name");
+        localStorage.removeItem('face_recognition_key')
         axios({
             url: PATH_PREFIX + "/logout",
             method: "POST",
@@ -67,9 +70,8 @@ const FinalExamDashboard = () => {
                 token: token,
             },
         }).then(response => {
+
             if (response?.status === 200) {
-                localStorage.removeItem("token");
-                localStorage.removeItem("user_profile_name");
                 Swal.fire({
                     icon: "success",
                     title: `Successfully logged out`,
@@ -77,6 +79,7 @@ const FinalExamDashboard = () => {
                     timer: 1500,
                 }).then(() => {
                     history.push("/login");
+                    localStorage.removeItem('token')
                     window.location.reload(false);
                 });
             }

@@ -18,7 +18,7 @@ const QrCodeToPrint = ({src, selectedStudent}) => {
         mywindow.document.write(`<div style="padding: 0;margin: 0"  >
 <div style="text-align: center; font-size: 40px">
 <b>
- ${selectedStudent?.unikal_number?selectedStudent?.unikal_number:''}
+ ${selectedStudent?.unikal_number ? selectedStudent?.unikal_number : ''}
  </b>
 </div>
 <div style="text-align: center">
@@ -30,7 +30,8 @@ const QrCodeToPrint = ({src, selectedStudent}) => {
  </b>
 </div>
                 <p><b>Pasport:</b> ${selectedStudent?.student_passport}</p>
-                 <p><b>Test topshirish
+                 
+                     <p><b>Test topshirish
                     holati:</b> ${selectedStudent?.type == 'resubmit' ? 'Qayta topshirish' : 'Birinchi marta'}</p>
           
                 </div>
@@ -57,6 +58,7 @@ const QrCodeToPrint = ({src, selectedStudent}) => {
                     vaqti:</b> {selectedStudent?.access_start_date} {selectedStudent?.access_start_time}
                 </p>
                 <p><b>Tel:</b> {selectedStudent?.student_phone}</p>
+                <p><b>Talim turi:</b> {selectedStudent?.edu_type?.short_name_uz}</p>
                 <p><b>Test topshirish
                     holati:</b> {selectedStudent?.type == 'resubmit' ?
                     <Badge color={'warning'}>Qayta topshirish</Badge> : <Badge color={'primary'}>Birinchi marta</Badge>}

@@ -10,6 +10,7 @@ import {useReactToPrint} from 'react-to-print';
 
 const CertificateShow = props => {
     const [data, setData] = useState();
+    const [eduType, setEduType] = useState();
     const [examinationArea, setExaminationArea] = useState();
     const [src, setSrc] = useState();
     const [isLoading, setIsLoading] = useState(false);
@@ -20,6 +21,7 @@ const CertificateShow = props => {
             const response = await getStudentCertificate(match?.params?.id);
             if (response?.data?.status == 1) {
                 setData(response.data?.certificate);
+                setEduType(response.data?.edu_type);
                 setExaminationArea(response?.data?.examinationArea)
                 QRCode.toDataURL(PATH_PREFIX_FILE + 'check-certificate/' + response.data?.certificate?.key).then(res => {
                     setSrc(res)
@@ -46,7 +48,7 @@ const CertificateShow = props => {
                     </Card>
                     <Card>
                         <CardBody>
-                            <Certificate data={data} examinationArea={examinationArea} src={src} ref={componentRef}/>
+                            <Certificate data={data} eduType={eduType} examinationArea={examinationArea} src={src} ref={componentRef}/>
                         </CardBody>
                     </Card>
                 </Container>

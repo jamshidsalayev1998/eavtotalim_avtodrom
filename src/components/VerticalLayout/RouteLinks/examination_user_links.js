@@ -170,6 +170,12 @@ const ExaminationUserLinks = (props) => {
                             <span>Avtomaktablar bo'yicha hisobot</span>
                         </Link>
                     </li>
+                     <li className="" name="asosiy">
+                        <Link to="/examination-administrator/all-online-applications" className="waves-effect">
+                            <i className="fas fa-layer-group"/>
+                            <span>Online arizalar</span>
+                        </Link>
+                    </li>
                     {/*<li className="" name="asosiy">*/}
                     {/*    <Link to="/examination-director/computer-config" className="waves-effect">*/}
                     {/*        <i className="fas fa-poll-h"/>*/}
@@ -344,6 +350,12 @@ const ExaminationUserLinks = (props) => {
                         <Link to="/examination-director/reports-by-organizations" className="waves-effect">
                             <i className="fas fa-layer-group"/>
                             <span>Avtomaktablar bo'yicha hisobot</span>
+                        </Link>
+                    </li>
+                     <li className="" name="asosiy">
+                        <Link to="/examination-administrator/all-online-applications" className="waves-effect">
+                            <i className="fas fa-layer-group"/>
+                            <span>Online arizalar</span>
                         </Link>
                     </li>
                     {/*<li className="" name="asosiy">*/}

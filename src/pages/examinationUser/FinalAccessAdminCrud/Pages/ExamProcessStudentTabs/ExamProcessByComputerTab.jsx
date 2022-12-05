@@ -3,7 +3,7 @@ import {withTranslation} from "react-i18next";
 import {Table, Row, Col, Card, Tooltip, Skeleton, message, Popconfirm, notification} from "antd";
 import {CardBody, Container,} from "reactstrap";
 import {computerTestEndApi, getExamProcessComputers} from "../../../../../services/api_services/final_test_admin_api";
-import {clearComputerApi} from "../../../../../services/api_services/computers_api";
+import {changeComputerApi, clearComputerApi} from "../../../../../services/api_services/computers_api";
 import {socketParam} from "../../../../../App";
 import MainContext from "../../../../../Context/MainContext";
 
@@ -67,6 +67,15 @@ const ExamProcessByComputerTab = (props) => {
             }
         })()
     };
+    const changeRandomComputer = (computer) => {
+        (async () => {
+            const res = await changeComputerApi(computer?.id);
+            if (parseInt(res?.status) === 1) {
+                message.success(res?.message);
+                setReload(!reload)
+            }
+        })()
+    };
     const computerEndTest = (final_access_student_id) => {
         (async () => {
             const res = await computerTestEndApi(final_access_student_id);
@@ -120,6 +129,20 @@ const ExamProcessByComputerTab = (props) => {
                                                   :
                                                   <span style={{fontSize: '25px', color: '#f5222d'}}><i
                                                       class='bx bx-x'/></span>
+                                          }
+                                      </Tooltip>,
+                                       <Tooltip placement={'bottom'} title={'Testni tugatish'}>
+                                          {
+                                              element?.merge ?
+                                                  <Popconfirm title={'Kompyuterni almashtirasizmi ?'} okText={'Ozgartirish'}
+                                                              cancelText={'Bekor qilish'}
+                                                              onConfirm={() => changeRandomComputer(element)}>
+                                              <span style={{fontSize: '25px', color: '#f5222d'}}><i
+                                                  class='bx bx-refresh'/></span>
+                                                  </Popconfirm>
+                                                  :
+                                                  <span style={{fontSize: '25px', color: '#f5222d'}}><i
+                                                      class='bx bx-refresh'/></span>
                                           }
                                       </Tooltip>
                                   ]}

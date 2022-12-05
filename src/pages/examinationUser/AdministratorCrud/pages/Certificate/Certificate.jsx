@@ -5,7 +5,7 @@ import moment from "moment";
 import 'moment/locale/uz-latn'
 import {PATH_PREFIX_FILE} from "../../../../../Utils/AppVariables";
 
-export const Certificate = React.forwardRef(({examinationArea, data, src}, ref) => {
+export const Certificate = React.forwardRef(({examinationArea, data, src,eduType}, ref) => {
     useEffect(() => {
         setPageSize()
     })
@@ -111,7 +111,7 @@ export const Certificate = React.forwardRef(({examinationArea, data, src}, ref) 
                     <Col className={styleModule.xl5}>
                         <Row className={'d-flex justify-content-center  pt-4'}>
                             <div className={styleModule.seriyaRaqam}>
-                                <h5>{data?.final_access_student?.edu_type?.short_name_uz}</h5>
+                                <h5>{eduType?.short_name_uz}</h5>
                             </div>
                         </Row>
                         <Row className={'d-flex justify-content-center  '}>

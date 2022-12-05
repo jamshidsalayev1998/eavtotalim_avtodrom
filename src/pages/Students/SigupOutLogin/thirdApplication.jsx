@@ -14,6 +14,7 @@ import {
   message,
   Upload,
   Collapse,
+    Steps
 } from "antd";
 import { NavLink, useHistory } from "react-router-dom";
 import { IoMdArrowRoundBack } from "react-icons/io";
@@ -55,6 +56,7 @@ const thirdApplication = () => {
   const [requiredDocsFirst, setRequiredDocsFirst] = useState(false);
   const [requiredDocsSecond, setRequiredDocsSecond] = useState(false);
   const history = useHistory();
+  const {Step} = Steps;
 
   const onFinish = async values => {
     try {
@@ -165,7 +167,6 @@ const thirdApplication = () => {
   return (
     <div
       className="site-card-wrapper d-flex justify-content-center align-items-center "
-      style={{ height: "100vh" }}
     >
       <Row gutter={16}>
         <Col span={24} className={""}>
@@ -256,6 +257,7 @@ const thirdApplication = () => {
                     </Select>
                   </Form.Item>
                 </Col>
+
 
                 <Col xs={24} md={12} lg={8} xl={8} xxl={6}>
                   <Form.Item

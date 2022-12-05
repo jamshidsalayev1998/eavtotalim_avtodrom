@@ -87,3 +87,22 @@ export const clearComputerApi = async (elementId) => {
         return error;
     }
 }
+
+export const changeComputerApi = async (elementId) => {
+    try {
+        const token = localStorage.getItem("token");
+        const data = new FormData();
+        data.append('computer_id' , elementId);
+        const response = await axios({
+            url: PATH_PREFIX + "/examination-director/change-random-computer",
+            method: "POST",
+            params: {
+                'token': token
+            },
+            data:data
+        })
+        return response?.data;
+    } catch (error) {
+        return error;
+    }
+}

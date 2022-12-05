@@ -74,6 +74,7 @@ import ShowPracticalExamResultByRecord
 import InstructorMonitoringPage
     from "../pages/examinationUser/InstructorCrud/pages/MonitoringPages/InstructorMonitoringPage";
 import ReportsIndexByOrganizations from "../pages/Reports/ByOrganization/ReportsIndexByOrganizations";
+import OnlineApplicationIndex from "../pages/OnlineApplications/OnlineApplicationIndex";
 // import PracticalTestResult from "../pages/PracticalTestResult/PracticalTestResult";
 
 const userRoutes = [
@@ -278,6 +279,10 @@ const examinationUserRoutes = [
         path: "/examination-director/reports-by-organizations",
         component: ReportsIndexByOrganizations,
     },
+    {
+        path: "/examination-administrator/all-online-applications",
+        component: OnlineApplicationIndex
+    }
 ]
 
 const finalyExamination = [
@@ -356,6 +361,10 @@ const cashierRoutes = [
     {
         path: "/cashier/qr-code-scanner-page-practical",
         component: PracticalPaymentQrCodeScannerPage
+    },
+    {
+        path: "/examination-administrator/all-online-applications",
+        component: OnlineApplicationIndex
     }
 ]
 const finalAccessAdminRoutes = [
@@ -478,6 +487,10 @@ const administratorRoutes = [
         path: "/examination-administrator/certificate/:id",
         component: CertificateShow,
     },
+    {
+        path: "/examination-administrator/all-online-applications",
+        component: OnlineApplicationIndex
+    }
 ]
 
 const instructorRoutes = [

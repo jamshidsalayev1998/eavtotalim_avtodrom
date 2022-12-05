@@ -83,6 +83,12 @@ const CashierLinks = (props) => {
                                 <span>Barcha keluvchilar</span>
                             </Link>
                         </li>
+                         <li className="" name="asosiy">
+                        <Link to="/examination-administrator/all-online-applications" className="waves-effect">
+                            <i className="fas fa-layer-group"/>
+                            <span>Online arizalar</span>
+                        </Link>
+                    </li>
 
                     </ul>
                 </div>
