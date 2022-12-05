@@ -99,10 +99,9 @@ const Login = () => {
           } else {
             history.push("/");
           }
-        }
-        else if(parseInt(response?.data?.status) === 0){
-            message.error(response?.data?.message);
-             setLoading(false);
+        } else if (parseInt(response?.data?.status) === 0) {
+          message.error(response?.data?.message);
+          setLoading(false);
         }
       })
       .catch(error => {
@@ -136,9 +135,9 @@ const Login = () => {
           <div className="language d-flex justify-content-center align-items-center">
             <LanguageDropDown />
             {localStorage.getItem("computer_key") !== null ? (
-              <NavLink to={"/computer-test"} className={"btn btn-warning"}>
+              <NavLink to={"/computer-test"} className={"btn btn-success"}>
                 <span className="mr-2">TEST</span>
-                <RiComputerLine />
+                <RiComputerLine className="font-size-18" />
               </NavLink>
             ) : (
               <NavLink to={"/computer-test"} className={"btn btn-primary"}>
