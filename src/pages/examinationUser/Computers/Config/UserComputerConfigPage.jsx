@@ -97,12 +97,22 @@ const UserComputerConfigPage = () => {
         className={"justify-content-center"}
       >
         <Link
-          className="m-3 d-flex align-items-center justify-content-center border rounded text-white"
-          style={{
-            fontSize: "20px",
-            width: "150px",
-            backgroundColor: "#005ED0",
-          }}
+          className="m-3 d-flex align-items-center justify-content-center border rounded"
+          style={
+            localStorage.getItem("computer_key") !== null
+              ? {
+                  fontSize: "20px",
+                  width: "150px",
+                  backgroundColor: "#005ED0",
+                  color: "#fff",
+                }
+              : {
+                  fontSize: "20px",
+                  width: "150px",
+                  backgroundColor: "#FAFAFA",
+                  color: "#6A6767",
+                }
+          }
           to={"/login"}
         >
           <span className="p-1">
@@ -224,12 +234,22 @@ const UserComputerConfigPage = () => {
           </Card>
         </Row>
         <Link
-          className="m-3 d-flex align-items-center justify-content-center border rounded text-white"
-          style={{
-            fontSize: "20px",
-            width: "150px",
-            backgroundColor: "#005ED0",
-          }}
+          className="m-3 d-flex align-items-center justify-content-center border rounded"
+          style={
+            localStorage.getItem("computer_key") !== null
+              ? {
+                  fontSize: "20px",
+                  width: "150px",
+                  backgroundColor: "#005ED0",
+                  color: "#fff",
+                }
+              : {
+                  fontSize: "20px",
+                  width: "150px",
+                  backgroundColor: "#FAFAFA",
+                  color: "#6A6767",
+                }
+          }
           to={"/computer-test"}
         >
           <span className="p-1">

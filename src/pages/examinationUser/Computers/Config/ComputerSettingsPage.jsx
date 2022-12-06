@@ -29,7 +29,10 @@ import {
 import { BsFillFileEarmarkMedicalFill } from "react-icons/bs";
 import Webcam from "react-webcam";
 import "./style.css";
-import { FaArrowLeft } from "react-icons/fa";
+import { FaArrowLeft, FaEye } from "react-icons/fa";
+import { MdOutlinePortrait } from "react-icons/md";
+import { BiCameraHome, BiErrorCircle, BiGlassesAlt } from "react-icons/bi";
+import { TbHandClick } from "react-icons/tb";
 
 const WebcamComponent = () => <Webcam />;
 const videoConstraints = {
@@ -72,42 +75,72 @@ const ComputerSettingsPage = () => {
           // message.error("Pasrtpo malumotlari noto'g'ri kiritilgan");
           setPicture("");
           notification.open({
-            message: "Xatolik",
-            description: "Pasrtpo malumotlari noto'g'ri kiritilgan",
+            message: (
+              <span className="text-danger d-flex justify-content-start align-items-center">
+                <BiErrorCircle /> <span className="px-1">Xatolik</span>
+              </span>
+            ),
+            description: "Pasport ma'lumotlari noto'g'ri kiritilgan",
           });
         } else if (parseInt(resp?.result_code) === 4) {
           // message.error('Pasport malumotlari bilan mos tushmadi');
           setPicture("");
           notification.open({
-            message: "Xatolik",
-            description: "Pasport malumotlari bilan mos tushmadi",
+            message: (
+              <span className="text-danger d-flex justify-content-start align-items-center">
+                <BiErrorCircle /> <span className="px-1">Xatolik</span>
+              </span>
+            ),
+            description: "Pasport ma'lumotlari bilan mos tushmadi",
           });
         } else if (parseInt(resp?.result_code) === 17) {
           // message.error('Yuzingizni kameraga to`g`ri tuting');
           setPicture("");
           notification.open({
-            message: "Xatolik",
+            message: (
+              <span className="text-danger d-flex justify-content-start align-items-center">
+                <BiErrorCircle /> <span className="px-1">Xatolik</span>
+              </span>
+            ),
             description: "Yuzingizni kameraga to`g`ri tuting",
           });
         } else if (parseInt(resp?.result_code) === 21) {
           // message.error("Yuzingiz kameraga to'liq ko'rinsin");
           setPicture("");
           notification.open({
-            message: "Xatolik",
+            message: (
+              <span className="text-danger d-flex justify-content-start align-items-center">
+                <BiErrorCircle /> <span className="px-1">Xatolik</span>
+              </span>
+            ),
             description: "Yuzingiz kameraga to`iq ko`rinsin",
           });
         } else if (parseInt(resp?.status) === 0) {
           // message.error(resp?.message);
           setPicture("");
           notification.open({
-            message: "Xatolik",
+            message: (
+              <span className="text-danger d-flex justify-content-start align-items-center">
+                <BiErrorCircle />{" "}
+                <spa className="px-1" n>
+                  Xatolik
+                </spa>
+              </span>
+            ),
             description: resp?.message,
           });
         } else {
           // message.error("Mos emas");
           setPicture("");
           notification.open({
-            message: "Xatolik",
+            message: (
+              <span className="text-danger d-flex justify-content-start align-items-center">
+                <BiErrorCircle />{" "}
+                <spa className="px-1" n>
+                  Xatolik
+                </spa>
+              </span>
+            ),
             description: "Mos emas",
           });
         }
@@ -255,63 +288,105 @@ const ComputerSettingsPage = () => {
         </div>
 
         {/* face recognition */}
-        <div
-          className={"d-flex justify-content-center align-items-center"}
-          style={{ height: "400px" }}
-        >
+        {computerKey && computer ? (
           <div
-            className={picture ? "scanning" : "border"}
-            style={{ width: "400px", height: "400px" }}
+            className={"d-flex justify-content-center align-items-center"}
+            style={{ height: "400px" }}
           >
-            {/*take picture*/}
-            <div>
-              <div style={{ position: "relative" }}>
-                {computerKey && computer && picture == "" ? (
-                  <>
-                    <div
-                      className={"face-shape-box  "}
-                      style={{
-                        position: "absolute",
-                        top: "50%",
-                        left: "50%",
-                        transform: "translate(-50%,-50%)",
-                        width: "250px",
-                        height: "250px",
-                      }}
-                    >
-                      <img
-                        src={faceShape}
-                        alt=""
-                        style={{ width: "100%", height: "100%" }}
+            <div
+              className={picture ? "scanning" : "border"}
+              style={{ width: "400px", height: "400px" }}
+            >
+              {/*take picture*/}
+              <div>
+                <div style={{ position: "relative" }}>
+                  {computerKey && computer && picture == "" ? (
+                    <>
+                      <div
+                        className={"face-shape-box  "}
+                        style={{
+                          position: "absolute",
+                          top: "50%",
+                          left: "50%",
+                          transform: "translate(-50%,-50%)",
+                          width: "250px",
+                          height: "250px",
+                        }}
+                      >
+                        <img
+                          src={faceShape}
+                          alt=""
+                          style={{ width: "100%", height: "100%" }}
+                        />
+                      </div>
+                      <Webcam
+                        style={{ borderRadius: "4px", width: "100%" }}
+                        audio={false}
+                        height={400}
+                        ref={webcamRef}
+                        screenshotFormat="image/jpeg"
+                        videoConstraints={videoConstraints}
                       />
-                    </div>
-                    <Webcam
-                      style={{ borderRadius: "4px", width: "100%" }}
-                      audio={false}
-                      height={400}
-                      ref={webcamRef}
-                      screenshotFormat="image/jpeg"
-                      videoConstraints={videoConstraints}
-                    />
-                  </>
-                ) : (
-                  <img style={{ borderRadius: "4px" }} src={picture} />
-                )}
+                    </>
+                  ) : (
+                    <img style={{ borderRadius: "4px" }} src={picture} />
+                  )}
+                </div>
               </div>
+              <p className="d-none">Yuz tekshirilmoqda...</p>
             </div>
-            <p className="d-none">Yuz tekshirilmoqda...</p>
-          </div>
 
-          <div
-            className="text-center border"
-            style={{
-              width: "400px",
-              height: "400px",
-            }}
-          >
-            <h4 className="text-warning">Yuzni tanish paneli</h4>
+            <div
+              className="border p-3 justify-content-between"
+              style={{
+                width: "400px",
+                height: "400px",
+              }}
+            >
+              <div>
+                <h4
+                  style={{
+                    color: "#1F1F1F",
+                    textAlign: "center",
+                  }}
+                >
+                  Yuzni tanish paneli
+                </h4>
+                <p className="d-flex justify-content-between align-items-center">
+                  <span>1. Yuzingizni panel ichidagi shaklda tuting </span>
+                  <MdOutlinePortrait style={{ fontSize: "22px" }} />
+                </p>
+                <p className="d-flex justify-content-between align-items-center">
+                  <span>2. Ko'zaynaklaringiz bo'lsa ularni yechib qo'ying</span>
+                  <BiGlassesAlt style={{ fontSize: "22px" }} />
+                </p>
+                <p className="d-flex justify-content-between align-items-center">
+                  <span>3. Kameraga qarang</span>{" "}
+                  <BiCameraHome style={{ fontSize: "22px" }} />
+                </p>
+                <p className="d-flex justify-content-between align-items-center">
+                  <span>
+                    4. Pastdagi{" "}
+                    <span className="text-white bg-primary p-1 rounded">
+                      Tekshirish
+                    </span>{" "}
+                    tugmasini bosing.
+                  </span>
+                  <TbHandClick style={{ fontSize: "21px" }} />
+                </p>
+              </div>
+
+              <Alert
+                style={{ borderRadius: "8px", marginTop: "30px" }}
+                message="Yuzni tanishda xatolik sodir bo'lsa, kompyuterga biriktirilgan o'quvchi ma'lumotlarini tekshirib qayta urinib ko'ring!!!"
+                type="warning"
+                showIcon
+              />
+            </div>
           </div>
-        </div>
+        ) : (
+          ""
+        )}
 
         <div className={"text-center mt-2  d-flex justify-content-center"}>
           {computerKey && computer ? (
@@ -337,17 +412,28 @@ const ComputerSettingsPage = () => {
               </span>
             </button>
           ) : (
-            <div>
+            <div
+              style={{
+                border: "1px solid #FFE58F",
+                backgroundColor: "#FFFBE6",
+                borderRadius: "8px",
+              }}
+              className="p-3"
+            >
               <Result
                 className="p-0"
                 status="warning"
                 title={
-                  <span className="text-danger">
+                  <span className="text-warning">
                     Kompyuterga kalit fayl yuklanmagan !!!
                   </span>
                 }
                 extra={
-                  <Button type="dashed" danger>
+                  <Button
+                    style={{ width: "100%", borderRadius: "8px" }}
+                    type="dashed"
+                    danger
+                  >
                     <Link to={"/computer-config-settings"}>
                       Kalitni yuklash{" "}
                       <BsFillFileEarmarkMedicalFill className="font-size-18 text-warning" />
