@@ -4,10 +4,24 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import {
   PATH_PREFIX,
-  PATH_PREFIX_FILE, PATH_PREFIX_FILE_WITHOUT_SLESH,
+  PATH_PREFIX_FILE,
+  PATH_PREFIX_FILE_WITHOUT_SLESH,
   PATH_PREFIX_INTALIM_TEST_FILES,
 } from "Utils/AppVariables";
-import { Modal, Button, Divider, Col, Badge, Spin } from "antd";
+import {
+  Modal,
+  Button,
+  Divider,
+  Col,
+  Badge,
+  Spin,
+  Popconfirm,
+  Tooltip,
+  Skeleton,
+  Space,
+  Form,
+  Radio,
+} from "antd";
 import MainContext from "Context/MainContext";
 import i18n from "i18n";
 import CountDownTimer from "../Students/StudentTests/CountDownTimer";
@@ -21,6 +35,10 @@ import { AiOutlineEnter } from "react-icons/ai";
 import { BsZoomIn, BsZoomOut, BsSearch } from "react-icons/bs";
 import { GiMouse } from "react-icons/gi";
 import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
+import Swal from "sweetalert2";
+import { MdLogout } from "react-icons/md";
+import { FaSignOutAlt } from "react-icons/fa";
+import { DotChartOutlined } from "@ant-design/icons";
 
 const TestComponent = ({
   settest_time,
@@ -96,6 +114,9 @@ const TestComponent = ({
   });
   const [languageLoader, setLenguageLoader] = useState(false);
   const [startTestLoader, setStartTestLoader] = useState(false);
+  // Popconfirm
+  const [openConfirm, setOpenConfirm] = useState(false);
+  const [confirmLoading, setConfirmLoading] = useState(false);
 
   useEffect(() => {
     if (autoFocusDivRef.current) {
@@ -173,7 +194,11 @@ const TestComponent = ({
         // console.log("pp", checked_test);
         setPressedKey(undefined);
         setRightAnswerData({
-          answer_video: res?.data?.data?.answer_video ? res?.data?.data?.answer_video : res?.data?.data?.link ? res?.data?.data?.link:'',
+          answer_video: res?.data?.data?.answer_video
+            ? res?.data?.data?.answer_video
+            : res?.data?.data?.link
+            ? res?.data?.data?.link
+            : "",
           answer_description: res?.data?.data?.answer_description,
         });
       }
@@ -269,7 +294,7 @@ const TestComponent = ({
         if (res?.data?.test_ended_status) {
           setIsTestEndedModalVisible(true);
           setTestResult(res?.data?.attempt_result);
-          localStorage.removeItem('face_recognition_key');
+          localStorage.removeItem("face_recognition_key");
           setTimeout(() => handleCancelTestEndedModal(), 20000);
         }
         startTest(question_order + 1);
@@ -302,6 +327,31 @@ const TestComponent = ({
   const handleCancelAnswerDescriptionModal = () => {
     setIsVisibleAnswerDescriptionModal(false);
   };
+
+  // Popconfirm
+  const showPopconfirm = () => {
+    setOpenConfirm(true);
+  };
+  const handleOk = () => {
+    setConfirmLoading(true);
+    logout();
+    Swal.fire({
+      position: "center",
+      icon: "success",
+      title: "Siz tizimdan chiqtingiz!",
+      showConfirmButton: false,
+      timer: 2000,
+    });
+    setTimeout(() => {
+      setOpenConfirm(false);
+      setConfirmLoading(false);
+    }, 2000);
+  };
+  const handleCancel = () => {
+    console.log("Clicked cancel button");
+    setOpenConfirm(false);
+  };
+
   return (
     <div
       className="final_test_div"
@@ -311,115 +361,78 @@ const TestComponent = ({
       ref={autoFocusDivRef}
     >
       <div>
-        <div
-          className="buttons  align-items-center justify-content-center    "
-          style={{
-            position: "fixed",
-            bottom: "0",
-            width: "100%",
-            zIndex: 1005,
-          }}
-        >
-          <div
-            className={
-              "d-flex justify-content-between align-items-center mr-5 "
-            }
-          >
-            <div className={"d-flex"} style={{}}></div>
-            <div className={"d-flex"}>
-              <div className={"d-flex"}>
-                {historys?.map((item, index) => (
-                  <span
-                    onClick={() => startTest(item?.order)}
-                    className={`span_test_number d-flex justify-content-center align-items-center ${
-                      question_order == item?.order && item?.result === 0
-                        ? "danger_active_test"
-                        : question_order == item?.order && item?.result === 1
-                        ? "success_active_test"
-                        : item?.result === 1
-                        ? "success_test"
-                        : item?.result === 0
-                        ? "danger_test"
-                        : question_order == item?.order && item?.result === ""
-                        ? "active_test"
-                        : ""
-                    }`}
-                    autoFocus
-                  >
-                    {item?.order}
-                  </span>
-                ))}
-              </div>
-              <div className="num_test d-flex align-items-center justify-content-between">
-                <div>
-                  <a
-                    onClick={e => startTest(question_order - 1, e)}
-                    style={{ marginRight: "40px", color: "white" }}
-                    src=""
-                    className={`mr-2 ml-5 ${
-                      question_order === 1 ? "isCheck_button" : ""
-                    }`}
-                    autoFocus
-                  >
-                    <i className="fas fa-angle-left" />
-                    {t("Oldingisi")}
-                  </a>
-                  <a
-                    onClick={e => startTest(question_order + 1, e)}
-                    style={{ marginLeft: "40px", color: "white" }}
-                    src=""
-                    className={`${
-                      question_order === 20 ? "isCheck_button" : ""
-                    }`}
-                    autoFocus
-                  >
-                    {t("Keyingisi")}
-                    <i className="fas fa-angle-right" />
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div className={"d-flex align-items-center"}>
-              <div>
-                <CountDownTimer
-                  hoursMinSecs={templateTestTime}
-                  setIsFinishedTime={setIsFinishedTime}
-                  setIsStarted={setIsStarted}
-                  isStarted={isStarted}
-                  // setIsTestEndedModalVisible={setIsTestEndedModalVisible}
-                  isTestEndedModalVisible={isTestEndedModalVisible}
-                  setTestResult={setTestResult}
-                  testResult={testResult}
-                />
-              </div>
-              <div>
-                <i
-                  className="fas fa-sign-out-alt ml-4"
-                  onClick={logout}
-                  style={{ fontSize: "32px", color: "#999", cursor: "pointer" }}
-                  autoFocus
-                ></i>
-              </div>
-            </div>
-          </div>
-        </div>
+        {/* Top header section */}
         <div
           className={
-            "col-12 col-md-12 d-flex justify-content-between pt-2 pb-2"
+            "col-12 d-flex justify-content-between align-items-center p-3"
           }
-          style={{ backgroundColor: "#005ED0" }}
         >
           <div style={{ width: "150px" }}>
             <img src={logoBlue} alt="" style={{ width: "100%" }} />
           </div>
-          <div style={{ fontSize: "23px", color: "white" }}>{userName}</div>
+
+          <div>
+            <CountDownTimer
+              hoursMinSecs={templateTestTime}
+              setIsFinishedTime={setIsFinishedTime}
+              setIsStarted={setIsStarted}
+              isStarted={isStarted}
+              // setIsTestEndedModalVisible={setIsTestEndedModalVisible}
+              isTestEndedModalVisible={isTestEndedModalVisible}
+              setTestResult={setTestResult}
+              testResult={testResult}
+            />
+          </div>
+
+          <div className="d-flex justify-content-between align-items-center">
+            <div className="text-white font-size-18">
+              TOPSHIRUVCHI:{" "}
+              <span style={{ color: "#FFEC3D" }} className="font-size-16">
+                {userName}
+              </span>
+            </div>
+
+            <div style={{ marginLeft: "15px" }}>
+              <Popconfirm
+                placement="bottomRight"
+                title="Testdan chiqasizmi?"
+                open={openConfirm}
+                okText="Ha"
+                cancelText="Yo'q"
+                onConfirm={handleOk}
+                okButtonProps={{
+                  loading: confirmLoading,
+                }}
+                onCancel={handleCancel}
+                style={{ borderRadius: "8px" }}
+              >
+                <Tooltip
+                  placement="bottomRight"
+                  title="Tizimdan chiqish tugmasi"
+                  color={"red"}
+                >
+                  <FaSignOutAlt
+                    style={{
+                      fontSize: "34px",
+                      color: "red",
+                      cursor: "pointer",
+                      border: "0.1px solid #fff",
+                      padding: "0 8px 0 8px",
+                      borderRadius: "8px",
+                      width: "45px",
+                    }}
+                    onClick={showPopconfirm}
+                  />
+                </Tooltip>
+              </Popconfirm>
+            </div>
+          </div>
         </div>
-        <div
-          className="row  "
-          style={{ marginLeft: "15px", marginRight: "15px" }}
-        >
-          <div className={"col-12 col-md-12 text-center"}>
-            <div className="question  w-100  p-2 ">
+
+        {/* Test questions body */}
+        <div className="row  m-3">
+          <div className={"col-12 text-center mt-2"}>
+            <div className="question">
               {Object.keys(dataBody)?.map((keyName, i) =>
                 dataBody[keyName]?.type == "1" ? (
                   <p>{question_order + ". " + dataBody[keyName]?.value}</p>
@@ -429,31 +442,9 @@ const TestComponent = ({
               )}
             </div>
           </div>
+
           <div className="col-12 col-md-5  answers_box">
             <div className="test_content ">
-              <div className="d-flex justify-content-end ">
-                <Button
-                  className={"rounded"}
-                  style={{ fontSize: "20px", height: "45px" }}
-                  type="primary"
-                  disabled={
-                    checked_test?.result === "" && selectedAnswerId
-                      ? false
-                      : true
-                  }
-                  onClick={() => checkTest(selectedAnswerId)}
-                  icon={
-                    pressedKey && (
-                      <span className={"functional_key_small"} autoFocus>
-                        {functionalKeys[pressedKey - 112]}
-                      </span>
-                    )
-                  }
-                  autoFocus
-                >
-                  {t("Javobni tasdiqlash")}
-                </Button>
-              </div>
               <div
                 className={`answers ${
                   checked_test?.status == 1 ? "isCheck" : ""
@@ -461,8 +452,16 @@ const TestComponent = ({
                 autoFocus
               >
                 {dataAnswers?.map((item, i) => (
-                  <div className={"d-flex align-items-center"} autoFocus>
-                    <div className={"functional_key"} autoFocus>
+                  <div className={"d-flex align-items-center my-3"} autoFocus>
+                    <div
+                      style={{
+                        border: "0.1px solid #fff",
+                        borderRight: "0px",
+                        borderRadius: "8px 0px 0px 8px",
+                      }}
+                      className={"functional_key"}
+                      autoFocus
+                    >
                       {functionalKeys[i]}
                     </div>
                     <div
@@ -505,6 +504,7 @@ const TestComponent = ({
                   </div>
                 ))}
               </div>
+              {/* true answers info */}
               <div className={"d-flex justify-content-end"}>
                 {rightAnswerData?.answer_description && (
                   <Button onClick={showAnswerDescription} autoFocus>
@@ -514,6 +514,8 @@ const TestComponent = ({
               </div>
             </div>
           </div>
+
+          {/* test question pictures */}
           <div
             className="col-12 col-md-7 d-flex justify-content-center image_box"
             style={{ objectFit: "cover" }}
@@ -552,12 +554,121 @@ const TestComponent = ({
                       </TransformComponent>
                     </Badge.Ribbon>
                   </TransformWrapper>
-                  <div></div>
                 </div>
               ) : (
-                ""
+                <>
+                  <div className="image">
+                    <Skeleton.Image active={false} />
+                  </div>
+                </>
               );
             })}
+          </div>
+        </div>
+
+        {/* test answers circle buttons */}
+        <div
+          className="buttons d-flex align-items-center justify-content-center"
+          style={{
+            position: "fixed",
+            bottom: "0",
+            width: "100%",
+            zIndex: 1005,
+          }}
+        >
+          <div
+            className={
+              "d-flex justify-content-between align-items-center mr-5 "
+            }
+          >
+            <div className={"d-flex"} style={{}}></div>
+            <div className={"d-flex"}>
+              <div className={"d-flex"}>
+                {historys?.map((item, index) => (
+                  <span
+                    onClick={() => startTest(item?.order)}
+                    className={`span_test_number d-flex justify-content-center align-items-center ${
+                      question_order == item?.order && item?.result === 0
+                        ? "danger_active_test"
+                        : question_order == item?.order && item?.result === 1
+                        ? "success_active_test"
+                        : item?.result === 1
+                        ? "success_test"
+                        : item?.result === 0
+                        ? "danger_test"
+                        : question_order == item?.order && item?.result === ""
+                        ? "active_test"
+                        : ""
+                    }`}
+                    autoFocus
+                  >
+                    {item?.order}
+                  </span>
+                ))}
+              </div>
+              {/* test next before button */}
+              <div className="num_test d-flex align-items-center justify-content-between">
+                <div>
+                  <a
+                    onClick={e => startTest(question_order - 1, e)}
+                    style={{
+                      marginRight: "40px",
+                      color: "white",
+                      fontSize: "20px",
+                    }}
+                    src=""
+                    className={`mr-2 ml-5 ${
+                      question_order === 1 ? "isCheck_button" : ""
+                    }`}
+                    autoFocus
+                  >
+                    <i className="fas fa-angle-left" />
+                    {t("OLDINGI")}
+                  </a>
+                  <a
+                    onClick={e => startTest(question_order + 1, e)}
+                    style={{
+                      marginLeft: "40px",
+                      color: "white",
+                      fontSize: "20px",
+                    }}
+                    src=""
+                    className={`${
+                      question_order === 20 ? "isCheck_button" : ""
+                    }`}
+                    autoFocus
+                  >
+                    {t("KEYINGI")}
+                    <i className="fas fa-angle-right" />
+                  </a>
+
+                  {/* selected test confirmation */}
+                  <a>
+                    <Button
+                      className={"rounded"}
+                      style={{ fontSize: "20px", height: "45px" }}
+                      type="primary"
+                      disabled={
+                        checked_test?.result === "" && selectedAnswerId
+                          ? false
+                          : true
+                      }
+                      onClick={() => checkTest(selectedAnswerId)}
+                      icon={
+                        pressedKey && (
+                          <span className={"functional_key_small"} autoFocus>
+                            {functionalKeys[pressedKey - 112]}
+                          </span>
+                        )
+                      }
+                      autoFocus
+                    >
+                      {t("Javobni tasdiqlash")}
+                    </Button>
+                  </a>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -792,24 +903,25 @@ const TestComponent = ({
             height="auto"
             controls
             autoPlay={true}
-            src={PATH_PREFIX_FILE + rightAnswerData?.answer_video}>
+            src={PATH_PREFIX_FILE + rightAnswerData?.answer_video}
+          >
             {/*<source src={PATH_PREFIX_FILE + rightAnswerData?.answer_video} type="video/mp4"/>*/}
             Your browser does not support the video tag.
           </video>
-        ):
-            rightAnswerData?.link ?
-                (
+        ) : rightAnswerData?.link ? (
           <video
             width="100%"
             height="auto"
             controls
             autoPlay={true}
-            src={PATH_PREFIX_FILE + rightAnswerData?.link}>
+            src={PATH_PREFIX_FILE + rightAnswerData?.link}
+          >
             {/*<source src={PATH_PREFIX_FILE + rightAnswerData?.answer_video} type="video/mp4"/>*/}
             Your browser does not support the video tag.
           </video>
-        ):''
-        }
+        ) : (
+          ""
+        )}
 
         {/*<video src={PATH_PREFIX_FILE + rightAnswerData?.answer_video}></video>*/}
       </Modal>
