@@ -39,6 +39,8 @@ import Swal from "sweetalert2";
 import { MdLogout } from "react-icons/md";
 import { FaSignOutAlt } from "react-icons/fa";
 import { DotChartOutlined } from "@ant-design/icons";
+import { FcApproval } from "react-icons/fc";
+import exit from "../../assets/images/exit.png";
 
 const TestComponent = ({
   settest_time,
@@ -411,15 +413,14 @@ const TestComponent = ({
                   title="Tizimdan chiqish tugmasi"
                   color={"red"}
                 >
-                  <FaSignOutAlt
+                  <img
+                    src={exit}
                     style={{
-                      fontSize: "34px",
-                      color: "red",
                       cursor: "pointer",
                       border: "0.1px solid #fff",
-                      padding: "0 8px 0 8px",
+                      padding: "2px 10px 2px 10px",
                       borderRadius: "8px",
-                      width: "45px",
+                      width: "50px",
                     }}
                     onClick={showPopconfirm}
                   />
@@ -507,9 +508,20 @@ const TestComponent = ({
               {/* true answers info */}
               <div className={"d-flex justify-content-end"}>
                 {rightAnswerData?.answer_description && (
-                  <Button onClick={showAnswerDescription} autoFocus>
-                    {t("To`g`ri javob tasnifi")}
-                  </Button>
+                  <button
+                    className="btn btn-info"
+                    onClick={showAnswerDescription}
+                    autoFocus
+                    style={{
+                      borderRadius: "8px",
+                      fontWeight: "500",
+                      border: "0.1px solid #fff",
+                      fontSize: "20px",
+                    }}
+                  >
+                    <FcApproval className="font-size-20" />{" "}
+                    {t("To'g'ri javob tasnifi")}
+                  </button>
                 )}
               </div>
             </div>
@@ -578,96 +590,117 @@ const TestComponent = ({
         >
           <div
             className={
-              "d-flex justify-content-between align-items-center mr-5 "
+              "d-flex justify-content-between align-items-center "
             }
           >
-            <div className={"d-flex"} style={{}}></div>
             <div className={"d-flex"}>
-              <div className={"d-flex"}>
-                {historys?.map((item, index) => (
-                  <span
-                    onClick={() => startTest(item?.order)}
-                    className={`span_test_number d-flex justify-content-center align-items-center ${
-                      question_order == item?.order && item?.result === 0
-                        ? "danger_active_test"
-                        : question_order == item?.order && item?.result === 1
-                        ? "success_active_test"
-                        : item?.result === 1
-                        ? "success_test"
-                        : item?.result === 0
-                        ? "danger_test"
-                        : question_order == item?.order && item?.result === ""
-                        ? "active_test"
-                        : ""
-                    }`}
-                    autoFocus
-                  >
-                    {item?.order}
-                  </span>
-                ))}
-              </div>
-              {/* test next before button */}
-              <div className="num_test d-flex align-items-center justify-content-between">
-                <div>
-                  <a
-                    onClick={e => startTest(question_order - 1, e)}
-                    style={{
-                      marginRight: "40px",
-                      color: "white",
-                      fontSize: "20px",
-                    }}
-                    src=""
-                    className={`mr-2 ml-5 ${
-                      question_order === 1 ? "isCheck_button" : ""
-                    }`}
-                    autoFocus
-                  >
-                    <i className="fas fa-angle-left" />
-                    {t("OLDINGI")}
-                  </a>
-                  <a
-                    onClick={e => startTest(question_order + 1, e)}
-                    style={{
-                      marginLeft: "40px",
-                      color: "white",
-                      fontSize: "20px",
-                    }}
-                    src=""
-                    className={`${
-                      question_order === 20 ? "isCheck_button" : ""
-                    }`}
-                    autoFocus
-                  >
-                    {t("KEYINGI")}
-                    <i className="fas fa-angle-right" />
-                  </a>
+              {historys?.map((item, index) => (
+                <span
+                  onClick={() => startTest(item?.order)}
+                  className={`span_test_number d-flex justify-content-center align-items-center ${
+                    question_order == item?.order && item?.result === 0
+                      ? "danger_active_test"
+                      : question_order == item?.order && item?.result === 1
+                      ? "success_active_test"
+                      : item?.result === 1
+                      ? "success_test"
+                      : item?.result === 0
+                      ? "danger_test"
+                      : question_order == item?.order && item?.result === ""
+                      ? "active_test"
+                      : ""
+                  }`}
+                  autoFocus
+                >
+                  {item?.order}
+                </span>
+              ))}
+            </div>
+            {/* test next before button */}
+            <div className="num_test d-flex align-items-center justify-content-between">
+              <a
+                onClick={e => startTest(question_order - 1, e)}
+                style={{
+                  marginRight: "40px",
+                  color: "white",
+                  fontSize: "20px",
+                }}
+                src=""
+                className={`mr-2 ml-5 ${
+                  question_order === 1 ? "isCheck_button" : ""
+                }`}
+                autoFocus
+              >
+                <i className="fas fa-angle-left" />
+                {t("OLDINGI")}
+              </a>
+              <a
+                onClick={e => startTest(question_order + 1, e)}
+                style={{
+                  marginLeft: "40px",
+                  color: "white",
+                  fontSize: "20px",
+                }}
+                src=""
+                className={`${question_order === 20 ? "isCheck_button" : ""}`}
+                autoFocus
+              >
+                {t("KEYINGI")}
+                <i className="fas fa-angle-right" />
+              </a>
 
-                  {/* selected test confirmation */}
-                  <a>
-                    <Button
-                      className={"rounded"}
-                      style={{ fontSize: "20px", height: "45px" }}
-                      type="primary"
-                      disabled={
-                        checked_test?.result === "" && selectedAnswerId
-                          ? false
-                          : true
-                      }
-                      onClick={() => checkTest(selectedAnswerId)}
-                      icon={
-                        pressedKey && (
-                          <span className={"functional_key_small"} autoFocus>
-                            {functionalKeys[pressedKey - 112]}
-                          </span>
-                        )
-                      }
-                      autoFocus
-                    >
-                      {t("Javobni tasdiqlash")}
-                    </Button>
-                  </a>
-                </div>
-              </div>
+              {/* selected test confirmation */}
+              <a>
+                <Badge
+                  style={{
+                    backgroundColor: "#ffec3d",
+                    color: "#000",
+                    fontWeight: "600",
+                  }}
+                  count={
+                    pressedKey && (
+                      <span className={"functional_key_small"} autoFocus>
+                        {functionalKeys[pressedKey - 112]}
+                      </span>
+                    )
+                  }
+                >
+                  <Button
+                    className={"btn btn-outline-success"}
+                    style={
+                      checked_test?.result === "" && selectedAnswerId
+                        ? {
+                            fontSize: "20px",
+                            height: "45px",
+                            backgroundColor: "#27AE60",
+                            color: "#fff",
+                          }
+                        : {
+                            fontSize: "20px",
+                            height: "45px",
+                            backgroundColor: "#fff",
+                            color: "#000",
+                          }
+                    }
+                    disabled={
+                      checked_test?.result === "" && selectedAnswerId
+                        ? false
+                        : true
+                    }
+                    onClick={() => checkTest(selectedAnswerId)}
+                    // icon={
+                    //   pressedKey && (
+                    //     <span className={"functional_key_small"} autoFocus>
+                    //       {functionalKeys[pressedKey - 112]}
+                    //     </span>
+                    //   )
+                    // }
+                    autoFocus
+                  >
+                    {t("Javobni tasdiqlash")}
+                  </Button>
+                </Badge>
+              </a>
             </div>
           </div>
         </div>
@@ -748,12 +781,20 @@ const TestComponent = ({
               </Divider>
             </Col>
             {languages?.map((item, index) => (
-              <div key={index} className="col-12 px-5 d-flex">
+              <div
+                key={index}
+                className="col-12 px-5 d-flex justify-content-center align-items-center"
+              >
                 <div
-                  className={
-                    "select-test-lang d-flex justify-content-center align-items-center"
-                  }
-                  style={{ backgroundColor: "#595959", color: "white" }}
+                  className={"d-flex align-items-center my-3 font-size-20"}
+                  style={{
+                    backgroundColor: "#595959",
+                    color: "white",
+                    padding: "10px",
+                    borderTopLeftRadius: "8px",
+                    borderBottomLeftRadius: "8px",
+                    border: "0.1px solid #000",
+                  }}
                   autoFocus
                 >
                   {item?.functionalKey}
@@ -772,7 +813,7 @@ const TestComponent = ({
                     src={item.image}
                     alt=""
                   />
-                  <h4 className="m-0 p-0">{item.language}</h4>
+                  <span className="m-0 p-0 font-size-20">{item.language}</span>
                 </div>
               </div>
             ))}
@@ -891,7 +932,7 @@ const TestComponent = ({
       <Modal
         zIndex={10000}
         width={1000}
-        title={t("To`g`ri javob tasnifi")}
+        title={t("To'g'ri javob tasnifi")}
         visible={isVisibleAnswerDescriptionModal}
         footer={false}
         onCancel={handleCancelAnswerDescriptionModal}
