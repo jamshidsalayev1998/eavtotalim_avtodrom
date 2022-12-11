@@ -282,7 +282,11 @@ const examinationUserRoutes = [
     {
         path: "/examination-administrator/all-online-applications",
         component: OnlineApplicationIndex
-    }
+    },
+    {
+        path: "/final-access-admin/exam-process",
+        component: ExamProcessStudents,
+    },
 ]
 
 const finalyExamination = [

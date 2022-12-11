@@ -164,13 +164,13 @@ const ExaminationUserLinks = (props) => {
                             <span>Avtomobilga biriktirilganlar</span>
                         </Link>
                     </li>
-                     <li className="" name="asosiy">
+                    <li className="" name="asosiy">
                         <Link to="/examination-director/reports-by-organizations" className="waves-effect">
                             <i className="fas fa-layer-group"/>
                             <span>Avtomaktablar bo'yicha hisobot</span>
                         </Link>
                     </li>
-                     <li className="" name="asosiy">
+                    <li className="" name="asosiy">
                         <Link to="/examination-administrator/all-online-applications" className="waves-effect">
                             <i className="fas fa-layer-group"/>
                             <span>Online arizalar</span>
@@ -322,12 +322,12 @@ const ExaminationUserLinks = (props) => {
                             <span>To'lovlar hisoboti </span>
                         </Link>
                     </li>
-                    <li className="" name="asosiy" >
-                            <Link to="/examination-instructor/students" className="waves-effect">
-                                <i className="fas fa-layer-group"></i>
-                                <span>Barcha topshiruvchilar</span>
-                            </Link>
-                        </li>
+                    <li className="" name="asosiy">
+                        <Link to="/examination-instructor/students" className="waves-effect">
+                            <i className="fas fa-layer-group"></i>
+                            <span>Barcha topshiruvchilar</span>
+                        </Link>
+                    </li>
                     <li className="" name="asosiy">
                         <Link to="/examination-instructor/merged-students" className="waves-effect">
                             <i className="fas fa-layer-group"/>
@@ -352,10 +352,19 @@ const ExaminationUserLinks = (props) => {
                             <span>Avtomaktablar bo'yicha hisobot</span>
                         </Link>
                     </li>
-                     <li className="" name="asosiy">
+                    <li className="" name="asosiy">
                         <Link to="/examination-administrator/all-online-applications" className="waves-effect">
                             <i className="fas fa-layer-group"/>
                             <span>Online arizalar</span>
+                        </Link>
+                    </li>
+                    <li className="" name="asosiy">
+                        <Link
+                            to="/final-access-admin/exam-process"
+                            className="waves-effect"
+                        >
+                            <i className="fas fa-poll-h"></i>
+                            <span>Test topshirish jarayonidagilar</span>
                         </Link>
                     </li>
                     {/*<li className="" name="asosiy">*/}
