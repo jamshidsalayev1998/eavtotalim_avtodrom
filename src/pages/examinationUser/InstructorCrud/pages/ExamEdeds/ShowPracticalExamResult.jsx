@@ -5,17 +5,18 @@ import { PATH_PREFIX_FILE } from "../../../../../Utils/AppVariables";
 import { getStudentPracticalExamResult } from "../../../../../services/api_services/student_practical_exam_result";
 import "./showPracticalExamResultStyle.css";
 import { Card, CardBody, Container, Badge } from "reactstrap";
-import { Button, Col, Row } from "antd";
-import { HiOutlineDocumentText } from "react-icons/hi";
+import { Col, Row } from "antd";
 
 const ShowPracticalExamResults = props => {
-  console.log("props", props);
   const match = useRouteMatch(
     "/examination-instructor/exam-ended-students/:id"
   );
   const [data, setData] = useState([]);
   const [resultData, setResultData] = useState();
   const [reloader, setReloader] = useState(true);
+  const [modal, setModal] = useState(false);
+
+  const toggle = () => setModal(!modal);
   useEffect(() => {
     (async () => {
       let filters = [
@@ -50,7 +51,6 @@ const ShowPracticalExamResults = props => {
     })();
   };
 
-  console.log("resData", resultData?.practical_result[15]);
   const history = useHistory();
   const getResult = elementId => {
     let fdata = resultData?.practical_result?.filter(data => {
@@ -83,18 +83,6 @@ const ShowPracticalExamResults = props => {
       <Container fluid>
         <Card>
           <CardBody>
-            <div className="top-organizations d-flex justify-content-between">
-              <b className="text-dark text-bold">{resultData?.student_fio}</b>
-              <div className={"d-flex"}>
-                <Button
-                  type="primary"
-                  className="d-flex justify-content-center align-items-center"
-                >
-                  <HiOutlineDocumentText className="mr-2 font-size-18" />
-                  Bayonnoma shakillantirish
-                </Button>
-              </div>
-            </div>
             <div className="crypto-buy-sell-nav mt-3">
               <Row className={"justify-content-between border p-3 "}>
                 <Col xl={8} md={12} sm={24} className={"text-center"}>
