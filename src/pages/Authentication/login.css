@@ -2,7 +2,7 @@ html,
 body {
   padding: 0;
   margin: 0;
-  overflow: hidden;
+  overflow: auto;
   width: 100%;
   height: 100%;
   background-image: url("./../../assets/images/loginPage/Banner_full.png");

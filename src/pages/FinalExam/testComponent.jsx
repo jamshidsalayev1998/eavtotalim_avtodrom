@@ -460,7 +460,7 @@ const TestComponent = ({
                 }`}
                 autoFocus
               >
-                {dataAnswers?.map((item, i) => (
+                {dataAnswers?.sort((a, b) => a.id > b.id ? 1 : -1).map((item, i) => (
                   <div className={"d-flex align-items-center"} autoFocus>
                     <div className={"functional_key"} autoFocus>
                       {functionalKeys[i]}
