@@ -3,7 +3,11 @@ import {withTranslation} from "react-i18next";
 import {Table, Row, Col, Card, Tooltip, Skeleton, message, Popconfirm, notification} from "antd";
 import {CardBody, Container,} from "reactstrap";
 import {computerTestEndApi, getExamProcessComputers} from "../../../../../services/api_services/final_test_admin_api";
-import {changeComputerApi, clearComputerApi} from "../../../../../services/api_services/computers_api";
+import {
+    changeComputerApi,
+    clearComputerApi,
+    pauseComputerApi
+} from "../../../../../services/api_services/computers_api";
 import {socketParam} from "../../../../../App";
 import MainContext from "../../../../../Context/MainContext";
 
@@ -45,7 +49,7 @@ const ExamProcessByComputerTab = (props) => {
                 console.log('bundan oldin', data);
                 const newState = data.map((obj, index) => {
                     if (parseInt(obj.id) === parseInt(dataSocket?.computer_id)) {
-                        return  {...obj, merge: null};
+                        return {...obj, merge: null};
                     }
                     return obj;
                 });
@@ -57,7 +61,7 @@ const ExamProcessByComputerTab = (props) => {
                 socketParam.off(eventName);
             }
         }
-    }, [mainContext?.profession?.examination_area_id,data]);
+    }, [mainContext?.profession?.examination_area_id, data]);
     const clearComputer = (computer) => {
         (async () => {
             const res = await clearComputerApi(computer?.id);
@@ -88,89 +92,124 @@ const ExamProcessByComputerTab = (props) => {
             }
         })()
     }
-    return (
-        <Row className={''} gutter={[12, 12]}>
-            {
-                data ? data?.map((element, index) => {
-                    return (
-                        <Col xl={6}>
-                            <Card hoverable={true}
-                                  title={
-                                      <div className={'d-flex justify-content-between'}>
-                                          <span>{element?.merge ? 'Band' : 'Bo`sh'}</span> <b>{element?.order}</b></div>
-                                  }
-                                  className={'p-2 border text-center'}
-                                  bordered={false}
-                                  style={{height: '100%'}}
-                                  actions={[
-                                      <Tooltip placement={'bottom'} title={'Bo`shatish'}>
-                                          {
-                                              element?.merge ?
-                                                  <Popconfirm title={'Kompyuterni bo`shatasizmi ?'}
-                                                              okText={'Bo`shatish'} cancelText={'Bekor qilish'}
-                                                              onConfirm={() => clearComputer(element)}>
+    const columns = [
+        {
+            title: 'Tartib raqam',
+            render: (index, row) => <>{row?.order}</>
+        },
+        {
+            title: 'F.I.O',
+            render: (index, row) => <>{row?.merge?.final_access_student?.student_fio}</>
+        },
+        {
+            title: 'Passport',
+            render: (index, row) => <>{row?.merge?.final_access_student?.student_passport}</>
+        },
+        {
+            title: 'Amallar',
+            children: [
+                {
+                    title: "Bo'shatish",
+                    className:'text-center',
+                    render: (index, element) =>
+                        <Tooltip placement={'bottom'} title={'Bo`shatish'}>
+                            {
+                                element?.merge ?
+                                    <Popconfirm title={'Kompyuterni bo`shatasizmi ?'}
+                                                okText={'Bo`shatish'} cancelText={'Bekor qilish'}
+                                                onConfirm={() => clearComputer(element)}>
                                                   <span style={{fontSize: '25px', color: '#52c41a'}}><i
                                                       className={'bx bxs-brush-alt'}/></span></Popconfirm> :
-                                                  <span style={{fontSize: '25px', color: '#faad14'}}><i
-                                                      className={'bx bxs-brush-alt'}/></span>
-                                          }
+                                    <span style={{fontSize: '25px', color: '#faad14'}}><i
+                                        className={'bx bxs-brush-alt'}/></span>
+                            }
 
-                                      </Tooltip>
-                                      ,
-                                      <Tooltip placement={'bottom'} title={'Testni tugatish'}>
-                                          {
-                                              element?.merge ?
-                                                  <Popconfirm title={'Testni tugatasizmi ?'} okText={'Tugatish'}
-                                                              cancelText={'Bekor qilish'}
-                                                              onConfirm={() => computerEndTest(element?.merge?.final_access_student?.id)}>
+                        </Tooltip>
+                },
+                {
+                    title: "Tugatish",
+                    className:'text-center',
+                    render: (index, element) =>
+                        <Tooltip placement={'bottom'} title={'Testni tugatish'}>
+                            {
+                                element?.merge ?
+                                    <Popconfirm title={'Testni tugatasizmi ?'} okText={'Tugatish'}
+                                                cancelText={'Bekor qilish'}
+                                                onConfirm={() => computerEndTest(element?.merge?.final_access_student?.id)}>
                                               <span style={{fontSize: '25px', color: '#f5222d'}}><i
-                                                  class='bx bx-x'/></span>
-                                                  </Popconfirm>
-                                                  :
-                                                  <span style={{fontSize: '25px', color: '#f5222d'}}><i
-                                                      class='bx bx-x'/></span>
-                                          }
-                                      </Tooltip>,
-                                       <Tooltip placement={'bottom'} title={'Testni tugatish'}>
-                                          {
-                                              element?.merge ?
-                                                  <Popconfirm title={'Kompyuterni almashtirasizmi ?'} okText={'Ozgartirish'}
-                                                              cancelText={'Bekor qilish'}
-                                                              onConfirm={() => changeRandomComputer(element)}>
+                                                  className='bx bx-x'/></span>
+                                    </Popconfirm>
+                                    :
+                                    <span style={{fontSize: '25px', color: '#f5222d'}}><i
+                                        className='bx bx-x'/></span>
+                            }
+                        </Tooltip>
+                },
+                {
+                    title: "Almashtirish",
+                    className:'text-center',
+                    render: (index, element) =>
+                        <Tooltip placement={'bottom'} title={'Kompyuterni almashtirish'}>
+                            {
+                                element?.merge ?
+                                    <Popconfirm title={'Kompyuterni almashtirasizmi ?'}
+                                                okText={'Ozgartirish'}
+                                                cancelText={'Bekor qilish'}
+                                                onConfirm={() => changeRandomComputer(element)}>
                                               <span style={{fontSize: '25px', color: '#f5222d'}}><i
-                                                  class='bx bx-refresh'/></span>
-                                                  </Popconfirm>
-                                                  :
-                                                  <span style={{fontSize: '25px', color: '#f5222d'}}><i
-                                                      class='bx bx-refresh'/></span>
-                                          }
-                                      </Tooltip>
-                                  ]}
+                                                  className='bx bx-refresh'/></span>
+                                    </Popconfirm>
+                                    :
+                                    <span style={{fontSize: '25px', color: '#f5222d'}}><i
+                                        className='bx bx-refresh'/></span>
+                            }
+                        </Tooltip>
+                },
+                {
+                    title: "Vaqtincha to`xtatish",
+                    className:'text-center',
+                    render: (index, element) =>
+                        <Tooltip placement={'bottom'} title={'Vaqtincha to`xtatish'}>
+                            {
+                                element?.merge ?
+                                    <Popconfirm title={'Vaqtincha to`xtatilsinmi?'}
+                                                okText={'To`xtatish'}
+                                                cancelText={'Bekor qilish'}
+                                                onConfirm={() => pauseComputer(element)}>
+                                                      <span style={{fontSize: '25px', color: '#f5222d'}}><i
+                                                          className='bx bx-pause-circle'/></span>
+                                    </Popconfirm>
+                                    :
+                                    <span style={{fontSize: '25px', color: '#f5222d'}}><i
+                                        className='bx bx-pause-circle'/></span>
+                            }
+                        </Tooltip>
+                }
+            ]
+        }
+    ]
+    const pauseComputer = (computer) => {
+        if (computer?.merge){
+            (async () => {
+                const responsePause = await pauseComputerApi(computer?.id);
+                if (responsePause){
+                    message.success('Vaqtincha to`xtatildi');
+                    setReload(!reload);
+                }
+            })()
+        }
+    }
+    return (
+        <>
 
-                            >
-                                {
-                                    element?.merge ?
-                                        <div>
-                                            <h4>{element?.merge?.final_access_student?.student_fio}</h4>
-                                            <h4>{element?.merge?.final_access_student?.student_passport}</h4>
-                                        </div> :
-                                        <Skeleton
-                                            loading={true}
-                                            paragraph={{
-                                                rows: 0,
-                                            }}
+            <Row className={''} gutter={[12, 12]}>
+                <Col xl={24}>
+                    <Table dataSource={data} columns={columns} bordered={true} pagination={false}/>
+                </Col>
 
-                                        >
-                                        </Skeleton>
-                                }
+            </Row>
+        </>
 
-                            </Card>
-                        </Col>
-                    )
-                }) : ''
-            }
-
-        </Row>
     );
 };
 export default withTranslation()(ExamProcessByComputerTab);
