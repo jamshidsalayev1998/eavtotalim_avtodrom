@@ -452,17 +452,9 @@ const TestComponent = ({
                 }`}
                 autoFocus
               >
-                {dataAnswers?.map((item, i) => (
-                  <div className={"d-flex align-items-center my-3"} autoFocus>
-                    <div
-                      style={{
-                        border: "0.1px solid #fff",
-                        borderRight: "0px",
-                        borderRadius: "8px 0px 0px 8px",
-                      }}
-                      className={"functional_key"}
-                      autoFocus
-                    >
+                {dataAnswers?.sort((a, b) => a.id > b.id ? 1 : -1).map((item, i) => (
+                  <div className={"d-flex align-items-center"} autoFocus>
+                    <div className={"functional_key"} autoFocus>
                       {functionalKeys[i]}
                     </div>
                     <div
