@@ -1,6 +1,6 @@
 import React, { Fragment, useContext, useEffect, useState } from "react";
 import logoImg from "assets/images/logo-blue-big.png";
-import faceShape from "assets/images/face-recognition/fa_shape.png";
+import faceShape from "assets/images/face-recognition/face-id-animation.svg";
 import faceShapeSuccess from "assets/images/face-recognition/face-shape-success.png";
 import faceShapeDanger from "assets/images/face-recognition/face-shape-danger.png";
 import {
