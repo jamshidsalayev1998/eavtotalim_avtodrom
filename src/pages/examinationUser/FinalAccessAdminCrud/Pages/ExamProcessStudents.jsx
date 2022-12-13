@@ -23,69 +23,66 @@ import MainContext from "../../../../Context/MainContext";
 import { getFinalAccessStudentById } from "../../../../services/api_services/getFinalAccessStudentById";
 
 const ExamProcessStudents = () => {
-    const [data, setData] = useState();
-    const [reload, setReload] = useState(false);
-    const mainContext = useContext(MainContext);
-    // console.log('uy' , context);
-    const eventName = 'examination_area_event_' + mainContext?.profession?.examination_area_id;
-    const refresh = () => {
-        setReload(!reload);
-    };
-    const openNotification = (description, message, result) => {
-        if (parseInt(result)) {
-            notification.success({
-                message: message,
-                description: description,
-            });
-        } else {
-            notification.error({
-                message: message,
-                description: description,
-            });
-        }
-    };
-    useEffect(() => {
-        if (parseInt(mainContext?.profession?.examination_area_id)) {
-            console.log('eventName', eventName)
-            socketParam.on(eventName, (data) => {
-                openNotification(data?.message, data?.userName, data?.test_result);
-                console.log('keldi', data?.userName)
-            });
-            return () => {
-                socketParam.off(eventName);
-            }
-        }
-
-    }, [mainContext?.profession?.examination_area_id]);
-    const inputEl = useRef();
-    const [inputValue, setInputValue] = useState();
-    const [isModalVisible, setIsModalVisible] = useState(false);
-    const focusInput = () => {
-        if (inputEl?.current) {
-            inputEl.current.focus()
-
-        }
-    };
-    const key_up = (keyCode) => {
-        if (parseInt(keyCode?.keyCode) === 13) {
-            if (inputValue) {
-                getData(inputValue)
+  const [data, setData] = useState();
+  const [reload, setReload] = useState(false);
+  const mainContext = useContext(MainContext);
+  // console.log('uy' , context);
+  const eventName =
+    "examination_area_event_" + mainContext?.profession?.examination_area_id;
+  const refresh = () => {
+    setReload(!reload);
+  };
+  const openNotification = (description, message, result) => {
+    if (parseInt(result)) {
+      notification.success({
+        message: message,
+        description: description,
+      });
+    } else {
+      notification.error({
+        message: message,
+        description: description,
+      });
+    }
+  };
+  useEffect(() => {
+    if (parseInt(mainContext?.profession?.examination_area_id)) {
+      console.log("eventName", eventName);
+      socketParam.on(eventName, data => {
+        openNotification(data?.message, data?.userName, data?.test_result);
+        console.log("keldi", data?.userName);
+      });
+      return () => {
+        socketParam.off(eventName);
+      };
+    }
+  }, [mainContext?.profession?.examination_area_id]);
+  const inputEl = useRef();
+  const [inputValue, setInputValue] = useState();
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const focusInput = () => {
+    if (inputEl?.current) {
+      inputEl.current.focus();
+    }
+  };
+  const key_up = keyCode => {
+    if (parseInt(keyCode?.keyCode) === 13) {
+      if (inputValue) {
+        getData(inputValue);
+      } else {
+        if (data != null) {
+          if (parseInt(data?.status) === 1) {
+            if (parseInt(data?.payment_status) === 1) {
+              // allowFinalExam(data?.id)
             } else {
-                if (data != null) {
-                    if (parseInt(data?.status) === 1) {
-                        if (parseInt(data?.payment_status) === 1) {
-                            // allowFinalExam(data?.id)
-                        } else {
-                            message.error('To`lov tasdiqlanmagan');
-                        }
-                    }
-                }
+              message.error("To`lov tasdiqlanmagan");
             }
           }
         }
       }
     }
   };
+
   const getData = inputValueParam => {
     (async () => {
       const response = await getFinalAccessStudentById(inputValueParam);
@@ -224,7 +221,7 @@ const ExamProcessStudents = () => {
               ref={inputEl}
               onChange={e => setInputValue(e?.target?.value)}
               onBlur={focusInput}
-            //   autoFocus={true}
+              //   autoFocus={true}
               onKeyUp={key_up}
               style={{ opacity: "0" }}
               // type={"number"}
@@ -253,4 +250,5 @@ const ExamProcessStudents = () => {
     </div>
   );
 };
+
 export default withTranslation()(ExamProcessStudents);
