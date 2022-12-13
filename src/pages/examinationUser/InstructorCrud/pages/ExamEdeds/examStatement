@@ -1,7 +1,0 @@
-import React from "react";
-
-const examStatement = () => {
-  return <div>examStatement</div>;
-};
-
-export default examStatement;

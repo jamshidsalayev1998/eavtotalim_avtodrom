@@ -128,6 +128,7 @@ const ShowPracticalExamResultByRecord = props => {
       <Container fluid>
         <Card>
           <CardBody>
+            {/* Statement  making button */}
             <div className="top-organizations d-flex justify-content-between">
               <b className="text-dark text-bold">{resultData?.student_fio}</b>
               <div className={"d-flex"}>
@@ -275,13 +276,13 @@ const ShowPracticalExamResultByRecord = props => {
         </Card>
       </Container>
 
-      {/* Exam Statement table */}
+      {/* Statement making table */}
       <Modal
         isOpen={modal}
         toggle={toggle}
         scrollable={true}
         centered={true}
-        size="lg"
+        size="xl"
       >
         <ModalHeader toggle={toggle}>Bayonnoma</ModalHeader>
         <ModalBody>
