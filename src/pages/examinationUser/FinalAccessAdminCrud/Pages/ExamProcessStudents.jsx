@@ -32,16 +32,16 @@ const ExamProcessStudents = () => {
         }
     };
     useEffect(() => {
-        // if (parseInt(mainContext?.profession?.examination_area_id)) {
-        //     console.log('eventName', eventName)
-        //     socketParam.on(eventName, (data) => {
-        //         openNotification(data?.message, data?.userName, data?.test_result);
-        //         console.log('keldi', data?.userName)
-        //     });
-        //     return () => {
-        //         socketParam.off(eventName);
-        //     }
-        // }
+        if (parseInt(mainContext?.profession?.examination_area_id)) {
+            console.log('eventName', eventName)
+            socketParam.on(eventName, (data) => {
+                openNotification(data?.message, data?.userName, data?.test_result);
+                console.log('keldi', data?.userName)
+            });
+            return () => {
+                socketParam.off(eventName);
+            }
+        }
 
     }, [mainContext?.profession?.examination_area_id]);
     const inputEl = useRef();

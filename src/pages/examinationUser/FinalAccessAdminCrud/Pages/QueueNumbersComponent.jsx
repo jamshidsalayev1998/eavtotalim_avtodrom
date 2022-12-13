@@ -9,6 +9,7 @@ const QueueNumbersComponent = props => {
         ? data?.map((element, index) => {
             return (
               <Col
+                  key={index}
                 xs={24}
                 sm={24}
                 md={12}
