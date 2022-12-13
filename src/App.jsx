@@ -34,9 +34,7 @@ import UserComputerConfigPage from "./pages/examinationUser/Computers/Config/Use
 import thirdApplication from "pages/Students/SigupOutLogin/thirdApplication";
 import socketIO from 'socket.io-client';
 import {NODEJS_SOCKET_URL} from "./Utils/AppVariables";
-
 export const socketParam = socketIO.connect(NODEJS_SOCKET_URL);
-
 const languagesList = ["uz", "kiril", "qq", "ru", "en"];
 
 const App = () => {
