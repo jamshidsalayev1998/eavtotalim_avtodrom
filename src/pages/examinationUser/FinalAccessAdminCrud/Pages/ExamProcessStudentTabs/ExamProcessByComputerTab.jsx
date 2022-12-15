@@ -252,7 +252,7 @@ const ExamProcessByComputerTab = props => {
                 <span>Ishlamoqda: </span>
                 <AiOutlinePauseCircle
                   style={{
-                    color: "#f5222d",
+                    color: "#52c41a",
                     fontSize: "20px",
                   }}
                 />
