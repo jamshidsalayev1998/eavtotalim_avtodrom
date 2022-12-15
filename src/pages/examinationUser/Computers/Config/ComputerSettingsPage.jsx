@@ -1,6 +1,6 @@
 import React, { Fragment, useContext, useEffect, useState } from "react";
 import logoImg from "assets/images/logo-blue-big.png";
-import faceShape from "assets/images/face-recognition/face-id-animation.svg";
+import faceShape from "assets/images/face-recognition/face-id-animation.png";
 import faceShapeSuccess from "assets/images/face-recognition/face-shape-success.png";
 import faceShapeDanger from "assets/images/face-recognition/face-shape-danger.png";
 import {
@@ -306,11 +306,11 @@ const ComputerSettingsPage = () => {
                         className={"face-shape-box  "}
                         style={{
                           position: "absolute",
-                          top: "50%",
+                          top: "40%",
                           left: "50%",
                           transform: "translate(-50%,-50%)",
-                          width: "250px",
-                          height: "250px",
+                          width: "220px",
+                          height: "220px",
                         }}
                       >
                         <img

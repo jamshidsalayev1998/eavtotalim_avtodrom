@@ -221,7 +221,7 @@ const ExamProcessStudents = () => {
               ref={inputEl}
               onChange={e => setInputValue(e?.target?.value)}
               onBlur={focusInput}
-              //   autoFocus={true}
+              // autoFocus={true}
               onKeyUp={key_up}
               style={{ opacity: "0" }}
               // type={"number"}

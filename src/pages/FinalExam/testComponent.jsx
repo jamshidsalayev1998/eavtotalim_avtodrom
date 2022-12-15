@@ -452,50 +452,52 @@ const TestComponent = ({
                 }`}
                 autoFocus
               >
-                {dataAnswers?.sort((a, b) => a.id > b.id ? 1 : -1).map((item, i) => (
-                  <div className={"d-flex align-items-center"} autoFocus>
-                    <div className={"functional_key"} autoFocus>
-                      {functionalKeys[i]}
-                    </div>
-                    <div
-                      onClick={() => {
-                        select_answer(item?.id);
-                        setPressedKey(i + 112);
-                      }}
-                      className={`${
-                        checked_test?.result == 0 &&
-                        checked_test?.selected_answer_id == item?.id
-                          ? "answer_incorrect"
-                          : checked_test?.result === "" &&
-                            selectedAnswerId == item?.id
-                          ? "selectedAnswer"
-                          : checked_test?.right_answer_id == item?.id
-                          ? "answer_correct"
-                          : "answer"
-                      }`}
-                      autoFocus
-                    >
-                      <span className="mr-2" autoFocus>
-                        {checked_test?.result == 0 &&
-                        checked_test?.selected_answer_id == item?.id ? (
-                          <i className="fas fa-times-circle empty-icon"></i>
-                        ) : checked_test?.right_answer_id == item?.id ? (
-                          <i className="fas fa-check-circle empty-icon"></i>
-                        ) : (
-                          <i className="far fa-circle empty-icon"></i>
-                        )}
-                      </span>
+                {dataAnswers
+                  ?.sort((a, b) => (a.id > b.id ? 1 : -1))
+                  .map((item, i) => (
+                    <div className={"d-flex align-items-center"} autoFocus>
+                      <div className={"functional_key"} autoFocus>
+                        {functionalKeys[i]}
+                      </div>
+                      <div
+                        onClick={() => {
+                          select_answer(item?.id);
+                          setPressedKey(i + 112);
+                        }}
+                        className={`${
+                          checked_test?.result == 0 &&
+                          checked_test?.selected_answer_id == item?.id
+                            ? "answer_incorrect"
+                            : checked_test?.result === "" &&
+                              selectedAnswerId == item?.id
+                            ? "selectedAnswer"
+                            : checked_test?.right_answer_id == item?.id
+                            ? "answer_correct"
+                            : "answer"
+                        }`}
+                        autoFocus
+                      >
+                        <span className="mr-2" autoFocus>
+                          {checked_test?.result == 0 &&
+                          checked_test?.selected_answer_id == item?.id ? (
+                            <i className="fas fa-times-circle empty-icon"></i>
+                          ) : checked_test?.right_answer_id == item?.id ? (
+                            <i className="fas fa-check-circle empty-icon"></i>
+                          ) : (
+                            <i className="far fa-circle empty-icon"></i>
+                          )}
+                        </span>
 
-                      {Object.keys(item?.body)?.map((keyName, i) =>
-                        item?.body[keyName]?.type == "1" ? (
-                          <span>{item?.body[keyName]?.value}</span>
-                        ) : (
-                          ""
-                        )
-                      )}
+                        {Object.keys(item?.body)?.map((keyName, i) =>
+                          item?.body[keyName]?.type == "1" ? (
+                            <span>{item?.body[keyName]?.value}</span>
+                          ) : (
+                            ""
+                          )
+                        )}
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
               </div>
               {/* true answers info */}
               <div className={"d-flex justify-content-end"}>
@@ -525,8 +527,6 @@ const TestComponent = ({
             style={{ objectFit: "cover" }}
           >
             {Object.keys(dataBody).map((keyName, i) => {
-              console.log(dataBody);
-              console.log(dataBody[question_order]);
               return dataBody[keyName]?.type == "2" ? (
                 <div onClick={() => setOpen(true)} autoFocus>
                   <TransformWrapper
@@ -560,11 +560,7 @@ const TestComponent = ({
                   </TransformWrapper>
                 </div>
               ) : (
-                <>
-                  <div className="image">
-                    <Skeleton.Image active={false} />
-                  </div>
-                </>
+                ""
               );
             })}
           </div>
@@ -580,11 +576,7 @@ const TestComponent = ({
             zIndex: 1005,
           }}
         >
-          <div
-            className={
-              "d-flex justify-content-between align-items-center "
-            }
-          >
+          <div className={"d-flex justify-content-between align-items-center "}>
             <div className={"d-flex"}>
               {historys?.map((item, index) => (
                 <span
