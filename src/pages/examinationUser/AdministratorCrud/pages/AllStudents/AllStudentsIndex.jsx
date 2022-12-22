@@ -33,6 +33,8 @@ const AllStudentsIndex = props => {
     const [addModalVisible, setAddModalVisible] = useState(false);
     const [eduTypes, setEduTypes] = useState([]);
     const [organizations, setOrganizations] = useState([]);
+    const inputTagRef = useRef(null);
+
 
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -60,12 +62,17 @@ const AllStudentsIndex = props => {
                     history.push(urlStudentAdd)
                 }
             }
+            if (event?.code === 'F4') {
+                if (location?.pathname === '/examination-administrator/all-students') {
+                    openAddModal()
+                }
+            }
         })
     }, [reload, waitWord]);
     useEffect(() => {
         getEduTypes()
         getOrganizationsFunction()
-    },[]);
+    }, []);
     const getEduTypes = () => {
         (async () => {
             let params = {};
@@ -94,7 +101,7 @@ const AllStudentsIndex = props => {
         },
         {
             title: 'Holati',
-            render: (index, element) => <>{element?.type == 'resubmit' ?
+            render: (index, element) => <>{element?.type === 'resubmit' ?
                 <Badge color={'warning'}>Qayta topshirish</Badge> : <Badge color={'primary'}>Birinchi marta</Badge>}</>
         },
         {
@@ -130,9 +137,9 @@ const AllStudentsIndex = props => {
                     title: 'Nazariy',
                     render: (index, element) => <>
                         {
-                            element?.exam_result == 1 ?
+                            Number(element?.exam_result) === 1 ?
                                 <Badge color={'success'}>O`tgan</Badge> :
-                                element?.exam_result == 0 ?
+                                Number(element?.exam_result) === 0 ?
                                     <Badge color={'danger'}>Yiqilgan</Badge> :
                                     <Badge color={'warning'}>Topshirmagan</Badge>
 
@@ -142,9 +149,9 @@ const AllStudentsIndex = props => {
                 {
                     title: 'Amaliy',
                     render: (index, element) => <>{
-                        element?.practical_exam_result == 1 ?
+                        Number(element?.practical_exam_result) === 1 ?
                             <Badge color={'success'}>O`tgan</Badge> :
-                            element?.practical_exam_result == 0 ?
+                            Number(element?.practical_exam_result) === 0 ?
                                 <Badge color={'danger'}>Yiqilgan</Badge> :
                                 <Badge color={'warning'}>Topshirmagan</Badge>
 
@@ -159,7 +166,7 @@ const AllStudentsIndex = props => {
             render: (index, element) => <>
                 <Tooltip title={'O\'zgartirish'}>
                     <NavLink to={'/examination-administrator/edit-students/' + element?.id}><i
-                        className={'bx bx-edit'}></i></NavLink>
+                        className={'bx bx-edit'}/></NavLink>
                 </Tooltip>
             </>
         }
@@ -194,6 +201,14 @@ const AllStudentsIndex = props => {
         });
     }
 
+    const openAddModal = (e) => {
+        setAddModalVisible(true);
+        console.log("ref -> ", inputTagRef)
+        if (inputTagRef.current) {
+            inputTagRef.current.focus();
+        }
+    };
+
 
     return (
         <>
@@ -204,6 +219,7 @@ const AllStudentsIndex = props => {
                 organizations={organizations}
                 reload={reload}
                 setReload={setreload}
+                inputTagRef={inputTagRef}
             />
             <div className="page-content">
                 <Container fluid>
@@ -216,7 +232,7 @@ const AllStudentsIndex = props => {
                                     <span
                                         className={'keyboard-style'}>F2</span>
                                 </NavLink>
-                                <button className="btn btn-outline-success" onClick={() => setAddModalVisible(true)}> +
+                                <button className="btn btn-outline-success" onClick={() => openAddModal()}> +
                                     Qo'shish
                                 </button>
                             </div>
@@ -224,7 +240,7 @@ const AllStudentsIndex = props => {
                                 <Row>
                                     <Col xl={18}>
                                         <Col xl={24} className={'d-flex justify-content-end'}>
-                                            <Col xl={6}><Input allowClear={true} autoFocus={true}
+                                            <Col xl={6}><Input allowClear={true}
                                                                onChange={e => changeWord(e?.target?.value)}/></Col>
                                         </Col>
                                         <Col xl={24}>
