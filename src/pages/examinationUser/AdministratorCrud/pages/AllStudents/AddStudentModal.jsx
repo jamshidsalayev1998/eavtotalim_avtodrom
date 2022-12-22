@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from "react";
-import {Form, Button, Select, Modal, Input, Row, Col, DatePicker, Popconfirm, message} from "antd";
+import React, {useState, useEffect, useRef} from "react";
+import {Form, Button, Select, Modal, Input, Row, Col, DatePicker, Popconfirm, message, Alert} from "antd";
 import InputMask from "react-input-mask";
 import moment from "moment";
 import {sendStudentToResubmitAllResponse} from "../../../../../services/api_services/send_student_to_resubmit";
@@ -7,13 +7,14 @@ import {addStudentToComes} from "../../../../../services/api_services/administra
 
 
 const AddStudentModal = props => {
+
     const maskInput = {
         mask: "aa9999999",
         maskChar: "_",
         alwaysShowMask: false,
         formatChars: {
             9: "[0-9]",
-            a: "[A-Z]",
+            a: "[A-Za-z]",
         },
 
         permanents: [2, 5],
@@ -31,15 +32,23 @@ const AddStudentModal = props => {
     };
 
     const [studentStoreForm] = Form.useForm();
-    const {addModalVisible, setAddModalVisible, eduTypes, organizations, reload , setReload} = props;
+    const {addModalVisible, setAddModalVisible, eduTypes, organizations, reload, setReload,inputTagRef} = props;
     const [dataHas, setDataHas] = useState(null);
     const [validatorErrors, setValidatorErrors] = useState([]);
+    const [loading, setLoading] = useState(false);
     const dateFormat = 'DD-MM-YYYY';
 
+    const onPassportHandle = e => {
+        // console.log('pi' , e)
+        studentStoreForm.setFieldsValue({
+            student_passport: e?.target?.value?.toUpperCase(),
+        });
+    };
 
     const [currentAge, setCurrentAge] = useState(16);
     const {Option} = Select;
     const simpleSaveStudent = (values) => {
+        setLoading(true)
         console.log('ehe', values);
         const formData = new FormData();
         for (let key in values) {
@@ -69,20 +78,30 @@ const AddStudentModal = props => {
                 return false;
             }
         })();
-    }
+        setLoading(false);
+    };
     const saveStudent = () => {
+        mergeFio();
         studentStoreForm.setFieldValue('typeSave', 'simple')
         studentStoreForm.submit();
-    }
+    };
     const saveStudentAndClear = () => {
+        mergeFio();
         studentStoreForm.setFieldValue('typeSave', 'clear')
 
         studentStoreForm.submit();
 
-    }
+    };
     const cancelAddModal = () => {
         setAddModalVisible(false);
-    }
+    };
+    const mergeFio = () => {
+        let fio = studentStoreForm.getFieldValue('last_name') + ' ' + studentStoreForm.getFieldValue('first_name') + ' ' + studentStoreForm.getFieldValue('middle_name');
+        studentStoreForm.setFieldValue('student_fio', fio);
+    };
+    const clearForm = () => {
+
+    };
     return (
         <Modal
             zIndex={1005}
@@ -94,10 +113,14 @@ const AddStudentModal = props => {
                 <Button key="back">
                     Bekor qilish
                 </Button>,
-                <Button type="primary" onClick={saveStudent}>
+                <Button onClick={clearForm} loading={loading}>
+                    Tozalash
+                </Button>,
+                <Button type="primary" onClick={saveStudent} loading={loading}>
                     Saqlash
                 </Button>,
                 <Button onClick={saveStudentAndClear}
+                        loading={loading}
                         type="primary"
                 >
                     Saqlash va tozalash
@@ -119,23 +142,62 @@ const AddStudentModal = props => {
                 <Row>
                     <Col xl={6}>
                         <Form.Item
-                            label="F.I.O"
-                            name="student_fio"
+                            label="Familiya"
+                            name="last_name"
                             rules={[
                                 {
                                     required: true,
                                     message:
-                                        "O`quvchi ism familiya otasining ismini kiriting!",
+                                        "O`quvchi familiyasini kiriting!",
+                                },
+                            ]}
+
+                        >
+                            <Input
+                                ref={inputTagRef}
+                                allowClear={true}
+                                style={{width: "100%"}}
+                                placeholder="Familiya"
+                            />
+                        </Form.Item>
+                    </Col>
+                    <Col xl={6}>
+                        <Form.Item
+                            label="Ism"
+                            name="first_name"
+                            rules={[
+                                {
+                                    required: true,
+                                    message:
+                                        "O`quvchi ismini kiriting!",
                                 },
                             ]}
                         >
                             <Input
                                 allowClear={true}
                                 style={{width: "100%"}}
-                                placeholder="F.I.O"
+                                placeholder="Ism"
                             />
                         </Form.Item>
                     </Col>
+                    <Col xl={6}>
+                        <Form.Item
+                            label="Otasining ismi"
+                            name="middle_name"
+                            rules={[
+                                {
+                                    required: false,
+                                },
+                            ]}
+                        >
+                            <Input
+                                allowClear={true}
+                                style={{width: "100%"}}
+                                placeholder="Otasining ismi"
+                            />
+                        </Form.Item>
+                    </Col>
+
                     <Col xl={6}>
                         <Form.Item
                             name="student_passport"
@@ -150,6 +212,7 @@ const AddStudentModal = props => {
                             <InputMask
                                 {...maskInput}
                                 className={"ant-input"}
+                                onChange={e => onPassportHandle(e)}
                                 placeholder="AA1234567"
                             />
                         </Form.Item>
@@ -235,6 +298,25 @@ const AddStudentModal = props => {
                             </Select>
                         </Form.Item>
                     </Col>
+                    <Col xl={6}>
+                        <Form.Item
+                            label="Guruh"
+                            name="group"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: "Guruhni kiriting!",
+                                },
+                            ]}
+                        >
+                            {/*<MaskedInput mask="(11) 1111111"/>*/}
+                            <Input
+                                placeholder="Guruhni kiriting"
+                                allowClear={true}
+                                style={{width: "100%"}}
+                            />
+                        </Form.Item>
+                    </Col>
                     <Col xl={12}>
                         <Form.Item
                             label="Ta`lim tashkiloti"
@@ -260,35 +342,17 @@ const AddStudentModal = props => {
                                     return (
                                         <Option value={element?.id}>
                                             {element?.name_uz ||
-                                                element?.name_ru ||
-                                                element?.name_kiril ||
-                                                element?.name_qq ||
-                                                element?.name_en}
+                                            element?.name_ru ||
+                                            element?.name_kiril ||
+                                            element?.name_qq ||
+                                            element?.name_en}
                                         </Option>
                                     );
                                 })}
                             </Select>
                         </Form.Item>
                     </Col>
-                    <Col xl={6}>
-                        <Form.Item
-                            label="Guruh"
-                            name="group"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: "Guruhni kiriting!",
-                                },
-                            ]}
-                        >
-                            {/*<MaskedInput mask="(11) 1111111"/>*/}
-                            <Input
-                                placeholder="Guruhni kiriting"
-                                allowClear={true}
-                                style={{width: "100%"}}
-                            />
-                        </Form.Item>
-                    </Col>
+
                     <Col xl={6}>
                         <Form.Item
                             label="Tug'ilgan sanasi"
@@ -322,6 +386,24 @@ const AddStudentModal = props => {
                     </Col>
                     <Form.Item name='typeSave' hidden={true} initialValue={'simple'}>
 
+                    </Form.Item>
+                    <Form.Item
+                        label="F.I.O"
+                        name="student_fio"
+                        hidden={true}
+                        rules={[
+                            {
+                                required: true,
+                                message:
+                                    "O`quvchi ism familiya otasining ismini kiriting!",
+                            },
+                        ]}
+                    >
+                        <Input
+                            allowClear={true}
+                            style={{width: "100%"}}
+                            placeholder="F.I.O"
+                        />
                     </Form.Item>
                 </Row>
                 <Row>
