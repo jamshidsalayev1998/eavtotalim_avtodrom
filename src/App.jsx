@@ -34,6 +34,7 @@ import UserComputerConfigPage from "./pages/examinationUser/Computers/Config/Use
 import thirdApplication from "pages/Students/SigupOutLogin/thirdApplication";
 import socketIO from 'socket.io-client';
 import {NODEJS_SOCKET_URL} from "./Utils/AppVariables";
+
 export const socketParam = socketIO.connect(NODEJS_SOCKET_URL);
 const languagesList = ["uz", "kiril", "qq", "ru", "en"];
 
@@ -58,47 +59,31 @@ const App = () => {
 
     console.log(location);
 
-//   axios.interceptors.response.use(
-//     response => {
-//       return response;
-//     },
+    axios.interceptors.response.use(
+        response => {
+            return response;
+        },
 
-//     error => {
-//       if (error?.response?.status === 429) {
-//         alert("to many request 429");
-
-//         caches.clear();
-//         window.location.reload();
-//       } else if (error?.response?.status === 401) {
-//         message.error(error?.response?.data?.error);
-
-//         localStorage.removeItem("token");
-//         setAuth(false);
-//         if (localStorage.getItem("computer_key")) {
-//           // history.push("/computer-test");
-//         } else {
-//           history.push("/login");
-//         }
-//       } else if (error?.response?.status === 404) {
-//         alert("not found 404");
-//         history.push("/notfound");
-//       }
-//       console.log("err mes", error?.response);
-//       if (error?.response?.status != 401) {
-//         (async () => {
-//           const data = new FormData();
-//           data.append("status_code", error?.response?.status);
-//           delete error?.response?.data?.trace;
-//           Object.assign(error?.response?.data, {
-//             api_url: error?.response?.config?.url,
-//           });
-//           data.append("error", JSON.stringify(error?.response?.data));
-//           let params = {};
-//           // const res = storeApiBugs(params, data);
-//         })();
-//       }
-//     }
-//   );
+        error => {
+            if (error?.response?.status === 429) {
+                caches.clear();
+                window.location.reload();
+            } else if (error?.response?.status === 401) {
+                message.error(error?.response?.data?.error);
+                localStorage.removeItem("token");
+                localStorage.removeItem("face_recognition_key");
+                localStorage.removeItem("user_profile_name");
+                setAuth(false);
+                if (localStorage.getItem("computer_key")) {
+                    // history.push("/computer-test");
+                } else {
+                    history.push("/login");
+                }
+            } else if (error?.response?.status === 404) {
+                history.push("/notfound");
+            }
+        }
+    );
 
     useEffect(() => {
         const token = localStorage.getItem("token");
