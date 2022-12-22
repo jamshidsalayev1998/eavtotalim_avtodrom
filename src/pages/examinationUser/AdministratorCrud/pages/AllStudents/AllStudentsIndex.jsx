@@ -9,6 +9,9 @@ import QRCode from "qrcode";
 import QrCodeToPrint from "./QrCodeToPrint";
 import {NavLink, useHistory, useLocation} from "react-router-dom";
 import "./key_styles.css"
+import AddStudentModal from "./AddStudentModal";
+import {getEduTypesForAll} from "../../../../../services/api_services/edu_types_api";
+import {getOrganizations} from "../../../../../services/api_services/administrator_students_api";
 
 
 const AllStudentsIndex = props => {
@@ -27,6 +30,9 @@ const AllStudentsIndex = props => {
     const inputEl = useRef();
     const history = useHistory();
     const location = useLocation();
+    const [addModalVisible, setAddModalVisible] = useState(false);
+    const [eduTypes, setEduTypes] = useState([]);
+    const [organizations, setOrganizations] = useState([]);
 
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -49,14 +55,33 @@ const AllStudentsIndex = props => {
             }
         })
         window.addEventListener("keyup", (event) => {
-            if (event?.code === 'F2'){
-                if (location?.pathname === '/examination-administrator/all-students'){
+            if (event?.code === 'F2') {
+                if (location?.pathname === '/examination-administrator/all-students') {
                     history.push(urlStudentAdd)
                 }
             }
         })
     }, [reload, waitWord]);
+    useEffect(() => {
+        getEduTypes()
+        getOrganizationsFunction()
+    },[]);
+    const getEduTypes = () => {
+        (async () => {
+            let params = {};
+            const res = await getEduTypesForAll(params);
+            setEduTypes(res?.data?.data);
+        })()
+    }
 
+    const getOrganizationsFunction = () => {
+        (async () => {
+            const orgResp = await getOrganizations({show_count: "all"});
+            if (orgResp) {
+                setOrganizations(orgResp?.data);
+            }
+        })();
+    };
     const columns = [
         {
             title: '#',
@@ -172,6 +197,14 @@ const AllStudentsIndex = props => {
 
     return (
         <>
+            <AddStudentModal
+                addModalVisible={addModalVisible}
+                setAddModalVisible={setAddModalVisible}
+                eduTypes={eduTypes}
+                organizations={organizations}
+                reload={reload}
+                setReload={setreload}
+            />
             <div className="page-content">
                 <Container fluid>
                     <Card>
@@ -179,9 +212,13 @@ const AllStudentsIndex = props => {
                             <div className="top-organizations">
                                 <h5>Barcha keluvchilar </h5>
                                 <NavLink to={urlStudentAdd}>
-                                    <button className="btn btn-outline-success"> + Qo'shish </button><span
+                                    <button className="btn btn-outline-success"> + Qo'shish</button>
+                                    <span
                                         className={'keyboard-style'}>F2</span>
                                 </NavLink>
+                                <button className="btn btn-outline-success" onClick={() => setAddModalVisible(true)}> +
+                                    Qo'shish
+                                </button>
                             </div>
                             <div className="crypto-buy-sell-nav mt-3">
                                 <Row>
