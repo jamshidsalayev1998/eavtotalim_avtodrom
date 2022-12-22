@@ -259,13 +259,13 @@ const ComputerSettingsPage = () => {
             <div className={"d-flex justify-content-center align-items-center"}>
               <AiOutlineDesktop
                 className="text-success"
-                style={{ fontSize: "150px", color: "#bfbfbf" }}
+                style={{ fontSize: "200px", color: "#bfbfbf" }}
               />
               <h1
                 className={`${
                   computer ? "rounded" : ""
                 } px-5 position-absolute text-success`}
-                style={{ color: "#bfbfbf" }}
+                style={{ color: "#bfbfbf", fontSize: "70px" }}
               >
                 {computer ? computer?.order : ""}
               </h1>
@@ -274,7 +274,7 @@ const ComputerSettingsPage = () => {
             <div className={"d-flex justify-content-center align-items-center"}>
               <AiOutlineDesktop
                 className="text-warning"
-                style={{ fontSize: "150px" }}
+                style={{ fontSize: "200px" }}
               />
               <span
                 className={`${
@@ -300,25 +300,29 @@ const ComputerSettingsPage = () => {
               {/*take picture*/}
               <div>
                 <div style={{ position: "relative" }}>
+                  <div
+                    className={"face-shape-box  "}
+                    style={{
+                      position: "absolute",
+                      top: "40%",
+                      left: "50%",
+                      transform: "translate(-50%,-50%)",
+                      width: "220px",
+                      height: "220px",
+                      zIndex: "100000",
+                    }}
+                  >
+                    <img
+                      src={faceShape}
+                      alt=""
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                      }}
+                    />
+                  </div>
                   {computerKey && computer && picture == "" ? (
                     <>
-                      <div
-                        className={"face-shape-box  "}
-                        style={{
-                          position: "absolute",
-                          top: "40%",
-                          left: "50%",
-                          transform: "translate(-50%,-50%)",
-                          width: "220px",
-                          height: "220px",
-                        }}
-                      >
-                        <img
-                          src={faceShape}
-                          alt=""
-                          style={{ width: "100%", height: "100%" }}
-                        />
-                      </div>
                       <Webcam
                         style={{ borderRadius: "4px", width: "100%" }}
                         audio={false}
@@ -326,6 +330,7 @@ const ComputerSettingsPage = () => {
                         ref={webcamRef}
                         screenshotFormat="image/jpeg"
                         videoConstraints={videoConstraints}
+                        mirrored={true}
                       />
                     </>
                   ) : (
@@ -447,10 +452,10 @@ const ComputerSettingsPage = () => {
 
         <Link
           className="fixed-bottom m-3 d-flex align-items-center"
-          style={{ fontSize: "18px" }}
+          style={{ fontSize: "24px", width: "100px" }}
           to={"/login"}
         >
-          <FaArrowLeft />
+          <FaArrowLeft style={{ fontSize: "20px", width: "100px" }} />
           <span className="p-1">Qaytish</span>
         </Link>
       </div>
