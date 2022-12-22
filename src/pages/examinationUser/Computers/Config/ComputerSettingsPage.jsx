@@ -259,13 +259,13 @@ const ComputerSettingsPage = () => {
             <div className={"d-flex justify-content-center align-items-center"}>
               <AiOutlineDesktop
                 className="text-success"
-                style={{ fontSize: "150px", color: "#bfbfbf" }}
+                style={{ fontSize: "200px", color: "#bfbfbf" }}
               />
               <h1
                 className={`${
                   computer ? "rounded" : ""
                 } px-5 position-absolute text-success`}
-                style={{ color: "#bfbfbf" }}
+                style={{ color: "#bfbfbf", fontSize: "70px" }}
               >
                 {computer ? computer?.order : ""}
               </h1>
@@ -274,7 +274,7 @@ const ComputerSettingsPage = () => {
             <div className={"d-flex justify-content-center align-items-center"}>
               <AiOutlineDesktop
                 className="text-warning"
-                style={{ fontSize: "150px" }}
+                style={{ fontSize: "200px" }}
               />
               <span
                 className={`${
@@ -316,7 +316,11 @@ const ComputerSettingsPage = () => {
                         <img
                           src={faceShape}
                           alt=""
-                          style={{ width: "100%", height: "100%" }}
+                          style={{
+                            width: "100%",
+                            height: "100%",
+                            zIndex: "100000",
+                          }}
                         />
                       </div>
                       <Webcam
@@ -326,6 +330,7 @@ const ComputerSettingsPage = () => {
                         ref={webcamRef}
                         screenshotFormat="image/jpeg"
                         videoConstraints={videoConstraints}
+                        mirrored={true}
                       />
                     </>
                   ) : (
@@ -447,10 +452,10 @@ const ComputerSettingsPage = () => {
 
         <Link
           className="fixed-bottom m-3 d-flex align-items-center"
-          style={{ fontSize: "18px" }}
+          style={{ fontSize: "24px", width: "100px" }}
           to={"/login"}
         >
-          <FaArrowLeft />
+          <FaArrowLeft style={{ fontSize: "20px", width: "100px" }} />
           <span className="p-1">Qaytish</span>
         </Link>
       </div>
