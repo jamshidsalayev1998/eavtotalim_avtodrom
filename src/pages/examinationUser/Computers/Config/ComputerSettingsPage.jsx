@@ -300,29 +300,29 @@ const ComputerSettingsPage = () => {
               {/*take picture*/}
               <div>
                 <div style={{ position: "relative" }}>
+                  <div
+                    className={"face-shape-box  "}
+                    style={{
+                      position: "absolute",
+                      top: "40%",
+                      left: "50%",
+                      transform: "translate(-50%,-50%)",
+                      width: "220px",
+                      height: "220px",
+                      zIndex: "100000",
+                    }}
+                  >
+                    <img
+                      src={faceShape}
+                      alt=""
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                      }}
+                    />
+                  </div>
                   {computerKey && computer && picture == "" ? (
                     <>
-                      <div
-                        className={"face-shape-box  "}
-                        style={{
-                          position: "absolute",
-                          top: "40%",
-                          left: "50%",
-                          transform: "translate(-50%,-50%)",
-                          width: "220px",
-                          height: "220px",
-                        }}
-                      >
-                        <img
-                          src={faceShape}
-                          alt=""
-                          style={{
-                            width: "100%",
-                            height: "100%",
-                            zIndex: "100000",
-                          }}
-                        />
-                      </div>
                       <Webcam
                         style={{ borderRadius: "4px", width: "100%" }}
                         audio={false}
