@@ -8,6 +8,20 @@ import {addStudentToComes} from "../../../../../services/api_services/administra
 
 const AddStudentModal = props => {
 
+    useEffect(() => {
+        window.addEventListener("keyup", (event) => {
+            if (event?.code === 'F7') {
+                clearForm();
+            }
+            if (event?.code === 'F8') {
+                saveStudent();
+            }
+            if (event?.code === 'F9') {
+                saveStudentAndClear();
+            }
+
+        })
+    }, [])
     const maskInput = {
         mask: "aa9999999",
         maskChar: "_",
@@ -32,7 +46,7 @@ const AddStudentModal = props => {
     };
 
     const [studentStoreForm] = Form.useForm();
-    const {addModalVisible, setAddModalVisible, eduTypes, organizations, reload, setReload,inputTagRef} = props;
+    const {addModalVisible, setAddModalVisible, eduTypes, organizations, reload, setReload, inputTagRef,focusRefElement} = props;
     const [dataHas, setDataHas] = useState(null);
     const [validatorErrors, setValidatorErrors] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -60,14 +74,12 @@ const AddStudentModal = props => {
             if (res?.data?.status === 1) {
                 message.success(res?.data?.message);
                 setReload(!reload)
-                studentStoreForm.resetFields();
+                clearForm();
                 if (values?.typeSave === 'simple') {
                     cancelAddModal();
                 } else {
-
                 }
                 return true;
-                // history.push("/examination-administrator/all-students");
             }
             if (parseInt(res?.data?.status) === 2) {
                 message.error("xato");
@@ -82,17 +94,19 @@ const AddStudentModal = props => {
     };
     const saveStudent = () => {
         mergeFio();
-        studentStoreForm.setFieldValue('typeSave', 'simple')
+        studentStoreForm.setFieldValue('typeSave', 'simple');
         studentStoreForm.submit();
     };
     const saveStudentAndClear = () => {
         mergeFio();
-        studentStoreForm.setFieldValue('typeSave', 'clear')
-
+        studentStoreForm.setFieldValue('typeSave', 'clear');
         studentStoreForm.submit();
+        focusRefElement();
 
     };
     const cancelAddModal = () => {
+        setValidatorErrors(null);
+        setDataHas(null);
         setAddModalVisible(false);
     };
     const mergeFio = () => {
@@ -100,7 +114,9 @@ const AddStudentModal = props => {
         studentStoreForm.setFieldValue('student_fio', fio);
     };
     const clearForm = () => {
-
+        studentStoreForm.resetFields();
+        setValidatorErrors(null);
+        setDataHas(null);
     };
     return (
         <Modal
@@ -111,19 +127,25 @@ const AddStudentModal = props => {
             title={"Yangi o'quvchi qo'shish"}
             footer={[
                 <Button key="back">
-                    Bekor qilish
+                    Bekor qilish <span
+                    className={'small-keyboard-style'}>ESC</span>
                 </Button>,
                 <Button onClick={clearForm} loading={loading}>
                     Tozalash
+                    <span
+                        className={'small-keyboard-style'}>F7</span>
                 </Button>,
                 <Button type="primary" onClick={saveStudent} loading={loading}>
                     Saqlash
+                    <span
+                        className={'small-keyboard-style'}>F8</span>
                 </Button>,
                 <Button onClick={saveStudentAndClear}
                         loading={loading}
                         type="primary"
                 >
-                    Saqlash va tozalash
+                    Saqlash va tozalash <span
+                    className={'small-keyboard-style'}>F9</span>
                 </Button>
             ]}
         >
@@ -352,7 +374,6 @@ const AddStudentModal = props => {
                             </Select>
                         </Form.Item>
                     </Col>
-
                     <Col xl={6}>
                         <Form.Item
                             label="Tug'ilgan sanasi"

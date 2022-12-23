@@ -204,10 +204,14 @@ const AllStudentsIndex = props => {
     const openAddModal = (e) => {
         setAddModalVisible(true);
         console.log("ref -> ", inputTagRef)
-        if (inputTagRef.current) {
+        focusRefElement()
+
+    };
+    const focusRefElement = () => {
+         if (inputTagRef.current) {
             inputTagRef.current.focus();
         }
-    };
+    }
 
 
     return (
@@ -220,6 +224,7 @@ const AllStudentsIndex = props => {
                 reload={reload}
                 setReload={setreload}
                 inputTagRef={inputTagRef}
+                focusRefElement={focusRefElement}
             />
             <div className="page-content">
                 <Container fluid>
@@ -227,14 +232,23 @@ const AllStudentsIndex = props => {
                         <CardBody>
                             <div className="top-organizations">
                                 <h5>Barcha keluvchilar </h5>
-                                <NavLink to={urlStudentAdd}>
-                                    <button className="btn btn-outline-success"> + Qo'shish</button>
-                                    <span
-                                        className={'keyboard-style'}>F2</span>
-                                </NavLink>
-                                <button className="btn btn-outline-success" onClick={() => openAddModal()}> +
-                                    Qo'shish
-                                </button>
+                                <div className={'d-flex'}>
+
+                                    <NavLink to={urlStudentAdd}>
+                                        <button className="btn btn-outline-success"> + Qo'shish sahifasi <span
+                                            className={'keyboard-style'}>F2</span></button>
+
+                                    </NavLink>
+                                    <div className={'d-flex'}>
+
+                                        <button className="btn btn-outline-success" onClick={() => openAddModal()}> +
+                                            Qo'shish oynasi
+                                             <span
+                                            className={'keyboard-style'}>F4</span>
+                                        </button>
+
+                                    </div>
+                                </div>
                             </div>
                             <div className="crypto-buy-sell-nav mt-3">
                                 <Row>

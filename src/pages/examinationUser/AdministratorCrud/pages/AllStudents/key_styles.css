@@ -8,3 +8,12 @@
     background-color: #f0f0f0;
     font-weight: bold;
 }
+.small-keyboard-style {
+    border-radius: 2px;
+    padding: 1px 4px 0 4px ;
+    margin-left: 2px;
+    display: inline-block;
+    color: black;
+    background-color: #f0f0f0;
+    font-weight: bold;
+}
