@@ -26,6 +26,7 @@ const FinalExamDashboard = () => {
   const [isTestEndedModalVisible, setIsTestEndedModalVisible] = useState(false);
   const [testResult, setTestResult] = useState();
   const [valueProgress, setValueProgress] = useState(0);
+  const [open, setOpen] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -84,6 +85,15 @@ const FinalExamDashboard = () => {
       }
     });
   };
+
+  const clickOutTest = () => {
+    setOpen(false);
+    setIsTestEndedModalVisible(false);
+    setTimeout(() => {
+      logout();
+    }, 3 * 60 * 1000);
+  };
+
   const showTestEndedModal = () => {
     setIsTestEndedModalVisible(true);
   };
@@ -123,8 +133,10 @@ const FinalExamDashboard = () => {
       <Modal
         width={850}
         centered
-        visible={isTestEndedModalVisible}        
+        visible={isTestEndedModalVisible}
         //    isTestEndedModalVisible
+        onCancel={() => clickOutTest()}
+        open={open}
         style={
           testResult?.correct_answers > 17
             ? { border: "2px solid #27AE60", borderRadius: "10px" }
