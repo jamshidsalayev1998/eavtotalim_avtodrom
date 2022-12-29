@@ -14,7 +14,7 @@ import {
   message,
   Upload,
   Collapse,
-    Steps
+  Steps,
 } from "antd";
 import { NavLink, useHistory } from "react-router-dom";
 import { IoMdArrowRoundBack } from "react-icons/io";
@@ -38,6 +38,7 @@ import moment from "moment";
 import axios from "axios";
 import { PATH_PREFIX } from "Utils/AppVariables";
 import "./style.css";
+import { useTranslation } from "react-i18next";
 
 const { Option } = Select;
 const { Panel } = Collapse;
@@ -56,7 +57,8 @@ const thirdApplication = () => {
   const [requiredDocsFirst, setRequiredDocsFirst] = useState(false);
   const [requiredDocsSecond, setRequiredDocsSecond] = useState(false);
   const history = useHistory();
-  const {Step} = Steps;
+  const { Step } = Steps;
+  const { t } = useTranslation();
 
   const onFinish = async values => {
     try {
@@ -165,10 +167,8 @@ const thirdApplication = () => {
   };
 
   return (
-    <div
-      className="site-card-wrapper d-flex justify-content-center align-items-center "
-    >
-      <Row gutter={16}>
+    <div className="online-application d-flex justify-content-center align-items-center">
+      <div className="wrap">
         <Col span={24} className={""}>
           <Card
             bordered={true}
@@ -181,7 +181,7 @@ const thirdApplication = () => {
             {/* go back */}
             <div>
               <NavLink to={"/login"} className={"text-dark font-size-16"}>
-                <IoMdArrowRoundBack /> Orqaga
+                <IoMdArrowRoundBack /> {t("Back")}
               </NavLink>
             </div>
 
@@ -203,7 +203,7 @@ const thirdApplication = () => {
                 </Divider>
                 <Col xs={24} md={12} lg={8} xl={8} xxl={6}>
                   <Form.Item
-                    label="Viloyat"
+                    label={t("Province")}
                     name="region"
                     rules={[
                       {
@@ -217,7 +217,7 @@ const thirdApplication = () => {
                       style={{
                         width: "100%",
                       }}
-                      placeholder="Viloyatni tanlang"
+                      placeholder={t("SelectaRegion")}
                       onChange={e => setDistrictById(e)}
                     >
                       {regions?.map((item, i) => (
@@ -231,7 +231,7 @@ const thirdApplication = () => {
 
                 <Col xs={24} md={12} lg={8} xl={8} xxl={6}>
                   <Form.Item
-                    label="Tuman"
+                    label={t("District")}
                     name="area_id"
                     rules={[
                       {
@@ -245,7 +245,7 @@ const thirdApplication = () => {
                       style={{
                         width: "100%",
                       }}
-                      placeholder="Tumanni tanlang"
+                      placeholder={t("SelectaDistrict")}
                       disabled={!form.getFieldValue("region")}
                       onChange={e => setAutoSchoolById(e)}
                     >
@@ -258,10 +258,9 @@ const thirdApplication = () => {
                   </Form.Item>
                 </Col>
 
-
                 <Col xs={24} md={12} lg={8} xl={8} xxl={6}>
                   <Form.Item
-                    label="Avtomaktab"
+                    label={t("Organization")}
                     name="organization_id"
                     rules={[
                       {
@@ -275,7 +274,7 @@ const thirdApplication = () => {
                       style={{
                         width: "100%",
                       }}
-                      placeholder="Avtomaktabni tanlang"
+                      placeholder={t("Select a  avtoschool")}
                       disabled={!form.getFieldValue("area_id")}
                       onChange={e => setTypeByOrganisationId(e)}
                     >
@@ -290,7 +289,7 @@ const thirdApplication = () => {
 
                 <Col xs={24} md={12} lg={8} xl={8} xxl={6}>
                   <Form.Item
-                    label="Toifa"
+                    label={t("All categories")}
                     name="edu_type_id"
                     rules={[
                       {
@@ -304,7 +303,7 @@ const thirdApplication = () => {
                       style={{
                         width: "100%",
                       }}
-                      placeholder="Toifani tanlang"
+                      placeholder={t("Select a category")}
                       disabled={!form.getFieldValue("organization_id")}
                       onChange={e => {
                         if (e == 1) {
@@ -361,7 +360,7 @@ const thirdApplication = () => {
 
                 <Col xs={24} md={12} lg={8} xl={8} xxl={6}>
                   <Form.Item
-                    label="Imtihon markazi"
+                    label={t("Test center")}
                     name="examination_area_id"
                     rules={[
                       {
@@ -375,7 +374,7 @@ const thirdApplication = () => {
                       style={{
                         width: "100%",
                       }}
-                      placeholder="Imtihon markazini tanlang"
+                      placeholder={t("Select a test center")}
                     >
                       {examinationAreas?.map((item, i) => (
                         <Option key={i} value={item?.id}>
@@ -669,7 +668,7 @@ const thirdApplication = () => {
             </Form>
           </Card>
         </Col>
-      </Row>
+      </div>
     </div>
   );
 };
