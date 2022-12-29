@@ -802,7 +802,18 @@
   "Select a  avtoschool":"Avtomaktabni tanlang",
   "Select a category": "Toifani tanlang",
   "Test center":"Imtihon markazi",
-  "Select a test center":"Test markazini tanlang"
-
+  "Select a test center":"Test markazini tanlang",
+"Educational Information (Mandatory)":"Ta'lim ma'lumotlar (Majburiy)",
+"Full name":"FIO",
+"Enter the phone number":"Telefon raqamni kiriting",
+"Exam status":"Imtihon topshirish holati",
+"For the first time":"Birinchi marta",
+"Resubmission":"Qayta topshirish",
+"Birth date":"Tug'ulgan kun",
+"optional":"ixtiyoriy",
+"Workbook":"Mehnat daftarcha",
+"083 Form":"083 Forma",
+"Upload":"Yuklash",
+"Clear":"Tozalash"
 }
 

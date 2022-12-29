@@ -199,7 +199,7 @@ const thirdApplication = () => {
               {/* Ta'lim ma'lumotlar */}
               <Row gutter={16}>
                 <Divider className="text-warning" orientation="left">
-                  Ta'lim ma'lumotlar (Majburiy)
+                  {t("Educational Information (Mandatory)")}
                 </Divider>
                 <Col xs={24} md={12} lg={8} xl={8} xxl={6}>
                   <Form.Item
@@ -477,11 +477,11 @@ const thirdApplication = () => {
               {/* shaxsiy ma'lumotlar */}
               <Row gutter={16}>
                 <Divider className="text-warning" orientation="left">
-                  Shaxsiy ma'lumotlar
+                  {t("Personal information")}
                 </Divider>
                 <Col xs={24} md={12} lg={8} xl={8} xxl={6}>
                   <Form.Item
-                    label="FIO"
+                    label={t("Full name")}
                     name="student_fio"
                     rules={[
                       {
@@ -496,7 +496,7 @@ const thirdApplication = () => {
 
                 <Col xs={24} md={12} lg={8} xl={8} xxl={6}>
                   <Form.Item
-                    label="Pasport seria va raqami"
+                    label={t("Passport series and number")}
                     name="student_passport"
                     rules={[
                       {
@@ -516,7 +516,7 @@ const thirdApplication = () => {
 
                 <Col xs={24} md={12} lg={8} xl={8} xxl={6}>
                   <Form.Item
-                    label="Telefon"
+                    label={t("Phone")}
                     name="student_phone"
                     rules={[
                       {
@@ -526,7 +526,7 @@ const thirdApplication = () => {
                     ]}
                   >
                     <InputMask
-                      placeholder="Telefon raqamni kiriting"
+                      placeholder={t("Enter the phone number")}
                       {...maskInputNumber}
                       className={"ant-input"}
                     />
@@ -535,7 +535,7 @@ const thirdApplication = () => {
 
                 <Col xs={24} md={12} lg={8} xl={8} xxl={6}>
                   <Form.Item
-                    label="Imtihon topshirish holati"
+                    label="Exam status"
                     name="type"
                     rules={[
                       {
@@ -551,15 +551,15 @@ const thirdApplication = () => {
                       }}
                       allowClear
                     >
-                      <Option value={"first"}>Birinchi marta</Option>
-                      <Option value={"resubmit"}>Qayta topshirish</Option>
+                      <Option value={"first"}>{t("For the first time")}</Option>
+                      <Option value={"resubmit"}>{t("Resubmission")}</Option>
                     </Select>
                   </Form.Item>
                 </Col>
 
                 <Col xs={24} md={12} lg={8} xl={8} xxl={6}>
                   <Form.Item
-                    label="Guruh"
+                    label={t("Group")}
                     name="group"
                     rules={[
                       {
@@ -574,7 +574,7 @@ const thirdApplication = () => {
 
                 <Col xs={24} md={12} lg={8} xl={8} xxl={6}>
                   <Form.Item
-                    label="Tug'ilgan sanasi"
+                    label={t("Birth date")}
                     name="birthday"
                     rules={[
                       {
@@ -604,13 +604,15 @@ const thirdApplication = () => {
                     <Form.Item
                       label={
                         <div>
-                          083 Forma{" "}
-                          <span className="text-warning">(ixtiyoriy)</span>
+                          {t("083 Form")}
+                          <span className="text-warning">
+                            ({t("optional")})
+                          </span>
                         </div>
                       }
                     >
                       <Upload accept=".pdf">
-                        <Button>Yuklash</Button>
+                        <Button>{t("Upload")}</Button>
                       </Upload>
                     </Form.Item>
                   </Col>
@@ -623,14 +625,16 @@ const thirdApplication = () => {
                     <Form.Item
                       label={
                         <div>
-                          Mehnat daftarcha{" "}
-                          <span className="text-warning">(ixtiyoriy)</span>
+                          {t("Workbook")}
+                          <span className="text-warning">
+                            ({t("optional")})
+                          </span>
                         </div>
                       }
                       name="file"
                     >
                       <Upload accept=".pdf">
-                        <Button>Yuklash</Button>
+                        <Button>{t("Upload")}</Button>
                       </Upload>
                     </Form.Item>
                   </Col>
@@ -647,7 +651,7 @@ const thirdApplication = () => {
                 >
                   <NavLink to={"/login"}>
                     <Button type="primary" danger className="mr-3">
-                      Bekor qilish
+                      {t("Cancel")}
                     </Button>
                   </NavLink>
 
@@ -657,11 +661,11 @@ const thirdApplication = () => {
                     type="dashed"
                     danger
                   >
-                    <GrPowerReset className="mr-1 text-danger" /> Tozalash
+                    <GrPowerReset className="mr-1 text-danger" /> {t("Clear")}
                   </Button>
 
                   <Button htmlType="submit" type="primary">
-                    <FaSave className="mr-1" /> Saqlash
+                    <FaSave className="mr-1" /> {t("Save")}
                   </Button>
                 </Col>
               </Row>
