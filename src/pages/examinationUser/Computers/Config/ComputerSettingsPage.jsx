@@ -25,6 +25,7 @@ import {
   AiOutlineLeft,
   AiOutlineDesktop,
   AiOutlineEnter,
+  AiFillCheckCircle,
 } from "react-icons/ai";
 import { BsFillFileEarmarkMedicalFill } from "react-icons/bs";
 import Webcam from "react-webcam";
@@ -67,7 +68,16 @@ const ComputerSettingsPage = () => {
           if (resp?.response_id) {
             setFaceRecognitionKey(resp?.response_id);
             localStorage.setItem("face_recognition_key", resp?.response_id);
-            message.success(resp?.result_note);
+            // message.success(resp?.result_note);
+            notification.open({
+              message: (
+                <span className="text-success d-flex justify-content-start align-items-center">
+                  <AiFillCheckCircle />{" "}
+                  <span className="px-1">Ma'lumotlar tasdiqlandi</span>
+                </span>
+              ),
+              description: "Imtihonga kirish mumkin",
+            });
             setLoadingRecognition(false);
             loginByComputer();
           }
@@ -77,10 +87,22 @@ const ComputerSettingsPage = () => {
           notification.open({
             message: (
               <span className="text-danger d-flex justify-content-start align-items-center">
-                <BiErrorCircle /> <span className="px-1">Xatolik</span>
+                <BiErrorCircle />{" "}
+                <span className="px-1">Xatolik yuz berdi</span>
               </span>
             ),
             description: "Pasport ma'lumotlari noto'g'ri kiritilgan",
+          });
+        } else if (parseInt(resp?.result_code) === 3) {
+          setPicture("");
+          notification.open({
+            message: (
+              <span className="text-danger d-flex justify-content-start align-items-center">
+                <BiErrorCircle />{" "}
+                <span className="px-1">Xatolik yuz berdi</span>
+              </span>
+            ),
+            description: "Yuz ma'lumoti yorug'lik darajasi past",
           });
         } else if (parseInt(resp?.result_code) === 4) {
           // message.error('Pasport malumotlari bilan mos tushmadi');
@@ -93,6 +115,80 @@ const ComputerSettingsPage = () => {
             ),
             description: "Pasport ma'lumotlari bilan mos tushmadi",
           });
+        } else if (parseInt(resp?.result_code) === 5) {
+          setPicture("");
+          notification.open({
+            message: (
+              <span className="text-danger d-flex justify-content-start align-items-center">
+                <BiErrorCircle /> <span className="px-1">Xatolik</span>
+              </span>
+            ),
+            description: "Bog'langan qurilma ishlashida xatolik",
+          });
+        } else if (parseInt(resp?.result_code) === 6) {
+          setPicture("");
+          notification.open({
+            message: (
+              <span className="text-danger d-flex justify-content-start align-items-center">
+                <BiErrorCircle /> <span className="px-1">Xatolik</span>
+              </span>
+            ),
+            description: "Bunday foydalanuvchi mavjud emas!",
+          });
+        } else if (parseInt(resp?.result_code) === 7) {
+          setPicture("");
+          notification.open({
+            message: (
+              <span className="text-danger d-flex justify-content-start align-items-center">
+                <BiErrorCircle />{" "}
+                <span className="px-1">Rasmni olishda xatolik</span>
+              </span>
+            ),
+            description: "Olingan rasm tekshirish uchun yaroqsiz",
+          });
+        } else if (parseInt(resp?.result_code) === 9) {
+          setPicture("");
+          notification.open({
+            message: (
+              <span className="text-danger d-flex justify-content-start align-items-center">
+                <BiErrorCircle />{" "}
+                <span className="px-1">Ma'lumot vaqtida xatolik</span>
+              </span>
+            ),
+            description: "Vazifani bajarish muddati tugadi",
+          });
+        } else if (parseInt(resp?.result_code) === 10) {
+          setPicture("");
+          notification.open({
+            message: (
+              <span className="text-danger d-flex justify-content-start align-items-center">
+                <BiErrorCircle /> <span className="px-1">Xatolik</span>
+              </span>
+            ),
+            description: "Navbatdagi vazifani kutish vaqti tugadi",
+          });
+        } else if (parseInt(resp?.result_code) === 11) {
+          setPicture("");
+          notification.open({
+            message: (
+              <span className="text-danger d-flex justify-content-start align-items-center">
+                <BiErrorCircle />{" "}
+                <span className="px-1">So'rovni yuborishda xatolik</span>
+              </span>
+            ),
+            description: "Qaytadan xarakat qilib ko'ring!",
+          });
+        } else if (parseInt(resp?.result_code) === 14) {
+          setPicture("");
+          notification.open({
+            message: (
+              <span className="text-danger d-flex justify-content-start align-items-center">
+                <BiErrorCircle />{" "}
+                <span className="px-1">Yuzni aniqlashda xatolik</span>
+              </span>
+            ),
+            description: "Yuzni aniqlashda muammolik",
+          });
         } else if (parseInt(resp?.result_code) === 17) {
           // message.error('Yuzingizni kameraga to`g`ri tuting');
           setPicture("");
@@ -104,6 +200,38 @@ const ComputerSettingsPage = () => {
             ),
             description: "Yuzingizni kameraga to`g`ri tuting",
           });
+        } else if (parseInt(resp?.result_code) === 18) {
+          setPicture("");
+          notification.open({
+            message: (
+              <span className="text-danger d-flex justify-content-start align-items-center">
+                <BiErrorCircle /> <span className="px-1">So'rovda xatolik</span>
+              </span>
+            ),
+            description: "Jarayonni davom ettirib bo'lmaydi",
+          });
+        } else if (parseInt(resp?.result_code) === 19) {
+          setPicture("");
+          notification.open({
+            message: (
+              <span className="text-danger d-flex justify-content-start align-items-center">
+                <BiErrorCircle />{" "}
+                <span className="px-1">Yuzni tanishda xatolik</span>
+              </span>
+            ),
+            description: "Yuzni tanish so'rovini davom ettirib bo'lmaydi",
+          });
+        } else if (parseInt(resp?.result_code) === 20) {
+          setPicture("");
+          notification.open({
+            message: (
+              <span className="text-danger d-flex justify-content-start align-items-center">
+                <BiErrorCircle />{" "}
+                <span className="px-1">Olingan rasmda xatolik</span>
+              </span>
+            ),
+            description: "Olingan rasm sifati past",
+          });
         } else if (parseInt(resp?.result_code) === 21) {
           // message.error("Yuzingiz kameraga to'liq ko'rinsin");
           setPicture("");
@@ -114,6 +242,81 @@ const ComputerSettingsPage = () => {
               </span>
             ),
             description: "Yuzingiz kameraga to`iq ko`rinsin",
+          });
+        } else if (parseInt(resp?.result_code) === 22) {
+          setPicture("");
+          notification.open({
+            message: (
+              <span className="text-danger d-flex justify-content-start align-items-center">
+                <BiErrorCircle />{" "}
+                <span className="px-1">Bir necha yuzlar aniqlandi</span>
+              </span>
+            ),
+            description: "Olingan rasmda bir necha yuz aniqlandi",
+          });
+        } else if (parseInt(resp?.result_code) === 23) {
+          setPicture("");
+          notification.open({
+            message: (
+              <span className="text-danger d-flex justify-content-start align-items-center">
+                <BiErrorCircle />{" "}
+                <span className="px-1">Rasm rangida xatolik</span>
+              </span>
+            ),
+            description: "Talab qilinadigan rasm rangli bo'lishi kerak",
+          });
+        } else if (parseInt(resp?.result_code) === 24) {
+          setPicture("");
+          notification.open({
+            message: (
+              <span className="text-danger d-flex justify-content-start align-items-center">
+                <BiErrorCircle />{" "}
+                <span className="px-1">Yuzda taqinchoqlar aniqlandi</span>
+              </span>
+            ),
+            description: "Ko'zingizda qoraytirilgan ko'zoynaklar aniqlandi",
+          });
+        } else if (parseInt(resp?.result_code) === 25) {
+          setPicture("");
+          notification.open({
+            message: (
+              <span className="text-danger d-flex justify-content-start align-items-center">
+                <BiErrorCircle />{" "}
+                <span className="px-1">Rasm sifatida xatolik</span>
+              </span>
+            ),
+            description: "Olingan rasm tekshirish uchun mos emas",
+          });
+        } else if (parseInt(resp?.result_code) === 26) {
+          setPicture("");
+          notification.open({
+            message: (
+              <span className="text-danger d-flex justify-content-start align-items-center">
+                <BiErrorCircle /> <span className="px-1">Xatolik</span>
+              </span>
+            ),
+            description: "Ko'zlar yumiq yoki to'silgan",
+          });
+        } else if (parseInt(resp?.result_code) === 27) {
+          setPicture("");
+          notification.open({
+            message: (
+              <span className="text-danger d-flex justify-content-start align-items-center">
+                <BiErrorCircle /> <span className="px-1">Xatolik</span>
+              </span>
+            ),
+            description: "Boshingizni to'g'ri tuting",
+          });
+        } else if (parseInt(resp?.result_code) === 28) {
+          setPicture("");
+          notification.open({
+            message: (
+              <span className="text-danger d-flex justify-content-start align-items-center">
+                <BiErrorCircle />{" "}
+                <span className="px-1">Yuzni aniqlashda xatolik</span>
+              </span>
+            ),
+            description: "Yuzni aniqlab bo'lmadi",
           });
         } else if (parseInt(resp?.status) === 0) {
           // message.error(resp?.message);
@@ -147,7 +350,6 @@ const ComputerSettingsPage = () => {
       })();
     }
   });
-  console.log("pic", picture);
 
   const {
     setAuth,
