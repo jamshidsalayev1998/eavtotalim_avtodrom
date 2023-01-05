@@ -197,9 +197,9 @@ const QueueFinalExam = props => {
                         Amaliy uchun navbat
                       </h3>
                       <QueueNumbersComponent
-                        data={accessedData?.filter(item => {
-                          item?.type == "practical";
-                        })}
+                        data={accessedData?.filter(
+                          item => item?.type == "practical"
+                        )}
                       />
                     </div>
                   </div>

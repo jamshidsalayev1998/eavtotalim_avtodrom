@@ -14,7 +14,7 @@ import {
   message,
   Upload,
   Collapse,
-    Steps
+  Steps,
 } from "antd";
 import { NavLink, useHistory } from "react-router-dom";
 import { IoMdArrowRoundBack } from "react-icons/io";
@@ -38,6 +38,7 @@ import moment from "moment";
 import axios from "axios";
 import { PATH_PREFIX } from "Utils/AppVariables";
 import "./style.css";
+import { useTranslation } from "react-i18next";
 
 const { Option } = Select;
 const { Panel } = Collapse;
@@ -56,7 +57,8 @@ const thirdApplication = () => {
   const [requiredDocsFirst, setRequiredDocsFirst] = useState(false);
   const [requiredDocsSecond, setRequiredDocsSecond] = useState(false);
   const history = useHistory();
-  const {Step} = Steps;
+  const { Step } = Steps;
+  const { t } = useTranslation();
 
   const onFinish = async values => {
     try {
@@ -165,10 +167,8 @@ const thirdApplication = () => {
   };
 
   return (
-    <div
-      className="site-card-wrapper d-flex justify-content-center align-items-center "
-    >
-      <Row gutter={16}>
+    <div className="online-application d-flex justify-content-center align-items-center">
+      <div className="wrap">
         <Col span={24} className={""}>
           <Card
             bordered={true}
@@ -181,7 +181,7 @@ const thirdApplication = () => {
             {/* go back */}
             <div>
               <NavLink to={"/login"} className={"text-dark font-size-16"}>
-                <IoMdArrowRoundBack /> Orqaga
+                <IoMdArrowRoundBack /> {t("Back")}
               </NavLink>
             </div>
 
@@ -199,11 +199,11 @@ const thirdApplication = () => {
               {/* Ta'lim ma'lumotlar */}
               <Row gutter={16}>
                 <Divider className="text-warning" orientation="left">
-                  Ta'lim ma'lumotlar (Majburiy)
+                  {t("Educational Information (Mandatory)")}
                 </Divider>
                 <Col xs={24} md={12} lg={8} xl={8} xxl={6}>
                   <Form.Item
-                    label="Viloyat"
+                    label={t("Province")}
                     name="region"
                     rules={[
                       {
@@ -217,7 +217,7 @@ const thirdApplication = () => {
                       style={{
                         width: "100%",
                       }}
-                      placeholder="Viloyatni tanlang"
+                      placeholder={t("SelectaRegion")}
                       onChange={e => setDistrictById(e)}
                     >
                       {regions?.map((item, i) => (
@@ -231,7 +231,7 @@ const thirdApplication = () => {
 
                 <Col xs={24} md={12} lg={8} xl={8} xxl={6}>
                   <Form.Item
-                    label="Tuman"
+                    label={t("District")}
                     name="area_id"
                     rules={[
                       {
@@ -245,7 +245,7 @@ const thirdApplication = () => {
                       style={{
                         width: "100%",
                       }}
-                      placeholder="Tumanni tanlang"
+                      placeholder={t("SelectaDistrict")}
                       disabled={!form.getFieldValue("region")}
                       onChange={e => setAutoSchoolById(e)}
                     >
@@ -258,10 +258,9 @@ const thirdApplication = () => {
                   </Form.Item>
                 </Col>
 
-
                 <Col xs={24} md={12} lg={8} xl={8} xxl={6}>
                   <Form.Item
-                    label="Avtomaktab"
+                    label={t("Organization")}
                     name="organization_id"
                     rules={[
                       {
@@ -275,7 +274,7 @@ const thirdApplication = () => {
                       style={{
                         width: "100%",
                       }}
-                      placeholder="Avtomaktabni tanlang"
+                      placeholder={t("Select a  avtoschool")}
                       disabled={!form.getFieldValue("area_id")}
                       onChange={e => setTypeByOrganisationId(e)}
                     >
@@ -290,7 +289,7 @@ const thirdApplication = () => {
 
                 <Col xs={24} md={12} lg={8} xl={8} xxl={6}>
                   <Form.Item
-                    label="Toifa"
+                    label={t("All categories")}
                     name="edu_type_id"
                     rules={[
                       {
@@ -304,7 +303,7 @@ const thirdApplication = () => {
                       style={{
                         width: "100%",
                       }}
-                      placeholder="Toifani tanlang"
+                      placeholder={t("Select a category")}
                       disabled={!form.getFieldValue("organization_id")}
                       onChange={e => {
                         if (e == 1) {
@@ -361,7 +360,7 @@ const thirdApplication = () => {
 
                 <Col xs={24} md={12} lg={8} xl={8} xxl={6}>
                   <Form.Item
-                    label="Imtihon markazi"
+                    label={t("Test center")}
                     name="examination_area_id"
                     rules={[
                       {
@@ -375,7 +374,7 @@ const thirdApplication = () => {
                       style={{
                         width: "100%",
                       }}
-                      placeholder="Imtihon markazini tanlang"
+                      placeholder={t("Select a test center")}
                     >
                       {examinationAreas?.map((item, i) => (
                         <Option key={i} value={item?.id}>
@@ -478,11 +477,11 @@ const thirdApplication = () => {
               {/* shaxsiy ma'lumotlar */}
               <Row gutter={16}>
                 <Divider className="text-warning" orientation="left">
-                  Shaxsiy ma'lumotlar
+                  {t("Personal information")}
                 </Divider>
                 <Col xs={24} md={12} lg={8} xl={8} xxl={6}>
                   <Form.Item
-                    label="FIO"
+                    label={t("Full name")}
                     name="student_fio"
                     rules={[
                       {
@@ -497,7 +496,7 @@ const thirdApplication = () => {
 
                 <Col xs={24} md={12} lg={8} xl={8} xxl={6}>
                   <Form.Item
-                    label="Pasport seria va raqami"
+                    label={t("Passport series and number")}
                     name="student_passport"
                     rules={[
                       {
@@ -517,7 +516,7 @@ const thirdApplication = () => {
 
                 <Col xs={24} md={12} lg={8} xl={8} xxl={6}>
                   <Form.Item
-                    label="Telefon"
+                    label={t("Phone")}
                     name="student_phone"
                     rules={[
                       {
@@ -527,7 +526,7 @@ const thirdApplication = () => {
                     ]}
                   >
                     <InputMask
-                      placeholder="Telefon raqamni kiriting"
+                      placeholder={t("Enter the phone number")}
                       {...maskInputNumber}
                       className={"ant-input"}
                     />
@@ -536,7 +535,7 @@ const thirdApplication = () => {
 
                 <Col xs={24} md={12} lg={8} xl={8} xxl={6}>
                   <Form.Item
-                    label="Imtihon topshirish holati"
+                    label="Exam status"
                     name="type"
                     rules={[
                       {
@@ -552,15 +551,15 @@ const thirdApplication = () => {
                       }}
                       allowClear
                     >
-                      <Option value={"first"}>Birinchi marta</Option>
-                      <Option value={"resubmit"}>Qayta topshirish</Option>
+                      <Option value={"first"}>{t("For the first time")}</Option>
+                      <Option value={"resubmit"}>{t("Resubmission")}</Option>
                     </Select>
                   </Form.Item>
                 </Col>
 
                 <Col xs={24} md={12} lg={8} xl={8} xxl={6}>
                   <Form.Item
-                    label="Guruh"
+                    label={t("Group")}
                     name="group"
                     rules={[
                       {
@@ -575,7 +574,7 @@ const thirdApplication = () => {
 
                 <Col xs={24} md={12} lg={8} xl={8} xxl={6}>
                   <Form.Item
-                    label="Tug'ilgan sanasi"
+                    label={t("Birth date")}
                     name="birthday"
                     rules={[
                       {
@@ -605,13 +604,15 @@ const thirdApplication = () => {
                     <Form.Item
                       label={
                         <div>
-                          083 Forma{" "}
-                          <span className="text-warning">(ixtiyoriy)</span>
+                          {t("083 Form")}
+                          <span className="text-warning">
+                            ({t("optional")})
+                          </span>
                         </div>
                       }
                     >
                       <Upload accept=".pdf">
-                        <Button>Yuklash</Button>
+                        <Button>{t("Upload")}</Button>
                       </Upload>
                     </Form.Item>
                   </Col>
@@ -624,14 +625,16 @@ const thirdApplication = () => {
                     <Form.Item
                       label={
                         <div>
-                          Mehnat daftarcha{" "}
-                          <span className="text-warning">(ixtiyoriy)</span>
+                          {t("Workbook")}
+                          <span className="text-warning">
+                            ({t("optional")})
+                          </span>
                         </div>
                       }
                       name="file"
                     >
                       <Upload accept=".pdf">
-                        <Button>Yuklash</Button>
+                        <Button>{t("Upload")}</Button>
                       </Upload>
                     </Form.Item>
                   </Col>
@@ -648,7 +651,7 @@ const thirdApplication = () => {
                 >
                   <NavLink to={"/login"}>
                     <Button type="primary" danger className="mr-3">
-                      Bekor qilish
+                      {t("Cancel")}
                     </Button>
                   </NavLink>
 
@@ -658,18 +661,18 @@ const thirdApplication = () => {
                     type="dashed"
                     danger
                   >
-                    <GrPowerReset className="mr-1 text-danger" /> Tozalash
+                    <GrPowerReset className="mr-1 text-danger" /> {t("Clear")}
                   </Button>
 
                   <Button htmlType="submit" type="primary">
-                    <FaSave className="mr-1" /> Saqlash
+                    <FaSave className="mr-1" /> {t("Save")}
                   </Button>
                 </Col>
               </Row>
             </Form>
           </Card>
         </Col>
-      </Row>
+      </div>
     </div>
   );
 };
