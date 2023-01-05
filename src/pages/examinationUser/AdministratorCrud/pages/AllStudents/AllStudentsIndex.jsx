@@ -137,9 +137,9 @@ const AllStudentsIndex = props => {
                     title: 'Nazariy',
                     render: (index, element) => <>
                         {
-                            Number(element?.exam_result) === 1 ?
+                            parseInt(element?.exam_result) === 1 ?
                                 <Badge color={'success'}>O`tgan</Badge> :
-                                Number(element?.exam_result) === 0 ?
+                                parseInt(element?.exam_result) === 0 ?
                                     <Badge color={'danger'}>Yiqilgan</Badge> :
                                     <Badge color={'warning'}>Topshirmagan</Badge>
 
@@ -149,9 +149,9 @@ const AllStudentsIndex = props => {
                 {
                     title: 'Amaliy',
                     render: (index, element) => <>{
-                        Number(element?.practical_exam_result) === 1 ?
+                        parseInt(element?.practical_exam_result) === 1 ?
                             <Badge color={'success'}>O`tgan</Badge> :
-                            Number(element?.practical_exam_result) === 0 ?
+                            parseInt(element?.practical_exam_result) === 0 ?
                                 <Badge color={'danger'}>Yiqilgan</Badge> :
                                 <Badge color={'warning'}>Topshirmagan</Badge>
 
