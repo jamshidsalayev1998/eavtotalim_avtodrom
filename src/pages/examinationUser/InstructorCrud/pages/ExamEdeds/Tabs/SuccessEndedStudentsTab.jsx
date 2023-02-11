@@ -56,7 +56,7 @@ const SuccessEndedStudentsTab = () => {
                                         }
                                     }}>
                                     <div style={{cursor: 'pointer'}}
-                                         className={`hover-result-box border p-1 hover rounded ${parseInt(elementMap?.result) === 1 ? `bg-success-box` : parseInt(elementMap?.result) === 0 ? `bg-danger-box` : `bg-warning-box`}`}>{elementMap?.examination_area_car?.name} - {elementMap?.examination_area_car?.number}</div>
+                                         className={`hover-result-box border p-1 hover rounded ${parseInt(elementMap?.result) === 1 ? `bg-success-box` : parseInt(elementMap?.result) === 0 ? `bg-danger-box` : `bg-warning-box`}`}>{elementMap?.examination_area_car?.name} - {elementMap?.examination_area_car?.number} ({elementMap?.penalty_ball} - jarima bali) </div>
 
                                 </NavLink>
                             </Popover>
