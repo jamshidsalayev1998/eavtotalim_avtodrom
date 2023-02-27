@@ -65,12 +65,13 @@ const ExaminationAreaSensorsIndex = props => {
 
     function edit_payment(element) {
         Object.assign(element,{
-            light:parseInt(element?.light)?true:false,
-            right:parseInt(element?.right)?true:false,
-            left:parseInt(element?.left)?true:false,
-            arg1:parseInt(element?.arg1)?true:false,
-            remen:parseInt(element?.remen)?true:false,
-            engine:parseInt(element?.engine)?true:false,
+            light:!!parseInt(element?.light),
+            right:!!parseInt(element?.right),
+            left:!!parseInt(element?.left),
+            arg1:!!parseInt(element?.arg1),
+            remen:!!parseInt(element?.remen),
+            engine:!!parseInt(element?.engine),
+            back:!!parseInt(element?.back),
         });
         // console.log(element)
         editForm.setFieldsValue(element);
