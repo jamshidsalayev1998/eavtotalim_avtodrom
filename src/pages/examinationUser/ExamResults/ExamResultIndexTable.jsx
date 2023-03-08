@@ -1,49 +1,97 @@
 import React, { useState, useRef } from "react";
 import { withTranslation } from "react-i18next";
-import { Table, Popconfirm, message, Tooltip, Tag, Modal, Input } from "antd";
+import {
+  Table,
+  Popconfirm,
+  message,
+  Tooltip,
+  Tag,
+  Modal,
+  Input,
+  Form,
+  Button,
+} from "antd";
 import { Link } from "react-router-dom";
 import moment from "moment";
-import { Badge, Button } from "reactstrap";
+import { Badge } from "reactstrap";
 import PrintReportByStudent from "./print/PrintReportByStudent";
 import "./print/print.css";
 import ReactToPrint from "react-to-print";
 import { sendStudentResultBySms } from "../../../services/api_services/send_student_result_by_sms_api";
+import axios from "axios";
+import { PATH_PREFIX_V2 } from "Utils/AppVariables";
 const { TextArea } = Input;
 
 const ExamResultIndexTable = ({ tableData, reload, setreload }) => {
   const [selectedStudentForReport, setSelectedStudentForReport] =
     useState(undefined);
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState({ opened: false, item: undefined });
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [studentId, setStudentId] = useState({});
 
-  const showModal = () => {
-    setOpen(true);
+  const [openPractical, setOpenPractical] = useState({
+    opened: false,
+    item: undefined,
+  });
+  const [confirmLoadingPractical, setConfirmLoadingPractical] = useState(false);
+  const [studentIdPractical, setStudentIdPractical] = useState({});
+
+  const showModal = id => {
+    setOpen({ opened: true, item: id });
   };
 
-  const handleOk = () => {
-    setModalText("The modal will be closed after two seconds");
-    setConfirmLoading(true);
-    setTimeout(() => {
-      setOpen(false);
+  const handleOk = async values => {
+    try {
+      setConfirmLoading(true);
+      const response = await axios.post(
+        PATH_PREFIX_V2 + "/examination-director/make-reexamination",
+        { final_access_student_id: open.item, ...values },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      message.success("Muaffaqiyatli amalga oshirildi");
       setConfirmLoading(false);
-    }, 2000);
+      setOpen({ opened: false, item: undefined });
+      setreload(!reload);
+    } catch (error) {
+      message.error("Xatolik yuz berdi");
+      setConfirmLoading(false);
+    }
   };
   const handleCancel = () => {
-    setOpen(false);
+    setOpen({ opened: false, item: undefined });
   };
 
-  //   useEffect(() => {
-  //     const getStudentId = async () => {
-  //       try {
-  //         const response = tableData;
-  //         setStudentId(response.id);
-  //       } catch (error) {
-  //         message.error("Student id ma'lumoti topilmadi");
-  //       }
-  //     };
-  //   }, [userId]);
-  //   console.log("iddddddddddddd", tableData?.filter(v => v?.id).length);
+  const showModalPractical = id => {
+    setOpenPractical({ opened: true, item: id });
+  };
+  const handleOkPractical = async values => {
+    try {
+      setConfirmLoadingPractical(true);
+      const response = await axios.post(
+        PATH_PREFIX_V2 + "/examination-director/make-practical-reexamination",
+        { final_practical_test_record_id: openPractical.item, ...values },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      message.success("Muaffaqiyatli amalga oshirildi");
+      setConfirmLoadingPractical(false);
+      setOpenPractical({ opened: false, item: undefined });
+      setreload(!reload);
+    } catch (error) {
+      message.error("Xatolik yuz berdi");
+      setConfirmLoadingPractical(false);
+    }
+  };
+  const handleCancelPractical = () => {
+    setOpenPractical({ opened: false, item: undefined });
+  };
 
   const sendTestResult = student => {
     (async () => {
@@ -116,26 +164,29 @@ const ExamResultIndexTable = ({ tableData, reload, setreload }) => {
       children: [
         {
           title: "Nazariy",
-          render: (index, element) => (
-            <>
-              {parseInt(element?.exam_result) === 1 ? (
-                <Tag color={"green"}>O`tgan</Tag>
-              ) : parseInt(element?.exam_result) === 0 ? (
-                <>
-                  <Tag color={"red"}>Yiqilgan</Tag>
-                  <button
-                    className="btn rounded border p-1 ml-2"
-                    color={"success"}
-                    onClick={showModal}
-                  >
-                    Qayta qo'yish <i class="fas fa-retweet text-success"></i>
-                  </button>
-                </>
-              ) : (
-                <Tag color={"gold"}>Topshirmagan</Tag>
-              )}
-            </>
-          ),
+          render: (index, element) => {
+            console.log("sssssssssssssssssssssssss", element);
+            return (
+              <>
+                {parseInt(element?.exam_result) === 1 ? (
+                  <Tag color={"green"}>O`tgan</Tag>
+                ) : parseInt(element?.exam_result) === 0 ? (
+                  <>
+                    <Tag color={"red"}>Yiqilgan</Tag>
+                    <button
+                      className="btn rounded border p-1 ml-2"
+                      color={"success"}
+                      onClick={() => showModal(element?.id)}
+                    >
+                      Qayta qo'yish <i class="fas fa-retweet text-success"></i>
+                    </button>
+                  </>
+                ) : (
+                  <Tag color={"gold"}>Topshirmagan</Tag>
+                )}
+              </>
+            );
+          },
         },
         {
           title: "Amaliy",
@@ -146,12 +197,25 @@ const ExamResultIndexTable = ({ tableData, reload, setreload }) => {
               ) : parseInt(element?.practical_exam_result) === 0 ? (
                 <>
                   <Tag color={"red"}>Yiqilgan</Tag>
-                  <button className="btn rounded border p-1" color={"success"}>
+                  <button
+                    className="btn rounded border p-1 ml-2"
+                    color={"success"}
+                    onClick={() => showModalPractical(element?.id)}
+                  >
                     Qayta qo'yish <i class="fas fa-retweet text-success"></i>
                   </button>
                 </>
               ) : (
-                <Tag color={"gold"}>Topshirmagan</Tag>
+                <>
+                  <Tag color={"gold"}>Topshirmagan</Tag>
+                  <button
+                    className="btn rounded border p-1 ml-2"
+                    color={"success"}
+                    onClick={() => showModalPractical(element?.id)}
+                  >
+                    Qayta qo'yish <i class="fas fa-retweet text-success"></i>
+                  </button>
+                </>
               )}
             </>
           ),
@@ -208,15 +272,37 @@ const ExamResultIndexTable = ({ tableData, reload, setreload }) => {
 
       <Modal
         title="Qayta imtihonga qo'yish"
-        open={open}
-        onOk={handleOk}
-        confirmLoading={confirmLoading}
+        open={open.opened}
         onCancel={handleCancel}
+        footer={false}
       >
-        <div>
-          <Input placeholder="Basic usage" />
-          <TextArea rows={4} />
-        </div>
+        <Form layout="vertical" onFinish={handleOk}>
+          <Form.Item name={"description"} label="Qayta imtihonga qo'yish izoxi">
+            <TextArea rows={4} />
+          </Form.Item>
+          <div className="d-flex justify-content-end">
+            <Button loading={confirmLoading} htmlType="submit" type="primary">
+              Yuborish
+            </Button>
+          </div>
+        </Form>
+      </Modal>
+      <Modal
+        title="Qayta imtihonga qo'yish"
+        open={openPractical.opened}
+        onCancel={handleCancelPractical}
+        footer={false}
+      >
+        <Form layout="vertical" onFinish={handleOkPractical}>
+          <Form.Item name={"description"} label="Qayta imtihonga qo'yish izoxi">
+            <TextArea rows={4} />
+          </Form.Item>
+          <div className="d-flex justify-content-end">
+            <Button loading={confirmLoading} htmlType="submit" type="primary">
+              Yuborish
+            </Button>
+          </div>
+        </Form>
       </Modal>
     </>
   );
