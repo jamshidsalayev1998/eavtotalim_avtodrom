@@ -29,14 +29,12 @@ const ExamResultIndexTable = ({ tableData, reload, setreload }) => {
     useState(undefined);
   const [open, setOpen] = useState({ opened: false, item: undefined });
   const [confirmLoading, setConfirmLoading] = useState(false);
-  const [studentId, setStudentId] = useState({});
 
   const [openPractical, setOpenPractical] = useState({
     opened: false,
     item: undefined,
   });
   const [confirmLoadingPractical, setConfirmLoadingPractical] = useState(false);
-  const [studentIdPractical, setStudentIdPractical] = useState({});
 
   const showModal = id => {
     setOpen({ opened: true, item: id });
@@ -47,9 +45,9 @@ const ExamResultIndexTable = ({ tableData, reload, setreload }) => {
       setConfirmLoading(true);
       const data = { final_access_student_id: open.item, ...values };
       const response = await sendStudentTheorioticalReexam(data);
-      message.success("Muaffaqiyatli amalga oshirildi");
       setConfirmLoading(false);
       setOpen({ opened: false, item: undefined });
+      message.success(response?.message);
       setreload(!reload);
     } catch (error) {
       message.error("Xatolik yuz berdi");
@@ -71,9 +69,9 @@ const ExamResultIndexTable = ({ tableData, reload, setreload }) => {
         ...values,
       };
       const response = await sendStudentPracticalReexam(data);
-      message.success("Muaffaqiyatli amalga oshirildi");
       setConfirmLoadingPractical(false);
       setOpenPractical({ opened: false, item: undefined });
+      message.success(response?.message);
       setreload(!reload);
     } catch (error) {
       message.error("Xatolik yuz berdi");
@@ -197,9 +195,7 @@ const ExamResultIndexTable = ({ tableData, reload, setreload }) => {
                   </button>
                 </>
               ) : (
-                <>
-                  <Tag color={"gold"}>Topshirmagan</Tag>
-                </>
+                <Tag color={"gold"}>Topshirmagan</Tag>
               )}
             </>
           ),
@@ -261,12 +257,21 @@ const ExamResultIndexTable = ({ tableData, reload, setreload }) => {
         footer={false}
       >
         <Form layout="vertical" onFinish={handleOk}>
-          <Form.Item name={"description"} label="Qayta imtihonga qo'yish izoxi">
+          <Form.Item
+            rules={[
+              {
+                required: true,
+                message: "Izohni kiriting!",
+              },
+            ]}
+            name={"description"}
+            label="Izoh"
+          >
             <TextArea rows={4} />
           </Form.Item>
           <div className="d-flex justify-content-end">
             <Button loading={confirmLoading} htmlType="submit" type="primary">
-              Yuborish
+              Imtihonga qo'yish
             </Button>
           </div>
         </Form>
@@ -278,12 +283,25 @@ const ExamResultIndexTable = ({ tableData, reload, setreload }) => {
         footer={false}
       >
         <Form layout="vertical" onFinish={handleOkPractical}>
-          <Form.Item name={"description"} label="Qayta imtihonga qo'yish izoxi">
+          <Form.Item
+            rules={[
+              {
+                required: true,
+                message: "Izohni kiriting!",
+              },
+            ]}
+            name={"description"}
+            label="Izoh"
+          >
             <TextArea rows={4} />
           </Form.Item>
           <div className="d-flex justify-content-end">
-            <Button loading={confirmLoading} htmlType="submit" type="primary">
-              Yuborish
+            <Button
+              loading={confirmLoadingPractical}
+              htmlType="submit"
+              type="primary"
+            >
+              Imtihonga qo'yish
             </Button>
           </div>
         </Form>
