@@ -208,13 +208,6 @@ const ExamResultIndexTable = ({ tableData, reload, setreload }) => {
               ) : (
                 <>
                   <Tag color={"gold"}>Topshirmagan</Tag>
-                  <button
-                    className="btn rounded border p-1 ml-2"
-                    color={"success"}
-                    onClick={() => showModalPractical(element?.id)}
-                  >
-                    Qayta qo'yish <i class="fas fa-retweet text-success"></i>
-                  </button>
                 </>
               )}
             </>
