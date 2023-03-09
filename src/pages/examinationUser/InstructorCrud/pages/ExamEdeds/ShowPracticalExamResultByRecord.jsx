@@ -346,14 +346,18 @@ const ShowPracticalExamResultByRecord = props => {
                           <span>{v?.penalty_ball}</span>
                         </Td>
                       </Tr>
-                      <Tr>
-                        <Td colSpan="3" className="text-left">
-                          Jami natijalari: {v?.penalty_ball}
-                        </Td>
-                      </Tr>
                     </>
                   );
                 })}
+
+                <Tr>
+                  <Td colSpan="3" className="text-left">
+                    Jami natijalari:{" "}
+                    {resultData?.listOfPenalties
+                      .map((v, i) => v?.penalty_ball)
+                      .reduce((a, b) => a + b)}
+                  </Td>
+                </Tr>
               </Tbody>
             </Table>
 
