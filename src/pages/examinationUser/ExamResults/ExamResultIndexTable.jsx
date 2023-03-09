@@ -20,6 +20,8 @@ import ReactToPrint from "react-to-print";
 import { sendStudentResultBySms } from "../../../services/api_services/send_student_result_by_sms_api";
 import axios from "axios";
 import { PATH_PREFIX_V2 } from "Utils/AppVariables";
+import { sendStudentTheorioticalReexam } from "services/api_services/send_student_theoriotical_reexam";
+import { sendStudentPracticalReexam } from "services/api_services/send_student_practical_reeam";
 const { TextArea } = Input;
 
 const ExamResultIndexTable = ({ tableData, reload, setreload }) => {
@@ -43,15 +45,8 @@ const ExamResultIndexTable = ({ tableData, reload, setreload }) => {
   const handleOk = async values => {
     try {
       setConfirmLoading(true);
-      const response = await axios.post(
-        PATH_PREFIX_V2 + "/examination-director/make-reexamination",
-        { final_access_student_id: open.item, ...values },
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
+      const data = { final_access_student_id: open.item, ...values };
+      const response = await sendStudentTheorioticalReexam(data);
       message.success("Muaffaqiyatli amalga oshirildi");
       setConfirmLoading(false);
       setOpen({ opened: false, item: undefined });
@@ -71,15 +66,11 @@ const ExamResultIndexTable = ({ tableData, reload, setreload }) => {
   const handleOkPractical = async values => {
     try {
       setConfirmLoadingPractical(true);
-      const response = await axios.post(
-        PATH_PREFIX_V2 + "/examination-director/make-practical-reexamination",
-        { final_practical_test_record_id: openPractical.item, ...values },
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
+      const data = {
+        final_practical_test_record_id: openPractical.item,
+        ...values,
+      };
+      const response = await sendStudentPracticalReexam(data);
       message.success("Muaffaqiyatli amalga oshirildi");
       setConfirmLoadingPractical(false);
       setOpenPractical({ opened: false, item: undefined });
