@@ -313,9 +313,9 @@ const ShowPracticalExamResultByRecord = props => {
                 <Tr className="text-center align-middle">
                   <Th className="">T/r</Th>
                   <Th>Xatoliklar</Th>
-                  <Th>1 ta xato uchun jarima</Th>
-                  <Th colSpan="4">
-                    <p>
+
+                  <Th>
+                    <p className="m-0 my-1">
                       Imtihon o‘tkazilgan sana
                       <br />
                       <span className="text-secondary">
@@ -326,209 +326,34 @@ const ShowPracticalExamResultByRecord = props => {
                         ).format("YYYY-MM-DD")}
                       </span>
                     </p>
-                    <p className="border-top py-2">
-                      To‘plangan jarima ballari
-                      <br />
-                      <span className="text-secondary">
-                        {resultData?.thisRecord?.penalty_ball
-                          ? resultData?.thisRecord?.penalty_ball
-                          : 0}
-                      </span>
-                    </p>
+                    <hr className="m-0 p-0" />
+                    <p className="m-0 my-1">Jarima ball</p>
                   </Th>
                 </Tr>
               </Thead>
-              <Thead>
-                <Tr className="text-center align-middle">
-                  <Th className="">1</Th>
-                  <Th className="">2</Th>
-                  <Th className="">3</Th>
-                  <Th className="">4</Th>
-                  <Th className="">5</Th>
-                  <Th className="">6</Th>
-                  <Th className="">7</Th>
-                </Tr>
-              </Thead>
               <Tbody className="text-center">
-                <Tr>
-                  <Td colSpan="7">
-                    <b>Amaliy imtihon bosqichlari</b>
-                  </Td>
-                </Tr>
-                <Tr>
-                  <Td>
-                    <p>1</p>
-                    <p>1.1</p>
-                  </Td>
-                  <Td className="text-left">
-                    <p>Balandlikka qo‘zg‘alishda:</p>
-                    <p>Notekis qo‘zg‘aldi:</p>
-                  </Td>
-                  <Td>
-                    <div>
-                      <p></p>
-                      <p>20</p>
-                    </div>
-                  </Td>
-                  <Td></Td>
-                  <Td></Td>
-                  <Td></Td>
-                  <Td></Td>
-                </Tr>
-
-                <Tr>
-                  <Td>1.2</Td>
-                  <Td className="text-left">Dvigatelni o‘chirib qo‘ydi:</Td>
-                  <Td>20</Td>
-                  <Td></Td>
-                  <Td></Td>
-                  <Td></Td>
-                  <Td></Td>
-                </Tr>
-
-                <Tr>
-                  <Td>1.3</Td>
-                  <Td className="text-left">Orqaga 70 sm. jildi:</Td>
-                  <Td>20</Td>
-                  <Td></Td>
-                  <Td></Td>
-                  <Td></Td>
-                  <Td></Td>
-                </Tr>
-
-                <Tr>
-                  <Td>
-                    <p>2</p>
-                    <p>2.1</p>
-                  </Td>
-                  <Td className="text-left">
-                    <p>Cheklangan harakat qismida qayrilish:</p>
-                    <p> Orqaga uzatmani 1-marta qo‘shib qayrila olmadi:</p>
-                  </Td>
-                  <Td>20</Td>
-                  <Td></Td>
-                  <Td></Td>
-                  <Td></Td>
-                  <Td></Td>
-                </Tr>
-
-                <Tr>
-                  <Td>2.2</Td>
-                  <Td className="text-left">Dvigatelni o‘chirib qo‘ydi</Td>
-                  <Td>20</Td>
-                  <Td></Td>
-                  <Td></Td>
-                  <Td></Td>
-                  <Td></Td>
-                </Tr>
-
-                <Tr>
-                  <Td>2.3</Td>
-                  <Td className="text-left">
-                    Cheklagichlardan chetga o‘tib ketdi:
-                  </Td>
-                  <Td>20</Td>
-                  <Td></Td>
-                  <Td></Td>
-                  <Td></Td>
-                  <Td></Td>
-                </Tr>
-
-                <Tr>
-                  <Td>
-                    <p>3</p>
-                    <p>3.1</p>
-                  </Td>
-                  <Td className="text-left">
-                    <p>Yo‘nalishning ilonizi qismida:</p>
-                    <p>Ustunchalarga tegib ketdi:</p>
-                  </Td>
-                  <Td>20</Td>
-                  <Td></Td>
-                  <Td></Td>
-                  <Td></Td>
-                  <Td></Td>
-                </Tr>
-
-                <Tr>
-                  <Td>3.2</Td>
-                  <Td className="text-left">
-                    O‘tish davomida to‘xtab harakatlandi:
-                  </Td>
-                  <Td>20</Td>
-                  <Td></Td>
-                  <Td></Td>
-                  <Td></Td>
-                  <Td></Td>
-                </Tr>
-
-                <Tr>
-                  <Td>3.3</Td>
-                  <Td className="text-left">Dvigatelni o‘chirib qo‘ydi:</Td>
-                  <Td>20</Td>
-                  <Td></Td>
-                  <Td></Td>
-                  <Td></Td>
-                  <Td></Td>
-                </Tr>
-
-                <Tr>
-                  <Td>
-                    <p>4</p>
-                    <p>4.1</p>
-                  </Td>
-                  <Td className="text-left">
-                    <p>Orqaga yurgizib boksga qo‘yish:</p>
-                    <p>Orqaga uzatmani 1-marta qo‘shib qayrila olmadi:</p>
-                  </Td>
-                  <Td>20</Td>
-                  <Td></Td>
-                  <Td></Td>
-                  <Td></Td>
-                  <Td></Td>
-                </Tr>
-
-                <Tr>
-                  <Td>4.2</Td>
-                  <Td className="text-left">Dvigatelni o‘chirib qo‘ydi:</Td>
-                  <Td>20</Td>
-                  <Td></Td>
-                  <Td></Td>
-                  <Td></Td>
-                  <Td></Td>
-                </Tr>
-
-                <Tr>
-                  <Td>4.3</Td>
-                  <Td className="text-left">
-                    Cheklagichlardan chetga o‘tib ketdi:
-                  </Td>
-                  <Td>20</Td>
-                  <Td></Td>
-                  <Td></Td>
-                  <Td></Td>
-                  <Td></Td>
-                </Tr>
-
-                <Tr>
-                  <Td>5</Td>
-                  <Td className="text-left">Bosqichni noto‘g‘ri bajardi:</Td>
-                  <Td>100</Td>
-                  <Td></Td>
-                  <Td></Td>
-                  <Td></Td>
-                  <Td></Td>
-                </Tr>
-
-                <Tr>
-                  <Td></Td>
-                  <Td className="text-left">Jami natijalari:</Td>
-                  <Td></Td>
-                  <Td></Td>
-                  <Td></Td>
-                  <Td></Td>
-                  <Td></Td>
-                </Tr>
+                {resultData?.listOfPenalties.map((v, i) => {
+                  return (
+                    <>
+                      <Tr key={i}>
+                        <Td>
+                          <span>{i + 1}</span>
+                        </Td>
+                        <Td className="text-left">
+                          <span>{v?.name}</span>
+                        </Td>
+                        <Td className="text-left">
+                          <span>{v?.penalty_ball}</span>
+                        </Td>
+                      </Tr>
+                      <Tr>
+                        <Td colSpan="3" className="text-left">
+                          Jami natijalari: {v?.penalty_ball}
+                        </Td>
+                      </Tr>
+                    </>
+                  );
+                })}
               </Tbody>
             </Table>
 
