@@ -6,13 +6,12 @@ body {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none; */
-  background-color: #F8F8FB !important;
+  background-color: #f8f8fb !important;
 }
 
 #root {
   position: relative;
 }
-
 
 @media print {
   .student_document_print {
@@ -25,7 +24,7 @@ body {
     display: none !important;
   }
 
-  .student_document_page{
+  .student_document_page {
     display: block;
   }
 }
@@ -56,7 +55,6 @@ video:focus {
   cursor: pointer;
 }
 
-
 .link_show_by_name:hover a {
   color: #005ed0;
   text-decoration: underline !important;
@@ -67,8 +65,6 @@ video:focus {
   text-decoration: underline !important;
   cursor: pointer;
 }
-
-
 
 /* <=======table empty starts=======> */
 
@@ -200,7 +196,7 @@ video:focus {
   /* height: 500px!important; */
   overflow-y: hidden !important;
 }
-.fc-view-harness{
+.fc-view-harness {
   height: 600px !important;
 }
 
@@ -216,5 +212,3 @@ video:focus {
   z-index: 2;
   cursor: pointer !important;
 }
-
-

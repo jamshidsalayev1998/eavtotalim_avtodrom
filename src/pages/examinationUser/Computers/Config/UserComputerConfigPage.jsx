@@ -120,6 +120,7 @@ const UserComputerConfigPage = () => {
             Login
           </span>
         </Link>
+
         <Row className={"w-100  justify-content-between p-5"}>
           <Card
             className={"w-100"}
@@ -233,6 +234,7 @@ const UserComputerConfigPage = () => {
             </CardBody>
           </Card>
         </Row>
+
         <Link
           className="m-3 d-flex align-items-center justify-content-center border rounded"
           style={

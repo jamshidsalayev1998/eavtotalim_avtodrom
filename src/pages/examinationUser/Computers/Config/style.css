@@ -66,3 +66,68 @@
     opacity: 0;
   }
 }
+
+/* Face id setting page */
+.face-id-wrapper {
+  width: 100vw;
+  height: 100vh;
+  padding: 30px !important;
+}
+.face-id {
+  width: 100%;
+  height: 100% !important;
+  position: relative;
+  background: #fff;
+  box-shadow: 0px 10px 20px rgba(29, 97, 122, 0.15);
+  border-radius: 16px;
+  padding: 14px;
+}
+.face-id .computer-order {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+.face-id .computer-order .computer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #fff;
+  box-shadow: 0px 10px 20px rgba(29, 97, 122, 0.15);
+  border-radius: 16px;
+  width: 200px;
+  height: 100px;
+}
+.face-id .computer-order .computer strong {
+  font-size: 20px;
+}
+.face-id .computer-order .computer h1 {
+  margin: 0;
+  color: #8c8c8c;
+  font-size: 60px;
+}
+.face-id .upload-key {
+  box-shadow: 0px 10px 20px rgba(29, 97, 122, 0.15);
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  width: 50%;
+  height: 50%;
+  padding: 30px;
+}
+
+/* web camera */
+.web-camera {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.web-camera .camera-frame {
+  width: 400px;
+  height: 400px;
+}
+.web-camera .camera-info {
+  padding: 14px;
+}
