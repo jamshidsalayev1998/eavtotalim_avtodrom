@@ -40,8 +40,8 @@ import { Card, CardBody } from "reactstrap";
 
 const WebcamComponent = () => <Webcam />;
 const videoConstraints = {
-  width: 600,
-  height: 600,
+  width: 800,
+  height: 800,
   facingMode: "user",
 };
 
@@ -564,7 +564,7 @@ const ComputerSettingsPage = () => {
         <div className={"text-center mt-2  d-flex justify-content-center"}>
           {computerKey && computer ? (
             <button
-              className={"py-1 btn d-flex text-white justify-content-center"}
+              className={"btn d-flex text-white justify-content-center"}
               onClick={
                 faceRecognitionKey ? loginByComputer : takePictureAndRecognition
               }
@@ -596,7 +596,12 @@ const ComputerSettingsPage = () => {
                 }
                 extra={
                   <Button
-                    style={{ width: "100%", borderRadius: "8px" }}
+                    style={{
+                      width: "100%",
+                      height: "40px",
+                      borderRadius: "8px",
+                      fontSize: "16px",
+                    }}
                     type="dashed"
                     danger
                   >
