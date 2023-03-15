@@ -1,42 +1,25 @@
-import React, { Fragment, useContext, useEffect, useState } from "react";
-import logoImg from "assets/images/logo-blue-big.png";
+import React, { useContext, useEffect, useState } from "react";
 import faceShape from "assets/images/face-recognition/face-id-animation.png";
-import faceShapeSuccess from "assets/images/face-recognition/face-shape-success.png";
-import faceShapeDanger from "assets/images/face-recognition/face-shape-danger.png";
 import {
   checkByComputerKey,
   faceRecognition,
   loginByComputerKey,
 } from "../../../../services/api_services/auth/login_computer_api";
 import { PATH_PREFIX_FILE } from "../../../../Utils/AppVariables";
-import {
-  Button,
-  Empty,
-  message,
-  Result,
-  notification,
-  Space,
-  Alert,
-} from "antd";
+import { Button, message, Result, notification, Alert } from "antd";
 import MainContext from "../../../../Context/MainContext";
 import { useHistory } from "react-router";
-import { Link, NavLink } from "react-router-dom";
-import {
-  AiOutlineLeft,
-  AiOutlineDesktop,
-  AiOutlineEnter,
-  AiFillCheckCircle,
-} from "react-icons/ai";
-import { BsFillFileEarmarkMedicalFill } from "react-icons/bs";
+import { Link } from "react-router-dom";
+import { AiOutlineEnter, AiFillCheckCircle } from "react-icons/ai";
+import { BsFillFileEarmarkMedicalFill, BsFillWebcamFill } from "react-icons/bs";
 import Webcam from "react-webcam";
 import "./style.css";
-import { FaArrowLeft, FaEye } from "react-icons/fa";
 import { MdOutlinePortrait } from "react-icons/md";
 import { BiCameraHome, BiErrorCircle, BiGlassesAlt } from "react-icons/bi";
 import { TbHandClick } from "react-icons/tb";
 import GoBackWithText from "components/Common/GoBackWithText";
 import defaultLogo from "assets/images/logo-blue-big.png";
-import { Card, CardBody } from "reactstrap";
+import { Card } from "reactstrap";
 
 const WebcamComponent = () => <Webcam />;
 const videoConstraints = {
@@ -445,6 +428,47 @@ const ComputerSettingsPage = () => {
   const takePictureAndRecognition = () => {
     faceRecognitionFunction();
   };
+
+  navigator.mediaDevices
+    .enumerateDevices()
+    .then(devices => {
+      const cameras = devices.filter(device => device.kind === "videoinput");
+      if (cameras.length === 0) {
+        notification.open({
+          message: (
+            <span className="text-danger d-flex justify-content-start align-items-center">
+              <i class="bx bxs-webcam text-dark"></i>
+              <span className="px-1">Kamera mavjud emas</span>
+            </span>
+          ),
+          description: "Yuzni aniqlash uchun kamera qurilmasi ulanmagan",
+          placement: "top",
+        });
+      } else {
+        notification.open({
+          message: (
+            <span className="text-success d-flex justify-content-start align-items-center">
+              <i class="bx bxs-webcam text-dark"></i>
+              <span className="px-1">Kamera bog'andi</span>
+            </span>
+          ),
+          description: "Kamera muvaffaqiyatli ulandi",
+          placement: "top",
+        });
+      }
+    })
+    .catch(error => {
+      notification.open({
+        message: (
+          <span className="text-danger d-flex justify-content-start align-items-center">
+            <i class="bx bxs-webcam text-dark"></i>
+            <span className="px-1">Kameraga ulanishda xatolik</span>
+          </span>
+        ),
+        description: "Qurilmaga ulanishda xatolik",
+        placement: "top",
+      });
+    });
 
   return (
     <div className="face-id-wrapper" onKeyDown={handleKeyBtn} tabIndex={"1"}>
