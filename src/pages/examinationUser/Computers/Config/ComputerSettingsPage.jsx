@@ -34,11 +34,14 @@ import { FaArrowLeft, FaEye } from "react-icons/fa";
 import { MdOutlinePortrait } from "react-icons/md";
 import { BiCameraHome, BiErrorCircle, BiGlassesAlt } from "react-icons/bi";
 import { TbHandClick } from "react-icons/tb";
+import GoBackWithText from "components/Common/GoBackWithText";
+import defaultLogo from "assets/images/logo-blue-big.png";
+import { Card, CardBody } from "reactstrap";
 
 const WebcamComponent = () => <Webcam />;
 const videoConstraints = {
-  width: 600,
-  height: 600,
+  width: 800,
+  height: 800,
   facingMode: "user",
 };
 
@@ -426,20 +429,11 @@ const ComputerSettingsPage = () => {
   };
 
   return (
-    <div onKeyDown={handleKeyBtn} tabIndex={"1"}>
-      <div
-        style={{
-          width: "100vw",
-          minHeight: "100vh",
-          position: "relative",
-          background: "#fff",
-        }}
-      >
-        {/* company logo */}
-        <div className={"d-flex justify-content-end"}>
-          <div className={"w-100 d-flex justify-content-between px-1"}>
-            {/* company logo */}
-            <div>
+    <div className="face-id-wrapper" onKeyDown={handleKeyBtn} tabIndex={"1"}>
+      <div className="face-id">
+        <div className="d-flex align-items-start">
+          <GoBackWithText
+            contentTitle={
               <span className={`${computer ? "" : ""} px-3 py-3 computer-test`}>
                 {computer?.examination_area?.logo ? (
                   <img
@@ -448,57 +442,29 @@ const ComputerSettingsPage = () => {
                     alt=""
                   />
                 ) : (
-                  ""
+                  <img style={{ width: "150px" }} src={defaultLogo} alt="" />
                 )}
               </span>
-            </div>
+            }
+          />
+          {/* computer order */}
+          <div className={"computer-order"}>
+            {computerKey && computer ? (
+              <Card className={"computer"}>
+                <h1>{computer ? computer?.order : ""}</h1>
+              </Card>
+            ) : (
+              <Card className={"computer"}>
+                <strong className="text-warning">Tanlanmagan!</strong>
+              </Card>
+            )}
           </div>
-        </div>
-
-        {/* computer order */}
-        <div className={"d-flex justify-content-end align-items-center"}>
-          {computerKey && computer ? (
-            <div className={"d-flex justify-content-center align-items-center"}>
-              <AiOutlineDesktop
-                className="text-success"
-                style={{ fontSize: "200px", color: "#bfbfbf" }}
-              />
-              <h1
-                className={`${
-                  computer ? "rounded" : ""
-                } px-5 position-absolute text-success`}
-                style={{ color: "#bfbfbf", fontSize: "70px" }}
-              >
-                {computer ? computer?.order : ""}
-              </h1>
-            </div>
-          ) : (
-            <div className={"d-flex justify-content-center align-items-center"}>
-              <AiOutlineDesktop
-                className="text-warning"
-                style={{ fontSize: "200px" }}
-              />
-              <span
-                className={`${
-                  computer ? "rounded" : ""
-                } px-5 position-absolute text-secondary`}
-              >
-                <strong className="text-warning">Tanlanmagan!!!</strong>
-              </span>
-            </div>
-          )}
         </div>
 
         {/* face recognition */}
         {computerKey && computer ? (
-          <div
-            className={"d-flex justify-content-center align-items-center"}
-            style={{ height: "400px" }}
-          >
-            <div
-              className={picture ? "scanning" : "border"}
-              style={{ width: "400px", height: "400px" }}
-            >
+          <div className={"web-camera"}>
+            <div className={picture ? "scanning" : " camera-frame"}>
               {/*take picture*/}
               <div>
                 <div style={{ position: "relative" }}>
@@ -544,7 +510,7 @@ const ComputerSettingsPage = () => {
             </div>
 
             <div
-              className="border p-3 justify-content-between"
+              className=" camera-info"
               style={{
                 width: "400px",
                 height: "400px",
@@ -575,7 +541,7 @@ const ComputerSettingsPage = () => {
                   <span>
                     4. Pastdagi{" "}
                     <span className="text-white bg-primary p-1 rounded">
-                      Tekshirish
+                      Yuzni tekshirish
                     </span>{" "}
                     tugmasini bosing.
                   </span>
@@ -598,7 +564,7 @@ const ComputerSettingsPage = () => {
         <div className={"text-center mt-2  d-flex justify-content-center"}>
           {computerKey && computer ? (
             <button
-              className={"py-1 btn d-flex text-white justify-content-center"}
+              className={"btn d-flex text-white justify-content-center"}
               onClick={
                 faceRecognitionKey ? loginByComputer : takePictureAndRecognition
               }
@@ -609,7 +575,7 @@ const ComputerSettingsPage = () => {
               autoFocus
             >
               <span style={{ fontSize: "34px" }}>
-                {faceRecognitionKey ? "Testni boshlash" : "Tekshirish"}
+                {faceRecognitionKey ? "Testni boshlash" : "Yuzni tekshirish"}
               </span>{" "}
               <span
                 className={"functional_key ml-3 "}
@@ -619,14 +585,7 @@ const ComputerSettingsPage = () => {
               </span>
             </button>
           ) : (
-            <div
-              style={{
-                border: "1px solid #FFE58F",
-                backgroundColor: "#FFFBE6",
-                borderRadius: "8px",
-              }}
-              className="p-3"
-            >
+            <Card className="upload-key">
               <Result
                 className="p-0"
                 status="warning"
@@ -637,7 +596,12 @@ const ComputerSettingsPage = () => {
                 }
                 extra={
                   <Button
-                    style={{ width: "100%", borderRadius: "8px" }}
+                    style={{
+                      width: "100%",
+                      height: "40px",
+                      borderRadius: "8px",
+                      fontSize: "16px",
+                    }}
                     type="dashed"
                     danger
                   >
@@ -648,18 +612,9 @@ const ComputerSettingsPage = () => {
                   </Button>
                 }
               />
-            </div>
+            </Card>
           )}
         </div>
-
-        <Link
-          className="fixed-bottom m-3 d-flex align-items-center"
-          style={{ fontSize: "24px", width: "100px" }}
-          to={"/login"}
-        >
-          <FaArrowLeft style={{ fontSize: "20px", width: "100px" }} />
-          <span className="p-1">Qaytish</span>
-        </Link>
       </div>
     </div>
   );

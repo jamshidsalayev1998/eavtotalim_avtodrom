@@ -79,12 +79,13 @@ const Login = () => {
           setAdditional(response?.data?.user?.additional);
           const tempRole = parseInt(response?.data?.user?.role);
           if (
-            tempRole !== 13 &&
-            tempRole !== 15 &&
-            tempRole !== 16 &&
-            tempRole !== 17 &&
-            tempRole !== 18 &&
-            tempRole !== 19
+            ![13, 15, 16, 17, 18, 19].includes(tempRole)
+            //  [ tempRole !== 13 &&
+            //   tempRole !== 15 &&
+            //   tempRole !== 16 &&
+            //   tempRole !== 17 &&
+            //   tempRole !== 18 &&
+            //   tempRole !== 19]
           ) {
             localStorage.removeItem("token");
             message.warning(
@@ -105,6 +106,7 @@ const Login = () => {
         }
       })
       .catch(error => {
+        console.log("Error:", error);
         setLoading(false);
         if (error?.response?.data?.error) {
           message.error(error?.response?.data?.error);
@@ -140,8 +142,8 @@ const Login = () => {
                 <RiComputerLine className="font-size-18" />
               </NavLink>
             ) : (
-              <NavLink to={"/computer-test"} className={"btn btn-primary"}>
-                <span className="mr-2">TEST</span>
+              <NavLink to={"/computer-test"} className={"btn btn-warning"}>
+                <span>TEST</span>
               </NavLink>
             )}
           </div>

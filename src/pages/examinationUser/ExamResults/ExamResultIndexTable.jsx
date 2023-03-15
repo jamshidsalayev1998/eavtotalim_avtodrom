@@ -154,7 +154,6 @@ const ExamResultIndexTable = ({ tableData, reload, setreload }) => {
         {
           title: "Nazariy",
           render: (index, element) => {
-            console.log("sssssssssssssssssssssssss", element);
             return (
               <>
                 {parseInt(element?.exam_result) === 1 ? (
