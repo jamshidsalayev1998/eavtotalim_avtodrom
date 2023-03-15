@@ -541,7 +541,7 @@ const ComputerSettingsPage = () => {
               <p className="d-none">Yuz tekshirilmoqda...</p>
             </div>
 
-            <div
+            {/* <div
               className=" camera-info"
               style={{
                 width: "400px",
@@ -580,7 +580,7 @@ const ComputerSettingsPage = () => {
                   <TbHandClick style={{ fontSize: "21px" }} />
                 </p>
               </div>
-            </div>
+            </div> */}
           </div>
         ) : (
           ""
