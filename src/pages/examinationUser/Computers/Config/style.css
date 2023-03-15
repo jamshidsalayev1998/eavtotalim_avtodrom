@@ -138,10 +138,11 @@
 .web-camera .camera-frame {
   width: 400px;
   height: 400px;
+  background-color: black;
 }
 
 .web-camera .camera-info {
-  padding: 14px;
+  padding: 20px;
 }
 
 .button-check-face {

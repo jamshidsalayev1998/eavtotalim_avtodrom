@@ -541,22 +541,15 @@ const ComputerSettingsPage = () => {
               <p className="d-none">Yuz tekshirilmoqda...</p>
             </div>
 
-            {/* <div
-              className=" camera-info"
+            <div
+              className="camera-info"
               style={{
-                width: "400px",
+                width: "600px",
                 height: "400px",
               }}
             >
               <div>
-                <h4
-                  style={{
-                    color: "#1F1F1F",
-                    textAlign: "center",
-                  }}
-                >
-                  Yuzni tanish paneli
-                </h4>
+                <h4>Yuzni tanish paneli</h4>
                 <p className="d-flex justify-content-between align-items-center">
                   <span>1. Yuzingizni panel ichidagi shaklda tuting </span>
                   <MdOutlinePortrait style={{ fontSize: "22px" }} />
@@ -580,7 +573,26 @@ const ComputerSettingsPage = () => {
                   <TbHandClick style={{ fontSize: "21px" }} />
                 </p>
               </div>
-            </div> */}
+
+              <button
+                className={
+                  "btn btn-primary w-100 d-flex text-white justify-content-center"
+                }
+                onClick={
+                  faceRecognitionKey
+                    ? loginByComputer
+                    : takePictureAndRecognition
+                }
+                autoFocus
+              >
+                <span>
+                  {faceRecognitionKey ? "Testni boshlash" : "Yuzni tekshirish"}
+                </span>{" "}
+                <span>
+                  Enter <AiOutlineEnter />
+                </span>
+              </button>
+            </div>
           </div>
         ) : (
           ""
@@ -588,27 +600,7 @@ const ComputerSettingsPage = () => {
 
         <div className={"button-check-face"}>
           {computerKey && computer ? (
-            <button
-              className={"btn d-flex text-white justify-content-center"}
-              onClick={
-                faceRecognitionKey ? loginByComputer : takePictureAndRecognition
-              }
-              style={{
-                backgroundColor: "#005ED0",
-                minWidth: "800px",
-              }}
-              autoFocus
-            >
-              <span style={{ fontSize: "36px" }}>
-                {faceRecognitionKey ? "Testni boshlash" : "Yuzni tekshirish"}
-              </span>{" "}
-              <span
-                className={"functional_key ml-3 "}
-                style={{ width: "auto" }}
-              >
-                Enter <AiOutlineEnter />
-              </span>
-            </button>
+            ""
           ) : (
             <Card className="upload-key">
               <Result
