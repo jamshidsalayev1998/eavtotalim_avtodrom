@@ -445,16 +445,6 @@ const ComputerSettingsPage = () => {
           placement: "top",
         });
       } else {
-        notification.open({
-          message: (
-            <span className="text-success d-flex justify-content-start align-items-center">
-              <i class="bx bxs-webcam text-dark"></i>
-              <span className="px-1">Kamera bog'andi</span>
-            </span>
-          ),
-          description: "Kamera muvaffaqiyatli ulandi",
-          placement: "top",
-        });
       }
     })
     .catch(error => {
