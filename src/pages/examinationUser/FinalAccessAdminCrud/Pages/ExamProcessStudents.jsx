@@ -29,6 +29,8 @@ const ExamProcessStudents = () => {
   // console.log('uy' , context);
   const eventName =
     "examination_area_event_" + mainContext?.profession?.examination_area_id;
+  const eventNameRealProccess =
+    "real_time_exam_" + mainContext?.profession?.examination_area_id;
   const refresh = () => {
     setReload(!reload);
   };
@@ -47,13 +49,16 @@ const ExamProcessStudents = () => {
   };
   useEffect(() => {
     if (parseInt(mainContext?.profession?.examination_area_id)) {
-      console.log("eventName", eventName);
       socketParam.on(eventName, data => {
         openNotification(data?.message, data?.userName, data?.test_result);
-        console.log("keldi", data?.userName);
+      });
+      socketParam.on(eventNameRealProccess, data => {
+        openNotification(JSON.stringify(data) , 'dasd0' , 0);
+      console.log(data)
       });
       return () => {
         socketParam.off(eventName);
+        socketParam.off(eventNameRealProccess);
       };
     }
   }, [mainContext?.profession?.examination_area_id]);
