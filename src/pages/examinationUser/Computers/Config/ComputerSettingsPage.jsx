@@ -495,7 +495,7 @@ const ComputerSettingsPage = () => {
 
         {/* face recognition */}
         {computerKey && computer ? (
-          <div className={"web-camera"}>
+          <span className={"web-camera"}>
             <div className={picture ? "scanning" : "camera-frame"}>
               {/*take picture*/}
 
@@ -550,7 +550,7 @@ const ComputerSettingsPage = () => {
             >
               <div className="d-flex justify-content-between align-items-center">
                 <div>
-                  <h4>Yuzni tanish paneli</h4>
+                  <h4>Yuzni tekshirish paneli</h4>
                   <p>
                     <span> Yuzingizni panel ichidagi shaklda tuting !</span>
                   </p>
@@ -599,7 +599,7 @@ const ComputerSettingsPage = () => {
                 </button>
               </div>
             </div>
-          </div>
+          </span>
         ) : (
           ""
         )}

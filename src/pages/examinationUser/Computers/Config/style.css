@@ -155,19 +155,25 @@
   justify-content: space-between;
 }
 .web-camera .camera-info h4 {
-  color: #005ed0;
-  font-size: px;
+  color: #595959;
+  font-size: 20px;
   font-weight: 600;
 }
 .web-camera .camera-info p {
-  color: #595959;
+  color: #797979;
   font-size: 15px;
   font-weight: 500;
   margin-left: 20px;
   margin-top: 20px;
 }
 .web-camera .camera-button button {
-  font-size: 24px;
+  font-size: 20px;
+}
+.web-camera .camera-button .enter {
+  background-color: #595959;
+  border-radius: 8px;
+  margin-left: 5px;
+  padding: 0 8px;
 }
 
 .button-check-face {
