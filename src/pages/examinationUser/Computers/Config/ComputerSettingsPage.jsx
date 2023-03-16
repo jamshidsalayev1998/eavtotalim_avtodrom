@@ -573,7 +573,7 @@ const ComputerSettingsPage = () => {
                   </p>
                 </div>
 
-                <TbFaceId style={{ fontSize: "100px", color: "#005ED0" }} />
+                <TbFaceId style={{ fontSize: "80px", color: "#595959" }} />
               </div>
 
               <div className="camera-button">

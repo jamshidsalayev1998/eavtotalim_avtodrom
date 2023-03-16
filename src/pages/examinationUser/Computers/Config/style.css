@@ -148,7 +148,7 @@
 }
 
 .web-camera .camera-info {
-  padding: 20px;
+  padding: 0 20px;
   font-family: "Inter" !important;
   display: flex;
   flex-direction: column;
