@@ -1,47 +1,30 @@
-import React, { Fragment, useContext, useEffect, useState } from "react";
-import logoImg from "assets/images/logo-blue-big.png";
+import React, { useContext, useEffect, useState } from "react";
 import faceShape from "assets/images/face-recognition/face-id-animation.png";
-import faceShapeSuccess from "assets/images/face-recognition/face-shape-success.png";
-import faceShapeDanger from "assets/images/face-recognition/face-shape-danger.png";
 import {
   checkByComputerKey,
   faceRecognition,
   loginByComputerKey,
 } from "../../../../services/api_services/auth/login_computer_api";
 import { PATH_PREFIX_FILE } from "../../../../Utils/AppVariables";
-import {
-  Button,
-  Empty,
-  message,
-  Result,
-  notification,
-  Space,
-  Alert,
-} from "antd";
+import { Button, message, Result, notification, Alert } from "antd";
 import MainContext from "../../../../Context/MainContext";
 import { useHistory } from "react-router";
-import { Link, NavLink } from "react-router-dom";
-import {
-  AiOutlineLeft,
-  AiOutlineDesktop,
-  AiOutlineEnter,
-  AiFillCheckCircle,
-} from "react-icons/ai";
-import { BsFillFileEarmarkMedicalFill } from "react-icons/bs";
+import { Link } from "react-router-dom";
+import { AiOutlineEnter, AiFillCheckCircle } from "react-icons/ai";
+import { BsFillFileEarmarkMedicalFill, BsFillWebcamFill } from "react-icons/bs";
 import Webcam from "react-webcam";
 import "./style.css";
-import { FaArrowLeft, FaEye } from "react-icons/fa";
 import { MdOutlinePortrait } from "react-icons/md";
 import { BiCameraHome, BiErrorCircle, BiGlassesAlt } from "react-icons/bi";
 import { TbHandClick } from "react-icons/tb";
 import GoBackWithText from "components/Common/GoBackWithText";
 import defaultLogo from "assets/images/logo-blue-big.png";
-import { Card, CardBody } from "reactstrap";
+import { Card } from "reactstrap";
 
 const WebcamComponent = () => <Webcam />;
 const videoConstraints = {
-  width: 800,
-  height: 800,
+  width: 600,
+  height: 600,
   facingMode: "user",
 };
 
@@ -56,6 +39,7 @@ const ComputerSettingsPage = () => {
   );
   const [picture, setPicture] = useState("");
   const [loadingRecognition, setLoadingRecognition] = useState(false);
+  const [visible, setVisible] = useState(false);
   const webcamRef = React.useRef(null);
   const faceRecognitionFunction = React.useCallback(() => {
     setLoadingRecognition(true);
@@ -85,8 +69,8 @@ const ComputerSettingsPage = () => {
             loginByComputer();
           }
         } else if (parseInt(resp?.result_code) === 2) {
-          // message.error("Pasrtpo malumotlari noto'g'ri kiritilgan");
           setPicture("");
+          setVisible(true);
           notification.open({
             message: (
               <span className="text-danger d-flex justify-content-start align-items-center">
@@ -108,8 +92,8 @@ const ComputerSettingsPage = () => {
             description: "Yuz ma'lumoti yorug'lik darajasi past",
           });
         } else if (parseInt(resp?.result_code) === 4) {
-          // message.error('Pasport malumotlari bilan mos tushmadi');
           setPicture("");
+          setVisible(true);
           notification.open({
             message: (
               <span className="text-danger d-flex justify-content-start align-items-center">
@@ -140,6 +124,7 @@ const ComputerSettingsPage = () => {
           });
         } else if (parseInt(resp?.result_code) === 7) {
           setPicture("");
+          setVisible(true);
           notification.open({
             message: (
               <span className="text-danger d-flex justify-content-start align-items-center">
@@ -151,6 +136,7 @@ const ComputerSettingsPage = () => {
           });
         } else if (parseInt(resp?.result_code) === 9) {
           setPicture("");
+          setVisible(true);
           notification.open({
             message: (
               <span className="text-danger d-flex justify-content-start align-items-center">
@@ -162,6 +148,7 @@ const ComputerSettingsPage = () => {
           });
         } else if (parseInt(resp?.result_code) === 10) {
           setPicture("");
+          setVisible(true);
           notification.open({
             message: (
               <span className="text-danger d-flex justify-content-start align-items-center">
@@ -172,6 +159,7 @@ const ComputerSettingsPage = () => {
           });
         } else if (parseInt(resp?.result_code) === 11) {
           setPicture("");
+          setVisible(true);
           notification.open({
             message: (
               <span className="text-danger d-flex justify-content-start align-items-center">
@@ -183,6 +171,7 @@ const ComputerSettingsPage = () => {
           });
         } else if (parseInt(resp?.result_code) === 14) {
           setPicture("");
+          setVisible(true);
           notification.open({
             message: (
               <span className="text-danger d-flex justify-content-start align-items-center">
@@ -193,8 +182,8 @@ const ComputerSettingsPage = () => {
             description: "Yuzni aniqlashda muammolik",
           });
         } else if (parseInt(resp?.result_code) === 17) {
-          // message.error('Yuzingizni kameraga to`g`ri tuting');
           setPicture("");
+          setVisible(true);
           notification.open({
             message: (
               <span className="text-danger d-flex justify-content-start align-items-center">
@@ -205,6 +194,7 @@ const ComputerSettingsPage = () => {
           });
         } else if (parseInt(resp?.result_code) === 18) {
           setPicture("");
+          setVisible(true);
           notification.open({
             message: (
               <span className="text-danger d-flex justify-content-start align-items-center">
@@ -215,6 +205,7 @@ const ComputerSettingsPage = () => {
           });
         } else if (parseInt(resp?.result_code) === 19) {
           setPicture("");
+          setVisible(true);
           notification.open({
             message: (
               <span className="text-danger d-flex justify-content-start align-items-center">
@@ -226,6 +217,7 @@ const ComputerSettingsPage = () => {
           });
         } else if (parseInt(resp?.result_code) === 20) {
           setPicture("");
+          setVisible(true);
           notification.open({
             message: (
               <span className="text-danger d-flex justify-content-start align-items-center">
@@ -238,6 +230,7 @@ const ComputerSettingsPage = () => {
         } else if (parseInt(resp?.result_code) === 21) {
           // message.error("Yuzingiz kameraga to'liq ko'rinsin");
           setPicture("");
+          setVisible(true);
           notification.open({
             message: (
               <span className="text-danger d-flex justify-content-start align-items-center">
@@ -248,6 +241,7 @@ const ComputerSettingsPage = () => {
           });
         } else if (parseInt(resp?.result_code) === 22) {
           setPicture("");
+          setVisible(true);
           notification.open({
             message: (
               <span className="text-danger d-flex justify-content-start align-items-center">
@@ -259,6 +253,7 @@ const ComputerSettingsPage = () => {
           });
         } else if (parseInt(resp?.result_code) === 23) {
           setPicture("");
+          setVisible(true);
           notification.open({
             message: (
               <span className="text-danger d-flex justify-content-start align-items-center">
@@ -270,6 +265,7 @@ const ComputerSettingsPage = () => {
           });
         } else if (parseInt(resp?.result_code) === 24) {
           setPicture("");
+          setVisible(true);
           notification.open({
             message: (
               <span className="text-danger d-flex justify-content-start align-items-center">
@@ -281,6 +277,7 @@ const ComputerSettingsPage = () => {
           });
         } else if (parseInt(resp?.result_code) === 25) {
           setPicture("");
+          setVisible(true);
           notification.open({
             message: (
               <span className="text-danger d-flex justify-content-start align-items-center">
@@ -292,6 +289,7 @@ const ComputerSettingsPage = () => {
           });
         } else if (parseInt(resp?.result_code) === 26) {
           setPicture("");
+          setVisible(true);
           notification.open({
             message: (
               <span className="text-danger d-flex justify-content-start align-items-center">
@@ -302,6 +300,7 @@ const ComputerSettingsPage = () => {
           });
         } else if (parseInt(resp?.result_code) === 27) {
           setPicture("");
+          setVisible(true);
           notification.open({
             message: (
               <span className="text-danger d-flex justify-content-start align-items-center">
@@ -312,6 +311,7 @@ const ComputerSettingsPage = () => {
           });
         } else if (parseInt(resp?.result_code) === 28) {
           setPicture("");
+          setVisible(true);
           notification.open({
             message: (
               <span className="text-danger d-flex justify-content-start align-items-center">
@@ -324,6 +324,7 @@ const ComputerSettingsPage = () => {
         } else if (parseInt(resp?.status) === 0) {
           // message.error(resp?.message);
           setPicture("");
+          setVisible(true);
           notification.open({
             message: (
               <span className="text-danger d-flex justify-content-start align-items-center">
@@ -428,6 +429,37 @@ const ComputerSettingsPage = () => {
     faceRecognitionFunction();
   };
 
+  navigator.mediaDevices
+    .enumerateDevices()
+    .then(devices => {
+      const cameras = devices.filter(device => device.kind === "videoinput");
+      if (cameras.length === 0) {
+        notification.open({
+          message: (
+            <span className="text-danger d-flex justify-content-start align-items-center">
+              <i class="bx bxs-webcam text-dark"></i>
+              <span className="px-1">Kamera mavjud emas</span>
+            </span>
+          ),
+          description: "Yuzni aniqlash uchun kamera qurilmasi ulanmagan",
+          placement: "top",
+        });
+      } else {
+      }
+    })
+    .catch(error => {
+      notification.open({
+        message: (
+          <span className="text-danger d-flex justify-content-start align-items-center">
+            <i class="bx bxs-webcam text-dark"></i>
+            <span className="px-1">Kameraga ulanishda xatolik</span>
+          </span>
+        ),
+        description: "Qurilmaga ulanishda xatolik",
+        placement: "top",
+      });
+    });
+
   return (
     <div className="face-id-wrapper" onKeyDown={handleKeyBtn} tabIndex={"1"}>
       <div className="face-id">
@@ -466,65 +498,58 @@ const ComputerSettingsPage = () => {
           <div className={"web-camera"}>
             <div className={picture ? "scanning" : " camera-frame"}>
               {/*take picture*/}
-              <div>
-                <div style={{ position: "relative" }}>
-                  <div
-                    className={"face-shape-box  "}
+
+              <div style={{ position: "relative" }}>
+                <div
+                  className={"face-shape-box  "}
+                  style={{
+                    position: "absolute",
+                    top: "40%",
+                    left: "50%",
+                    transform: "translate(-50%,-50%)",
+                    width: "220px",
+                    height: "220px",
+                    zIndex: "100000",
+                  }}
+                >
+                  <img
+                    src={faceShape}
+                    alt=""
                     style={{
-                      position: "absolute",
-                      top: "40%",
-                      left: "50%",
-                      transform: "translate(-50%,-50%)",
-                      width: "220px",
-                      height: "220px",
-                      zIndex: "100000",
+                      width: "100%",
+                      height: "100%",
                     }}
-                  >
-                    <img
-                      src={faceShape}
-                      alt=""
-                      style={{
-                        width: "100%",
-                        height: "100%",
-                      }}
-                    />
-                  </div>
-                  {computerKey && computer && picture == "" ? (
-                    <>
-                      <Webcam
-                        style={{ borderRadius: "4px", width: "100%" }}
-                        audio={false}
-                        height={400}
-                        ref={webcamRef}
-                        screenshotFormat="image/jpeg"
-                        videoConstraints={videoConstraints}
-                        mirrored={true}
-                      />
-                    </>
-                  ) : (
-                    <img style={{ borderRadius: "4px" }} src={picture} />
-                  )}
+                  />
                 </div>
+                {computerKey && computer && picture == "" ? (
+                  <>
+                    <Webcam
+                      style={{ borderRadius: "4px", width: "100%" }}
+                      audio={false}
+                      height={400}
+                      ref={webcamRef}
+                      screenshotFormat="image/jpeg"
+                      videoConstraints={videoConstraints}
+                      mirrored={true}
+                    />
+                  </>
+                ) : (
+                  <img style={{ borderRadius: "4px" }} src={picture} />
+                )}
               </div>
+
               <p className="d-none">Yuz tekshirilmoqda...</p>
             </div>
 
             <div
-              className=" camera-info"
+              className="camera-info"
               style={{
-                width: "400px",
+                width: "600px",
                 height: "400px",
               }}
             >
               <div>
-                <h4
-                  style={{
-                    color: "#1F1F1F",
-                    textAlign: "center",
-                  }}
-                >
-                  Yuzni tanish paneli
-                </h4>
+                <h4>Yuzni tanish paneli</h4>
                 <p className="d-flex justify-content-between align-items-center">
                   <span>1. Yuzingizni panel ichidagi shaklda tuting </span>
                   <MdOutlinePortrait style={{ fontSize: "22px" }} />
@@ -549,41 +574,33 @@ const ComputerSettingsPage = () => {
                 </p>
               </div>
 
-              <Alert
-                style={{ borderRadius: "8px", marginTop: "30px" }}
-                message="Yuzni tanishda xatolik sodir bo'lsa, kompyuterga biriktirilgan o'quvchi ma'lumotlarini tekshirib qayta urinib ko'ring!!!"
-                type="warning"
-                showIcon
-              />
+              <button
+                className={
+                  "btn btn-primary w-100 d-flex text-white justify-content-center"
+                }
+                onClick={
+                  faceRecognitionKey
+                    ? loginByComputer
+                    : takePictureAndRecognition
+                }
+                autoFocus
+              >
+                <span>
+                  {faceRecognitionKey ? "Testni boshlash" : "Yuzni tekshirish"}
+                </span>{" "}
+                <span>
+                  Enter <AiOutlineEnter />
+                </span>
+              </button>
             </div>
           </div>
         ) : (
           ""
         )}
 
-        <div className={"text-center mt-2  d-flex justify-content-center"}>
+        <div className={"button-check-face"}>
           {computerKey && computer ? (
-            <button
-              className={"btn d-flex text-white justify-content-center"}
-              onClick={
-                faceRecognitionKey ? loginByComputer : takePictureAndRecognition
-              }
-              style={{
-                backgroundColor: "#005ED0",
-                minWidth: "800px",
-              }}
-              autoFocus
-            >
-              <span style={{ fontSize: "34px" }}>
-                {faceRecognitionKey ? "Testni boshlash" : "Yuzni tekshirish"}
-              </span>{" "}
-              <span
-                className={"functional_key ml-3 "}
-                style={{ width: "auto" }}
-              >
-                Enter <AiOutlineEnter />
-              </span>
-            </button>
+            ""
           ) : (
             <Card className="upload-key">
               <Result
@@ -615,6 +632,22 @@ const ComputerSettingsPage = () => {
             </Card>
           )}
         </div>
+
+        {visible && (
+          <Alert
+            style={{
+              borderRadius: "8px",
+              position: "absolute",
+              bottom: "14px",
+              left: "14px",
+              right: "14px",
+              margin: "auto",
+            }}
+            message="Yuzni tanishda xatolik sodir bo'lsa, kompyuterga biriktirilgan o'quvchi ma'lumotlarini tekshirib qayta urinib ko'ring!!!"
+            type="warning"
+            showIcon
+          />
+        )}
       </div>
     </div>
   );
