@@ -16,7 +16,7 @@ import Webcam from "react-webcam";
 import "./style.css";
 import { MdOutlinePortrait } from "react-icons/md";
 import { BiCameraHome, BiErrorCircle, BiGlassesAlt } from "react-icons/bi";
-import { TbHandClick } from "react-icons/tb";
+import { TbFaceId, TbHandClick } from "react-icons/tb";
 import GoBackWithText from "components/Common/GoBackWithText";
 import defaultLogo from "assets/images/logo-blue-big.png";
 import { Card } from "reactstrap";
@@ -496,7 +496,7 @@ const ComputerSettingsPage = () => {
         {/* face recognition */}
         {computerKey && computer ? (
           <div className={"web-camera"}>
-            <div className={picture ? "scanning" : " camera-frame"}>
+            <div className={picture ? "scanning" : "camera-frame"}>
               {/*take picture*/}
 
               <div style={{ position: "relative" }}>
@@ -548,50 +548,56 @@ const ComputerSettingsPage = () => {
                 height: "400px",
               }}
             >
-              <div>
-                <h4>Yuzni tanish paneli</h4>
-                <p className="d-flex justify-content-between align-items-center">
-                  <span>1. Yuzingizni panel ichidagi shaklda tuting </span>
-                  <MdOutlinePortrait style={{ fontSize: "22px" }} />
-                </p>
-                <p className="d-flex justify-content-between align-items-center">
-                  <span>2. Ko'zaynaklaringiz bo'lsa ularni yechib qo'ying</span>
-                  <BiGlassesAlt style={{ fontSize: "22px" }} />
-                </p>
-                <p className="d-flex justify-content-between align-items-center">
-                  <span>3. Kameraga qarang</span>{" "}
-                  <BiCameraHome style={{ fontSize: "22px" }} />
-                </p>
-                <p className="d-flex justify-content-between align-items-center">
-                  <span>
-                    4. Pastdagi{" "}
-                    <span className="text-white bg-primary p-1 rounded">
-                      Yuzni tekshirish
-                    </span>{" "}
-                    tugmasini bosing.
-                  </span>
-                  <TbHandClick style={{ fontSize: "21px" }} />
-                </p>
+              <div className="d-flex justify-content-between align-items-center">
+                <div>
+                  <h4>Yuzni tanish paneli</h4>
+                  <p>
+                    <span> Yuzingizni panel ichidagi shaklda tuting !</span>
+                  </p>
+                  <p>
+                    <span>
+                      Ko'zaynaklaringiz bo'lsa ularni yechib qo'ying !
+                    </span>
+                  </p>
+                  <p>
+                    <span> Kameraga qarang !</span>{" "}
+                  </p>
+                  <p>
+                    <span>
+                      Pastdagi{" "}
+                      <span className="text-white bg-primary p-1 rounded">
+                        Yuzni tekshirish
+                      </span>{" "}
+                      tugmasini bosing !
+                    </span>
+                  </p>
+                </div>
+
+                <TbFaceId style={{ fontSize: "100px", color: "#005ED0" }} />
               </div>
 
-              <button
-                className={
-                  "btn btn-primary w-100 d-flex text-white justify-content-center"
-                }
-                onClick={
-                  faceRecognitionKey
-                    ? loginByComputer
-                    : takePictureAndRecognition
-                }
-                autoFocus
-              >
-                <span>
-                  {faceRecognitionKey ? "Testni boshlash" : "Yuzni tekshirish"}
-                </span>{" "}
-                <span>
-                  Enter <AiOutlineEnter />
-                </span>
-              </button>
+              <div className="camera-button">
+                <button
+                  className={
+                    "btn btn-primary w-100 d-flex text-white justify-content-center"
+                  }
+                  onClick={
+                    faceRecognitionKey
+                      ? loginByComputer
+                      : takePictureAndRecognition
+                  }
+                  autoFocus
+                >
+                  <span>
+                    {faceRecognitionKey
+                      ? "Testni boshlash"
+                      : "Yuzni tekshirish"}
+                  </span>{" "}
+                  <span className="enter">
+                    Enter <AiOutlineEnter />
+                  </span>
+                </button>
+              </div>
             </div>
           </div>
         ) : (

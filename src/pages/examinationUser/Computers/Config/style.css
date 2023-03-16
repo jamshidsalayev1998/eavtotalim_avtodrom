@@ -133,6 +133,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
 }
 
 .web-camera .camera-frame {
@@ -143,6 +149,25 @@
 
 .web-camera .camera-info {
   padding: 20px;
+  font-family: "Inter" !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.web-camera .camera-info h4 {
+  color: #005ed0;
+  font-size: px;
+  font-weight: 600;
+}
+.web-camera .camera-info p {
+  color: #595959;
+  font-size: 15px;
+  font-weight: 500;
+  margin-left: 20px;
+  margin-top: 20px;
+}
+.web-camera .camera-button button {
+  font-size: 24px;
 }
 
 .button-check-face {
