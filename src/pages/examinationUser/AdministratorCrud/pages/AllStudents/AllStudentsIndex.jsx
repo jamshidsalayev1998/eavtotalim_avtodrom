@@ -100,9 +100,13 @@ const AllStudentsIndex = props => {
             render: (index, element) => <>{element?.student_fio}</>
         },
         {
+            title: 'Ta`lim turi',
+            render: (index, element) => <>{element?.edu_type?.short_name_en}</>
+        },
+        {
             title: 'Holati',
             render: (index, element) => <>{element?.type === 'resubmit' ?
-                <Badge color={'warning'}>Qayta topshirish</Badge> : <Badge color={'primary'}>Birinchi marta</Badge>}</>
+                <Badge color={'warning'}>Qayta</Badge> : <Badge color={'primary'}>Birinchi</Badge>}</>
         },
         {
             title: 'To`lov',
@@ -112,8 +116,8 @@ const AllStudentsIndex = props => {
                     render: (index, element) => <>
                         {
                             parseInt(element?.payment_status) ?
-                                <Badge color={'success'}>To'lov qilingan</Badge> :
-                                <Badge color={'danger'}>To'lov qilinmagan</Badge>
+                                <Badge color={'success'}>qilingan</Badge> :
+                                <Badge color={'danger'}>qilinmagan</Badge>
                         }
                     </>
                 },
@@ -122,8 +126,8 @@ const AllStudentsIndex = props => {
                     render: (index, element) => <>
                         {
                             parseInt(element?.practical_payment_status) ?
-                                <Badge color={'success'}>To'lov qilingan</Badge> :
-                                <Badge color={'danger'}>To'lov qilinmagan</Badge>
+                                <Badge color={'success'}>qilingan</Badge> :
+                                <Badge color={'danger'}>qilinmagan</Badge>
                         }
                     </>
                 }

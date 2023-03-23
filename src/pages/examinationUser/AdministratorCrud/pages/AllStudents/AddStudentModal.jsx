@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useRef} from "react";
-import {Form, Button, Select, Modal, Input, Row, Col, DatePicker, Popconfirm, message, Alert} from "antd";
+import {Form, Button, Select, Modal, Input, Row, Col, DatePicker, Popconfirm, message, Alert, Upload} from "antd";
 import InputMask from "react-input-mask";
 import moment from "moment";
 import {sendStudentToResubmitAllResponse} from "../../../../../services/api_services/send_student_to_resubmit";
@@ -46,10 +46,21 @@ const AddStudentModal = props => {
     };
 
     const [studentStoreForm] = Form.useForm();
-    const {addModalVisible, setAddModalVisible, eduTypes, organizations, reload, setReload, inputTagRef,focusRefElement} = props;
+    const {
+        addModalVisible,
+        setAddModalVisible,
+        eduTypes,
+        organizations,
+        reload,
+        setReload,
+        inputTagRef,
+        focusRefElement
+    } = props;
     const [dataHas, setDataHas] = useState(null);
     const [validatorErrors, setValidatorErrors] = useState([]);
     const [loading, setLoading] = useState(false);
+        const [fileList, setFileList] = useState([]);
+
     const dateFormat = 'DD-MM-YYYY';
 
     const onPassportHandle = e => {
@@ -66,7 +77,11 @@ const AddStudentModal = props => {
         console.log('ehe', values);
         const formData = new FormData();
         for (let key in values) {
-            formData.append(key, values[key] ? values[key] : "");
+            if (key === 'med_file') {
+                formData.append(key, values[key] ? values[key].file?.originFileObj : "");
+            } else {
+                formData.append(key, values[key] ? values[key] : "");
+            }
         }
         let params = {};
         (async () => {
@@ -117,6 +132,33 @@ const AddStudentModal = props => {
         studentStoreForm.resetFields();
         setValidatorErrors(null);
         setDataHas(null);
+        setFileList([]);
+    };
+    const propsMedFile = {
+        name: 'file',
+        action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
+        headers: {
+            authorization: 'authorization-text',
+        },
+        onChange(info) {
+            if (info.file.status !== 'uploading') {
+                console.log(info.file, info.fileList);
+            }
+            if (info.file.status === 'done') {
+                message.success(`${info.file.name} file uploaded successfully`);
+            } else if (info.file.status === 'error') {
+                message.error(`${info.file.name} file upload failed.`);
+            }
+        },
+    };
+    const dummyRequest = ({file, onSuccess}) => {
+        setTimeout(() => {
+            onSuccess("ok");
+        }, 0);
+    };
+    const onChangeMedFile = ({fileList: newFileList}) => {
+        setFileList([]);
+        setFileList(newFileList);
     };
     return (
         <Modal
@@ -364,10 +406,10 @@ const AddStudentModal = props => {
                                     return (
                                         <Option value={element?.id}>
                                             {element?.name_uz ||
-                                            element?.name_ru ||
-                                            element?.name_kiril ||
-                                            element?.name_qq ||
-                                            element?.name_en}
+                                                element?.name_ru ||
+                                                element?.name_kiril ||
+                                                element?.name_qq ||
+                                                element?.name_en}
                                         </Option>
                                     );
                                 })}
@@ -403,6 +445,50 @@ const AddStudentModal = props => {
                                     width: "100%",
                                 }}
                             />
+                        </Form.Item>
+                    </Col>
+                    <Col xl={6}>
+                        <Form.Item
+                            label="Tibbiy ma`lumotnoma raqami"
+                            name="med_number"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: "Tibbiy ma`lumotnoma raqamini kiriting!",
+                                },
+                            ]}
+                            className={"w-100"}
+                        >
+                            <Input
+                                placeholder="Tibbiy ma`lumotnoma raqamini kiriting"
+                                allowClear={true}
+                                style={{width: "100%"}}
+                            />
+                        </Form.Item>
+                    </Col>
+                    <Col xl={6}>
+                        <Form.Item
+                            label="Tibbiy ma`lumotnoma nusxasi"
+                            name="med_file"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: "Tibbiy nusxasini kiriting!",
+                                },
+                            ]}
+                            className={"w-100"}
+                        >
+                            <Upload
+                                customRequest={dummyRequest}
+                                // listType="picture-card"
+                                multiple={false}
+                                maxCount={1}
+                                fileList={fileList}
+                                onChange={onChangeMedFile}
+                                locale={true}
+                            >
+                                <Button>Click to Upload</Button>
+                            </Upload>
                         </Form.Item>
                     </Col>
                     <Form.Item name='typeSave' hidden={true} initialValue={'simple'}>
