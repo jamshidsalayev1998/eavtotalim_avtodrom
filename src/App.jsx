@@ -57,7 +57,6 @@ const App = () => {
         localStorage.getItem("computer_key")
     );
 
-    console.log(location);
 
     axios.interceptors.response.use(
         response => {
