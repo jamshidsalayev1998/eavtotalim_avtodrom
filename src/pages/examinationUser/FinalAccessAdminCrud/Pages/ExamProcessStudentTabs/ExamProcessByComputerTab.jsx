@@ -4,18 +4,16 @@ import {
   Table,
   Row,
   Col,
-  Card,
   Tooltip,
-  Skeleton,
   message,
   Popconfirm,
   notification,
   Badge,
 } from "antd";
-import { CardBody, Container } from "reactstrap";
 import {
   computerTestEndApi,
   getExamProcessComputers,
+  getRealTimeExamProcess,
 } from "../../../../../services/api_services/final_test_admin_api";
 import {
   changeComputerApi,
@@ -31,16 +29,18 @@ import {
   AiOutlineStop,
 } from "react-icons/ai";
 import { TfiExchangeVertical } from "react-icons/tfi";
-import { MdOutlineChangeCircle } from "react-icons/md";
-import { BsSquareFill } from "react-icons/bs";
 
 const ExamProcessByComputerTab = props => {
   const { reload, setReload } = props;
   const [data, setData] = useState([]);
+  const [realTimeData, setRealTimeData] = useState([]);
   const mainContext = useContext(MainContext);
-  // console.log('uy' , context);
+
   const eventName =
     "examination_area_event_" + mainContext?.profession?.examination_area_id;
+  const real_time_exam_result =
+    "real_time_exam_" + mainContext?.profession?.examination_area_id;
+
   const refresh = () => {
     setReload(!reload);
   };
@@ -57,23 +57,22 @@ const ExamProcessByComputerTab = props => {
       });
     }
   };
+
   useEffect(() => {
     (async () => {
       const resp = await getExamProcessComputers();
       setData(resp?.data);
-      console.log("change dan oldin", resp?.data);
     })();
   }, [reload]);
+
   useEffect(() => {
     if (parseInt(mainContext?.profession?.examination_area_id) && data.length) {
-      console.log("eventName", eventName);
       socketParam.on(eventName, dataSocket => {
         openNotification(
           dataSocket?.message,
           dataSocket?.userName,
           dataSocket?.test_result
         );
-        console.log("bundan oldin", data);
         const newState = data.map((obj, index) => {
           if (parseInt(obj.id) === parseInt(dataSocket?.computer_id)) {
             return { ...obj, merge: null };
@@ -81,14 +80,47 @@ const ExamProcessByComputerTab = props => {
           return obj;
         });
         setData(newState);
-        console.log("change dan keyin", newState);
-        console.log("keldi", dataSocket);
       });
       return () => {
         socketParam.off(eventName);
       };
     }
   }, [mainContext?.profession?.examination_area_id, data]);
+
+  // real time exam 22
+  useEffect(() => {
+    (async () => {
+      const response = await getRealTimeExamProcess();
+      setRealTimeData(response?.data);
+    })();
+  }, [reload]);
+
+  useEffect(() => {
+    if (
+      parseInt(mainContext?.profession?.examination_area_id) &&
+      realTimeData.length
+    ) {
+      socketParam.on(real_time_exam_result, real_time_data => {
+        setRealTimeData(
+          realTimeData.map((object, index) => {
+            if (parseInt(object?.id) === parseInt(real_time_data?.id)) {
+              return real_time_data;
+            }
+            return object;
+          })
+        );
+      });
+      return () => {
+        socketParam.off(real_time_exam_result);
+      };
+    }
+  }, [mainContext?.profession?.examination_area_id, realTimeData]);
+
+  const mergedData = data.map((item, index) => ({
+    ...item,
+    ...realTimeData[index],
+  }));
+
   const clearComputer = computer => {
     (async () => {
       const res = await clearComputerApi(computer?.id);
@@ -118,6 +150,7 @@ const ExamProcessByComputerTab = props => {
       }
     })();
   };
+
   const columns = [
     {
       title: "Tartib raqam",
@@ -242,7 +275,7 @@ const ExamProcessByComputerTab = props => {
                 <span>To'xtatilgan: </span>
                 <AiOutlinePlayCircle
                   style={{
-                    color: "#FAAD14",                    
+                    color: "#FAAD14",
                     fontSize: "20px",
                   }}
                 />
@@ -318,7 +351,46 @@ const ExamProcessByComputerTab = props => {
         },
       ],
     },
+    {
+      title: (
+        <>
+          <div className=" d-flex justify-content-center align-items-center">
+            <span>Real vaqtdagi javoblar</span>
+            <i class="bx bxs-circle bx-flashing text-danger ml-2"></i>
+          </div>
+          <div className="bg-white rounded border">
+            <span className="text-danger">Noto'g'ri(belgilanmagan)</span> /{" "}
+            <span className="text-success">to'gri</span>
+          </div>
+        </>
+      ),
+      render: (index, row) => (
+        <>
+          {row?.merge !== null ? (
+            <span className="bg-light p-1 rounded">
+              <span className="text-danger font-weight-bold">
+                {
+                  row?.merge?.final_access_student?.final_test_student_attempt
+                    ?.incorrect_answers
+                }{" "}
+                /{" "}
+              </span>
+              <span className="text-success font-weight-bold">
+                {
+                  row?.merge?.final_access_student?.final_test_student_attempt
+                    ?.correct_answers
+                }
+              </span>
+            </span>
+          ) : (
+            ""
+          )}
+        </>
+      ),
+      align: "center",
+    },
   ];
+
   const pauseComputer = computer => {
     if (computer?.merge) {
       (async () => {
@@ -335,7 +407,7 @@ const ExamProcessByComputerTab = props => {
       <Row className={""} gutter={[12, 12]}>
         <Col xl={24}>
           <Table
-            dataSource={data}
+            dataSource={mergedData}
             columns={columns}
             bordered={true}
             pagination={false}
