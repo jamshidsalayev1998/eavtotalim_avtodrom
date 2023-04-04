@@ -36,69 +36,227 @@ const ExaminationUserLinks = props => {
           }
         >
           <ul className="metismenu list-unstyled" id="side-menu">
-            <li>
+            <li className="" name="asosiy">
               <Link to="/" className="waves-effect">
                 <i className="fas fa-home" />
-                <span>{t("Home")}</span>
+                <span>{t("Bosh sahifa")}</span>
               </Link>
             </li>
-            <li>
+            <li className="" name="asosiy">
               <Link to="/come-examination/come-groups" className="waves-effect">
-                <i className="fas fa-layer-group" />
+                <i class="fas fa-walking"></i>
                 <span>{t("Guruh bo`yicha keluvchilar")}</span>
               </Link>
             </li>
-            <li>
+
+            <li className="" name="asosiy">
               <Link
                 to="/come-examination/allow-students"
                 className="waves-effect"
               >
-                <i className="fas fa-clipboard-check" />
+                <i class="fas fa-spell-check"></i>
                 <span>{t("Testga ruhsat berish (Guruhlar bo`yicha)")}</span>
               </Link>
             </li>
-            <li>
+
+            <li className="" name="asosiy">
               <Link
                 to="/come-examination/allow-students/separately"
                 className="waves-effect"
               >
-                <i className="fas fa-clipboard-check" />
+                <i class="fas fa-user-check"></i>
                 <span>{t("Testga ruxsat berish (O`quvchilar bo`yicha)")}</span>
               </Link>
             </li>
-            <li>
+
+            <li className="" name="asosiy">
+              <Link
+                to="/examination-administrator/all-students"
+                className="waves-effect"
+              >
+                <i class="fas fa-users"></i>
+                <span>{t("Barcha keluvchilar")}</span>
+              </Link>
+            </li>
+
+            <li className="" name="asosiy">
+              <Link to="/cashier/student-payments" className="waves-effect">
+                <i class="fas fa-hand-holding-usd"></i>
+                <span>O`quvchilarga to`lovni tasdiqlash (Nazariy)</span>
+              </Link>
+            </li>
+
+            <li className="" name="asosiy">
+              <Link
+                to="/cashier/student-payments-practical"
+                className="waves-effect"
+              >
+                <i class="fas fa-hand-holding-usd"></i>
+                <span>O`quvchilarga to`lovni tasdiqlash (Amaliy)</span>
+              </Link>
+            </li>
+
+            <li className="" name="asosiy">
+              <Link
+                to="/examination-instructor/exam-ended-students"
+                className="waves-effect"
+              >
+                <i class="fas fa-child"></i>
+                <span>Amaliy topshirganlar</span>
+              </Link>
+            </li>
+
+            <li className="" name="asosiy">
+              <Link
+                to="/examination-administrator/all-online-applications"
+                className="waves-effect"
+              >
+                <i class="far fa-id-card"></i>
+                <span>Online arizalar</span>
+              </Link>
+            </li>
+
+            <li className="" name="asosiy">
+              <Link
+                to="/final-access-admin/exam-process"
+                className="waves-effect"
+              >
+                <i class="fas fa-network-wired"></i>
+                <span>Test topshirish jarayonidagilar</span>
+              </Link>
+            </li>
+
+            <li className="" name="asosiy">
+              <Link
+                to="/examination-instructor/monitoring-page"
+                className="waves-effect"
+              >
+                <i class="fas fa-server"></i>
+                <span>Monitoring sahifasi</span>
+              </Link>
+            </li>
+
+            <li className="" name="asosiy">
+              <Link
+                to="/examination-administrator/certificate"
+                className="waves-effect"
+              >
+                <i class="fas fa-certificate"></i>
+                <span>{t("Sertifikatlar")}</span>
+              </Link>
+            </li>
+
+            <li className="" name="asosiy">
+              <Link
+                to="/examination/display-page-index"
+                className="waves-effect"
+              >
+                <i class="fas fa-bullhorn"></i>
+                <span>{t("E`lon sahifasi")}</span>
+              </Link>
+            </li>
+
+            <li className="" name="asosiy">
+              <Link to="/examination/queue-display" className="waves-effect">
+                <i class="fas fa-people-arrows"></i>
+                <span>Navbat</span>
+              </Link>
+            </li>
+
+            <li className="" name="asosiy">
+              <Link
+                to="/examination-instructor/students"
+                className="waves-effect"
+              >
+                <i class="fas fa-users"></i>
+                <span>Barcha topshiruvchilar</span>
+              </Link>
+            </li>
+
+            <li className="" name="asosiy">
+              <Link
+                to="/examination-instructor/merged-students"
+                className="waves-effect"
+              >
+                <span className="d-flex position-relative">
+                  <i class="fas fa-car-alt">+</i>
+                </span>
+                <span>Avtomobilga biriktirilganlar</span>
+              </Link>
+            </li>
+
+            <li className="" name="asosiy">
               <Link to="/examination/result-groups" className="waves-effect">
-                <i className="fas fa-poll-h" />
+                <i class="fas fa-spell-check"></i>
                 <span>{t("Test natijasi")}</span>
               </Link>
             </li>
-            {/*<li className="" name="asosiy">*/}
-            {/*    <Link to="/examination/resubmit" className="waves-effect">*/}
-            {/*        <i className="fa fa-retweet"/>                    {/*        <span>{t("Qayta topshirish")}</span>*/}
-            {/*    </Link>*/}
-            {/*</li>*/}
+
+            <li className="" name="asosiy">
+              <Link
+                to="/examination-director/payment-report"
+                className="waves-effect"
+              >
+                <i class="fas fa-wallet"></i>
+                <span>To'lovlar hisoboti </span>
+              </Link>
+            </li>
+
+            <li className="" name="asosiy">
+              <Link
+                to="/examination-director/reports-by-organizations"
+                className="waves-effect"
+              >
+                <i class="far fa-file-excel"></i>
+                <span>Avtomaktablar bo'yicha hisobot</span>
+              </Link>
+            </li>
+
+            <li className="" name="asosiy">
+              <Link to="pages-404" className="waves-effect">
+                <i class="far fa-file-excel"></i>
+                <span>Ta'lim turi bo'yicha hisobot</span>
+              </Link>
+            </li>
+
+            <li className="" name="asosiy">
+              <Link to="pages-404" className="waves-effect">
+                <i class="far fa-file-excel"></i>
+                <span>Ta'lim turi umumiy</span>
+              </Link>
+            </li>
+
             <li className="" name="asosiy">
               <Link to="/examination-director/cashier" className="waves-effect">
                 <i className="fa fa-money-bill" />
                 <span>{t("Kassirlar")}</span>
               </Link>
             </li>
+
             <li className="" name="asosiy">
               <Link
                 to="/examination-director/final-access-admin"
                 className="waves-effect"
               >
-                <i className="fa fa-user" />
+                <i class="fas fa-user-shield"></i>
                 <span>{t("Testga ruxsat beruvchi admin")}</span>
               </Link>
             </li>
+
             <li className="" name="asosiy">
               <Link
                 to="/examination-director/administrator"
                 className="waves-effect"
               >
-                <i className="fa fa-users" />
+                <i class="fas fa-id-badge"></i>
                 <span>{t("Administrator")}</span>
+              </Link>
+            </li>
+
+            <li className="" name="asosiy">
+              <Link to="/examination-area/instructors" className="waves-effect">
+                <i class="fas fa-chalkboard-teacher"></i>
+                <span>{t("Instruktorlar")}</span>
               </Link>
             </li>
 
@@ -108,21 +266,27 @@ const ExaminationUserLinks = props => {
                 className="waves-effect"
               >
                 <i className="fa fa-credit-card" />
-                <span>{t("To`lov turlari")}</span>
+                <span>{t("To'lov turlari")}</span>
               </Link>
             </li>
-            <li className="" name="asosiy">
-              <Link to="/examination-area/instructors" className="waves-effect">
-                <i className="fa fa-male" />
-                <span>{t("Instruktorlar")}</span>
-              </Link>
-            </li>
+
             <li className="" name="asosiy">
               <Link to="/examination-area/cars" className="waves-effect">
                 <i className="fa fa-car" />
                 <span>{t("Avtomobillar")}</span>
               </Link>
             </li>
+
+            <li className="" name="asosiy">
+              <Link
+                to="/examination-director/computers"
+                className="waves-effect"
+              >
+                <i className="fa fa-desktop" />
+                <span>{t("Kompyuterlar")}</span>
+              </Link>
+            </li>
+
             <li className="" name="asosiy">
               <Link to="/examination-area/sensors" className="waves-effect">
                 <i className="fa fa-camera-retro" />
@@ -132,96 +296,11 @@ const ExaminationUserLinks = props => {
 
             <li className="" name="asosiy">
               <Link
-                to="/examination/display-page-index"
-                className="waves-effect"
-              >
-                <i className="fa fa-desktop" />
-                <span>{t("E`lon sahifasi")}</span>
-              </Link>
-            </li>
-
-            <li className="" name="asosiy">
-              <Link
-                to="/examination-administrator/all-students"
-                className="waves-effect"
-              >
-                <i className="fas fa-poll-h" />
-                <span>{t("Barcha keluvchilar")}</span>
-              </Link>
-            </li>
-            <li className="" name="asosiy">
-              <Link to="/cashier/student-payments" className="waves-effect">
-                <i className="fas fa-home" />
-                <span>O`quvchilarga to`lovni tasdiqlash (Nazariy)</span>
-              </Link>
-            </li>
-            <li className="" name="asosiy">
-              <Link
-                to="/cashier/student-payments-practical"
-                className="waves-effect"
-              >
-                <i className="fas fa-home" />
-                <span>O`quvchilarga to`lovni tasdiqlash (Amaliy)</span>
-              </Link>
-            </li>
-            <li className="" name="asosiy">
-              <Link
-                to="/examination-administrator/certificate"
-                className="waves-effect"
-              >
-                <i className="fas fa-poll-h" />
-                <span>{t("Sertifikatlar")}</span>
-              </Link>
-            </li>
-            <li className="" name="asosiy">
-              <Link
                 to="/examination-director/examination-area-config"
                 className="waves-effect"
               >
-                <i className="fa fa-desktop" />
-                <span>{t("Sozlamalar")}</span>
-              </Link>
-            </li>
-            <li className="" name="asosiy">
-              <Link to="/examination/queue-display" className="waves-effect">
-                <i className="fas fa-poll-h" />
-                <span>Navbat</span>
-              </Link>
-            </li>
-            <li className="" name="asosiy">
-              <Link
-                to="/examination-director/payment-report"
-                className="waves-effect"
-              >
-                <i className="fas fa-poll-h" />
-                <span>To'lovlar hisoboti </span>
-              </Link>
-            </li>
-            <li className="" name="asosiy">
-              <Link
-                to="/examination-instructor/merged-students"
-                className="waves-effect"
-              >
-                <i className="fas fa-layer-group" />
-                <span>Avtomobilga biriktirilganlar</span>
-              </Link>
-            </li>
-            <li className="" name="asosiy">
-              <Link
-                to="/examination-director/reports-by-organizations"
-                className="waves-effect"
-              >
-                <i className="fas fa-layer-group" />
-                <span>Avtomaktablar bo'yicha hisobot</span>
-              </Link>
-            </li>
-            <li className="" name="asosiy">
-              <Link
-                to="/examination-administrator/all-online-applications"
-                className="waves-effect"
-              >
-                <i className="fas fa-layer-group" />
-                <span>Online arizalar</span>
+                <i class="fas fa-user-cog"></i>
+                <span>{t("Profil")}</span>
               </Link>
             </li>
           </ul>
@@ -269,7 +348,7 @@ const ExaminationUserLinks = props => {
                     to="/come-examination/come-groups"
                     className="waves-effect"
                   >
-                    <i className="fas fa-layer-group" />
+                    <i class="fas fa-walking"></i>
                     <span>{t("Guruh bo`yicha keluvchilar")}</span>
                   </Link>
                 </li>
@@ -279,7 +358,7 @@ const ExaminationUserLinks = props => {
                     to="/come-examination/allow-students"
                     className="waves-effect"
                   >
-                    <i className="fas fa-clipboard-check" />
+                    <i class="fas fa-spell-check"></i>
                     <span>{t("Testga ruhsat berish (Guruhlar bo`yicha)")}</span>
                   </Link>
                 </li>
@@ -289,7 +368,7 @@ const ExaminationUserLinks = props => {
                     to="/come-examination/allow-students/separately"
                     className="waves-effect"
                   >
-                    <i className="fas fa-clipboard-check" />
+                    <i class="fas fa-user-check"></i>
                     <span>
                       {t("Testga ruxsat berish (O`quvchilar bo`yicha)")}
                     </span>
@@ -301,14 +380,14 @@ const ExaminationUserLinks = props => {
                     to="/examination-administrator/all-students"
                     className="waves-effect"
                   >
-                    <i className="fas fa-poll-h" />
+                    <i class="fas fa-users"></i>
                     <span>{t("Barcha keluvchilar")}</span>
                   </Link>
                 </li>
 
                 <li className="" name="asosiy">
                   <Link to="/cashier/student-payments" className="waves-effect">
-                    <i className="fas fa-home" />
+                    <i class="fas fa-hand-holding-usd"></i>
                     <span>O`quvchilarga to`lovni tasdiqlash (Nazariy)</span>
                   </Link>
                 </li>
@@ -318,7 +397,7 @@ const ExaminationUserLinks = props => {
                     to="/cashier/student-payments-practical"
                     className="waves-effect"
                   >
-                    <i className="fas fa-home" />
+                    <i class="fas fa-hand-holding-usd"></i>
                     <span>O`quvchilarga to`lovni tasdiqlash (Amaliy)</span>
                   </Link>
                 </li>
@@ -328,7 +407,7 @@ const ExaminationUserLinks = props => {
                     to="/examination-instructor/exam-ended-students"
                     className="waves-effect"
                   >
-                    <i className="fas fa-layer-group" />
+                    <i class="fas fa-child"></i>
                     <span>Amaliy topshirganlar</span>
                   </Link>
                 </li>
@@ -338,7 +417,7 @@ const ExaminationUserLinks = props => {
                     to="/examination-administrator/all-online-applications"
                     className="waves-effect"
                   >
-                    <i className="fas fa-layer-group" />
+                    <i class="far fa-id-card"></i>
                     <span>Online arizalar</span>
                   </Link>
                 </li>
@@ -348,7 +427,7 @@ const ExaminationUserLinks = props => {
                     to="/final-access-admin/exam-process"
                     className="waves-effect"
                   >
-                    <i className="fas fa-poll-h"></i>
+                    <i class="fas fa-network-wired"></i>
                     <span>Test topshirish jarayonidagilar</span>
                   </Link>
                 </li>
@@ -358,7 +437,7 @@ const ExaminationUserLinks = props => {
                     to="/examination-instructor/monitoring-page"
                     className="waves-effect"
                   >
-                    <i className="fas fa-layer-group" />
+                    <i class="fas fa-server"></i>
                     <span>Monitoring sahifasi</span>
                   </Link>
                 </li>
@@ -368,7 +447,7 @@ const ExaminationUserLinks = props => {
                     to="/examination-administrator/certificate"
                     className="waves-effect"
                   >
-                    <i className="fas fa-poll-h" />
+                    <i class="fas fa-certificate"></i>
                     <span>{t("Sertifikatlar")}</span>
                   </Link>
                 </li>
@@ -404,7 +483,7 @@ const ExaminationUserLinks = props => {
                     to="/examination/display-page-index"
                     className="waves-effect"
                   >
-                    <i className="fa fa-desktop" />
+                    <i class="fas fa-bullhorn"></i>
                     <span>{t("E`lon sahifasi")}</span>
                   </Link>
                 </li>
@@ -414,7 +493,7 @@ const ExaminationUserLinks = props => {
                     to="/examination/queue-display"
                     className="waves-effect"
                   >
-                    <i className="fas fa-poll-h" />
+                    <i class="fas fa-people-arrows"></i>
                     <span>Navbat</span>
                   </Link>
                 </li>
@@ -424,7 +503,7 @@ const ExaminationUserLinks = props => {
                     to="/examination-instructor/students"
                     className="waves-effect"
                   >
-                    <i className="fas fa-layer-group"></i>
+                    <i class="fas fa-users"></i>
                     <span>Barcha topshiruvchilar</span>
                   </Link>
                 </li>
@@ -434,7 +513,9 @@ const ExaminationUserLinks = props => {
                     to="/examination-instructor/merged-students"
                     className="waves-effect"
                   >
-                    <i className="fas fa-layer-group" />
+                    <span className="d-flex position-relative">
+                      <i class="fas fa-car-alt">+</i>
+                    </span>
                     <span>Avtomobilga biriktirilganlar</span>
                   </Link>
                 </li>
@@ -470,7 +551,7 @@ const ExaminationUserLinks = props => {
                     to="/examination/result-groups"
                     className="waves-effect"
                   >
-                    <i className="fas fa-poll-h" />
+                    <i class="fas fa-spell-check"></i>
                     <span>{t("Test natijasi")}</span>
                   </Link>
                 </li>
@@ -480,7 +561,7 @@ const ExaminationUserLinks = props => {
                     to="/examination-director/payment-report"
                     className="waves-effect"
                   >
-                    <i className="fas fa-poll-h" />
+                    <i class="fas fa-wallet"></i>
                     <span>To'lovlar hisoboti </span>
                   </Link>
                 </li>
@@ -490,21 +571,21 @@ const ExaminationUserLinks = props => {
                     to="/examination-director/reports-by-organizations"
                     className="waves-effect"
                   >
-                    <i className="fas fa-layer-group" />
+                    <i class="far fa-file-excel"></i>
                     <span>Avtomaktablar bo'yicha hisobot</span>
                   </Link>
                 </li>
 
                 <li className="" name="asosiy">
                   <Link to="pages-404" className="waves-effect">
-                    <i className="fas fa-layer-group" />
+                    <i class="far fa-file-excel"></i>
                     <span>Ta'lim turi bo'yicha hisobot</span>
                   </Link>
                 </li>
 
                 <li className="" name="asosiy">
                   <Link to="pages-404" className="waves-effect">
-                    <i className="fas fa-layer-group" />
+                    <i class="far fa-file-excel"></i>
                     <span>Ta'lim turi umumiy</span>
                   </Link>
                 </li>
@@ -550,7 +631,7 @@ const ExaminationUserLinks = props => {
                     to="/examination-director/final-access-admin"
                     className="waves-effect"
                   >
-                    <i className="fa fa-user" />
+                    <i class="fas fa-user-shield"></i>
                     <span>{t("Testga ruxsat beruvchi admin")}</span>
                   </Link>
                 </li>
@@ -560,7 +641,7 @@ const ExaminationUserLinks = props => {
                     to="/examination-director/administrator"
                     className="waves-effect"
                   >
-                    <i className="fa fa-users" />
+                    <i class="fas fa-id-badge"></i>
                     <span>{t("Administrator")}</span>
                   </Link>
                 </li>
@@ -570,18 +651,8 @@ const ExaminationUserLinks = props => {
                     to="/examination-area/instructors"
                     className="waves-effect"
                   >
-                    <i className="fa fa-male" />
+                    <i class="fas fa-chalkboard-teacher"></i>
                     <span>{t("Instruktorlar")}</span>
-                  </Link>
-                </li>
-
-                <li className="" name="asosiy">
-                  <Link
-                    to="/examination-director/examination-area-config"
-                    className="waves-effect"
-                  >
-                    <i className="fa fa-desktop" />
-                    <span>{t("Profil")}</span>
                   </Link>
                 </li>
               </div>
@@ -623,7 +694,8 @@ const ExaminationUserLinks = props => {
 
                 <li className="" name="asosiy">
                   <Link to="/examination-area/cars" className="waves-effect">
-                    <i className="fa fa-car" />
+                    <i className="fas fa-car-side"></i>
+
                     <span>{t("Avtomobillar")}</span>
                   </Link>
                 </li>
@@ -642,6 +714,16 @@ const ExaminationUserLinks = props => {
                   <Link to="/examination-area/sensors" className="waves-effect">
                     <i className="fa fa-camera-retro" />
                     <span>{t("Sensorlar")}</span>
+                  </Link>
+                </li>
+
+                <li className="" name="asosiy">
+                  <Link
+                    to="/examination-director/examination-area-config"
+                    className="waves-effect"
+                  >
+                    <i class="fas fa-user-cog"></i>
+                    <span>{t("Profil")}</span>
                   </Link>
                 </li>
               </div>
