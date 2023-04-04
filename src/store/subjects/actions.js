@@ -1,3 +1,3 @@
-export const ADD_DEFAULT_DATA = 'ADD_DEFAULT_DATA';
-export const ADD_SUBJECT = 'ADD_SUBJECT';
-export const REMOVE_SUBJECT = 'REMOVE_SUBJECT';
+export const ADD_DEFAULT_DATA = "ADD_DEFAULT_DATA";
+export const ADD_SUBJECT = "ADD_SUBJECT";
+export const REMOVE_SUBJECT = "REMOVE_SUBJECT";

@@ -1,15 +1,6 @@
 import React, { useContext } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import {
-  IS_EDUCATION,
-  IS_EXAM,
-  IS_PRINT,
-  IS_USER,
-  IS_ROOM,
-  IS_REPORT,
-  IS_FINAL_EXAM,
-} from "store/sidebar/actions";
 import MainContext from "Context/MainContext";
 import { useSelector, useDispatch } from "react-redux";
 

@@ -1,56 +1,47 @@
-const { IS_EDUCATION, IS_EXAM, IS_PRINT, IS_USER, IS_ROOM, IS_REPORT, IS_FINAL_EXAM } = require("./actions")
-
+const {
+  IS_EXAM_PROCESS,
+  IS_TEST_PROCESS_SETTINGS,
+  IS_REPORTS,
+  IS_USERS,
+  IS_SETTINGS,
+} = require("./actions");
 
 const initialValues = {
-    education: false,
-    exam: false,
-    print: false,
-    report:false,
-    user: false,
-    room:false,
-    exams:false,
-}
-
+  exam_process: false,
+  test_process_settings: true,
+  reports: true,
+  users: true,
+  settings: true,
+};
 
 export const sidebar_content = (state = initialValues, action) => {
-    switch(action.type){
-      case IS_EDUCATION:
-          return {
-              ...state,
-              education:!state.education
-          }
-        case IS_EXAM:
-            return {
-                ...state,
-                exam:!state.exam
-            }
-        case IS_PRINT:
-            return {
-                ...state,
-                print:!state.print
-            }
-        case IS_USER:
-            return {
-                ...state,
-                user:!state.user
-            }
-        case IS_ROOM:
-            return {
-                ...state,
-                room:!state.room
-            }
-
-            case IS_REPORT:
-                return {
-                    ...state,
-                    report:!state.report
-                }
-            case IS_FINAL_EXAM:
-                return {
-                    ...state,
-                    exams:!state.exams
-                }
-        default:
-            return state;
-    }
-}
+  switch (action.type) {
+    case IS_EXAM_PROCESS:
+      return {
+        ...state,
+        exam_process: !state.exam_process,
+      };
+    case IS_TEST_PROCESS_SETTINGS:
+      return {
+        ...state,
+        test_process_settings: !state.test_process_settings,
+      };
+    case IS_REPORTS:
+      return {
+        ...state,
+        reports: !state.reports,
+      };
+    case IS_USERS:
+      return {
+        ...state,
+        users: !state.users,
+      };
+    case IS_SETTINGS:
+      return {
+        ...state,
+        settings: !state.settings,
+      };
+    default:
+      return state;
+  }
+};

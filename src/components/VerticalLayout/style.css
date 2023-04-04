@@ -1,5 +1,5 @@
 .main_link_sidebar {
-  background-color: #005ED0;
+  background-color: #005ed0;
   border-bottom: 1px solid #2172d4;
   font-weight: 400;
   padding: 6px 20px 6px 20px;
@@ -12,15 +12,15 @@
   display: -ms-flexbox !important;
   display: flex !important;
   -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
 }
 
 .main_link_sidebar:hover {
-  background-color: #488BDD;
+  background-color: #488bdd;
   color: white;
 }
 
@@ -41,14 +41,14 @@
 .panel-collapse {
   max-height: 500px;
   overflow: hidden;
-  -webkit-transition: max-height .3s ease;
-  transition: max-height .3s ease;
+  -webkit-transition: max-height 0.3s ease;
+  transition: max-height 0.3s ease;
 }
 
 .panel-close {
   max-height: 0;
-  -webkit-transition: max-height .3s ease;
-  transition: max-height .3s ease;
+  -webkit-transition: max-height 0.3s ease;
+  transition: max-height 0.3s ease;
 }
 
 .ff {
