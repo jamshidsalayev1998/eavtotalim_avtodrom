@@ -17,7 +17,10 @@ import InputMask from "react-input-mask";
 import moment from "moment";
 import { sendStudentToResubmitAllResponse } from "../../../../../services/api_services/send_student_to_resubmit";
 import { addStudentToComes } from "../../../../../services/api_services/administrator_students_api";
-import { FilePdfOutlined } from "@ant-design/icons";
+import { FilePdfOutlined, InfoCircleOutlined } from "@ant-design/icons";
+import "./key_styles.css";
+
+const { Option } = Select;
 
 const AddStudentModal = props => {
   useEffect(() => {
@@ -60,7 +63,6 @@ const AddStudentModal = props => {
   const {
     addModalVisible,
     setAddModalVisible,
-    eduTypes,
     visitorTypes,
     organizations,
     reload,
@@ -79,35 +81,46 @@ const AddStudentModal = props => {
   const [selectedVisitorTypeId, setSelectedVisitorTypeId] = useState(null);
   const [selectedEduTypeId, setSelectedEduTypeId] = useState(null);
   const [filetypes, setFiletypes] = useState([]);
+  const [eduTypeDescription, setEduTypeDescription] = useState(null);
+  const [fileMonthLimit, setFileMonthLimit] = useState(null);
   const [age, setAge] = useState(null);
   const [selectedOption, setSelectedOption] = useState(null);
 
   const dateFormat = "DD-MM-YYYY";
 
-  //   pdf validation function
-  const handleBeforeUpload = file => {
-    const fileType = file.type;
-    const isAllowed = allowedFileTypes.includes(fileType);
-
-    if (!isAllowed) {
-      message.error("Only PDF files are allowed!");
-    }
-
-    return isAllowed;
-  };
-
-  //   age validation function
+  //   age and type validation function
   const handleSelectChange = value => {
     setSelectedOption(value);
     setSelectedEduTypeId(value);
+
+    // filter file types
     let visitorType = visitorTypes
       ?.find(v => v?.id === selectedVisitorTypeId)
       ?.edu_type_visitor_types?.find(v => v?.edu_type_id === value)
       ?.file_types?.map(f => f?.file_key);
     setFiletypes(visitorType);
+
+    // filter edu type description
+    let visitorEduType = visitorTypes
+      ?.find(v => v?.id === selectedVisitorTypeId)
+      ?.edu_type_visitor_types?.find(
+        v => v?.edu_type_id === value
+      )?.description;
+    setEduTypeDescription(visitorEduType);
+
+    // filter file month limit
+    // let visitorFileMonthLimit = visitorTypes
+    //   ?.find(v => v?.id === selectedVisitorTypeId)
+    //   ?.edu_type_visitor_types?.find(v => v?.edu_type_id === value)
+    //   ?.find(v => v?.file_types === value)?.file_month_limit;
+    // setFileMonthLimit(visitorFileMonthLimit);
+
+    // reset form
     studentStoreForm.setFieldsValue({
       birthday: null,
     });
+
+    // set age
     switch (value) {
       case 1:
         setAge(18);
@@ -138,18 +151,44 @@ const AddStudentModal = props => {
     }
   };
 
+  console.log("visitor type id", selectedVisitorTypeId);
+  console.log("edu type id", selectedEduTypeId);
+  console.log("descriptionnn", eduTypeDescription);
+  console.log("filetypesssssssssssssssss", filetypes);
+  console.log("file month limitytttttttttttttttttt", fileMonthLimit);
+
+  //   edu type description modal
+  const info = () => {
+    Modal.info({
+      title: "Ta'lim turi haqida ma'lumot",
+      content: (
+        <div>
+          <p>{eduTypeDescription}</p>
+        </div>
+      ),
+      zIndex: 1006,
+      width: 800,
+      onOk() {},
+    });
+  };
+
   const onPassportHandle = e => {
     studentStoreForm.setFieldsValue({
       student_passport: e?.target?.value?.toUpperCase(),
     });
   };
 
-  const { Option } = Select;
   const simpleSaveStudent = values => {
     setLoading(true);
     const formData = new FormData();
     for (let key in values) {
-      if (key === "med_file") {
+      if (
+        key === "med_file" ||
+        key === "school_license" ||
+        key === "license" ||
+        key === "school_diploma" ||
+        key === "road_safety_file_letter"
+      ) {
         formData.append(
           key,
           values[key] ? values[key].file?.originFileObj : ""
@@ -172,7 +211,7 @@ const AddStudentModal = props => {
         return true;
       }
       if (parseInt(res?.data?.status) === 2) {
-        message.error("xato");
+        message.error("Ma'lumotlarni yuborishda xatolik!");
         setValidatorErrors(res?.data?.validator_errors);
         if (res?.data?.data_has) {
           setDataHas(res?.data?.data_has);
@@ -213,23 +252,7 @@ const AddStudentModal = props => {
     setDataHas(null);
     setFileList([]);
   };
-  const propsMedFile = {
-    name: "file",
-    action: "https://www.mocky.io/v2/5cc8019d300000980a055e76",
-    headers: {
-      authorization: "authorization-text",
-    },
-    onChange(info) {
-      if (info.file.status !== "uploading") {
-        console.log(info.file, info.fileList);
-      }
-      if (info.file.status === "done") {
-        message.success(`${info.file.name} file uploaded successfully`);
-      } else if (info.file.status === "error") {
-        message.error(`${info.file.name} file upload failed.`);
-      }
-    },
-  };
+
   const dummyRequest = ({ file, onSuccess }) => {
     setTimeout(() => {
       onSuccess("ok");
@@ -261,10 +284,12 @@ const AddStudentModal = props => {
     setRoadSafetyFileLetterList([]);
     setRoadSafetyFileLetterList(newRoadSafetyFileLetterList);
   };
+
   return (
     <Modal
       zIndex={1005}
       width={1600}
+      centered
       open={addModalVisible}
       onCancel={cancelAddModal}
       title={"Yangi o'quvchi qo'shish"}
@@ -330,6 +355,19 @@ const AddStudentModal = props => {
           <Col xl={8}>
             <Form.Item
               label="Ta`lim turi"
+              tooltip={{
+                title: "Ta'lim turi tasnifi",
+                icon: (
+                  <InfoCircleOutlined
+                    onClick={info}
+                    style={
+                      eduTypeDescription === null
+                        ? { color: "#1890FF", display: "none" }
+                        : { color: "#1890FF" }
+                    }
+                  />
+                ),
+              }}
               name="edu_type_id"
               rules={[
                 {
@@ -576,173 +614,417 @@ const AddStudentModal = props => {
             </Form.Item>
           </Col>
 
-          {/* tibbiy ma'lumotnoma raqami */}
-          <Col xl={6}>
-            <Form.Item
-              label="Tibbiy ma`lumotnoma raqami"
-              name="med_number"
-              rules={[
-                {
-                  required: true,
-                  message: "Tibbiy ma`lumotnoma raqamini kiriting!",
-                },
-              ]}
-              className={"w-100"}
-            >
-              <Input
-                placeholder="Tibbiy ma`lumotnoma raqamini kiriting"
-                allowClear={true}
-                style={{ width: "100%" }}
-                disabled={selectedVisitorTypeId === null}
-              />
-            </Form.Item>
-          </Col>
-
-          {/* Tibbiy ma`lumotnoma nusxasi */}
+          {/* Tibbiy ma`lumotnoma nusxasi va tibbiy ma'lumotnoma raqami */}
           {filetypes?.includes("med_file") && (
-            <Col xl={6}>
-              <Form.Item
-                label="Tibbiy ma`lumotnoma nusxasi"
-                name="med_file"
-                // rules={[
-                //   {
-                //     required: true,
-                //     message: "Tibbiy ma`lumotnoma nusxasini kiriting!",
-                //   },
-                // ]}
-              >
-                <Upload
-                  customRequest={dummyRequest}
-                  multiple={false}
-                  maxCount={1}
-                  fileList={fileList}
-                  onChange={onChangeMedFile}
-                  locale={true}
-                  beforeUpload={handleBeforeUpload}
-                  accept=".pdf"
+            <>
+              {/* number */}
+              <Col xl={6}>
+                <Form.Item
+                  label="Tibbiy ma`lumotnoma raqami"
+                  name="med_file_number"
+                  //   rules={[
+                  //     {
+                  //       required: true,
+                  //       message: "Tibbiy ma`lumotnoma raqamini kiriting!",
+                  //     },
+                  //   ]}
+                  className={"w-100"}
                 >
-                  <Button icon={<FilePdfOutlined />}> PDF fayl tanlang</Button>
-                </Upload>
-              </Form.Item>
-            </Col>
+                  <Input
+                    placeholder="Tibbiy ma`lumotnoma raqamini kiriting"
+                    allowClear={true}
+                    style={{ width: "100%" }}
+                    disabled={selectedVisitorTypeId === null}
+                  />
+                </Form.Item>
+              </Col>
+              {/* date */}
+              <Col xl={6}>
+                <Form.Item
+                  label="Tibbiy ma'lumotnoma sanasi"
+                  name="med_file_date"
+                  //   rules={[
+                  //     {
+                  //       required: true,
+                  //       message: "Tibbiy ma'lumotnoma sanasini kiriting!",
+                  //     },
+                  //   ]}
+                >
+                  <DatePicker
+                    format={dateFormat}
+                    placeholder="Sanani tanlang"
+                    disabled={!age}
+                    disabledDate={current =>
+                      current && current.year() > new Date().getFullYear() - age
+                    }
+                    className={"w-100"}
+                    defaultPickerValue={moment(
+                      new Date().getTime() - 86400 * 1000 * 365 * age
+                    )}
+                    style={{
+                      width: "100%",
+                    }}
+                  />
+                </Form.Item>
+              </Col>
+              {/* file */}
+              <Col xl={6}>
+                <Form.Item
+                  label="Tibbiy ma`lumotnoma nusxasi"
+                  name="med_file"
+                  // rules={[
+                  //   {
+                  //     required: true,
+                  //     message: "Tibbiy ma`lumotnoma nusxasini kiriting!",
+                  //   },
+                  // ]}
+                >
+                  <Upload
+                    customRequest={dummyRequest}
+                    multiple={false}
+                    maxCount={1}
+                    fileList={fileList}
+                    onChange={onChangeMedFile}
+                    locale={true}
+                    accept=".pdf"
+                  >
+                    <Button icon={<FilePdfOutlined />}>
+                      {" "}
+                      PDF fayl tanlang
+                    </Button>
+                  </Upload>
+                </Form.Item>
+              </Col>
+            </>
           )}
 
           {/* Avtomaktab tomonidan berilgan guvohnoma */}
           {filetypes?.includes("school_license") && (
-            <Col xl={6}>
-              <Form.Item
-                label="Avtomaktab tomonidan berilgan guvohnoma"
-                name="school_license"
-                // rules={[
-                //   {
-                //     required: true,
-                //     message: "Avtomaktab tomonidan berilgan guvohnoma!",
-                //   },
-                // ]}
-              >
-                <Upload
-                  customRequest={dummyRequest}
-                  // listType="picture-card"
-                  multiple={false}
-                  maxCount={1}
-                  schoolLicenseList={schoolLicenseList}
-                  onChange={onChangeSchoolLicenseFile}
-                  locale={true}
-                  beforeUpload={handleBeforeUpload}
-                  accept=".pdf"
+            <>
+              {/* number */}
+              <Col xl={6}>
+                <Form.Item
+                  label="Avtomaktab tomonidan berilgan guvohnoma raqami"
+                  name="school_license_number"
+                  //   rules={[
+                  //     {
+                  //       required: true,
+                  //       message: "Guvohnoma raqamini kiriting!",
+                  //     },
+                  //   ]}
+                  className={"w-100"}
                 >
-                  <Button icon={<FilePdfOutlined />}> PDF fayl tanlang</Button>
-                </Upload>
-              </Form.Item>
-            </Col>
+                  <Input
+                    placeholder="Avtomaktab tomonidan berilgan guvohnoma raqamini kiriting"
+                    allowClear={true}
+                    style={{ width: "100%" }}
+                    disabled={selectedVisitorTypeId === null}
+                  />
+                </Form.Item>
+              </Col>
+              {/* date */}
+              <Col xl={6}>
+                <Form.Item
+                  label="Avtomaktab tomonidan berilgan guvohnoma sanasi"
+                  name="school_license_date"
+                  //   rules={[
+                  //     {
+                  //       required: true,
+                  //       message: "Guvohnoma sanasini kiriting!",
+                  //     },
+                  //   ]}
+                >
+                  <DatePicker
+                    format={dateFormat}
+                    placeholder="Sanani tanlang"
+                    disabled={selectedVisitorTypeId === null}
+                    disabledDate={current =>
+                      current && current.diff(moment(), "months") > age * 12
+                    }
+                    className={"w-100"}
+                    defaultPickerValue={moment().subtract(age, "months")}
+                    style={{
+                      width: "100%",
+                    }}
+                  />
+                </Form.Item>
+              </Col>
+              {/* file */}
+              <Col xl={6}>
+                <Form.Item
+                  label="Avtomaktab tomonidan berilgan guvohnoma"
+                  name="school_license"
+                  // rules={[
+                  //   {
+                  //     required: true,
+                  //     message: "Avtomaktab tomonidan berilgan guvohnoma!",
+                  //   },
+                  // ]}
+                >
+                  <Upload
+                    customRequest={dummyRequest}
+                    multiple={false}
+                    maxCount={1}
+                    schoolLicenseList={schoolLicenseList}
+                    onChange={onChangeSchoolLicenseFile}
+                    locale={true}
+                    accept=".pdf"
+                  >
+                    <Button icon={<FilePdfOutlined />}>
+                      {" "}
+                      PDF fayl tanlang
+                    </Button>
+                  </Upload>
+                </Form.Item>
+              </Col>
+            </>
           )}
 
           {/* Mavjud guvohnoma nusxasi */}
           {filetypes?.includes("license") && (
-            <Col xl={6}>
-              <Form.Item
-                label="Mavjud guvohnoma nusxasi"
-                name="license"
-                // rules={[
-                //   {
-                //     required: true,
-                //     message: "Mavjud guvohnoma nusxasi!",
-                //   },
-                // ]}
-              >
-                <Upload
-                  customRequest={dummyRequest}
-                  // listType="picture-card"
-                  multiple={false}
-                  maxCount={1}
-                  licenseList={licenseList}
-                  onChange={onChangeLicenseFile}
-                  locale={true}
-                  beforeUpload={handleBeforeUpload}
-                  accept=".pdf"
+            <>
+              {/* number */}
+              <Col xl={6}>
+                <Form.Item
+                  label="Mavjud guvohnoma raqami"
+                  name="license_number"
+                  //   rules={[
+                  //     {
+                  //       required: true,
+                  //       message: "Mavjud guvohnoma raqamini kiriting!",
+                  //     },
+                  //   ]}
+                  className={"w-100"}
                 >
-                  <Button icon={<FilePdfOutlined />}> PDF fayl tanlang</Button>
-                </Upload>
-              </Form.Item>
-            </Col>
+                  <Input
+                    placeholder="Mavjud guvohnoma raqamini kiriting"
+                    allowClear={true}
+                    style={{ width: "100%" }}
+                    disabled={selectedVisitorTypeId === null}
+                  />
+                </Form.Item>
+              </Col>
+              {/* date */}
+              <Col xl={6}>
+                <Form.Item
+                  label="Mavjud guvohnoma sanasi"
+                  name="license_number_date"
+                  //   rules={[
+                  //     {
+                  //       required: true,
+                  //       message: "Mavjud guvohnoma sanasini kiriting!",
+                  //     },
+                  //   ]}
+                >
+                  <DatePicker
+                    format={dateFormat}
+                    placeholder="Sanani tanlang"
+                    disabled={selectedVisitorTypeId === null}
+                    disabledDate={current =>
+                      current && current.diff(moment(), "months") > age * 12
+                    }
+                    className={"w-100"}
+                    defaultPickerValue={moment().subtract(age, "months")}
+                    style={{
+                      width: "100%",
+                    }}
+                  />
+                </Form.Item>
+              </Col>
+              {/* file */}
+              <Col xl={6}>
+                <Form.Item
+                  label="Mavjud guvohnoma nusxasi"
+                  name="license"
+                  // rules={[
+                  //   {
+                  //     required: true,
+                  //     message: "Mavjud guvohnoma nusxasi!",
+                  //   },
+                  // ]}
+                >
+                  <Upload
+                    customRequest={dummyRequest}
+                    // listType="picture-card"
+                    multiple={false}
+                    maxCount={1}
+                    licenseList={licenseList}
+                    onChange={onChangeLicenseFile}
+                    locale={true}
+                    accept=".pdf"
+                  >
+                    <Button icon={<FilePdfOutlined />}>
+                      {" "}
+                      PDF fayl tanlang
+                    </Button>
+                  </Upload>
+                </Form.Item>
+              </Col>
+            </>
           )}
 
           {/* Muassasa tomonidan berilgan diplom */}
           {filetypes?.includes("school_diploma") && (
-            <Col xl={6}>
-              <Form.Item
-                label="Muassasa tomonidan berilgan diplom"
-                name="school_diploma"
-                // rules={[
-                //   {
-                //     required: true,
-                //     message: "Muassasa tomonidan berilgan diplom!",
-                //   },
-                // ]}
-              >
-                <Upload
-                  customRequest={dummyRequest}
-                  multiple={false}
-                  maxCount={1}
-                  schoolDiplomaList={schoolDiplomaList}
-                  onChange={onChangeSchoolDiplomaFile}
-                  locale={true}
-                  beforeUpload={handleBeforeUpload}
-                  accept=".pdf"
+            <>
+              {/* number */}
+              <Col xl={6}>
+                <Form.Item
+                  label="Muassasa tomonidan berilgan diplom raqami"
+                  name="school_diploma_number"
+                  //   rules={[
+                  //     {
+                  //       required: true,
+                  //       message: "Diplom raqamini kiriting!",
+                  //     },
+                  //   ]}
+                  className={"w-100"}
                 >
-                  <Button icon={<FilePdfOutlined />}> PDF fayl tanlang</Button>
-                </Upload>
-              </Form.Item>
-            </Col>
+                  <Input
+                    placeholder="Muassasa tomonidan berilgan diplom raqamini kiriting"
+                    allowClear={true}
+                    style={{ width: "100%" }}
+                    disabled={selectedVisitorTypeId === null}
+                  />
+                </Form.Item>
+              </Col>
+              {/* date */}
+              <Col xl={6}>
+                <Form.Item
+                  label="Muassasa tomonidan berilgan diplom sanasi"
+                  name="school_diploma_date"
+                  //   rules={[
+                  //     {
+                  //       required: true,
+                  //       message: "Diplom sanasini kiriting!",
+                  //     },
+                  //   ]}
+                >
+                  <DatePicker
+                    format={dateFormat}
+                    placeholder="Sanani tanlang"
+                    disabled={selectedVisitorTypeId === null}
+                    disabledDate={current =>
+                      current && current.diff(moment(), "months") > age * 12
+                    }
+                    className={"w-100"}
+                    defaultPickerValue={moment().subtract(age, "months")}
+                    style={{
+                      width: "100%",
+                    }}
+                  />
+                </Form.Item>
+              </Col>
+              {/* file */}
+              <Col xl={6}>
+                <Form.Item
+                  label="Muassasa tomonidan berilgan diplom"
+                  name="school_diploma"
+                  // rules={[
+                  //   {
+                  //     required: true,
+                  //     message: "Muassasa tomonidan berilgan diplom!",
+                  //   },
+                  // ]}
+                >
+                  <Upload
+                    customRequest={dummyRequest}
+                    multiple={false}
+                    maxCount={1}
+                    schoolDiplomaList={schoolDiplomaList}
+                    onChange={onChangeSchoolDiplomaFile}
+                    locale={true}
+                    accept=".pdf"
+                  >
+                    <Button icon={<FilePdfOutlined />}>
+                      {" "}
+                      PDF fayl tanlang
+                    </Button>
+                  </Upload>
+                </Form.Item>
+              </Col>
+            </>
           )}
 
           {/* DYHXX tomonidan berilgan xat */}
           {filetypes?.includes("road_safety_letter") && (
-            <Col xl={6}>
-              <Form.Item
-                label="DYHXX tomonidan berilgan xat"
-                name="road_safety_letter"
-                // rules={[
-                //   {
-                //     required: true,
-                //     message: "DYHXX tomonidan berilgan xat!",
-                //   },
-                // ]}
-              >
-                <Upload
-                  customRequest={dummyRequest}
-                  multiple={false}
-                  maxCount={1}
-                  roadSafetyFileLetterList={roadSafetyFileLetterList}
-                  onChange={onChangeRoadSafetyLetterFile}
-                  locale={true}
-                  beforeUpload={handleBeforeUpload}
-                  accept=".pdf"
+            <>
+              {/* number */}
+              <Col xl={6}>
+                <Form.Item
+                  label="DYHXX tomonidan berilgan xat raqami"
+                  name="road_safety_letter_number"
+                  //   rules={[
+                  //     {
+                  //       required: true,
+                  //       message: "Diplom raqamini kiriting!",
+                  //     },
+                  //   ]}
+                  className={"w-100"}
                 >
-                  <Button icon={<FilePdfOutlined />}> PDF fayl tanlang</Button>
-                </Upload>
-              </Form.Item>
-            </Col>
+                  <Input
+                    placeholder="DYHXX tomonidan berilgan xat raqamini kiriting"
+                    allowClear={true}
+                    style={{ width: "100%" }}
+                    disabled={selectedVisitorTypeId === null}
+                  />
+                </Form.Item>
+              </Col>
+              {/* date */}
+              <Col xl={6}>
+                <Form.Item
+                  label="Muassasa tomonidan berilgan diplom sanasi"
+                  name="road_safety_letter_date"
+                  //   rules={[
+                  //     {
+                  //       required: true,
+                  //       message: "Diplom sanasini kiriting!",
+                  //     },
+                  //   ]}
+                >
+                  <DatePicker
+                    format={dateFormat}
+                    placeholder="Sanani tanlang"
+                    disabled={selectedVisitorTypeId === null}
+                    disabledDate={current =>
+                      current && current.diff(moment(), "months") > age * 12
+                    }
+                    className={"w-100"}
+                    defaultPickerValue={moment().subtract(age, "months")}
+                    style={{
+                      width: "100%",
+                    }}
+                  />
+                </Form.Item>
+              </Col>
+              {/* file */}
+              <Col xl={6}>
+                <Form.Item
+                  label="DYHXX tomonidan berilgan xat"
+                  name="road_safety_letter"
+                  // rules={[
+                  //   {
+                  //     required: true,
+                  //     message: "DYHXX tomonidan berilgan xat!",
+                  //   },
+                  // ]}
+                >
+                  <Upload
+                    customRequest={dummyRequest}
+                    multiple={false}
+                    maxCount={1}
+                    roadSafetyFileLetterList={roadSafetyFileLetterList}
+                    onChange={onChangeRoadSafetyLetterFile}
+                    locale={true}
+                    accept=".pdf"
+                  >
+                    <Button icon={<FilePdfOutlined />}>
+                      {" "}
+                      PDF fayl tanlang
+                    </Button>
+                  </Upload>
+                </Form.Item>
+              </Col>
+            </>
           )}
 
           {/* other condition */}
