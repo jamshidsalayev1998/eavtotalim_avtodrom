@@ -102,3 +102,25 @@ export const getVisitorTypes = async (params = {}) => {
     return e;
   }
 };
+
+export const checkVisitorData = async (params, data) => {
+  try {
+    const token = localStorage.getItem("token");
+    Object.assign(params, { token: token });
+    const response = await API_V2({
+      url: `/examination-administrator/students/check`,
+      method: "POST",
+      params: params,
+      headers: {
+        Accept: "application/json",
+      },
+      data: data,
+    });
+    if (response?.data) {
+      const data = response;
+      return data;
+    }
+  } catch (error) {
+    return error;
+  }
+};
