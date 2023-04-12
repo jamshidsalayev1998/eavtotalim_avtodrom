@@ -23,7 +23,6 @@ import {
   checkVisitorData,
 } from "../../../../../services/api_services/administrator_students_api";
 import { FilePdfOutlined, InfoCircleOutlined } from "@ant-design/icons";
-import Swal from "sweetalert2";
 
 const { Option } = Select;
 
@@ -90,6 +89,7 @@ const AddStudentModal = props => {
   const [age, setAge] = useState(null);
   const [selectedOption, setSelectedOption] = useState(null);
   const [resultStatus, setResultStatus] = useState(null);
+  const [resultData, setResultData] = useState(null);
   const [resultZero, setResultZero] = useState(null);
   const [resultOne, setResultOne] = useState(null);
   const [resultTwo, setResultTwo] = useState(null);
@@ -196,6 +196,7 @@ const AddStudentModal = props => {
       if (res?.data?.message === "Success") {
         message.success("Tekshirildi");
         setResultStatus(res?.data?.data?.status);
+        setResultData(res?.data?.data);
         setLoading(false);
       }
       if (res?.data?.data?.status === 0) {
@@ -1402,6 +1403,25 @@ const AddStudentModal = props => {
           )}
 
           {/* Tekshiruv natijasi */}
+          {resultStatus === 0 ? (
+            <p>
+              Topshiruvchi:
+              <span className="font-size-14 font-weight-bold text-secondary ml-1">
+                {resultData?.student?.student_fio}
+              </span>
+            </p>
+          ) : resultStatus === 2 ? (
+            <p>
+              Topshiruvchi:
+              <span className="font-size-14 font-weight-bold text-secondary ml-1">
+                {resultData?.student?.student_fio}
+              </span>
+            </p>
+          ) : resultStatus === 1 ? (
+            ""
+          ) : (
+            ""
+          )}
           <Alert
             className={
               resultStatus === 1

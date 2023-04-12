@@ -279,12 +279,12 @@ const AllStudentsIndex = props => {
               <div className="d-flex justify-content-between align-items-center">
                 <h5>Barcha keluvchilar </h5>
                 <div className={"d-flex"}>
-                  <NavLink to={urlStudentAdd}>
+                  {/* <NavLink to={urlStudentAdd}>
                     <Button color="success" outline>
                       + Qo'shish sahifasi{" "}
                       <span className={"keyboard-style"}>F2</span>
                     </Button>
-                  </NavLink>
+                  </NavLink> */}
                   <div className={"d-flex ml-2"}>
                     <Button
                       color="success"
