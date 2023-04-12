@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Badge, Card, CardBody, Container } from "reactstrap";
+import { Badge, Button, Card, CardBody, Container } from "reactstrap";
 import { withTranslation } from "react-i18next";
 import {
   Row,
@@ -276,25 +276,24 @@ const AllStudentsIndex = props => {
         <Container fluid>
           <Card>
             <CardBody>
-              <div className="top-organizations">
+              <div className="d-flex justify-content-between align-items-center">
                 <h5>Barcha keluvchilar </h5>
                 <div className={"d-flex"}>
-                  {/* <NavLink to={urlStudentAdd}>
-                    <button className="btn btn-outline-success">
-                      {" "}
+                  <NavLink to={urlStudentAdd}>
+                    <Button color="success" outline>
                       + Qo'shish sahifasi{" "}
                       <span className={"keyboard-style"}>F2</span>
-                    </button>
-                  </NavLink> */}
-                  <div className={"d-flex"}>
-                    <button
-                      className="btn btn-outline-success"
+                    </Button>
+                  </NavLink>
+                  <div className={"d-flex ml-2"}>
+                    <Button
+                      color="success"
+                      outline
                       onClick={() => openAddModal()}
                     >
-                      {" "}
                       <span className="mr-2">+ Qo'shish oynasi</span>
                       <span className={"keyboard-style"}>F4</span>
-                    </button>
+                    </Button>
                   </div>
                 </div>
               </div>

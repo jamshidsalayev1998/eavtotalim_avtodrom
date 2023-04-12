@@ -212,3 +212,40 @@ video:focus {
   z-index: 2;
   cursor: pointer !important;
 }
+
+.card {
+  border-radius: 8px !important;
+  box-shadow: 0px 10px 20px rgba(29, 97, 122, 0.15) !important;
+}
+
+.ant-alert {
+  border-radius: 8px !important;
+  padding: 5px 8px !important;
+}
+
+.ant-btn {
+  border-radius: 8px !important;
+}
+
+.ant-input-affix-wrapper {
+  border-radius: 8px !important;
+}
+.ant-input {
+  border-radius: 8px !important;
+}
+.ant-select:not(.ant-select-customize-input) .ant-select-selector {
+  border-radius: 8px !important;
+}
+.ant-input-affix-wrapper
+  .ant-input:not(.ant-input-disabled).ant-input:not(.ant-input-borderless).ant-input-lg,
+.ant-input-affix-wrapper
+  .ant-input:not(.ant-input-disabled).ant-input:not(.ant-input-borderless).ant-input-sm,
+.ant-input-affix-wrapper-lg
+  .ant-input:not(.ant-input-disabled).ant-input:not(.ant-input-borderless),
+.ant-input-affix-wrapper-sm
+  .ant-input:not(.ant-input-disabled).ant-input:not(.ant-input-borderless) {
+  border-radius: 8px !important;
+}
+.ant-picker {
+  border-radius: 8px !important;
+}
