@@ -249,3 +249,15 @@ video:focus {
 .ant-picker {
   border-radius: 8px !important;
 }
+.ant-table td,
+.ant-table th {
+  font-size: 16px !important;
+}
+.ant-modal-header {
+  border-radius: 8px 8px 0 0 !important;
+}
+.ant-pagination-prev .ant-pagination-item-link,
+.ant-pagination-next .ant-pagination-item-link,
+.ant-pagination-item {
+  border-radius: 8px !important;
+}

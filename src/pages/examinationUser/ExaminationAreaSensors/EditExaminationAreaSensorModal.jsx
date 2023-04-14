@@ -99,11 +99,12 @@ const EditExaminationAreaSensorModal = ({
         title="Sensorni o`zgartirish"
         visible={isEditModalVisible}
         onOk={handleOk}
-        width={1100}
+        width={1200}
         onCancel={handleCancel}
         okText={"Saqlash"}
         cancelText={"Bekor qilish"}
         zIndex={1005}
+        centered
       >
         <Row>
           <Form
@@ -123,7 +124,13 @@ const EditExaminationAreaSensorModal = ({
             autoComplete="off"
           >
             <Row gutter={16}>
-              <Col sm={24} md={12} lg={6} xl={6}>
+              <Col
+                sm={24}
+                md={12}
+                lg={6}
+                xl={6}
+                className="d-flex justify-content-center align-items-center"
+              >
                 <Form.Item
                   label="Sensor belgi rasmi"
                   name="image"
@@ -133,6 +140,7 @@ const EditExaminationAreaSensorModal = ({
                       message: "Rasmni tanlang!",
                     },
                   ]}
+                  className="text-center"
                 >
                   <Upload
                     customRequest={dummyRequest}
@@ -230,7 +238,7 @@ const EditExaminationAreaSensorModal = ({
               </Col>
             </Row>
 
-            <Row gutter={16}>
+            <Row>
               <Form.Item name="left" valuePropName={"checked"}>
                 <Checkbox>Chapga ogohlantirish chirog'i</Checkbox>
               </Form.Item>

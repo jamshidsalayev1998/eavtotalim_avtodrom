@@ -276,6 +276,11 @@ const AddStudentModal = props => {
     studentStoreForm.setFieldValue("typeSave", "clear");
     studentStoreForm.submit();
     focusRefElement();
+    studentStoreForm.resetFields();
+    setValidatorErrors(null);
+    setDataHas(null);
+    setFileList([]);
+    addModalVisible(false);
   };
   const cancelAddModal = () => {
     setValidatorErrors(null);
@@ -1267,7 +1272,7 @@ const AddStudentModal = props => {
                   {/* date */}
                   <Col xl={6}>
                     <Form.Item
-                      label="Muassasa tomonidan berilgan diplom sanasi"
+                      label="DYHXX tomonidan berilgan xat sanasi"
                       name="road_safety_letter_date"
                       rules={[
                         {
@@ -1277,7 +1282,8 @@ const AddStudentModal = props => {
                               : resultStatus === 2
                               ? false
                               : false,
-                          message: "Diplom sanasini kiriting!",
+                          message:
+                            "DYHXX tomonidan berilgan xat sanasini kiriting!",
                         },
                       ]}
                     >
