@@ -266,6 +266,9 @@ const AddExaminationAreaSensorModal = ({
                 <Form.Item name="engine" valuePropName={"checked"}>
                   <Checkbox>Dvigatel</Checkbox>
                 </Form.Item>
+                <Form.Item name="back" valuePropName={"checked"}>
+                  <Checkbox>Orqaga</Checkbox>
+                </Form.Item>
               </Row>
             </Form>
           </Col>

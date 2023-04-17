@@ -299,7 +299,7 @@ const ExaminationAreaSensorsIndex = props => {
       />
       <div className="page-content">
         <Container fluid>
-          <Card className="p-3">
+          <Card>
             <div className="top-organizations d-flex justify-content-between">
               <h5 className="text-dark">{t("Sensorlar")}</h5>
               <div className={"d-flex"}>
@@ -309,7 +309,7 @@ const ExaminationAreaSensorsIndex = props => {
               </div>
             </div>
 
-            <Row gutter={[16, 16]}>
+            <Row gutter={[0, 16]}>
               <Col xl={6}>
                 <Select
                   className={"w-100"}
@@ -333,14 +333,14 @@ const ExaminationAreaSensorsIndex = props => {
                 </Select>
               </Col>
 
-              <Col xl={24}>
+              <Col sm={24} md={24} xl={24}>
                 <Table
                   className="table-responsive table-hover"
                   bordered
                   dataSource={data}
                   columns={columns}
                   loading={loading}
-                  scroll={{ x: true, y: 650 }}
+                  scroll={{ x: true, y: 600 }}
                   pagination={{ position: ["bottomRight"] }}
                   size="small"
                   sticky

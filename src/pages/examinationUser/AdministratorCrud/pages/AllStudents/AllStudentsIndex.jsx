@@ -13,9 +13,10 @@ import {
   message,
   Popconfirm,
   Tooltip,
+  Drawer,
 } from "antd";
 import axios from "axios";
-import { PATH_PREFIX } from "../../../../../Utils/AppVariables";
+import { PATH_PREFIX, PATH_PREFIX_V2 } from "../../../../../Utils/AppVariables";
 import useDebounce from "../../../../../components/CustomHooks/useDebounce";
 import QRCode from "qrcode";
 import QrCodeToPrint from "./QrCodeToPrint";
@@ -27,10 +28,11 @@ import {
   getOrganizations,
   getVisitorTypes,
 } from "../../../../../services/api_services/administrator_students_api";
+import { element } from "prop-types";
 
 const AllStudentsIndex = props => {
   const [data, setData] = useState([]);
-  const [isloading, setIsloading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [reload, setreload] = useState(false);
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
@@ -49,12 +51,19 @@ const AllStudentsIndex = props => {
   const [organizations, setOrganizations] = useState([]);
   const [visitorTypes, setVisitorTypes] = useState([]);
   const inputTagRef = useRef(null);
+  const [open, setOpen] = useState(false);
+  const showDrawer = () => {
+    setOpen(true);
+  };
+  const onClose = () => {
+    setOpen(false);
+  };
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    setIsloading(true);
+    setLoading(true);
     axios({
-      url: PATH_PREFIX + "/examination-administrator/all-students",
+      url: PATH_PREFIX_V2 + "/examination-administrator/students",
       method: "GET",
       params: {
         token,
@@ -63,26 +72,30 @@ const AllStudentsIndex = props => {
         word,
       },
     }).then(response => {
-      if (response?.data?.status == 1) {
-        setData(response?.data?.data?.data);
+      if (response?.data?.message === "Success") {
+        setData(response?.data?.data);
         setTotal(response?.data?.data?.total);
         setPage(response?.data?.data?.current_page);
-        setIsloading(false);
+        setLoading(false);
+      } else {
+        setLoading(false);
+        message.error("Xatolik!");
       }
     });
     window.addEventListener("keyup", event => {
       if (event?.code === "F2") {
-        if (location?.pathname === "/examination-administrator/all-students") {
+        if (location?.pathname === "/examination-administrator/students") {
           history.push(urlStudentAdd);
         }
       }
       if (event?.code === "F4") {
-        if (location?.pathname === "/examination-administrator/all-students") {
+        if (location?.pathname === "/examination-administrator/students") {
           openAddModal();
         }
       }
     });
   }, [reload, waitWord]);
+  console.log("llllllllllllllllllllll", data);
   useEffect(() => {
     getEduTypes();
     getOrganizationsFunction();
@@ -103,7 +116,6 @@ const AllStudentsIndex = props => {
       setVisitorTypes(visResp?.data);
     })();
   };
-  //   console.log("visitorTypess", visitorTypes);
 
   const getOrganizationsFunction = () => {
     (async () => {
@@ -113,24 +125,28 @@ const AllStudentsIndex = props => {
       }
     })();
   };
+
   const columns = [
     {
-      title: "#",
-      render: (index, element, counter) => (
-        <>{showCount * (page - 1) + counter + 1}</>
-      ),
+      title: "№",
+      dataIndex: "index",
+      key: "index",
+      render: (text, record, index) => index + 1,
+      width: 40,
+      align: "center",
     },
 
     {
-      title: "F.I.O",
+      title: <div className="text-center">F.I.O</div>,
       render: (index, element) => <>{element?.student_fio}</>,
     },
     {
-      title: "Ta`lim turi",
-      render: (index, element) => <>{element?.edu_type?.short_name_en}</>,
+      title: <div className="text-center">Ta`lim turi</div>,
+      render: (index, element) => <>{element?.edu_type?.short_name}</>,
     },
     {
       title: "Holati",
+      align: "center",
       render: (index, element) => (
         <>
           {element?.type === "resubmit" ? (
@@ -142,10 +158,11 @@ const AllStudentsIndex = props => {
       ),
     },
     {
-      title: "To`lov",
+      title: "To'lov",
       children: [
         {
           title: "Nazariy",
+          align: "center",
           render: (index, element) => (
             <>
               {parseInt(element?.payment_status) ? (
@@ -158,6 +175,7 @@ const AllStudentsIndex = props => {
         },
         {
           title: "Amaliy",
+          align: "center",
           render: (index, element) => (
             <>
               {parseInt(element?.practical_payment_status) ? (
@@ -175,6 +193,7 @@ const AllStudentsIndex = props => {
       children: [
         {
           title: "Nazariy",
+          align: "center",
           render: (index, element) => (
             <>
               {parseInt(element?.exam_result) === 1 ? (
@@ -189,6 +208,7 @@ const AllStudentsIndex = props => {
         },
         {
           title: "Amaliy",
+          align: "center",
           render: (index, element) => (
             <>
               {parseInt(element?.practical_exam_result) === 1 ? (
@@ -204,9 +224,15 @@ const AllStudentsIndex = props => {
       ],
     },
     {
+      title: "Umumiy holat",
+      render: (index, element) => <>{element?.general_status_data?.name}</>,
+      width: "120",
+    },
+    {
       title: "Amallar",
+      align: "center",
       render: (index, element) => (
-        <>
+        <div className="d-flex align-items-center justify-content-around">
           <Tooltip title={"O'zgartirish"}>
             <NavLink
               to={"/examination-administrator/edit-students/" + element?.id}
@@ -214,7 +240,9 @@ const AllStudentsIndex = props => {
               <i className={"bx bx-edit"} />
             </NavLink>
           </Tooltip>
-        </>
+
+          <i style={{ cursor: "pointer" }} class="far fa-eye text-dark"></i>
+        </div>
       ),
     },
   ];
@@ -259,6 +287,11 @@ const AllStudentsIndex = props => {
     }
   };
 
+  const handleRowClick = (record, index) => {
+    select_student(record);
+    showDrawer();
+  };
+
   return (
     <>
       <AddStudentModal
@@ -275,80 +308,77 @@ const AllStudentsIndex = props => {
       <div className="page-content">
         <Container fluid>
           <Card>
-            <CardBody>
-              <div className="d-flex justify-content-between align-items-center">
-                <h5>Barcha keluvchilar </h5>
-                <div className={"d-flex"}>
-                  {/* <NavLink to={urlStudentAdd}>
+            <div className="d-flex justify-content-between align-items-center">
+              <h5>Barcha keluvchilar </h5>
+              <div className={"d-flex"}>
+                {/* <NavLink to={urlStudentAdd}>
                     <Button color="success" outline>
                       + Qo'shish sahifasi{" "}
                       <span className={"keyboard-style"}>F2</span>
                     </Button>
                   </NavLink> */}
-                  <div className={"d-flex ml-2"}>
-                    <Button
-                      color="success"
-                      outline
-                      onClick={() => openAddModal()}
-                    >
-                      <span className="mr-2">+ Qo'shish oynasi</span>
-                      <span className={"keyboard-style"}>F4</span>
-                    </Button>
-                  </div>
+                <div className={"d-flex ml-2"}>
+                  <Button
+                    color="success"
+                    outline
+                    onClick={() => openAddModal()}
+                  >
+                    <span className="mr-2">+ Qo'shish oynasi</span>
+                    <span className={"keyboard-style"}>F4</span>
+                  </Button>
                 </div>
               </div>
-              <div className="crypto-buy-sell-nav mt-3">
-                <Row>
-                  <Col xl={18}>
-                    <Col xl={24} className={"d-flex justify-content-end"}>
-                      <Col xl={6}>
-                        <Input
-                          allowClear={true}
-                          onChange={e => changeWord(e?.target?.value)}
-                        />
-                      </Col>
-                    </Col>
-                    <Col xl={24}>
-                      <Table
-                        bordered={true}
-                        columns={columns}
-                        dataSource={data}
-                        loading={isloading}
-                        pagination={false}
-                        onRow={(record, rowIndex) => {
-                          return {
-                            onClick: event => {
-                              select_student(record);
-                            },
-                          };
-                        }}
-                      />
-                    </Col>
-                    <Col xl={24} className={"d-flex justify-content-end"}>
-                      <Pagination
-                        onShowSizeChange={onShowSizeChange}
-                        onChange={changePage}
-                        defaultCurrent={page}
-                        current={page}
-                        total={total}
-                        showSizeChanger
-                      />
-                    </Col>
-                  </Col>
-                  <Col xl={6}>
-                    {selectedStudent && (
-                      <>
-                        <QrCodeToPrint
-                          src={src}
-                          selectedStudent={selectedStudent}
-                        />
-                      </>
-                    )}
-                  </Col>
-                </Row>
-              </div>
-            </CardBody>
+            </div>
+
+            <Row gutter={[0, 16]}>
+              <Col xl={24}>
+                <Col xl={6}>
+                  <Input
+                    allowClear={true}
+                    onChange={e => changeWord(e?.target?.value)}
+                  />
+                </Col>
+              </Col>
+
+              <Row gutter={[0, 16]}>
+                <Col xl={24}>
+                  <Table
+                    bordered={true}
+                    columns={columns}
+                    dataSource={data}
+                    loading={loading}
+                    onRow={(record, index) => ({
+                      onClick: () => handleRowClick(record, index),
+                    })}
+                    onClick={showDrawer}
+                    scroll={{ x: true, y: 600 }}
+                    pagination={false}
+                    size="small"
+                    sticky
+                  />
+                </Col>
+                <Col xl={24} className="d-flex justify-content-end">
+                  <Pagination
+                    onShowSizeChange={onShowSizeChange}
+                    onChange={changePage}
+                    defaultCurrent={page}
+                    current={page}
+                    total={total}
+                    showSizeChanger
+                  />
+                </Col>
+              </Row>
+            </Row>
           </Card>
+
+          <Drawer
+            title="Basic Drawer"
+            placement="right"
+            onClose={onClose}
+            open={open}
+          >
+            <QrCodeToPrint src={src} selectedStudent={selectedStudent} />
+          </Drawer>
         </Container>
       </div>
     </>
