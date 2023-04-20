@@ -95,7 +95,7 @@ const AllStudentsIndex = props => {
       }
     });
   }, [reload, waitWord]);
-  console.log("llllllllllllllllllllll", data);
+
   useEffect(() => {
     getEduTypes();
     getOrganizationsFunction();

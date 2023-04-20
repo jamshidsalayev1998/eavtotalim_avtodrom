@@ -54,7 +54,7 @@ const AddStudentModal = props => {
   const maskInputNumber = {
     mask: "(99) 9999999",
     maskChar: "_",
-    alwaysShowMask: false,
+    alwaysShowMask: true,
     formatChars: {
       9: "[0-9]",
       a: "[A-Za-z]",

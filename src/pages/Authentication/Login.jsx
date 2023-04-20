@@ -15,7 +15,6 @@ import logoIntalim from "../../assets/images/logo.png";
 import smartCar from "../../assets/images/loginPage/SmartCar.png";
 import LanguageDropDown from "./../../components/CommonForBoth/TopbarDropdown/LanguageDropdown";
 import MainContext from "Context/MainContext";
-import { Modal } from "reactstrap";
 import "./login.css";
 import API from "../../api/";
 import { useTranslation } from "react-i18next";
