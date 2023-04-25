@@ -322,7 +322,7 @@ const Login = () => {
                      {t("Login")}
                     </button> */}
                     </p>
-                    <NavLink to={"/third-application"}>
+                    <NavLink to={"/online-application"}>
                       Testga ro'yhatdan o'tish
                     </NavLink>
                   </form>

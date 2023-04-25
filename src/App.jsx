@@ -34,6 +34,7 @@ import UserComputerConfigPage from "./pages/examinationUser/Computers/Config/Use
 import socketIO from "socket.io-client";
 import { NODEJS_SOCKET_URL } from "./Utils/AppVariables";
 import studentOnlineApplication from "pages/Students/SigupOutLogin/studentOnlineApplication";
+import smsCodeRecieving from "pages/Students/SigupOutLogin/smsCodeRecieving";
 
 export const socketParam = socketIO.connect(NODEJS_SOCKET_URL);
 const languagesList = ["uz", "kiril", "qq", "ru", "en"];
@@ -162,7 +163,12 @@ const App = () => {
               />
               <Route
                 component={studentOnlineApplication}
-                path="/third-application"
+                path="/online-application"
+                exact
+              />
+              <Route
+                component={smsCodeRecieving}
+                path="/online-application-sms-check"
                 exact
               />
               <Redirect
