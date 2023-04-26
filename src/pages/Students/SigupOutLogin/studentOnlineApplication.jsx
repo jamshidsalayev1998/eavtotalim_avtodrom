@@ -54,9 +54,12 @@ const studentOnlineApplication = ({ captchaCode }) => {
       setLoader(true);
       formRef.current.resetFields(["code"]);
       const formData = new FormData();
-      formData.append("phone", phoneParser(values.phone));
+      const parsedPhone = phoneParser(values.phone);
+      formData.append("phone", parsedPhone);
       formData.append("captcha[key]", values.key);
       formData.append("captcha[code]", values.code);
+
+      setPhone(parsedPhone); // Update the phone state with parsedPhone
 
       const response = await API_V2.post(
         "/online-application/auth/send-code",
@@ -100,7 +103,7 @@ const studentOnlineApplication = ({ captchaCode }) => {
     try {
       setLoader(true);
       const formSmsData = new FormData();
-      formSmsData.append("phone", phoneParser(values.phone));
+      formSmsData.append("phone", phone); // Set phone value from state
       formSmsData.append("code", values.code);
 
       const response = await API_V2.post(
@@ -112,7 +115,25 @@ const studentOnlineApplication = ({ captchaCode }) => {
           },
         }
       );
+
+      if (response?.data?.message == "Success") {
+        message.info(
+          "Telefon raqamingizga yuborilgan login va parolni tizimga kiriting!"
+        );
+        history.push("/login");
+      }
+      history.push("/login");
     } catch (error) {
+      if (!error?.response?.status) {
+        setErrorMessage("Serverda uzulish!");
+      } else if (error?.response?.status == 400) {
+        setErrorMessage("Xafvsizlik kodi xato!");
+      } else if (error?.response?.status == 422) {
+        message.error(error?.response.data?.errors?.code);
+      } else {
+        setErrMsg("Xatolik!");
+      }
+      message.error("Kiritilgan kod xato!");
       setLoader(false);
     } finally {
       setLoader(false);
@@ -297,15 +318,8 @@ const studentOnlineApplication = ({ captchaCode }) => {
 
             {/* telefon raqam */}
             <div className="text-center text-secondary">
-              <span></span> <p>{phone}</p>
+              <span></span> <p>+{phone}</p>
             </div>
-            <Form.Item
-              style={{ width: "100%" }}
-              name={"phone"}
-              className="m-0 p-0 d-none"
-            >
-              <Input placeholder="telefon raqam" />
-            </Form.Item>
 
             {/* sms kodi */}
             <Form.Item
@@ -320,7 +334,7 @@ const studentOnlineApplication = ({ captchaCode }) => {
               ]}
               name={"code"}
             >
-              <Input placeholder="sms kodni kiriting" />
+              <Input id="code" placeholder="sms kodni kiriting" />
             </Form.Item>
 
             <Button type="primary" htmlType="submit" className="w-100">
