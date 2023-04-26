@@ -53,8 +53,8 @@ const ExamProcessStudents = () => {
         openNotification(data?.message, data?.userName, data?.test_result);
       });
       socketParam.on(eventNameRealProccess, data => {
-        openNotification(JSON.stringify(data) , 'dasd0' , 0);
-      console.log(data)
+        openNotification(JSON.stringify(data), "dasd0", 0);
+        console.log(data);
       });
       return () => {
         socketParam.off(eventName);
@@ -218,38 +218,33 @@ const ExamProcessStudents = () => {
           </Col>
         </Row>
       </Modal>
-      <Container fluid style={{ overFlow: "auto" }}>
+      <Container fluid>
         <Card>
-          <CardBody>
-            <Input
-              // style={{opacity: '0'}}
-              ref={inputEl}
-              onChange={e => setInputValue(e?.target?.value)}
-              onBlur={focusInput}
-              // autoFocus={true}
-              onKeyUp={key_up}
-              style={{ opacity: "0" }}
-              // type={"number"}
-              value={inputValue}
-            />
-            <div className="top-organizations">
-              <h5 className="text-dark">Test topshirish jarayonidagilar</h5>
-              <button className={"btn btn-light"} onClick={refresh}>
-                <i className="fa fa-retweet" aria-hidden="true" />
-              </button>
-            </div>
-            <Tabs defaultActiveKey="1">
-              <Tabs.TabPane tab="Kompyuter bo'yicha" key="1">
-                <ExamProcessByComputerTab
-                  reload={reload}
-                  setReload={setReload}
-                />
-              </Tabs.TabPane>
-              <Tabs.TabPane tab="O'quvchilar bo'yicha" key="2">
-                <ExamProcessByStudentTab reload={reload} />
-              </Tabs.TabPane>
-            </Tabs>
-          </CardBody>
+          <Input
+            ref={inputEl}
+            onChange={e => setInputValue(e?.target?.value)}
+            onBlur={focusInput}
+            // autoFocus={true}
+            onKeyUp={key_up}
+            style={{ opacity: "0" }}
+            // type={"number"}
+            className="d-none"
+            value={inputValue}
+          />
+          <div className="top-organizations">
+            <h5 className="text-dark">Test topshirish jarayonidagilar</h5>
+            <button className={"btn btn-light"} onClick={refresh}>
+              <i className="fa fa-retweet" aria-hidden="true" />
+            </button>
+          </div>
+          <Tabs defaultActiveKey="1">
+            <Tabs.TabPane tab="Kompyuter bo'yicha" key="1">
+              <ExamProcessByComputerTab reload={reload} setReload={setReload} />
+            </Tabs.TabPane>
+            <Tabs.TabPane tab="O'quvchilar bo'yicha" key="2">
+              <ExamProcessByStudentTab reload={reload} />
+            </Tabs.TabPane>
+          </Tabs>
         </Card>
       </Container>
     </div>

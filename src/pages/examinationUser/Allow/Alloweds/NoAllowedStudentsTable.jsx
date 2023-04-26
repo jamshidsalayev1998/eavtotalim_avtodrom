@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col} from "reactstrap";
+import { Row, Col } from "reactstrap";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
 import { withTranslation, useTranslation } from "react-i18next";
@@ -64,7 +64,7 @@ const NoAllowedStudentsTable = ({}) => {
         group_id,
         word,
         status: "1",
-        type:'first'
+        type: "first",
       },
     }).then(res => {
       if (res?.data?.status == "1") {
@@ -89,7 +89,7 @@ const NoAllowedStudentsTable = ({}) => {
     set_selected_group_id("all");
     localStorage.setItem(
       window.location.pathname + "-no-allowed-default-group-id",
-      'all'
+      "all"
     );
     set_groups([]);
     set_selected_organization_id(element_id);
@@ -99,13 +99,13 @@ const NoAllowedStudentsTable = ({}) => {
     );
   };
 
-  const change_group = (element_id) => {
+  const change_group = element_id => {
     set_selected_group_id(element_id);
     localStorage.setItem(
       window.location.pathname + "-no-allowed-default-group-id",
       element_id
     );
-  }
+  };
 
   return (
     <>
@@ -117,9 +117,12 @@ const NoAllowedStudentsTable = ({}) => {
             style={{ width: "100%" }}
             placeholder="Avtomaktab"
             optionFilterProp="children"
-            onChange={e => {change_organization_id(e); setpage(1)}}
+            onChange={e => {
+              change_organization_id(e);
+              setpage(1);
+            }}
             defaultValue="all"
-            value={organization_id != 'all' ? Number(organization_id) :'all'}
+            value={organization_id != "all" ? Number(organization_id) : "all"}
             filterOption={(input, option) =>
               option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
             }
@@ -145,7 +148,10 @@ const NoAllowedStudentsTable = ({}) => {
             allowClear
             style={{ width: "100%" }}
             defaultValue={word}
-            onChange={e => {change_word(e?.target?.value); setpage(1)}}
+            onChange={e => {
+              change_word(e?.target?.value);
+              setpage(1);
+            }}
           />
         </Col>
       </Row>
@@ -170,7 +176,7 @@ const NoAllowedStudentsTable = ({}) => {
               {data?.map((element, index) => {
                 return (
                   <Tr key={index}>
-                    <Td>
+                    <Td className="text-center">
                       {show_count == "all"
                         ? index + 1
                         : show_count * (page - 1) + index + 1}
@@ -179,7 +185,9 @@ const NoAllowedStudentsTable = ({}) => {
                       <NavLink
                         to={`/come-examination/no-allow-students/${element?.id}`}
                       >
-                        {element?.type =='first' ? element?.group?.name_uz : element?.name}
+                        {element?.type == "first"
+                          ? element?.group?.name_uz
+                          : element?.name}
                       </NavLink>
                     </Td>
                     <Td>
@@ -208,7 +216,10 @@ const NoAllowedStudentsTable = ({}) => {
               <select
                 className="custom-select mx-2"
                 value={show_count}
-                onChange={e => {setshow_count(e.target.value); setpage(1);}}
+                onChange={e => {
+                  setshow_count(e.target.value);
+                  setpage(1);
+                }}
               >
                 <option value="10">10</option>
                 <option value="20">20</option>

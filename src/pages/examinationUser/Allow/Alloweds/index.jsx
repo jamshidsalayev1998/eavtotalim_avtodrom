@@ -22,32 +22,33 @@ const AllowStudentsTable = props => {
   const { t } = useTranslation();
   const [isLoading, setIsLoading] = useState(false);
 
-
-  const [default_tab , set_default_tab] = useState(localStorage.getItem(window.location.pathname+'-default-tab'));
-  const change_tab = (key) => {
-    localStorage.setItem(window.location.pathname+'-default-tab' , key);
-  }
+  const [default_tab, set_default_tab] = useState(
+    localStorage.getItem(window.location.pathname + "-default-tab")
+  );
+  const change_tab = key => {
+    localStorage.setItem(window.location.pathname + "-default-tab", key);
+  };
   return (
     <>
       <div className="page-content">
         <Container fluid>
           <Card>
-            <CardBody>
-              <div className="top-organizations">
-                <h5 className="text-dark">Imtihonga jo'natilgan guruhlar</h5>
-                
-              </div>
-              <div className="crypto-buy-sell-nav mt-3">
-                <Tabs defaultActiveKey={default_tab?default_tab:'1'} onChange={change_tab}>
-                  <TabPane tab="Ruhsat berilmaganlar" key="1">
-                    <NoAllowedStudentsTable />
-                  </TabPane>
-                  <TabPane tab="Ruhsat berilganlar" key="2">
-                    <AllowedStudentsTable />
-                  </TabPane>
-                </Tabs>
-              </div>
-            </CardBody>
+            <div>
+              <h5 className="text-dark">Imtihonga jo'natilgan guruhlar</h5>
+            </div>
+            <div>
+              <Tabs
+                defaultActiveKey={default_tab ? default_tab : "1"}
+                onChange={change_tab}
+              >
+                <TabPane tab="Ruhsat berilmaganlar" key="1">
+                  <NoAllowedStudentsTable />
+                </TabPane>
+                <TabPane tab="Ruhsat berilganlar" key="2">
+                  <AllowedStudentsTable />
+                </TabPane>
+              </Tabs>
+            </div>
           </Card>
         </Container>
       </div>

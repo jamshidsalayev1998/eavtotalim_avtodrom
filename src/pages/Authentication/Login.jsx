@@ -82,7 +82,7 @@ const Login = () => {
         setAdditional(response?.data?.user?.additional);
 
         const tempRole = parseInt(role);
-        if (![13, 15, 16, 17, 18, 19].includes(tempRole)) {
+        if (![13, 15, 16, 17, 18, 19, 23].includes(tempRole)) {
           localStorage.removeItem("token");
           message.warning(
             <>

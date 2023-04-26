@@ -5,9 +5,9 @@ import { connect } from "react-redux";
 
 // Import Routes all
 import {
-  instructorRoutes,
-  all_user_routes,
   authRoutes,
+  onlineStudentApplicationRoutes,
+  all_user_routes,
 } from "../routes/allRoutes";
 
 // Import all middleware
@@ -22,7 +22,7 @@ import NonAuthLayout from "../components/NonAuthLayout";
 import "../assets/scss/theme.scss";
 import MainContext from "../Context/MainContext";
 
-const InstructorRoles = props => {
+const StudentOnlineApplicationRoles = props => {
   const { hasLayout } = useContext(MainContext);
   function getLayout() {
     let layoutCls = VerticalLayout;
@@ -62,7 +62,7 @@ const InstructorRoles = props => {
             />
           ))}
 
-          {instructorRoutes.map((route, idx) => (
+          {onlineStudentApplicationRoutes.map((route, idx) => (
             <Authmiddleware
               path={route.path}
               layout={hasLayout ? Layout : NonAuthLayout}
@@ -79,7 +79,7 @@ const InstructorRoles = props => {
   );
 };
 
-InstructorRoles.propTypes = {
+StudentOnlineApplicationRoles.propTypes = {
   layout: PropTypes.any,
 };
 
@@ -89,4 +89,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, null)(InstructorRoles);
+export default connect(mapStateToProps, null)(StudentOnlineApplicationRoles);

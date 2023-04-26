@@ -22,13 +22,17 @@ const studentOnlineApplication = ({ captchaCode }) => {
   const formRef = useRef(null);
   const [showDiv1, setShowDiv1] = useState(true);
   const [showDiv2, setShowDiv2] = useState(false);
+  const [countdown, setCountdown] = useState(null);
 
   // sms waiting time counter
-
-  // phone mask
-  const handlePhoneChange = event => {
-    setPhone(event.target.value);
-  };
+  useEffect(() => {
+    const timer =
+      countdown > 0 &&
+      setInterval(() => {
+        setCountdown(prevCountdown => prevCountdown - 1);
+      }, 1000);
+    return () => clearInterval(timer);
+  }, [countdown, showDiv2]);
 
   const phoneParser = value => {
     // Remove all non-digit characters from the input value
@@ -75,6 +79,7 @@ const studentOnlineApplication = ({ captchaCode }) => {
         setShowDiv1(false);
         setShowDiv2(true);
         message.success("Yuborildi");
+        setCountdown(60);
       } else if (response?.data?.status == 0) {
         form.setFields([
           { name: ["phone"], errors: [...error?.response.data?.errors?.phone] },
@@ -173,6 +178,10 @@ const studentOnlineApplication = ({ captchaCode }) => {
     });
   }, [captcha]);
 
+  // phone mask
+  const handlePhoneChange = event => {
+    setPhone(event.target.value);
+  };
   return (
     <Spin spinning={loader}>
       {showDiv1 && (
@@ -318,7 +327,14 @@ const studentOnlineApplication = ({ captchaCode }) => {
 
             {/* telefon raqam */}
             <div className="text-center text-secondary">
-              <span></span> <p>+{phone}</p>
+              {countdown === 0 ? (
+                <div className="text-primary">
+                  Ushbu raqamingizga kelgan sms kodni kiriting!
+                </div>
+              ) : (
+                <div>Kodning kelish vaqti {countdown}</div>
+              )}{" "}
+              <p className="font-weight-bold">+{phone}</p>
             </div>
 
             {/* sms kodi */}

@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import {Row, Col } from "reactstrap";
+import { Row, Col } from "reactstrap";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
 import { withTranslation, useTranslation } from "react-i18next";
 import { PATH_PREFIX } from "Utils/AppVariables";
 import { DataLoader } from "pages/Loaders/Loaders";
-import { Select,Input } from "antd";
+import { Select, Input } from "antd";
 import { Table, Thead, Tbody, Tr, Th, Td } from "react-super-responsive-table";
 import PaginationComponent from "react-reactstrap-pagination";
 
@@ -17,7 +17,11 @@ const AllowedStudentsTable = ({}) => {
   const [show_count, setshow_count] = useState("10");
   const [page, setpage] = useState("1");
   const [total, settotal] = useState("1");
-  const [word, setword] = useState(localStorage.getItem(window.location.pathname+'-no-accepted-default-search-word'));
+  const [word, setword] = useState(
+    localStorage.getItem(
+      window.location.pathname + "-no-accepted-default-search-word"
+    )
+  );
   const [organization_id, set_selected_organization_id] = useState(
     localStorage.getItem(
       window.location.pathname + "-allowed-default-organization-id"
@@ -28,9 +32,7 @@ const AllowedStudentsTable = ({}) => {
       : "all"
   );
   const [group_id, set_selected_group_id] = useState(
-    localStorage.getItem(
-      window.location.pathname + "-allowed-default-group-id"
-    )
+    localStorage.getItem(window.location.pathname + "-allowed-default-group-id")
       ? localStorage.getItem(
           window.location.pathname + "-allowed-default-group-id"
         )
@@ -60,29 +62,32 @@ const AllowedStudentsTable = ({}) => {
         group_id,
         word,
         status: "2",
-        type:'first'
+        type: "first",
       },
     }).then(res => {
       if (res?.data?.status == "1") {
-        setIsLoading(false)
+        setIsLoading(false);
         setData(res?.data?.data?.data);
         set_organizations(res?.data?.filters?.organizations);
         set_groups(res?.data?.filters?.groups);
         settotal(res?.data?.data?.total);
       }
     });
-  }, [get_again, page, show_count, organization_id, word,group_id]);
+  }, [get_again, page, show_count, organization_id, word, group_id]);
 
-  const change_word = (word) => {
+  const change_word = word => {
     setword(word);
-    localStorage.setItem(window.location.pathname+'-no-accepted-default-search-word' , word);
-  }
+    localStorage.setItem(
+      window.location.pathname + "-no-accepted-default-search-word",
+      word
+    );
+  };
 
   const change_organization_id = element_id => {
     set_selected_group_id("all");
     localStorage.setItem(
       window.location.pathname + "-allowed-default-group-id",
-      'all'
+      "all"
     );
     set_groups([]);
     set_selected_organization_id(element_id);
@@ -92,18 +97,16 @@ const AllowedStudentsTable = ({}) => {
     );
   };
 
-  const change_group = (element_id) => {
+  const change_group = element_id => {
     set_selected_group_id(element_id);
     localStorage.setItem(
       window.location.pathname + "-allowed-default-group-id",
       element_id
     );
-  }
+  };
 
   return (
     <>
-      
-
       <Row style={{ justifyContent: "space-between" }}>
         <Col xl={4}>
           <label htmlFor="">Avtomaktab</label>
@@ -112,9 +115,12 @@ const AllowedStudentsTable = ({}) => {
             style={{ width: "100%" }}
             placeholder="Select a person"
             optionFilterProp="children"
-            onChange={e => {change_organization_id(e); setpage(1)}}
+            onChange={e => {
+              change_organization_id(e);
+              setpage(1);
+            }}
             defaultValue="all"
-            value={organization_id != 'all' ? Number(organization_id) :'all'}
+            value={organization_id != "all" ? Number(organization_id) : "all"}
             filterOption={(input, option) =>
               option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
             }
@@ -123,7 +129,11 @@ const AllowedStudentsTable = ({}) => {
             {organizations?.map((element, index) => {
               return (
                 <Option value={element?.id} key={index}>
-                  {element?.name_uz || element?.name_ru || element?.name_en || element?.name_qq || element?.name_kiril}
+                  {element?.name_uz ||
+                    element?.name_ru ||
+                    element?.name_en ||
+                    element?.name_qq ||
+                    element?.name_kiril}
                 </Option>
               );
             })}
@@ -158,7 +168,15 @@ const AllowedStudentsTable = ({}) => {
         </Col> */}
         <Col xl={2}>
           <label htmlFor="">Qidirish</label>
-          <Input allowClear style={{ width: '100%' }} defaultValue={word} onChange={(e) => {change_word(e?.target?.value); setpage(1)}} />
+          <Input
+            allowClear
+            style={{ width: "100%" }}
+            defaultValue={word}
+            onChange={e => {
+              change_word(e?.target?.value);
+              setpage(1);
+            }}
+          />
         </Col>
       </Row>
       {isLoading && <DataLoader />}
@@ -180,27 +198,34 @@ const AllowedStudentsTable = ({}) => {
             </Thead>
             <Tbody>
               {data?.map((element, index) => {
-                  return (
-                    <Tr key={index}>
-                      <Td>
-                        {show_count == "all"
-                          ? index + 1
-                          : show_count * (page - 1) + index + 1}
-                      </Td>
-                      <Td>
-                        <NavLink
-                          to={`/come-examination/allowed-students/${element?.id}`}
-                        >
-                          {element?.group?.name_uz}
-                        </NavLink>
-                      </Td>
-                      <Td>{element?.organization?.name_uz || element?.organization?.name_ru || element?.organization?.name_kiril || element?.organization?.name_en || element?.organization?.name_qq}</Td>
-                      <Td>
-                        {element?.access_start_date} ({element?.access_start_time})
-                      </Td>
-                    </Tr>
-                  );
-                })}
+                return (
+                  <Tr key={index}>
+                    <Td className="text-center">
+                      {show_count == "all"
+                        ? index + 1
+                        : show_count * (page - 1) + index + 1}
+                    </Td>
+                    <Td>
+                      <NavLink
+                        to={`/come-examination/allowed-students/${element?.id}`}
+                      >
+                        {element?.group?.name_uz}
+                      </NavLink>
+                    </Td>
+                    <Td>
+                      {element?.organization?.name_uz ||
+                        element?.organization?.name_ru ||
+                        element?.organization?.name_kiril ||
+                        element?.organization?.name_en ||
+                        element?.organization?.name_qq}
+                    </Td>
+                    <Td>
+                      {element?.access_start_date} ({element?.access_start_time}
+                      )
+                    </Td>
+                  </Tr>
+                );
+              })}
             </Tbody>
           </Table>
         </>
@@ -213,7 +238,10 @@ const AllowedStudentsTable = ({}) => {
               <select
                 className="custom-select mx-2"
                 value={show_count}
-                onChange={e => {setshow_count(e.target.value); setpage(1);}}
+                onChange={e => {
+                  setshow_count(e.target.value);
+                  setpage(1);
+                }}
               >
                 <option value="10">10</option>
                 <option value="20">20</option>

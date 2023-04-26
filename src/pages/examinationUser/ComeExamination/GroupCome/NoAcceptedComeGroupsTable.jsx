@@ -3,9 +3,9 @@ import { Row, Col, Badge } from "reactstrap";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
 import { withTranslation, useTranslation } from "react-i18next";
-import {PATH_PREFIX} from "Utils/AppVariables";
+import { PATH_PREFIX } from "Utils/AppVariables";
 import { DataLoader } from "pages/Loaders/Loaders";
-import { Select, Modal, Button, TimePicker,Input } from "antd";
+import { Select, Modal, Button, TimePicker, Input } from "antd";
 import { Table, Thead, Tbody, Tr, Th, Td } from "react-super-responsive-table";
 import PaginationComponent from "react-reactstrap-pagination";
 import moment from "moment";
@@ -17,7 +17,11 @@ const NoAcceptedComeGroupsTable = () => {
   const [show_count, setshow_count] = useState("10");
   const [page, setpage] = useState("1");
   const [total, settotal] = useState("1");
-  const [word, setword] = useState(localStorage.getItem(window.location.pathname+'-no-accepted-default-search-word'));
+  const [word, setword] = useState(
+    localStorage.getItem(
+      window.location.pathname + "-no-accepted-default-search-word"
+    )
+  );
   const [organizations, set_organizations] = useState([]);
   const [organization_id, set_organization_id] = useState("all");
   const [isLoading, setIsLoading] = useState(false);
@@ -38,7 +42,7 @@ const NoAcceptedComeGroupsTable = () => {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    setIsLoading(true)
+    setIsLoading(true);
     axios({
       url: PATH_PREFIX + "/come-examination/come-groups-index",
       method: "GET",
@@ -52,13 +56,13 @@ const NoAcceptedComeGroupsTable = () => {
       },
     }).then(res => {
       if (res?.data?.status == "1") {
-        setIsLoading(false)
+        setIsLoading(false);
         setData(res?.data?.data?.data);
         settotal(res?.data?.data?.total);
         set_organizations(res?.data?.filters?.organizations);
       }
     });
-  }, [get_again, show_count, page, organization_id,word]);
+  }, [get_again, show_count, page, organization_id, word]);
 
   const [isModalVisible, setIsModalVisible] = useState(false);
 
@@ -66,7 +70,7 @@ const NoAcceptedComeGroupsTable = () => {
     set_selected_element_id(element_id);
     set_come_group_name(group_name);
     set_come_organization_name(organization_name);
-  setIsModalVisible(true);
+    setIsModalVisible(true);
   };
 
   const handleOk = () => {
@@ -127,16 +131,17 @@ const NoAcceptedComeGroupsTable = () => {
     set_selected_element_id("");
   };
 
-  const change_word = (word) => {
+  const change_word = word => {
     setword(word);
-    localStorage.setItem(window.location.pathname+'-no-accepted-default-search-word' , word);
-  }
-
-
+    localStorage.setItem(
+      window.location.pathname + "-no-accepted-default-search-word",
+      word
+    );
+  };
 
   return (
     <>
-        <Modal
+      <Modal
         title="Guruhga kelish vaqtini tasdiqlash"
         visible={isModalVisible}
         onOk={handleOk}
@@ -200,103 +205,112 @@ const NoAcceptedComeGroupsTable = () => {
           </Col>
         </Row>
       </Modal>
-          <Row style={{ justifyContent: "space-between" }}>
-            <Col xl={4}>
-              <label htmlFor="">Tashkilot</label>
-              <Select
-                showSearch
-                style={{ width: "100%" }}
-                placeholder="Select a person"
-                optionFilterProp="children"
-                value={organization_id}
-                onChange={e => {set_organization_id(e); setpage(1)}}
-                defaultValue="all"
-                filterOption={(input, option) =>
-                  option.children.toLowerCase().indexOf(input.toLowerCase()) >=
-                  0
-                }
-              >
-                <Option value="all">Barchasi</Option>
-                {organizations?.map((element, index) => {
-                  return (
-                    <Option value={element?.id} key={index}>
-                      {element?.name_uz}
-                    </Option>
-                  );
-                })}
-              </Select>
-            </Col>
-            <Col xl={2}>
-              <label htmlFor="">Qidirish</label>
-              <Input allowClear style={{ width: '100%' }} defaultValue={word} onChange={(e) => {change_word(e?.target?.value); setpage(1)}} />
-            </Col>
-          </Row>
-          {isLoading && <DataLoader />}
-          {!isLoading && (
-          <Row>
-            <Table
-              id="tech-companies-1"
-              className="table table-striped table-bordered mt-2"
-            >
-              <Thead>
-                <Tr>
-                  <Th>#</Th>
-                  <Th>Guruh nomi</Th>
-                  <Th>Tashkilot</Th>
-                  <Th>O'quvchilar soni</Th>
-                  <Th>Holati</Th>
-                  <Th>Tasdiqlash</Th>
-                </Tr>
-              </Thead>
-              <Tbody>
-                {data?.map((element, index) => {
-                  return (
-                    <Tr key={index}>
-                      <Td>{index + 1}</Td>
-                      <Td>
-                        <NavLink
-                          to={`/come-examination/come-groups/${element?.id}`}
-                          
-                        >
-                          {" "}
-                          {element?.group?.name_uz}{" "}
-                        </NavLink>{" "}
-                      </Td>
-                      <Td>{element?.group?.organization?.name_uz}</Td>
-                      <Td>{element?.final_access_students_count}</Td>
-                      <Td style={{ width: "1px" }}>
-                        <Badge
-                          color={element?.status == 1 ? "success" : "warning"}
-                          className="py-1 px-2 badge badge-pill"
-                        >
-                          {element?.status == "1" && "Tasdiqlangan"}
-                          {element?.status == "0" && "Tasdiqlanmagan"}
-                        </Badge>
-                      </Td>
-                      <Td
-                        style={{ width: "1px" }}
-                        onClick={() =>
-                          showModal(
-                            element?.group?.name_uz,
-                            element?.id,
-                            element?.group?.organization?.name_uz
-                          )
-                        }
+      <Row style={{ justifyContent: "space-between" }}>
+        <Col xl={4}>
+          <label htmlFor="">Tashkilot</label>
+          <Select
+            showSearch
+            style={{ width: "100%" }}
+            placeholder="Select a person"
+            optionFilterProp="children"
+            value={organization_id}
+            onChange={e => {
+              set_organization_id(e);
+              setpage(1);
+            }}
+            defaultValue="all"
+            filterOption={(input, option) =>
+              option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+            }
+          >
+            <Option value="all">Barchasi</Option>
+            {organizations?.map((element, index) => {
+              return (
+                <Option value={element?.id} key={index}>
+                  {element?.name_uz}
+                </Option>
+              );
+            })}
+          </Select>
+        </Col>
+        <Col xl={2}>
+          <label htmlFor="">Qidirish</label>
+          <Input
+            allowClear
+            style={{ width: "100%" }}
+            defaultValue={word}
+            onChange={e => {
+              change_word(e?.target?.value);
+              setpage(1);
+            }}
+          />
+        </Col>
+      </Row>
+      {isLoading && <DataLoader />}
+      {!isLoading && (
+        <Row>
+          <Table
+            id="tech-companies-1"
+            className="table table-striped table-bordered mt-3 mx-3"
+          >
+            <Thead>
+              <Tr>
+                <Th>#</Th>
+                <Th>Guruh nomi</Th>
+                <Th>Tashkilot</Th>
+                <Th>O'quvchilar soni</Th>
+                <Th>Holati</Th>
+                <Th>Tasdiqlash</Th>
+              </Tr>
+            </Thead>
+            <Tbody>
+              {data?.map((element, index) => {
+                return (
+                  <Tr key={index}>
+                    <Td>{index + 1}</Td>
+                    <Td>
+                      <NavLink
+                        to={`/come-examination/come-groups/${element?.id}`}
                       >
-                        <button
-                          className="btn btn-light"
-                          style={{ color: "#34C38F" }}
-                        >
-                          {" "}
-                          <i className="fa fa-check"></i>{" "}
-                        </button>
-                      </Td>
-                    </Tr>
-                  );
-                })}
-              </Tbody>
-            </Table>
-          </Row>
+                        {" "}
+                        {element?.group?.name_uz}{" "}
+                      </NavLink>{" "}
+                    </Td>
+                    <Td>{element?.group?.organization?.name_uz}</Td>
+                    <Td>{element?.final_access_students_count}</Td>
+                    <Td style={{ width: "1px" }}>
+                      <Badge
+                        color={element?.status == 1 ? "success" : "warning"}
+                        className="py-1 px-2 badge badge-pill"
+                      >
+                        {element?.status == "1" && "Tasdiqlangan"}
+                        {element?.status == "0" && "Tasdiqlanmagan"}
+                      </Badge>
+                    </Td>
+                    <Td
+                      style={{ width: "1px" }}
+                      onClick={() =>
+                        showModal(
+                          element?.group?.name_uz,
+                          element?.id,
+                          element?.group?.organization?.name_uz
+                        )
+                      }
+                    >
+                      <button
+                        className="btn btn-light"
+                        style={{ color: "#34C38F" }}
+                      >
+                        {" "}
+                        <i className="fa fa-check"></i>{" "}
+                      </button>
+                    </Td>
+                  </Tr>
+                );
+              })}
+            </Tbody>
+          </Table>
+        </Row>
       )}
       {data?.length > 0 && (
         <Row>
@@ -306,7 +320,10 @@ const NoAcceptedComeGroupsTable = () => {
               <select
                 className="custom-select mx-2"
                 value={show_count}
-                onChange={e => {setshow_count(e.target.value); setpage(1);}}
+                onChange={e => {
+                  setshow_count(e.target.value);
+                  setpage(1);
+                }}
               >
                 <option value="10">10</option>
                 <option value="20">20</option>

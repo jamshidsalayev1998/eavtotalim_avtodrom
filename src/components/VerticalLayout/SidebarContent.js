@@ -14,11 +14,10 @@ import CashierLinks from "./RouteLinks/cashier_links";
 import FinalAccessAdminLinks from "./RouteLinks/final_access_admin_links";
 import AdministratorLinks from "./RouteLinks/administrator_links";
 import InstructorLinks from "./RouteLinks/instructor_links";
+import StudentOnlineApplicationLinks from "./RouteLinks/online_student_application";
 
 const SidebarContent = props => {
-
   const { role } = useContext(MainContext);
-  
 
   useEffect(() => {
     const pathName = props.location.pathname;
@@ -68,21 +67,21 @@ const SidebarContent = props => {
     return false;
   }
 
-
   switch (role) {
     case "13":
-          return <ExaminationUserLinks />
+      return <ExaminationUserLinks />;
     case "16":
-      return <CashierLinks/>
-      case "17":
-      return <FinalAccessAdminLinks/>
-     case "19":
-      return <AdministratorLinks/>
-      case "18":
-      return <InstructorLinks/>
+      return <CashierLinks />;
+    case "17":
+      return <FinalAccessAdminLinks />;
+    case "19":
+      return <AdministratorLinks />;
+    case "18":
+      return <InstructorLinks />;
+    case "23":
+      return <StudentOnlineApplicationLinks />;
     default:
-      return <SuperadminLinks {...props} />
-
+      return <SuperadminLinks {...props} />;
   }
 };
 
@@ -92,5 +91,3 @@ SidebarContent.propTypes = {
 };
 
 export default React.memo(withRouter(withTranslation()(SidebarContent)));
-
-
