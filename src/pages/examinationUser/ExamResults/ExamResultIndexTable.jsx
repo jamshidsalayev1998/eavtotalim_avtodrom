@@ -244,6 +244,9 @@ const ExamResultIndexTable = ({ tableData, reload, setreload }) => {
         columns={columns}
         dataSource={data}
         pagination={false}
+        scroll={{ x: true, y: 600 }}
+        size="small"
+        sticky
       />
       <div className={"print-box"} ref={elem => (printReportRef = elem)}>
         <PrintReportByStudent selectedStudent={selectedStudentForReport} />

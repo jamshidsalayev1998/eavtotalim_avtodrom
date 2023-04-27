@@ -376,16 +376,16 @@ const AddStudentModal = props => {
           Saqlash
           <span className={"small-keyboard-style"}>F8</span>
         </Button>,
-        <Button
-          disabled={
-            resultStatus === 1 ? false : resultStatus === 2 ? false : true
-          }
-          onClick={saveStudentAndClear}
-          loading={loading}
-          type="primary"
-        >
-          Saqlash va tozalash <span className={"small-keyboard-style"}>F9</span>
-        </Button>,
+        // <Button
+        //   disabled={
+        //     resultStatus === 1 ? false : resultStatus === 2 ? false : true
+        //   }
+        //   onClick={saveStudentAndClear}
+        //   loading={loading}
+        //   type="primary"
+        // >
+        //   Saqlash va tozalash <span className={"small-keyboard-style"}>F9</span>
+        // </Button>,
       ]}
     >
       <Spin spinning={loading} tip="Tekshirilmoqda...">

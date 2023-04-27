@@ -228,8 +228,8 @@ const ExamProcessStudents = () => {
             onKeyUp={key_up}
             style={{ opacity: "0" }}
             // type={"number"}
-            className="d-none"
             value={inputValue}
+            className="position-absolute bottom-0"
           />
           <div className="top-organizations">
             <h5 className="text-dark">Test topshirish jarayonidagilar</h5>

@@ -1,6 +1,7 @@
-import React from 'react'
+import React from "react";
 import * as FileSaver from "file-saver";
 import * as XLSX from "xlsx";
+import { Button } from "reactstrap";
 
 export const ExportToExcel = ({ apiData, fileName }) => {
   const fileType =
@@ -16,6 +17,12 @@ export const ExportToExcel = ({ apiData, fileName }) => {
   };
 
   return (
-    <button onClick={(e) => exportToCSV(apiData, fileName)}>Export</button>
+    <Button
+      color="success"
+      className="py-1"
+      onClick={e => exportToCSV(apiData, fileName)}
+    >
+      Hisobot (exel)
+    </Button>
   );
 };
