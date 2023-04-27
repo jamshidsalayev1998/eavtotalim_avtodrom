@@ -9,7 +9,7 @@ import { PATH_PREFIX_FILE } from "../../../../Utils/AppVariables";
 import { Button, message, Result, notification, Alert } from "antd";
 import MainContext from "../../../../Context/MainContext";
 import { useHistory } from "react-router";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { AiOutlineEnter, AiFillCheckCircle } from "react-icons/ai";
 import { BsFillFileEarmarkMedicalFill, BsFillWebcamFill } from "react-icons/bs";
 import Webcam from "react-webcam";
@@ -464,21 +464,26 @@ const ComputerSettingsPage = () => {
     <div className="face-id-wrapper" onKeyDown={handleKeyBtn} tabIndex={"1"}>
       <div className="face-id">
         <div className="d-flex align-items-start">
-          <GoBackWithText
-            contentTitle={
-              <span className={`${computer ? "" : ""} px-3 py-3 computer-test`}>
-                {computer?.examination_area?.logo ? (
-                  <img
-                    style={{ width: "150px" }}
-                    src={PATH_PREFIX_FILE + computer?.examination_area?.logo}
-                    alt=""
-                  />
-                ) : (
-                  <img style={{ width: "150px" }} src={defaultLogo} alt="" />
-                )}
-              </span>
-            }
-          />
+          <div className="d-flex align-items-center justify-content-left w-100">
+            <NavLink
+              className="btn rounded-circle mr-3"
+              style={{ boxShadow: "0px 10px 20px rgba(29, 97, 122, 0.15)" }}
+              to={"/login"}
+            >
+              <i className="bx bx-arrow-back font-size-20 font-weight-bold "></i>
+            </NavLink>
+            <span className={`${computer ? "" : ""} px-3 py-3 computer-test`}>
+              {computer?.examination_area?.logo ? (
+                <img
+                  style={{ width: "150px" }}
+                  src={PATH_PREFIX_FILE + computer?.examination_area?.logo}
+                  alt=""
+                />
+              ) : (
+                <img style={{ width: "150px" }} src={defaultLogo} alt="" />
+              )}
+            </span>
+          </div>
           {/* computer order */}
           <div className={"computer-order"}>
             {computerKey && computer ? (
