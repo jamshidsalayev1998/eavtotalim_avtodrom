@@ -192,7 +192,7 @@ const ExaminationAreaSensorsIndex = props => {
       render: (index, element) => (
         <div className="text-center">
           <img
-            style={{ maxWidth: "100px" }}
+            style={{ maxWidth: "80px" }}
             src={PATH_PREFIX_FILE + element?.image}
             alt=""
           />
@@ -253,14 +253,14 @@ const ExaminationAreaSensorsIndex = props => {
             className="p-1"
             loading={loadingButtonDown}
           >
-            <i className="fas fa-arrow-down font-size-16"></i>
+            <i className="fas fa-arrow-down font-size-12"></i>
           </Button>
           <Button
             onClick={() => moveSensor(element?.id, "up")}
             className="p-1"
             loading={loadingButtonUp}
           >
-            <i className="fas fa-arrow-up font-size-16"></i>
+            <i className="fas fa-arrow-up font-size-12"></i>
           </Button>
         </div>
       ),
