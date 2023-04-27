@@ -12,6 +12,7 @@ import {
   Form,
   message,
   Popconfirm,
+  Button,
 } from "antd";
 import axios from "axios";
 import { PATH_PREFIX } from "../../../Utils/AppVariables";
@@ -439,10 +440,7 @@ const CashierIndex = props => {
           <Card>
             <div className="top-organizations">
               <h5>Kassirlar </h5>
-              <Button
-                className="btn btn-outline-success"
-                onClick={showAddModal}
-              >
+              <Button type="primary" ghost onClick={showAddModal}>
                 {" "}
                 + Qo'shish
               </Button>
@@ -454,6 +452,11 @@ const CashierIndex = props => {
                     columns={columns}
                     dataSource={data}
                     loading={isloading}
+                    bordered={true}
+                    scroll={{ x: true, y: 600 }}
+                    pagination={false}
+                    size="small"
+                    sticky
                   />
                 </Col>
               </Row>

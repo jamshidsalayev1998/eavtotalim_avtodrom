@@ -464,7 +464,10 @@ const ComputerSettingsPage = () => {
     <div className="face-id-wrapper" onKeyDown={handleKeyBtn} tabIndex={"1"}>
       <div className="face-id">
         <div className="d-flex align-items-start">
-          <div className="d-flex align-items-center justify-content-left w-100">
+          <div
+            className="d-flex align-items-center justify-content-left w-100"
+            style={{ zIndex: "10000" }}
+          >
             <NavLink
               className="btn rounded-circle mr-3"
               style={{ boxShadow: "0px 10px 20px rgba(29, 97, 122, 0.15)" }}

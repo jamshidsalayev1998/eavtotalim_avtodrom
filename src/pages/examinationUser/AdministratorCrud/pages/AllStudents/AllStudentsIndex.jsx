@@ -343,7 +343,6 @@ const AllStudentsIndex = props => {
               <Row gutter={[0, 16]}>
                 <Col xl={24}>
                   <Table
-                    bordered={true}
                     columns={columns}
                     dataSource={data}
                     loading={loading}
@@ -351,6 +350,7 @@ const AllStudentsIndex = props => {
                       onClick: () => handleRowClick(record, index),
                     })}
                     onClick={showDrawer}
+                    bordered={true}
                     scroll={{ x: true, y: 600 }}
                     pagination={false}
                     size="small"
