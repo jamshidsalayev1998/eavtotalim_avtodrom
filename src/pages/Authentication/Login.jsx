@@ -24,6 +24,7 @@ import axios from "axios";
 import { PATH_PREFIX } from "../../Utils/AppVariables";
 import { LoopCircleLoading } from "react-loadingg";
 import { RiComputerLine } from "react-icons/ri";
+import { GrDocumentUser } from "react-icons/gr";
 
 const languagesList = ["uz", "kiril", "qq", "ru", "en"];
 
@@ -322,8 +323,13 @@ const Login = () => {
                      {t("Login")}
                     </button> */}
                     </p>
-                    <NavLink to={"/online-application"}>
-                      Testga ro'yhatdan o'tish
+                    <NavLink
+                      className={"d-flex align-items-center text-info"}
+                      style={{ fontWeight: "500" }}
+                      to={"/online-application-select-need"}
+                    >
+                      <i class="fas fa-id-badge font-size-18 text-info"></i>
+                      <span className="ml-1">Testga ro'yhatdan o'tish</span>
                     </NavLink>
                   </form>
                 </div>

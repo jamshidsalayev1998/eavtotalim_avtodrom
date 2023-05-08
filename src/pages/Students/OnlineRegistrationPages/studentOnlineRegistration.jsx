@@ -9,7 +9,7 @@ import axios from "axios";
 import ReactInputMask from "react-input-mask";
 import API_V2 from "api/index_v2";
 
-const studentOnlineApplication = ({ captchaCode }) => {
+const StudentOnlineRegistration = ({ captchaCode }) => {
   const [form] = Form.useForm();
   const [form2] = Form.useForm();
   const history = useHistory();
@@ -200,7 +200,7 @@ const studentOnlineApplication = ({ captchaCode }) => {
           >
             <div className="registration-image">
               <RiAccountPinCircleLine
-                style={{ color: "#005ed0", fontSize: "24px" }}
+                style={{ color: "#005ed0", fontSize: "34px" }}
               />
               <Divider orientation="center" className="text-dark font-size-18">
                 {t("Online ro'yxatdan o'tish")}
@@ -316,7 +316,7 @@ const studentOnlineApplication = ({ captchaCode }) => {
               <div>
                 <i
                   class="bx bx-message-detail bx-tada"
-                  style={{ color: "#005ed0", fontSize: "24px" }}
+                  style={{ color: "#005ed0", fontSize: "34px" }}
                 ></i>
               </div>
 
@@ -332,7 +332,10 @@ const studentOnlineApplication = ({ captchaCode }) => {
                   Ushbu raqamingizga kelgan sms kodni kiriting!
                 </div>
               ) : (
-                <div>Kodning kelish vaqti {countdown}</div>
+                <div>
+                  Kodning kelish vaqti{" "}
+                  <span className="text-info">{countdown}</span>
+                </div>
               )}{" "}
               <p className="font-weight-bold">+{phone}</p>
             </div>
@@ -354,7 +357,7 @@ const studentOnlineApplication = ({ captchaCode }) => {
             </Form.Item>
 
             <Button type="primary" htmlType="submit" className="w-100">
-              {t("Yuborish")}
+              {t("Tasdiqlash")}
             </Button>
           </Form>
         </div>
@@ -363,4 +366,4 @@ const studentOnlineApplication = ({ captchaCode }) => {
   );
 };
 
-export default studentOnlineApplication;
+export default StudentOnlineRegistration;

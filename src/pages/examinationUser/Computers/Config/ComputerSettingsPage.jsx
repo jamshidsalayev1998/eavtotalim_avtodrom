@@ -429,36 +429,36 @@ const ComputerSettingsPage = () => {
     faceRecognitionFunction();
   };
 
-  navigator.mediaDevices
-    .enumerateDevices()
-    .then(devices => {
-      const cameras = devices.filter(device => device.kind === "videoinput");
-      if (cameras.length === 0) {
-        notification.open({
-          message: (
-            <span className="text-danger d-flex justify-content-start align-items-center">
-              <i class="bx bxs-webcam text-dark"></i>
-              <span className="px-1">Kamera mavjud emas</span>
-            </span>
-          ),
-          description: "Yuzni aniqlash uchun kamera qurilmasi ulanmagan",
-          placement: "top",
-        });
-      } else {
-      }
-    })
-    .catch(error => {
-      notification.open({
-        message: (
-          <span className="text-danger d-flex justify-content-start align-items-center">
-            <i class="bx bxs-webcam text-dark"></i>
-            <span className="px-1">Kameraga ulanishda xatolik</span>
-          </span>
-        ),
-        description: "Qurilmaga ulanishda xatolik",
-        placement: "top",
-      });
-    });
+  // navigator.mediaDevices
+  //   .enumerateDevices()
+  //   .then(devices => {
+  //     const cameras = devices.filter(device => device.kind === "videoinput");
+  //     if (cameras.length === 0) {
+  //       notification.open({
+  //         message: (
+  //           <span className="text-danger d-flex justify-content-start align-items-center">
+  //             <i class="bx bxs-webcam text-dark"></i>
+  //             <span className="px-1">Kamera mavjud emas</span>
+  //           </span>
+  //         ),
+  //         description: "Yuzni aniqlash uchun kamera qurilmasi ulanmagan",
+  //         placement: "top",
+  //       });
+  //     } else {
+  //     }
+  //   })
+  //   .catch(error => {
+  //     notification.open({
+  //       message: (
+  //         <span className="text-danger d-flex justify-content-start align-items-center">
+  //           <i class="bx bxs-webcam text-dark"></i>
+  //           <span className="px-1">Kameraga ulanishda xatolik</span>
+  //         </span>
+  //       ),
+  //       description: "Qurilmaga ulanishda xatolik",
+  //       placement: "top",
+  //     });
+  //   });
 
   return (
     <div className="face-id-wrapper" onKeyDown={handleKeyBtn} tabIndex={"1"}>

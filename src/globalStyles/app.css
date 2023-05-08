@@ -265,3 +265,6 @@ video:focus {
 .ant-pagination-item {
   border-radius: 8px !important;
 }
+.ant-message-notice-content {
+  border-radius: 8px !important;
+}

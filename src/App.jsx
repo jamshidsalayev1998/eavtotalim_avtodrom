@@ -33,7 +33,9 @@ import ComputerSettingsPage from "./pages/examinationUser/Computers/Config/Compu
 import UserComputerConfigPage from "./pages/examinationUser/Computers/Config/UserComputerConfigPage";
 import socketIO from "socket.io-client";
 import { NODEJS_SOCKET_URL } from "./Utils/AppVariables";
-import studentOnlineApplication from "pages/Students/SigupOutLogin/studentOnlineApplication";
+import SignUpAndForgetPassword from "pages/Students/OnlineRegistrationPages/signUp_and_forgetPassword";
+import StudentOnlineRegistration from "pages/Students/OnlineRegistrationPages/studentOnlineRegistration";
+import ReOpenPassword from "pages/Students/OnlineRegistrationPages/reOpenPassword";
 
 export const socketParam = socketIO.connect(NODEJS_SOCKET_URL);
 const languagesList = ["uz", "kiril", "qq", "ru", "en"];
@@ -161,10 +163,16 @@ const App = () => {
                 exact
               />
               <Route
-                component={studentOnlineApplication}
-                path="/online-application"
+                component={SignUpAndForgetPassword}
+                path="/online-application-select-need"
                 exact
-              />
+              />{" "}
+              <Route
+                component={StudentOnlineRegistration}
+                path="/online-registration"
+                exact
+              />{" "}
+              <Route component={ReOpenPassword} path="/reopen-password" exact />
               <Redirect
                 to={
                   localStorage.getItem("computer_key")
