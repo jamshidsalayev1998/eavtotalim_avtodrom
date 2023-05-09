@@ -33,9 +33,9 @@ import ComputerSettingsPage from "./pages/examinationUser/Computers/Config/Compu
 import UserComputerConfigPage from "./pages/examinationUser/Computers/Config/UserComputerConfigPage";
 import socketIO from "socket.io-client";
 import { NODEJS_SOCKET_URL } from "./Utils/AppVariables";
-import SignUpAndForgetPassword from "pages/Students/OnlineRegistrationPages/signUp_and_forgetPassword";
-import StudentOnlineRegistration from "pages/Students/OnlineRegistrationPages/studentOnlineRegistration";
-import ReOpenPassword from "pages/Students/OnlineRegistrationPages/reOpenPassword";
+import SignUpAndForgetPassword from "pages/Students/SigupOutLogin/signUp_and_forgetPassword";
+import StudentOnlineRegistration from "pages/Students/SigupOutLogin/studentOnlineRegistration";
+import ReOpenPassword from "pages/Students/SigupOutLogin/reOpenPassword";
 
 export const socketParam = socketIO.connect(NODEJS_SOCKET_URL);
 const languagesList = ["uz", "kiril", "qq", "ru", "en"];

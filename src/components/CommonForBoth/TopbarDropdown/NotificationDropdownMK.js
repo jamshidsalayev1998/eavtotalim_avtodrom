@@ -10,16 +10,18 @@ import { withTranslation } from "react-i18next";
 const NotificationDropdownMK = props => {
   // Declare a new state variable, which we'll call "menu"
   const [menu, setMenu] = useState(false);
-  const [isnot, setisnot] = useState(sessionStorage.getItem("isnotif")=="true");
+  const [isnot, setisnot] = useState(
+    sessionStorage.getItem("isnotif") == "true"
+  );
 
   const refreshSayt = () => {
     window.location.reload();
     sessionStorage.setItem("isnotif", false);
   };
 
-  useEffect(()=>{
-    setisnot(sessionStorage.getItem("isnotif") == "true")
-  }, [sessionStorage.getItem("isnotif")])
+  useEffect(() => {
+    setisnot(sessionStorage.getItem("isnotif") == "true");
+  }, [sessionStorage.getItem("isnotif")]);
 
   return (
     <>

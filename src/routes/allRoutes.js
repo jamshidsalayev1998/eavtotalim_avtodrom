@@ -526,6 +526,10 @@ const onlineStudentApplicationRoutes = [
     path: "/",
     component: index,
   },
+  {
+    path: "/examination-administrator/all-students",
+    component: AllStudentsIndex,
+  },
 ];
 
 export {

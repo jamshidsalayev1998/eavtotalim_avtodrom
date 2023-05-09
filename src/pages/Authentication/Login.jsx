@@ -24,7 +24,6 @@ import axios from "axios";
 import { PATH_PREFIX } from "../../Utils/AppVariables";
 import { LoopCircleLoading } from "react-loadingg";
 import { RiComputerLine } from "react-icons/ri";
-import { GrDocumentUser } from "react-icons/gr";
 
 const languagesList = ["uz", "kiril", "qq", "ru", "en"];
 
