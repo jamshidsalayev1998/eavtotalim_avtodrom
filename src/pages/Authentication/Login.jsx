@@ -110,69 +110,6 @@ const Login = () => {
     }
   };
 
-  // old login user function
-  // const loginUser = async () => {
-  //   // fileServerReadKey();
-  //   const formdata = new FormData();
-  //   formdata.append("username", username);
-  //   formdata.append("password", password);
-  //   let params = {};
-  //   let key = localStorage.getItem("computer_key");
-  //   if (key) {
-  //     Object.assign(params, { computer_key: key });
-  //   }
-  //   setLoading(true);
-  //   return await axios({
-  //     url: PATH_PREFIX + "/login",
-  //     method: "POST",
-  //     params,
-  //     data: formdata,
-  //   })
-  //     .then(response => {
-  //       if (response?.data?.access_token) {
-  //         const token = response.data.access_token;
-  //         localStorage.setItem("token", token);
-  //         localStorage.setItem("user_profile_name", response?.data?.user?.name);
-  //         sessionStorage.setItem("isnotif", true);
-  //         setAuth(true);
-  //         setCategory_id(response?.data?.category_id);
-  //         setRole(String(response?.data?.user?.role));
-  //         setRegion_id(String(response?.data?.user?.profession?.region_id));
-  //         setUserType(String(response?.data?.user?.online));
-  //         setAdditional(response?.data?.user?.additional);
-  //         const tempRole = parseInt(response?.data?.user?.role);
-  //         if (![13, 15, 16, 17, 18, 19].includes(tempRole)) {
-  //           localStorage.removeItem("token");
-  //           message.warning(
-  //             <>
-  //               Siz Avto intalim tizimidan foydalanishingiz mumkin <br />
-  //               <a href="http://avto.intalim.uz/login">
-  //                 Avto intalim tizimiga o'tish{" "}
-  //                 <i className="fas fa-external-link-alt ml-2"></i>
-  //               </a>
-  //             </>
-  //           );
-  //         } else {
-  //           setLoading(false);
-  //           history.push("/");
-  //         }
-  //       } else if (parseInt(response?.data?.status) === 0) {
-  //         message.error(response?.data?.message);
-  //         setLoading(false);
-  //       }
-  //     })
-  //     .catch(error => {
-  //       setLoading(false);
-  //       if (error?.response?.data?.error) {
-  //         message.error(error?.response?.data?.error);
-  //         setLoading(false);
-  //       } else {
-  //         setLoading(false);
-  //         message.error("Server bilan aloqa yo'q");
-  //       }
-  //     });
-  // };
-
   const checkFs = () => {
     fileServerReadKey();
   };

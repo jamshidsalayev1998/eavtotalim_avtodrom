@@ -36,6 +36,7 @@ import { NODEJS_SOCKET_URL } from "./Utils/AppVariables";
 import SignUpAndForgetPassword from "pages/Students/SigupOutLogin/signUp_and_forgetPassword";
 import StudentOnlineRegistration from "pages/Students/SigupOutLogin/studentOnlineRegistration";
 import ReOpenPassword from "pages/Students/SigupOutLogin/reOpenPassword";
+import StudentOnlineApplicationRoles from "roles/StudentOnlineApplicationRoles";
 
 export const socketParam = socketIO.connect(NODEJS_SOCKET_URL);
 const languagesList = ["uz", "kiril", "qq", "ru", "en"];
@@ -147,6 +148,8 @@ const App = () => {
           return <InstructorRoles />;
         case "19":
           return <AdministratorRoles />;
+        case "23":
+          return <StudentOnlineApplicationRoles />;
         default:
           return (
             <>

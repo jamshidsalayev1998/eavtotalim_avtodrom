@@ -65,7 +65,7 @@ import ShowPracticalExamResultByRecord from "../pages/examinationUser/Instructor
 import InstructorMonitoringPage from "../pages/examinationUser/InstructorCrud/pages/MonitoringPages/InstructorMonitoringPage";
 import ReportsIndexByOrganizations from "../pages/Reports/ByOrganization/ReportsIndexByOrganizations";
 import OnlineApplicationIndex from "../pages/OnlineApplications/OnlineApplicationIndex";
-import index from "pages/StudentOnlineApplication/Dashboard";
+import index from "pages/StudentOnlineApplication/Apply-docs";
 // import PracticalTestResult from "../pages/PracticalTestResult/PracticalTestResult";
 
 const userRoutes = [
