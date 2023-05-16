@@ -720,6 +720,38 @@ const AddStudentModal = props => {
                   </Select>
                 </Form.Item>
               </Col>
+              <Col xl={6}>
+                <Form.Item
+                  label="Nima bo'yicha imtihon"
+                  name="typeOfExam"
+                  rules={[
+                    {
+                      required:
+                        resultStatus === 1
+                          ? true
+                          : resultStatus === 2
+                          ? false
+                          : false,
+                      message: "Holatini tanlang!",
+                    },
+                  ]}
+                >
+                  <Select
+                    className={"w-100"}
+                    placeholder="Topshirish holati"
+                    disabled={
+                      resultStatus === 1
+                        ? false
+                        : resultStatus === 2
+                        ? false
+                        : true
+                    }
+                  >
+                    <Option value={"both"}>Ikkalasi</Option>
+                    <Option value={"practical"}>Faqat amaliy</Option>
+                  </Select>
+                </Form.Item>
+              </Col>
 
               {/* Guruh */}
               <Col xl={6}>
