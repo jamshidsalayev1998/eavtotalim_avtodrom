@@ -726,6 +726,15 @@ const ExaminationUserLinks = props => {
                     <span>{t("Profil")}</span>
                   </Link>
                 </li>
+                <li className="" name="asosiy">
+                  <Link
+                    to="/examination-director/comissions"
+                    className="waves-effect"
+                  >
+                    <i class="fas fa-user-cog"></i>
+                    <span>{t("Komissiya")}</span>
+                  </Link>
+                </li>
               </div>
             }
           </ul>

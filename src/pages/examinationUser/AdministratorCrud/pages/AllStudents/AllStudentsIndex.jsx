@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import { Badge, Button, Card, CardBody, Container } from "reactstrap";
 import { withTranslation } from "react-i18next";
 import {
@@ -29,8 +29,12 @@ import {
   getVisitorTypes,
 } from "../../../../../services/api_services/administrator_students_api";
 import { element } from "prop-types";
+import MainContext from "../../../../../Context/MainContext";
 
 const AllStudentsIndex = props => {
+  const mainContext = useContext(MainContext);
+  // console.log('uy' , context);
+  const examinationAreaId = mainContext?.profession?.examination_area_id;
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [reload, setreload] = useState(false);
@@ -196,12 +200,18 @@ const AllStudentsIndex = props => {
           align: "center",
           render: (index, element) => (
             <>
-              {parseInt(element?.exam_result) === 1 ? (
-                <Badge color={"success"}>O`tgan</Badge>
-              ) : parseInt(element?.exam_result) === 0 ? (
-                <Badge color={"danger"}>Yiqilgan</Badge>
+              {element?.type_of_exam === "practical" ? (
+                "Topshirmaydi"
               ) : (
-                <Badge color={"warning"}>Topshirmagan</Badge>
+                <>
+                  {parseInt(element?.exam_result) === 1 ? (
+                    <Badge color={"success"}>O`tgan</Badge>
+                  ) : parseInt(element?.exam_result) === 0 ? (
+                    <Badge color={"danger"}>Yiqilgan</Badge>
+                  ) : (
+                    <Badge color={"warning"}>Topshirmagan</Badge>
+                  )}
+                </>
               )}
             </>
           ),
@@ -225,7 +235,13 @@ const AllStudentsIndex = props => {
     },
     {
       title: "Umumiy holat",
-      render: (index, element) => <>{element?.general_status_data?.name}</>,
+      render: (index, element) => (
+        <>
+          {parseInt(examinationAreaId) === 23
+            ? element?.general_status_data?.additional_name
+            : element?.general_status_data?.name}
+        </>
+      ),
       width: "120",
     },
     {
@@ -343,7 +359,13 @@ const AllStudentsIndex = props => {
               <Row gutter={[0, 16]}>
                 <Col xl={24}>
                   <Table
-                    columns={columns}
+                    columns={
+                      parseInt(examinationAreaId) === 23
+                        ? columns.filter(columnFilter => {
+                            return columnFilter?.title !== "To'lov";
+                          })
+                        : columns
+                    }
                     dataSource={data}
                     loading={loading}
                     onRow={(record, index) => ({

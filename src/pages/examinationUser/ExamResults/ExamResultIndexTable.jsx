@@ -22,6 +22,7 @@ import axios from "axios";
 import { PATH_PREFIX_V2 } from "Utils/AppVariables";
 import { sendStudentTheorioticalReexam } from "services/api_services/send_student_theoriotical_reexam";
 import { sendStudentPracticalReexam } from "services/api_services/send_student_practical_reeam";
+
 const { TextArea } = Input;
 
 const ExamResultIndexTable = ({ tableData, reload, setreload }) => {
@@ -103,16 +104,22 @@ const ExamResultIndexTable = ({ tableData, reload, setreload }) => {
       dataIndex: "student_fio",
       key: "student_fio",
       render: (text, row) => (
-        <Link
-          to={{
-            pathname: `/examination/result-groups/${row?.final_test_student_attempt?.id}`,
-            state: {
-              student_fio: row?.student_fio,
-            },
-          }}
-        >
-          {row?.student_fio}
-        </Link>
+        <>
+          {row?.type_of_exam === "practical" ? (
+            row?.student_fio
+          ) : (
+            <Link
+              to={{
+                pathname: `/examination/result-groups/${row?.final_test_student_attempt?.id}`,
+                state: {
+                  student_fio: row?.student_fio,
+                },
+              }}
+            >
+              {row?.student_fio}
+            </Link>
+          )}
+        </>
       ),
     },
     {
@@ -156,22 +163,28 @@ const ExamResultIndexTable = ({ tableData, reload, setreload }) => {
           render: (index, element) => {
             return (
               <>
-                {parseInt(element?.exam_result) === 1 ? (
-                  <Tag color={"green"}>O`tgan</Tag>
-                ) : parseInt(element?.exam_result) === 0 ? (
-                  <>
-                    <Tag color={"red"}>Yiqilgan</Tag>
-                    <button
-                      className="btn rounded border p-1 ml-2"
-                      color={"success"}
-                      onClick={() => showModal(element?.id)}
-                    >
-                      Qayta qo'yish{" "}
-                      <i className="fas fa-retweet text-success"></i>
-                    </button>
-                  </>
+                {element?.type_of_exam === "practical" ? (
+                  "Topshirmaydi"
                 ) : (
-                  <Tag color={"gold"}>Topshirmagan</Tag>
+                  <>
+                    {parseInt(element?.exam_result) === 1 ? (
+                      <Tag color={"green"}>O`tgan</Tag>
+                    ) : parseInt(element?.exam_result) === 0 ? (
+                      <>
+                        <Tag color={"red"}>Yiqilgan</Tag>
+                        <button
+                          className="btn rounded border p-1 ml-2"
+                          color={"success"}
+                          onClick={() => showModal(element?.id)}
+                        >
+                          Qayta qo'yish{" "}
+                          <i class="fas fa-retweet text-success"></i>
+                        </button>
+                      </>
+                    ) : (
+                      <Tag color={"gold"}>Topshirmagan</Tag>
+                    )}
+                  </>
                 )}
               </>
             );
@@ -191,8 +204,7 @@ const ExamResultIndexTable = ({ tableData, reload, setreload }) => {
                     color={"success"}
                     onClick={() => showModalPractical(element?.id)}
                   >
-                    Qayta qo'yish{" "}
-                    <i className="fas fa-retweet text-success"></i>
+                    Qayta qo'yish <i class="fas fa-retweet text-success"></i>
                   </button>
                 </>
               ) : (

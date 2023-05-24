@@ -66,6 +66,7 @@ import InstructorMonitoringPage from "../pages/examinationUser/InstructorCrud/pa
 import ReportsIndexByOrganizations from "../pages/Reports/ByOrganization/ReportsIndexByOrganizations";
 import OnlineApplicationIndex from "../pages/OnlineApplications/OnlineApplicationIndex";
 import index from "pages/StudentOnlineApplication/Apply-docs";
+import ComissionsIndex from "../pages/examinationUser/ExaminationAreaConfig/ComissionsIndex";
 // import PracticalTestResult from "../pages/PracticalTestResult/PracticalTestResult";
 
 const userRoutes = [
@@ -192,6 +193,10 @@ const examinationUserRoutes = [
   {
     path: "/examination-director/examination-area-config",
     component: ExaminationAreaConfigIndex,
+  },
+    {
+    path: "/examination-director/comissions",
+    component: ComissionsIndex,
   },
   {
     path: "/examination-administrator/all-students/add",
