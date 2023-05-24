@@ -25,6 +25,7 @@ import userInfo from "../../../assets/icons/online-application/applicant-infos.p
 import attachment from "../../../assets/icons/online-application/attachment.png";
 import dateIcon from "../../../assets/icons/online-application/date.png";
 import pdf from "../../../assets/icons/online-application/file-pdf.png";
+import closeIcon from "../../../assets/icons/online-application/close.png";
 
 const ApplyModal = ({ open, onClose, visitorTypes, organizations }) => {
   // states
@@ -194,6 +195,7 @@ const ApplyModal = ({ open, onClose, visitorTypes, organizations }) => {
   return (
     <div className="apply-modal-student">
       <Modal
+        wrapClassName="online-student-modal"
         title={
           <div className="modal-breadcrumb">
             <img src={apply} alt="Icon" />
@@ -213,20 +215,25 @@ const ApplyModal = ({ open, onClose, visitorTypes, organizations }) => {
         footer={
           <div className="d-flex justify-content-between align-items-center">
             <button
-              style={{ width: "100px" }}
-              className="btn text-dark border font-weight-bold"
+              style={{ width: "100px", height: "40px" }}
+              className="btn text-dark bg-white border font-weight-bold"
             >
               Bekor qilish
             </button>
             <button
               onClick={saveStudent}
-              style={{ width: "100px", backgroundColor: "#2C60F4" }}
+              style={{
+                width: "100px",
+                backgroundColor: "#2C60F4",
+                height: "40px",
+              }}
               className="btn btn-info border"
             >
               Saqlash
             </button>
           </div>
         }
+        closeIcon={<img src={closeIcon} />}
       >
         <Spin spinning={loading} tip="Tekshirilmoqda...">
           <Form
