@@ -356,7 +356,7 @@ const ExamProcessByComputerTab = props => {
         <>
           <div className=" d-flex justify-content-center align-items-center">
             <span>Real vaqtdagi javoblar</span>
-            <i class="bx bxs-circle bx-flashing text-danger ml-2"></i>
+            <i className="bx bxs-circle bx-flashing text-danger ml-2"></i>
           </div>
           <div className="bg-white rounded border">
             <span className="text-danger">Noto'g'ri(belgilanmagan)</span> /{" "}

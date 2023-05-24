@@ -219,7 +219,7 @@ const FinalExamDashboard = () => {
             <Row>
               <Col xl={24} className={"text-center"}>
                 <span style={{ fontSize: "80px" }}>
-                  <i class="fas fa-smile text-success"></i>
+                  <i className="fas fa-smile text-success"></i>
                 </span>
                 <p style={{ fontSize: "24px" }} className="text-danger">
                   {t("Tabriklaymiz siz testdan muvofaqiyatli o'tdingiz!")}
@@ -232,7 +232,7 @@ const FinalExamDashboard = () => {
             <Row>
               <Col xl={24} className={"text-center"}>
                 <span style={{ fontSize: "80px" }}>
-                  <i class="fas fa-frown text-danger"></i>
+                  <i className="fas fa-frown text-danger"></i>
                 </span>
                 <p style={{ fontSize: "24px" }} className="text-danger">
                   {t("Afsuski testdan o'ta olmadingiz!")}

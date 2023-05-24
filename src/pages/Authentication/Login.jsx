@@ -243,7 +243,7 @@ const Login = () => {
                     <p className="login_button">
                       <button
                         type="submit"
-                        tabindex="13"
+                        tabIndex="13"
                         className="login_submit"
                         onClick={loginUser}
                       >
@@ -252,7 +252,7 @@ const Login = () => {
 
                       {/* <button
                      type="submit"
-                     tabindex="13"
+                     tabIndex="13"
                      className="login_submit"
                      onClick={checkFs}
                     >
@@ -264,7 +264,7 @@ const Login = () => {
                       style={{ fontWeight: "500" }}
                       to={"/online-application-select-need"}
                     >
-                      <i class="fas fa-id-badge font-size-18 text-info"></i>
+                      <i className="fas fa-id-badge font-size-18 text-info"></i>
                       <span className="ml-1">Testga ro'yhatdan o'tish</span>
                     </NavLink>
                   </form>

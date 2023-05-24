@@ -138,7 +138,7 @@ const ExaminationAreaComputersIndex = () => {
                     style={{ color: "#52c41a" }}
                   >
                     {" "}
-                    <i class="bx bxs-brush-alt"></i>{" "}
+                    <i className="bx bxs-brush-alt"></i>{" "}
                   </span>
                 </Tooltip>
               </Popconfirm>

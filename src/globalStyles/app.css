@@ -225,10 +225,10 @@ video:focus {
 }
 
 .ant-btn {
-  border-radius: 8px !important;
+  border-radius: 4px !important;
 }
 .btn {
-  border-radius: 8px !important;
+  border-radius: 4px !important;
 }
 
 .ant-input-affix-wrapper {

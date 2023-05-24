@@ -24,7 +24,7 @@ const SignUpAndForgetPassword = () => {
               }}
             >
               <i
-                class="far fa-user-circle"
+                className="far fa-user-circle"
                 style={{
                   color: "#005ed0",
                   fontSize: "34px",
@@ -47,7 +47,7 @@ const SignUpAndForgetPassword = () => {
               }}
             >
               <i
-                class="bx bx-lock-open"
+                className="bx bx-lock-open"
                 style={{
                   color: "#005ed0",
                   fontSize: "34px",

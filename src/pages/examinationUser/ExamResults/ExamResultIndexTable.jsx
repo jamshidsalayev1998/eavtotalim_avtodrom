@@ -166,7 +166,8 @@ const ExamResultIndexTable = ({ tableData, reload, setreload }) => {
                       color={"success"}
                       onClick={() => showModal(element?.id)}
                     >
-                      Qayta qo'yish <i class="fas fa-retweet text-success"></i>
+                      Qayta qo'yish{" "}
+                      <i className="fas fa-retweet text-success"></i>
                     </button>
                   </>
                 ) : (
@@ -190,7 +191,8 @@ const ExamResultIndexTable = ({ tableData, reload, setreload }) => {
                     color={"success"}
                     onClick={() => showModalPractical(element?.id)}
                   >
-                    Qayta qo'yish <i class="fas fa-retweet text-success"></i>
+                    Qayta qo'yish{" "}
+                    <i className="fas fa-retweet text-success"></i>
                   </button>
                 </>
               ) : (

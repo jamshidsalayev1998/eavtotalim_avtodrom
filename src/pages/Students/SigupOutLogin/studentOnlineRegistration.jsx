@@ -270,7 +270,7 @@ const StudentOnlineRegistration = ({ captchaCode }) => {
               <span style={{ color: "#bfbfbf" }}>
                 Xavfsizlik kodi{" "}
                 <i
-                  class="fas fa-redo-alt"
+                  className="fas fa-redo-alt"
                   style={{ cursor: "pointer" }}
                   onClick={getCaptchaFunction}
                 ></i>
@@ -291,7 +291,7 @@ const StudentOnlineRegistration = ({ captchaCode }) => {
               className="registration-form-back my-3 p-0 m-0"
               type="link"
             >
-              <i class="fas fa-arrow-left mr-1"> </i>
+              <i className="fas fa-arrow-left mr-1"> </i>
               <span>qaytish</span>
             </Button>
           </Form>
@@ -315,7 +315,7 @@ const StudentOnlineRegistration = ({ captchaCode }) => {
             <div className="registration-image">
               <div>
                 <i
-                  class="bx bx-message-detail bx-tada"
+                  className="bx bx-message-detail bx-tada"
                   style={{ color: "#005ed0", fontSize: "34px" }}
                 ></i>
               </div>

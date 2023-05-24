@@ -437,7 +437,7 @@ const ComputerSettingsPage = () => {
   //       notification.open({
   //         message: (
   //           <span className="text-danger d-flex justify-content-start align-items-center">
-  //             <i class="bx bxs-webcam text-dark"></i>
+  //             <i className="bx bxs-webcam text-dark"></i>
   //             <span className="px-1">Kamera mavjud emas</span>
   //           </span>
   //         ),
@@ -451,7 +451,7 @@ const ComputerSettingsPage = () => {
   //     notification.open({
   //       message: (
   //         <span className="text-danger d-flex justify-content-start align-items-center">
-  //           <i class="bx bxs-webcam text-dark"></i>
+  //           <i className="bx bxs-webcam text-dark"></i>
   //           <span className="px-1">Kameraga ulanishda xatolik</span>
   //         </span>
   //       ),

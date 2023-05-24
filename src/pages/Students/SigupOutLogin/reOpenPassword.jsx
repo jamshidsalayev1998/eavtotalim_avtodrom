@@ -125,7 +125,7 @@ const ReOpenPassword = ({ captchaCode }) => {
         message.success(
           <span>
             <h5 className="text-info">Login va parol tiklandi!</h5>
-            <i class="fas fa-envelope-open-text text-warning font-size-18 mr-1"></i>
+            <i className="fas fa-envelope-open-text text-warning font-size-18 mr-1"></i>
             Telefon raqamingizga yuborilgan login va parolni tizimga kiriting!
           </span>
         );
@@ -204,7 +204,7 @@ const ReOpenPassword = ({ captchaCode }) => {
           >
             <div className="registration-image">
               <i
-                class="bx bx-lock-open"
+                className="bx bx-lock-open"
                 style={{ color: "#005ed0", fontSize: "34px" }}
               ></i>
 
@@ -276,7 +276,7 @@ const ReOpenPassword = ({ captchaCode }) => {
               <span style={{ color: "#bfbfbf" }}>
                 Xavfsizlik kodi{" "}
                 <i
-                  class="fas fa-redo-alt"
+                  className="fas fa-redo-alt"
                   style={{ cursor: "pointer" }}
                   onClick={getCaptchaFunction}
                 ></i>
@@ -297,7 +297,7 @@ const ReOpenPassword = ({ captchaCode }) => {
               className="registration-form-back my-3 p-0 m-0"
               type="link"
             >
-              <i class="fas fa-arrow-left mr-1"> </i>
+              <i className="fas fa-arrow-left mr-1"> </i>
               <span>qaytish</span>
             </Button>
           </Form>
@@ -321,7 +321,7 @@ const ReOpenPassword = ({ captchaCode }) => {
             <div className="registration-image">
               <div>
                 <i
-                  class="bx bx-message-detail bx-tada"
+                  className="bx bx-message-detail bx-tada"
                   style={{ color: "#005ed0", fontSize: "34px" }}
                 ></i>
               </div>

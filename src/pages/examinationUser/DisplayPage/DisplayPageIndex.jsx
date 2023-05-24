@@ -51,7 +51,7 @@ const DisplayPageIndex = props => {
                 onClick={() => setHasLayout(!hasLayout)}
               >
                 <i
-                  class={hasLayout ? `fa fa-expand` : `fa fa-compress`}
+                  className={hasLayout ? `fa fa-expand` : `fa fa-compress`}
                   aria-hidden="true"
                 ></i>
               </button>

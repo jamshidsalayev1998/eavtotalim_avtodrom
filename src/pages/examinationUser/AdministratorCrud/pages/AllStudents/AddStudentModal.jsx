@@ -356,7 +356,7 @@ const AddStudentModal = props => {
               : { color: "#1890FF" }
           }
         >
-          <i class="bx bx-error bx-flashing text-warning font-size-18"></i>
+          <i className="bx bx-error bx-flashing text-warning font-size-18"></i>
         </Button>,
         <Button type="dashed" key="back">
           Bekor qilish <span className={"small-keyboard-style"}>ESC</span>

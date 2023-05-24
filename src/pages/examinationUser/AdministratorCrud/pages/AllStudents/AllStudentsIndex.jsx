@@ -241,7 +241,7 @@ const AllStudentsIndex = props => {
             </NavLink>
           </Tooltip>
 
-          <i style={{ cursor: "pointer" }} class="far fa-eye text-dark"></i>
+          <i style={{ cursor: "pointer" }} className="far fa-eye text-dark"></i>
         </div>
       ),
     },

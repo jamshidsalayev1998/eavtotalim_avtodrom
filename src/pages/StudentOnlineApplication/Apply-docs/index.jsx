@@ -1,10 +1,60 @@
 import { Button, Col, Row, Select, Table } from "antd";
-import React from "react";
-import { Card, Container } from "reactstrap";
+import React, { useEffect, useState } from "react";
+import { Card } from "reactstrap";
+import {
+  getOrganizations,
+  getVisitorTypes,
+} from "services/api_services/administrator_students_api";
+import { getEduTypesForAll } from "services/api_services/edu_types_api";
+import ApplyModal from "./ApplyModal";
 import data from "./data";
 import "./style.scss";
 
 const index = () => {
+  // states
+  const [modalOpen, setModalOpen] = useState(false);
+  const [visitorTypes, setVisitorTypes] = useState([]);
+  const [eduTypes, setEduTypes] = useState([]);
+  const [organizations, setOrganizations] = useState([]);
+
+  // modal props datas
+  const getVisitorTypesFunction = () => {
+    (async () => {
+      let params = {};
+      const response = await getVisitorTypes(params);
+      setVisitorTypes(response?.data);
+    })();
+  };
+  const getEduTypesFunction = () => {
+    (async () => {
+      let params = {};
+      const response = await getEduTypesForAll(params);
+      setEduTypes(response?.data?.data);
+    })();
+  };
+  const getOrganizationsFunction = () => {
+    (async () => {
+      const orgResp = await getOrganizations({ show_count: "all" });
+      if (orgResp) {
+        setOrganizations(orgResp?.data);
+      }
+    })();
+  };
+
+  useEffect(() => {
+    getVisitorTypesFunction();
+    getEduTypesFunction();
+    getOrganizationsFunction();
+  }, []);
+
+  // modal control
+  const handleOpenModal = () => {
+    setModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setModalOpen(false);
+  };
   const columns = [
     {
       title: "№",
@@ -55,11 +105,12 @@ const index = () => {
       <Card className="mb-3">
         <div className="apply-header">
           <div>Ariza topshirish</div>
-          <Button type="primary">
-            <i class="fas fa-plus-circle mr-1"></i>Ariza yarating
+          <Button type="primary" onClick={handleOpenModal}>
+            <i className="fas fa-plus-circle mr-1"></i>Ariza yarating
           </Button>
         </div>
       </Card>
+      {/* ARIZALAR JADVALI */}
       <Card>
         <Table
           className="table-responsive table-hover"
@@ -71,6 +122,14 @@ const index = () => {
           sticky
         />
       </Card>
+
+      {/* HUJJAT TOPSHIRISH MODALI */}
+      <ApplyModal
+        visitorTypes={visitorTypes}
+        open={modalOpen}
+        onClose={handleCloseModal}
+        organizations={organizations}
+      />
     </div>
   );
 };

@@ -854,28 +854,31 @@ const TestComponent = ({
             </h3>
           </Divider>
           <p style={{ fontSize: "20px" }}>
-            1. <i class="fa fa-question-circle" aria-hidden="true"></i>{" "}
+            1. <i className="fa fa-question-circle" aria-hidden="true"></i>{" "}
             {t("Test 20 ta savoldan iborat bo'ladi.")}
           </p>
           <p style={{ fontSize: "20px" }}>
-            2. <i class="fa fa-clock text-warning" aria-hidden="true"></i>{" "}
+            2. <i className="fa fa-clock text-warning" aria-hidden="true"></i>{" "}
             {t("Testni yechish uchun sizga 25 daqiqa vaqt beriladi.")}
           </p>
           <p style={{ fontSize: "20px" }}>
-            3. <i class="fa fa-random" aria-hidden="true"></i>{" "}
+            3. <i className="fa fa-random" aria-hidden="true"></i>{" "}
             {t(
               "Test savollari ketma ketlik tartibini hohlagan tarzda yechish mumkin."
             )}
           </p>
           <p style={{ fontSize: "20px" }}>
-            4. <i class="fa fa-exclamation-circle" aria-hidden="true"></i>{" "}
+            4. <i className="fa fa-exclamation-circle" aria-hidden="true"></i>{" "}
             {t(
               "Har bitta savol uchun maqul javobni belgilaganingizda darhol javobingiz natijasi ko`rsatiladi"
             )}
           </p>
           <p style={{ fontSize: "20px" }}>
             5.{" "}
-            <i class="fa fa-check-circle text-success" aria-hidden="true"></i>{" "}
+            <i
+              className="fa fa-check-circle text-success"
+              aria-hidden="true"
+            ></i>{" "}
             {t(
               "Testdan o'tish uchun kamida 18 ta savolga to'g'ri javob belgilashingiz lozim."
             )}
@@ -883,7 +886,7 @@ const TestComponent = ({
           <p style={{ fontSize: "20px" }}>
             6.{" "}
             <i
-              class="fa fa-exclamation-triangle text-danger"
+              className="fa fa-exclamation-triangle text-danger"
               aria-hidden="true"
             ></i>{" "}
             {t(
@@ -893,7 +896,7 @@ const TestComponent = ({
           <p style={{ fontSize: "20px" }}>
             7.{" "}
             <i
-              class="fa fa-exclamation-circle text-info"
+              className="fa fa-exclamation-circle text-info"
               aria-hidden="true"
             ></i>{" "}
             {t("Tayyor bo'lsangiz testni boshlash tugmasini bosing !")}

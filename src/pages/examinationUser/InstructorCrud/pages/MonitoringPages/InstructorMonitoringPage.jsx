@@ -82,7 +82,7 @@ const InstructorMonitoringPage = props => {
                 }}
               >
                 <i
-                  class={hasLayout ? `fa fa-expand` : `fa fa-compress`}
+                  className={hasLayout ? `fa fa-expand` : `fa fa-compress`}
                   aria-hidden="true"
                 />
               </button>

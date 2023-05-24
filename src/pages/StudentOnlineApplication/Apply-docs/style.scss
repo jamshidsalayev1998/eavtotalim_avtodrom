@@ -1,11 +1,38 @@
 .apply {
+    font-family: "TT Firs Neue Trl", sans-serif;
+
     .apply-header {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        div {       
+        div {
             font-weight: 550;
-            font-size: 20px;            
+            font-size: 20px;
+        }
+    }
+}
+
+.apply-modal-student {
+    font-family: "TT Firs Neue Trl";
+}
+.modal-breadcrumb {
+    font-weight: 400;
+    font-family: "TT Firs Neue Trl", sans-serif;
+    display: flex;
+    align-items: center;
+    font-size: 17px;
+}
+
+.filled-data {
+    .user-infos {
+        display: flex;
+        align-items: center;
+        font-size: 18px;
+        color: #2c60f4 !important;
+        width: 100%;
+        margin-bottom: 15px;
+        img {
+            margin-right: 12px;
         }
     }
 }

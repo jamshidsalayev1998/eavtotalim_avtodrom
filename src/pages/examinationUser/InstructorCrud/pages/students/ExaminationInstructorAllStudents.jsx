@@ -55,7 +55,7 @@ const ExaminationInstructorAllStudents = ({}) => {
             className={"btn btn-outline-success"}
             onClick={() => selectStudent(element)}
           >
-            <i class="fa fa-car" aria-hidden="true"></i>{" "}
+            <i className="fa fa-car" aria-hidden="true"></i>{" "}
             <i className={"fa fa-check"}></i>
           </button>
         </>
