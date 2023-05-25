@@ -24,6 +24,7 @@ import {
 } from "../../../../../services/api_services/administrator_students_api";
 import { FilePdfOutlined, InfoCircleOutlined } from "@ant-design/icons";
 import MainContext from "../../../../../Context/MainContext";
+import { debounce } from "lodash";
 
 const { Option } = Select;
 
@@ -46,7 +47,7 @@ const AddStudentModal = props => {
   }, []);
   const maskInput = {
     mask: "aa9999999",
-    maskChar: "_",
+    maskChar: "",
     alwaysShowMask: false,
     formatChars: {
       9: "[0-9]",
@@ -217,11 +218,19 @@ const AddStudentModal = props => {
       message.error("Ma'lumotlarni yuborishda xatolik!");
     }
   };
+  const debouncedCheckStudentClick = debounce(checkStudentClick, 500);
 
   const onPassportHandle = e => {
     studentStoreForm.setFieldsValue({
       student_passport: e?.target?.value?.toUpperCase(),
     });
+  };
+  const handlePassportInputChange = e => {
+    onPassportHandle(e);
+    const inputValue = e.target.value;
+    if (inputValue.length >= 9) {
+      debouncedCheckStudentClick();
+    }
   };
 
   const simpleSaveStudent = async values => {
@@ -545,8 +554,8 @@ const AddStudentModal = props => {
                 <InputMask
                   {...maskInput}
                   className={"ant-input"}
-                  onChange={e => onPassportHandle(e)}
-                  onBlur={checkStudentClick}
+                  onChange={handlePassportInputChange}
+                  // onBlur={checkStudentClick}
                   disabled={selectedVisitorTypeId === null}
                   placeholder="AA1234567"
                 />
