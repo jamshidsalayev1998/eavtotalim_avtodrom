@@ -25,7 +25,7 @@ const WebcamComponent = () => <Webcam />;
 const videoConstraints = {
   width: 600,
   height: 600,
-  facingMode: "user",
+  // facingMode: "user",
 };
 
 const ComputerSettingsPage = () => {
@@ -529,7 +529,7 @@ const ComputerSettingsPage = () => {
                     }}
                   />
                 </div>
-                {computerKey && computer && picture == "" ? (
+                {computerKey && computer && picture === "" ? (
                   <>
                     <Webcam
                       style={{ borderRadius: "4px", width: "100%" }}
