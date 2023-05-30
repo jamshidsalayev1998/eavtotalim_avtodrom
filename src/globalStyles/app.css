@@ -268,3 +268,6 @@ video:focus {
 .ant-message-notice-content {
   border-radius: 8px !important;
 }
+.ant-tooltip-inner {
+  border-radius: 8px !important;
+}

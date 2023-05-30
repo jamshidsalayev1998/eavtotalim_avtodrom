@@ -18,7 +18,7 @@ import MainContext from "Context/MainContext";
 import "./login.css";
 import API from "../../api/";
 import { useTranslation } from "react-i18next";
-import { message, Spin } from "antd";
+import { message, Spin, Tooltip } from "antd";
 // import {fileServerReadKey} from "../../services/api_services/file_server/file_server_function";
 import axios from "axios";
 import { PATH_PREFIX } from "../../Utils/AppVariables";
@@ -259,14 +259,22 @@ const Login = () => {
                      {t("Login")}
                     </button> */}
                     </p>
-                    <NavLink
-                      className={"d-flex align-items-center text-info"}
-                      style={{ fontWeight: "500" }}
-                      to={"/online-application-select-need"}
+                    <Tooltip
+                      title="Testga online ravishda ariza qoldirish tugmasi"
+                      placement="bottomLeft"
+                      color={"blue"}
                     >
-                      <i className="fas fa-id-badge font-size-18 text-info"></i>
-                      <span className="ml-1">Testga ro'yhatdan o'tish</span>
-                    </NavLink>
+                      <NavLink
+                        className={"d-flex align-items-center text-info"}
+                        style={{ fontWeight: "500" }}
+                        to={"/online-application-select-need"}
+                      >
+                        <i className="fas fa-id-badge font-size-18 text-info"></i>
+                        <span className="ml-1">
+                          Testga online ro'yhatdan o'tish
+                        </span>
+                      </NavLink>
+                    </Tooltip>
                   </form>
                 </div>
 

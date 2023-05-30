@@ -288,11 +288,15 @@ const StudentOnlineRegistration = ({ captchaCode }) => {
 
             <Button
               onClick={() => history.goBack()}
-              className="registration-form-back my-3 p-0 m-0"
+              className="btn border rounded-3 mt-3 bg-white"
               type="link"
+              style={{
+                boxShadow: "0px 10px 20px rgba(29, 97, 122, 0.15)",
+                borderRadius: "8px",
+                color: "#005ed0",
+              }}
             >
-              <i className="fas fa-arrow-left mr-1"> </i>
-              <span>qaytish</span>
+              <i className="bx bx-arrow-back font-size-20 font-weight-bold"></i>
             </Button>
           </Form>
         </div>

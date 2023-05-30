@@ -1,8 +1,8 @@
-$base:#005ed0;
+$base: #005ed0;
 $color: #f5f5f5;
 $color1: #2f54eb;
 $color3: #595959;
-$bgcolor:#F8F8FB;
+$bgcolor: #f8f8fb;
 $textcolor: #434343;
 
 // registration
@@ -11,7 +11,7 @@ $textcolor: #434343;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background: $color;
+  // background: $color;
 
   #registration-form {
     max-width: 480px;
@@ -20,7 +20,7 @@ $textcolor: #434343;
     margin: 15px;
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
     border-radius: 8px;
-    background:white;
+    background: white;
 
     .registration-image {
       text-align: center;
@@ -30,7 +30,6 @@ $textcolor: #434343;
       }
     }
 
-
     .registration-form-button {
       width: 100%;
       height: 36px;
@@ -39,13 +38,11 @@ $textcolor: #434343;
     }
 
     .registration-form-back {
-                  background: transparent;
+      background: transparent;
       font-weight: 500;
-            :hover {
+      :hover {
         text-decoration: underline !important;
       }
     }
   }
-
 }
-
