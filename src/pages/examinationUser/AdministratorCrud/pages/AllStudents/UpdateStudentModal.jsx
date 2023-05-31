@@ -28,7 +28,7 @@ import { debounce } from "lodash";
 
 const { Option } = Select;
 
-const AddStudentModal = props => {
+const UpdateStudentModal = props => {
   const mainContext = useContext(MainContext);
   // console.log('uy' , context);
   const examinationAreaId = mainContext?.profession?.examination_area_id;
@@ -263,6 +263,7 @@ const AddStudentModal = props => {
           cancelAddModal();
         }
         setLoading(false);
+        window.location.reload(); // reload the page after success message is displayed
       } else if (parseInt(res?.data?.status) === 2) {
         message.error("Ma'lumotlarni yuborishda xatolik!");
         setValidatorErrors(res?.data?.validator_errors);
@@ -1570,4 +1571,4 @@ const AddStudentModal = props => {
   );
 };
 
-export default AddStudentModal;
+export default UpdateStudentModal;

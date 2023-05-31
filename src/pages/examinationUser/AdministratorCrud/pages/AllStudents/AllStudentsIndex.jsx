@@ -30,6 +30,7 @@ import {
 } from "../../../../../services/api_services/administrator_students_api";
 import { element } from "prop-types";
 import MainContext from "../../../../../Context/MainContext";
+import UpdateStudentModal from "./UpdateStudentModal";
 
 const AllStudentsIndex = props => {
   const mainContext = useContext(MainContext);
@@ -51,6 +52,7 @@ const AllStudentsIndex = props => {
   const history = useHistory();
   const location = useLocation();
   const [addModalVisible, setAddModalVisible] = useState(false);
+  const [updateModalVisible, setUpdateModalVisible] = useState(false);
   const [eduTypes, setEduTypes] = useState([]);
   const [organizations, setOrganizations] = useState([]);
   const [visitorTypes, setVisitorTypes] = useState([]);
@@ -292,11 +294,18 @@ const AllStudentsIndex = props => {
     });
   }
 
+  // Add student
   const openAddModal = e => {
     setAddModalVisible(true);
     console.log("ref -> ", inputTagRef);
     focusRefElement();
   };
+  const openUpdateModal = e => {
+    setUpdateModalVisible(true);
+    console.log("ref -> ", inputTagRef);
+    focusRefElement();
+  };
+  // Update student
   const focusRefElement = () => {
     if (inputTagRef.current) {
       inputTagRef.current.focus();
@@ -313,6 +322,19 @@ const AllStudentsIndex = props => {
       <AddStudentModal
         addModalVisible={addModalVisible}
         setAddModalVisible={setAddModalVisible}
+        eduTypes={eduTypes}
+        organizations={organizations}
+        visitorTypes={visitorTypes}
+        reload={reload}
+        setReload={setreload}
+        inputTagRef={inputTagRef}
+        focusRefElement={focusRefElement}
+      />
+
+      {/* Update */}
+      <UpdateStudentModal
+        updateModalVisible={updateModalVisible}
+        setUpdateModalVisible={setUpdateModalVisible}
         eduTypes={eduTypes}
         organizations={organizations}
         visitorTypes={visitorTypes}
