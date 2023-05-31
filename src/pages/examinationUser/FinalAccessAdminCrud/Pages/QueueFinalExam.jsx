@@ -187,7 +187,7 @@ const QueueFinalExam = props => {
                       </h3>
                       <QueueNumbersComponent
                         data={accessedData?.filter(
-                          item => item?.type == "theoretical"
+                          item => item?.type === "theoretical"
                         )}
                       />
                     </div>
@@ -198,7 +198,7 @@ const QueueFinalExam = props => {
                       </h3>
                       <QueueNumbersComponent
                         data={accessedData?.filter(
-                          item => item?.type == "practical"
+                          item => item?.type === "practical"
                         )}
                       />
                     </div>
