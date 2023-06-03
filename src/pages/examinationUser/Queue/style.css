@@ -1,0 +1,19 @@
+.queueElementClass {
+    border: 1px solid black;
+    padding: 15px;
+    font-size: 25px;
+    font-weight: bold;
+    margin-left: 2px;
+    margin-right: 2px;
+}
+
+.queueRemainingBoxClass {
+    border: 1px solid black;
+    padding: 15px;
+    background-color: #ffd200;
+}
+.queueLimitBoxClass {
+    border: 1px solid black;
+    padding: 15px;
+    background-color: #00ff80;
+}
