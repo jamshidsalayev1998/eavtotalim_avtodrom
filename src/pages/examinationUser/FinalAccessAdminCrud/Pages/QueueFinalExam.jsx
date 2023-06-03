@@ -47,6 +47,7 @@ const QueueFinalExam = props => {
       const audio = new Audio(ringer);
       audio.loop = true;
       const response = await getQueueList();
+    setFreeComputers(response?.freeComputers);
       reBuiltData(response);
     })();
     setTimeout(() => {
@@ -55,7 +56,6 @@ const QueueFinalExam = props => {
   }, [reload]);
 
   const reBuiltData = response => {
-    setFreeComputers(response?.freeComputers);
     let waitArray = [];
     let accessArray = [];
     response?.data?.map((element, index) => {
@@ -82,7 +82,6 @@ const QueueFinalExam = props => {
     setFreeComputers(accessArray.slice(-1));
   };
 
-  console.log(accessedData?.data?.type);
 
   useEffect(() => {
     setTimeout(() => {
