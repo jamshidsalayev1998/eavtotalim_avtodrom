@@ -30,7 +30,7 @@ import {
 } from "../../../../../services/api_services/administrator_students_api";
 import { element } from "prop-types";
 import MainContext from "../../../../../Context/MainContext";
-import UpdateStudentModal from "./UpdateStudentModal";
+import { deleteStudentApplivation } from "services/api_services/final_access_student/final_accesss_student_api";
 
 const AllStudentsIndex = props => {
   const mainContext = useContext(MainContext);
@@ -38,7 +38,7 @@ const AllStudentsIndex = props => {
   const examinationAreaId = mainContext?.profession?.examination_area_id;
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [reload, setreload] = useState(false);
+  const [reload, setReload] = useState(false);
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
   const [showCount, setShowCount] = useState(10);
@@ -130,6 +130,68 @@ const AllStudentsIndex = props => {
         setOrganizations(orgResp?.data);
       }
     })();
+  };
+
+  function delete_student(element) {
+    (async () => {
+      const response = await deleteStudentApplivation(element);
+      if (response?.data?.message === "Success") {
+        setReload(!reload);
+        message.success("O'quvchi tizimdan muvoffaqiyatli o'chirildi");
+      }
+    })();
+  }
+
+  const selectStudentForEdit = element => {
+    setEditStudent(element);
+  };
+
+  const onShowSizeChange = (current, pageSize) => {
+    setShowCount(pageSize);
+    setPage(0);
+    setTimeout(() => {
+      setReload(!reload);
+    }, 1000);
+  };
+
+  function changePage(e) {
+    setPage(e);
+    setReload(!reload);
+  }
+
+  function changeWord(word) {
+    setWord(word);
+    setPage(1);
+  }
+
+  function select_student(selected) {
+    setSelectedStudent(selected);
+    QRCode.toDataURL(selected?.student_passport).then(res => {
+      setSrc(res);
+    });
+  }
+
+  // Add student
+  const openAddModal = e => {
+    setAddModalVisible(true);
+    console.log("ref -> ", inputTagRef);
+    focusRefElement();
+  };
+  const openUpdateModal = e => {
+    setUpdateModalVisible(true);
+    console.log("ref -> ", inputTagRef);
+    focusRefElement();
+  };
+  // Update student
+  const focusRefElement = () => {
+    if (inputTagRef.current) {
+      inputTagRef.current.focus();
+    }
+  };
+
+  const handleRowClick = (record, index) => {
+    select_student(record);
+    showDrawer();
   };
 
   const columns = [
@@ -247,10 +309,25 @@ const AllStudentsIndex = props => {
       width: "120",
     },
     {
+      title: "Qr code",
+      align: "center",
+      width: 80,
+      render: (record, index) => (
+        <i
+          onClick={() => handleRowClick(record, index)}
+          style={{ cursor: "pointer" }}
+          className="fas fa-qrcode text-info font-size-20"
+        ></i>
+      ),
+    },
+    {
       title: "Amallar",
       align: "center",
-      render: (index, element) => (
-        <div className="d-flex align-items-center justify-content-around">
+      render: (element, index) => (
+        <div
+          key={index}
+          className="d-flex align-items-center justify-content-around font-size-20"
+        >
           <Tooltip title={"O'zgartirish"}>
             <NavLink
               to={"/examination-administrator/edit-students/" + element?.id}
@@ -259,63 +336,24 @@ const AllStudentsIndex = props => {
             </NavLink>
           </Tooltip>
 
-          <i style={{ cursor: "pointer" }} className="far fa-eye text-dark"></i>
+          <Tooltip title={"O'chirish"}>
+            <Popconfirm
+              title={"Ma`lumotni o`chirasizmi"}
+              placement="topLeft"
+              onConfirm={() => delete_student(element?.id)}
+              okText={"O`chirish"}
+              cancelText={"Bekor qilish"}
+            >
+              <span style={{ color: "#f5222d", cursor: "pointer" }}>
+                {" "}
+                <i className="bx bxs-trash"></i>
+              </span>
+            </Popconfirm>
+          </Tooltip>
         </div>
       ),
     },
   ];
-
-  const selectStudentForEdit = element => {
-    setEditStudent(element);
-  };
-
-  const onShowSizeChange = (current, pageSize) => {
-    setShowCount(pageSize);
-    setPage(0);
-    setTimeout(() => {
-      setreload(!reload);
-    }, 1000);
-  };
-
-  function changePage(e) {
-    setPage(e);
-    setreload(!reload);
-  }
-
-  function changeWord(word) {
-    setWord(word);
-    setPage(1);
-  }
-
-  function select_student(selected) {
-    setSelectedStudent(selected);
-    QRCode.toDataURL(selected?.student_passport).then(res => {
-      setSrc(res);
-    });
-  }
-
-  // Add student
-  const openAddModal = e => {
-    setAddModalVisible(true);
-    console.log("ref -> ", inputTagRef);
-    focusRefElement();
-  };
-  const openUpdateModal = e => {
-    setUpdateModalVisible(true);
-    console.log("ref -> ", inputTagRef);
-    focusRefElement();
-  };
-  // Update student
-  const focusRefElement = () => {
-    if (inputTagRef.current) {
-      inputTagRef.current.focus();
-    }
-  };
-
-  const handleRowClick = (record, index) => {
-    select_student(record);
-    showDrawer();
-  };
 
   return (
     <>
@@ -326,23 +364,11 @@ const AllStudentsIndex = props => {
         organizations={organizations}
         visitorTypes={visitorTypes}
         reload={reload}
-        setReload={setreload}
+        setReload={setReload}
         inputTagRef={inputTagRef}
         focusRefElement={focusRefElement}
       />
 
-      {/* Update */}
-      <UpdateStudentModal
-        updateModalVisible={updateModalVisible}
-        setUpdateModalVisible={setUpdateModalVisible}
-        eduTypes={eduTypes}
-        organizations={organizations}
-        visitorTypes={visitorTypes}
-        reload={reload}
-        setReload={setreload}
-        inputTagRef={inputTagRef}
-        focusRefElement={focusRefElement}
-      />
       <div className="page-content">
         <Container fluid>
           <Card>
@@ -390,10 +416,6 @@ const AllStudentsIndex = props => {
                     }
                     dataSource={data}
                     loading={loading}
-                    onRow={(record, index) => ({
-                      onClick: () => handleRowClick(record, index),
-                    })}
-                    onClick={showDrawer}
                     bordered={true}
                     scroll={{ x: true, y: 600 }}
                     pagination={false}

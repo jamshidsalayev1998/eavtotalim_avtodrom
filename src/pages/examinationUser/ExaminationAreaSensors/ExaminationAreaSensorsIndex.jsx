@@ -149,7 +149,6 @@ const ExaminationAreaSensorsIndex = props => {
       setLoadingButtonUp(false);
     }
   };
-  console.log("llllllllllllllllllllllllll", moveSensor);
 
   const showAddModal = () => {
     setIsAddModalVisible(true);

@@ -62,3 +62,20 @@ export const showFinalAccessStudent = async (itemId, params = {}) => {
     return error;
   }
 };
+
+export const deleteStudentApplivation = async studentId => {
+  try {
+    const token = localStorage.getItem("token");
+    const response = await API_V2({
+      url: "/examination-administrator/student-delete/" + studentId,
+      method: "DELETE",
+      params: {
+        token: token,
+      },
+    });
+    if (response?.data) {
+      const data = response;
+      return data;
+    }
+  } catch (error) {}
+};
