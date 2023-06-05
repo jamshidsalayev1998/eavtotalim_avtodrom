@@ -7,69 +7,67 @@ import {socketParam} from "../../../App";
 import "./style.css"
 
 const ExaminationAreaQueueWithoutAuth = () => {
-    const [data, setData] = useState([]);
     const [remainingQueueData, setRemainingQueueData] = useState([]);
     const [limitedQueueData, setLimitedQueueData] = useState([]);
-    const [freeComputersData, setFreeComputersData] = useState([]);
+    const [freeComputersData, setFreeComputersData] = useState(undefined);
     const match = useRouteMatch('/queue/:id');
+    useEffect(async () => {
+        const response = await get_queue_info(match?.params?.id)
+        setRemainingQueueData(response?.remainingQueueData);
+        setLimitedQueueData(response?.limitedQueueData);
+        await setFreeComputersData(response?.freeComputersData);
+    }, []);
     useEffect(() => {
-        getInfo();
+
         const eventName = 'queue_event_' + match?.params?.id;
         socketParam.on(eventName, data => {
-            reBuildQueue(data)
-            console.log('keyin remaining', remainingQueueData);
-            console.log('keyin limit', limitedQueueData)
+            if (data?.type === 'new_student') {
+                const freeComputersCount = parseInt(freeComputersData) || 0; // Parsing with fallback value
+                console.log('free computer count', freeComputersCount);
+                console.log('lengthlimited', limitedQueueData.length);
+                if (freeComputersCount > limitedQueueData.length) {
+                    setLimitedQueueData(prevData => [...prevData, data?.queue]);
+                } else {
+                    setRemainingQueueData(prevData => [...prevData, data?.queue]);
+                }
+            } else if (data?.type === 'free_computer') {
+                if (remainingQueueData.length > 0) {
+                    const firstElement = remainingQueueData[0];
+                    setRemainingQueueData(prevData => prevData.slice(1));
+                    setLimitedQueueData(prevData => [...prevData, firstElement]);
+                }
+                setFreeComputersData(freeComputersData + 1);
+            } else if (data?.type === 'student_merged') {
+                console.log('data?.type', data?.type);
+                console.log('data?.unikal_number', data?.unikal_number);
+                console.log("limitedQueueData in merged", limitedQueueData)
+                const updatedQueueData = limitedQueueData.filter(
+                    element => element.unikal_number !== data?.unikal_number
+                );
+                const updatedRemainQueueData = remainingQueueData.filter(
+                    element => element.unikal_number !== data?.unikal_number
+                );
+                setLimitedQueueData(updatedQueueData);
+                setRemainingQueueData(updatedRemainQueueData);
+                setFreeComputersData(freeComputersData - 1)
+            }
         });
         return () => {
             socketParam.off(eventName);
         };
-    }, []);
-    const getInfo = () => {
-        (async () => {
-            const response = await get_queue_info(match?.params?.id)
-            console.log(response);
-            setData(response);
-            setRemainingQueueData(response?.remainingQueueData);
-            setLimitedQueueData(response?.limitedQueueData);
-            setFreeComputersData(response?.freeComputersData);
-        })()
-    };
-    const transferElement = (data) => {
-        console.log('socket', data?.type);
-        if (remainingQueueData.length > 0) {
-            const firstElement = remainingQueueData[0];
-            setRemainingQueueData(prevData => prevData.slice(1));
-            setLimitedQueueData(prevData => [...prevData, firstElement]);
-        }
-    };
+    }, [remainingQueueData, freeComputersData, limitedQueueData]);
+
     const reBuildQueue = (data) => {
-        if (data?.type === 'new_student') {
-            if (parseInt(freeComputersData) > limitedQueueData.length) {
-                setLimitedQueueData(prevData => [...prevData, data?.queue]);
-            } else {
-                setRemainingQueueData(prevData => [...prevData, data?.queue]);
-            }
-        } else if (data?.type === 'free_computer') {
-            transferElement(data);
-        }
-        else if (data?.type === 'student_merged'){
-            removeElement(data?.unikal_number)
-        }
-    };
-    const removeElement = (unikal_number) => {
-        const updatedQueueData = limitedQueueData.filter(
-            element => element.unikal_number !== unikal_number
-        );
-        setLimitedQueueData(updatedQueueData);
+
     };
     return (
         <Row>
             <Col xl={12} className={'.queueRemainingBoxClass'}>
-                <h5>Kutishda</h5>
+                <h5>Kutishda {remainingQueueData?.length}</h5>
                 <ListQueueComponent data={remainingQueueData}/>
             </Col>
             <Col xl={12} className={'.queueLimitBoxClass'}>
-                <h5>Kirishi mumkin</h5>
+                <h5>Kirishi mumkin {limitedQueueData?.length} komplar {freeComputersData}</h5>
                 <ListQueueComponent data={limitedQueueData}/>
             </Col>
         </Row>
