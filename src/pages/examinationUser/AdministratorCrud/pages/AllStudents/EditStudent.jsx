@@ -28,7 +28,7 @@ import {
 } from "../../../../../services/api_services/administrator_students_api";
 import InputMask from "react-input-mask";
 import {
-  showFinalAccessStudent,
+  editFinalAccessStudent,
   updateFinalAccessStudent,
 } from "../../../../../services/api_services/final_access_student/final_accesss_student_api";
 import moment from "moment";
@@ -53,7 +53,7 @@ const EditStudents = props => {
       const res = await getEduTypesForAll(params);
       getOrganizationsFunction();
       setEduTypes(res?.data?.data);
-      const response = await showFinalAccessStudent(match?.params?.id);
+      const response = await editFinalAccessStudent(match?.params?.id);
       console.log("popo", response);
       if (parseInt(response?.status) === 1) {
         const yy = response?.data?.student;
@@ -249,7 +249,29 @@ const EditStudents = props => {
                         </Select>
                       </Form.Item>
                     </Col>
-
+                    <Col xl={6}>
+                      <Form.Item
+                        label="Ta`lim turi"
+                        name="edu_type_id"
+                        rules={[
+                          {
+                            required: true,
+                            message: "Ta`lim turini tanlang!",
+                          },
+                        ]}
+                        initialValue={1}
+                      >
+                        <Select className={"w-100"}>
+                          {eduTypes.map((element, index) => {
+                            return (
+                              <Option value={element?.id}>
+                                {element?.short_name_uz}
+                              </Option>
+                            );
+                          })}
+                        </Select>
+                      </Form.Item>
+                    </Col>
                     <Col xl={12}>
                       <Form.Item
                         label="Ta`lim tashkiloti"
