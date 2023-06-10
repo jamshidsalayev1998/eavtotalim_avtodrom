@@ -372,7 +372,7 @@ const ShowPracticalExamResultByRecord = props => {
                                                     <span>{resultData?.listOfPenalties.length + i + 1}</span>
                                                 </Td>
                                                 <Td className="text-left">
-                                                    <span>{JSON.parse(v.info).sensor_name} - etap uchun</span>
+                                                    <span>{v?.sensor?.name} - etap uchun</span>
                                                 </Td>
                                                 <Td className="text-left">
                                                     <span>{v?.penalty_ball}</span>
