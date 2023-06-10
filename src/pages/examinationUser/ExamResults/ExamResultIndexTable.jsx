@@ -145,16 +145,16 @@ const ExamResultIndexTable = ({ tableData, reload, setreload }) => {
         <>{row?.final_test_student_attempt?.incorrect_answers}</>
       ),
     },
-    {
-      title: "Test yechilgan sana",
-      render: (text, row) => (
-        <>
-          {moment(row?.final_test_student_attempt?.created_at).format(
-            "YYYY-MM-DD HH:mm:ss"
-          )}
-        </>
-      ),
-    },
+    // {
+    //   title: "Test yechilgan sana",
+    //   render: (text, row) => (
+    //     <>
+    //       {moment(row?.final_test_student_attempt?.created_at).format(
+    //         "YYYY-MM-DD HH:mm:ss"
+    //       )}
+    //     </>
+    //   ),
+    // },
     {
       title: "Natija",
       children: [
