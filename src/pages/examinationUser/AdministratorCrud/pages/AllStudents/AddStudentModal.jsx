@@ -235,47 +235,68 @@ const AddStudentModal = props => {
 
   const simpleSaveStudent = async values => {
     const formData = new FormData();
-    for (let key in values) {
-      if (
-        key === "med_file" ||
-        key === "school_license" ||
-        key === "license" ||
-        key === "school_diploma" ||
-        key === "road_safety_file_letter"
-      ) {
-        formData.append(
-          key,
-          values[key] ? values[key].file?.originFileObj : ""
-        );
+
+    const fileKeys = [
+      "med_file",
+      "school_license",
+      "license",
+      "school_diploma",
+      "road_safety_letter",
+    ];
+
+    for (const key in values) {
+      if (fileKeys.includes(key)) {
+        formData.append(key, values[key]?.file?.originFileObj || "");
       } else {
-        formData.append(key, values[key] ? values[key] : "");
+        formData.append(key, values[key] || "");
       }
     }
-    let params = {};
+
     setLoading(true);
+
     try {
+      const params = {};
       const res = await addStudentToComes(params, formData);
+
       if (res?.data?.message === "Success") {
         message.success(res?.data?.message);
-        setReload(!reload);
+        setReload(prevReload => !prevReload);
         clearForm();
+
         if (values?.typeSave === "simple") {
           cancelAddModal();
         }
-        setLoading(false);
       } else if (parseInt(res?.data?.status) === 2) {
-        message.error("Ma'lumotlarni yuborishda xatolik!");
-        setValidatorErrors(res?.data?.validator_errors);
-        if (res?.data?.data_has) {
-          setDataHas(res?.data?.data_has);
+        const { validator_errors, data_has } = res?.data;
+
+        for (const field in validator_errors) {
+          const errorMessages = validator_errors[field];
+          errorMessages.forEach(errorMsg => {
+            message.error(errorMsg);
+          });
         }
-        setLoading(false);
+
+        setValidatorErrors(validator_errors);
+        setDataHas(data_has);
       }
     } catch (error) {
-      console.log(error);
       message.error("Ma'lumotlar to'g'ri kiritilmadi");
+      message.error(error);
+    } finally {
       setLoading(false);
     }
+  };
+
+  const handleFinishFailed = errorInfo => {
+    const { errorFields } = errorInfo;
+
+    // Extract the error messages
+    const errorMessages = errorFields.map(field => field.errors[0]);
+
+    // Display the error messages
+    errorMessages.forEach(errorMessage => {
+      message.error(errorMessage);
+    });
   };
 
   const saveStudent = () => {
@@ -400,11 +421,12 @@ const AddStudentModal = props => {
         // </Button>,
       ]}
     >
-      <Spin spinning={loading} tip="Tekshirilmoqda...">
+      <Spin spinning={loading} tip="Yuklanmoqda...">
         <Form
           form={studentStoreForm}
           name={"studentadd"}
           onFinish={simpleSaveStudent}
+          onFinishFailed={handleFinishFailed}
           autoComplete={false}
           labelCol={{
             span: 24,

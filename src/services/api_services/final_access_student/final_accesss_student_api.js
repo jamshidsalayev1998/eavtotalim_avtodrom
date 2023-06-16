@@ -5,13 +5,10 @@ export const updateFinalAccessStudent = async (itemId, data, params = {}) => {
   try {
     const token = localStorage.getItem("token");
     Object.assign(params, { token: token });
-    const response = await API({
-      url: "/examination-area/final-access-student-edit/" + itemId,
+    const response = await API_V2({
+      url: "/examination-administrator/student-update/" + itemId,
       method: "POST",
       params: params,
-      headers: {
-        Accept: "application/json",
-      },
       data: data,
     });
     if (response?.data) {

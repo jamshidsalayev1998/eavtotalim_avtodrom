@@ -8,6 +8,9 @@ body {
   user-select: none; */
   background-color: #f8f8fb !important;
 }
+body > iframe {
+  display: none;
+}
 
 #root {
   position: relative;

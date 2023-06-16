@@ -200,13 +200,13 @@ const AllStudentsIndex = props => {
       dataIndex: "index",
       key: "index",
       render: (text, record, index) => index + 1,
-      width: 40,
+      width: 60,
       align: "center",
     },
-
     {
       title: <div className="text-center">F.I.O</div>,
       render: (index, element) => <>{element?.student_fio}</>,
+      width: 200,
     },
     {
       title: <div className="text-center">Ta`lim turi</div>,
@@ -311,11 +311,11 @@ const AllStudentsIndex = props => {
     {
       title: "Qr code",
       align: "center",
-      width: 80,
+      width: 200,
       render: (record, index) => (
         <i
           onClick={() => handleRowClick(record, index)}
-          style={{ cursor: "pointer" }}
+          style={{ cursor: "pointer", width: "80px" }}
           className="fas fa-qrcode text-info font-size-20"
         ></i>
       ),
@@ -327,6 +327,7 @@ const AllStudentsIndex = props => {
         <div
           key={index}
           className="d-flex align-items-center justify-content-around font-size-20"
+          style={{ width: "80px" }}
         >
           <Tooltip title={"O'zgartirish"}>
             <NavLink
