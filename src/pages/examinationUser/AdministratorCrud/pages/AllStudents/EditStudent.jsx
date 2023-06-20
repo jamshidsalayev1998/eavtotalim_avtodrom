@@ -94,7 +94,6 @@ const EditStudents = props => {
 
     fetchData();
   }, [addForm, match?.params?.id]);
-  console.log("fetched setData", data);
 
   const formOnChange = value => {
     console.log("valuess", value);
@@ -184,8 +183,9 @@ const EditStudents = props => {
 
       const res = await updateFinalAccessStudent(match.params.id, data);
 
-      if (res.status === 1) {
+      if (res.message === "Success") {
         message.success(res.message);
+        message.info("O'quvchi ma'lumotlari o'zgardi");
         history.push("/examination-administrator/all-students");
       } else if (res.status === 2) {
         message.error("Error");
