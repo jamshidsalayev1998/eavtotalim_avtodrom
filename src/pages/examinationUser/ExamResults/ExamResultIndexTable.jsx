@@ -105,8 +105,11 @@ const ExamResultIndexTable = ({ tableData, reload, setreload }) => {
       key: "student_fio",
       render: (text, row) => (
         <>
-          {row?.type_of_exam === "practical" ? (
-            row?.student_fio
+          {!row?.final_test_student_attempt?.id ||
+          row?.type_of_exam === "practical" ? (
+            <Tooltip title={"Imtihon ma'lumotlari mavjud emas!"}>
+              <span style={{ cursor: "pointer" }}>{row?.student_fio}</span>
+            </Tooltip>
           ) : (
             <Link
               to={{
@@ -138,12 +141,14 @@ const ExamResultIndexTable = ({ tableData, reload, setreload }) => {
       render: (text, row) => (
         <>{row?.final_test_student_attempt?.correct_answers}</>
       ),
+      width: 90,
     },
     {
       title: "Noto`g`ri javoblar",
       render: (text, row) => (
         <>{row?.final_test_student_attempt?.incorrect_answers}</>
       ),
+      width: 90,
     },
     // {
     //   title: "Test yechilgan sana",

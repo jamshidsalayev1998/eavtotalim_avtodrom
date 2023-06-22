@@ -6,6 +6,7 @@ import { useRouteMatch } from "react-router";
 import { socketParam } from "../../../App";
 import "./style.css";
 import LargeElement from "./LargeElement";
+import { NavLink } from "react-router-dom";
 
 const ExaminationAreaQueueWithoutAuth = () => {
   const [remainingQueueData, setRemainingQueueData] = useState([]);
@@ -74,7 +75,16 @@ const ExaminationAreaQueueWithoutAuth = () => {
   return (
     <Row style={{ minHeight: "100vh" }}>
       <Col xs={24} xl={12} className="waitingListContainer">
-        <h5>Kutishda {remainingQueueData?.length}</h5>
+        <div className="d-flex align-items-center">
+          <NavLink
+            className="btn rounded-circle p-3 position-relative bg-light"
+            style={{ boxShadow: "0px 10px 20px rgba(28, 88, 110, 0.15)" }}
+            to={"/examinationAreas"}
+          >
+            <i className="bx bx-arrow-back font-size-20 font-weight-bold "></i>
+          </NavLink>
+          <h5 className="m-0 ml-3">Kutishda {remainingQueueData?.length}</h5>
+        </div>
         <ListQueueComponent
           data={remainingQueueData}
           transferSignal={transferSignal}
