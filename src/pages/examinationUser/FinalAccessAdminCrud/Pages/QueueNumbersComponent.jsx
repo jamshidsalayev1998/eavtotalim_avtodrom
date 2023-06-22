@@ -19,14 +19,19 @@ const QueueNumbersComponent = props => {
                   <p
                     className={`${bgColor}` + ""}
                     style={{
-                      fontSize: "40px",
+                      fontSize: "35px",
                       paddingLeft: "auto",
                       marginBottom: 0,
                     }}
                   >
                     {element?.unikal_number}
                   </p>
-                  <span>{element?.student_fio}</span>
+                  {/* <span>{element?.student_fio}</span> */}
+                  <span className="text-white fw-bold">
+                    {element?.student_fio.length > 30
+                      ? `${element?.student_fio.slice(0, 40)}...`
+                      : element?.student_fio}
+                  </span>
                 </div>
               </Col>
             );
