@@ -3,21 +3,37 @@ import { Card, CardBody, Container } from "reactstrap";
 import { withTranslation } from "react-i18next";
 import "./queue.css";
 
-import { Row, Col, Select, Input, Pagination, message, Tooltip } from "antd";
+import {
+  Row,
+  Col,
+  Select,
+  Input,
+  Pagination,
+  message,
+  Tooltip,
+  Modal,
+  Button,
+  Form,
+} from "antd";
 import axios from "axios";
 import MainContext from "../../../../Context/MainContext";
 import { PATH_PREFIX } from "../../../../Utils/AppVariables";
 import { DataLoader } from "../../../Loaders/Loaders";
 import QueuePageIndexTable from "./QueuePageIndexTable";
-import { getQueueList } from "../../../../services/api_services/queue_api";
+import {
+  getQueueList,
+  reputStudentToQueueApi,
+} from "../../../../services/api_services/queue_api";
 import QueueNumbersComponent from "./QueueNumbersComponent";
 import ringer from "../../../../assets/music/sound_queue.mp3";
 import { BsCheckCircle, BsClockHistory } from "react-icons/bs";
 import ShowQueueNumber from "./ShowQueueNumber";
 import { socketParam } from "../../../../App";
+import InputMask from "react-input-mask";
 
 const QueueFinalExam = props => {
   const [data, setData] = useState([]);
+  const [addForm] = Form.useForm();
   const [isloading, setIsloading] = useState(false);
   const { hasLayout, setHasLayout } = useContext(MainContext);
   const [reload, setReload] = useState(false);
@@ -25,10 +41,13 @@ const QueueFinalExam = props => {
   const [accessedData, setAccessedData] = useState();
   const [freeComputers, setFreeComputers] = useState();
   const [showQueueNumber, setShowQueueNumber] = useState(true);
+  const [reputQueueModal, setReputQueueModal] = useState(false);
+
   const mainContext = useContext(MainContext);
   const eventName =
     "examination_area_queue_event_" +
     mainContext?.profession?.examination_area_id;
+
   useEffect(() => {
     // console.log('eventName', eventName);
     if (parseInt(mainContext?.profession?.examination_area_id)) {
@@ -47,7 +66,7 @@ const QueueFinalExam = props => {
       const audio = new Audio(ringer);
       audio.loop = true;
       const response = await getQueueList();
-    setFreeComputers(response?.freeComputers);
+      setFreeComputers(response?.freeComputers);
       reBuiltData(response);
     })();
     setTimeout(() => {
@@ -82,13 +101,50 @@ const QueueFinalExam = props => {
     setFreeComputers(accessArray.slice(-1));
   };
 
-
   useEffect(() => {
     setTimeout(() => {
       setShowQueueNumber(false);
     }, 10000);
   }, [reload]);
 
+  const onFinishAdd = async values => {
+    try {
+      const res = await reputStudentToQueueApi(values);
+      message.success(res?.data?.message);
+      reputStudentModalHide();
+    } catch (error) {
+      message.error(error?.message);
+    }
+  };
+
+  const submitForm = () => {
+    addForm.submit();
+  };
+
+  const reputStudentModalShow = () => {
+    setReputQueueModal(true);
+  };
+
+  const reputStudentModalHide = () => {
+    setReputQueueModal(false);
+  };
+
+  const onPassportHandle = e => {
+    addForm.setFieldsValue({
+      student_passport: e?.target?.value?.toUpperCase(),
+    });
+  };
+  const maskInput = {
+    mask: "aa9999999",
+    maskChar: "_",
+    alwaysShowMask: false,
+    formatChars: {
+      9: "[0-9]",
+      a: "[A-Za-z]",
+    },
+
+    permanents: [2, 5], // permanents is an array of indexes of the non-editable characters in the mask
+  };
   return (
     <>
       <div
@@ -113,6 +169,73 @@ const QueueFinalExam = props => {
                       <div className="d-flex justify-content-start align-items-center">
                         <BsClockHistory />
                         <span className="pl-2 font-size-20">Kutishda...</span>
+                      </div>
+
+                      {/* Qayta navbatga qo'yish */}
+                      <div className="d-flex justify-content-start align-items-center">
+                        <Tooltip title="Qayta navbatga qo'yish">
+                          <span
+                            onClick={reputStudentModalShow}
+                            className="text-dark cursor-pointer font-size-20"
+                          >
+                            <i class="fas fa-user-clock"></i>
+                            <span className="pl-2">Navbatga qayta qo'yish</span>
+                          </span>
+                        </Tooltip>
+
+                        <Modal
+                          zIndex={10000}
+                          width={500}
+                          centered
+                          title={
+                            <>
+                              <i class="fas fa-people-arrows mr-1"></i>
+                              <span>Navbatga qayta qo'yish oynasi </span>
+                            </>
+                          }
+                          visible={reputQueueModal}
+                          onCancel={reputStudentModalHide}
+                          footer={[
+                            <button
+                              className="btn btn-info"
+                              onClick={submitForm}
+                            >
+                              <div className="d-flex align-items-center">
+                                <i class="bx bxs-user-check font-size-20 mr-1"></i>
+                                Qayta qo'yish
+                              </div>
+                            </button>,
+                          ]}
+                        >
+                          <Form
+                            form={addForm}
+                            onFinish={onFinishAdd}
+                            labelCol={{
+                              span: 24,
+                            }}
+                            wrapperCol={{
+                              span: 23,
+                            }}
+                          >
+                            <Form.Item
+                              name="student_passport"
+                              label="Pasport seria va raqami"
+                              rules={[
+                                {
+                                  required: true,
+                                  message: "Pasport seria va raqamini kiriting",
+                                },
+                              ]}
+                            >
+                              <InputMask
+                                {...maskInput}
+                                className={"ant-input"}
+                                onChange={e => onPassportHandle(e)}
+                                placeholder="Pasport seria va raqami"
+                              />
+                            </Form.Item>
+                          </Form>
+                        </Modal>
                       </div>
 
                       <div>

@@ -218,7 +218,6 @@ const EditStudents = props => {
   }
 
   const onPassportHandle = e => {
-    // console.log('pi' , e)
     addForm.setFieldsValue({
       student_passport: e?.target?.value?.toUpperCase(),
     });
