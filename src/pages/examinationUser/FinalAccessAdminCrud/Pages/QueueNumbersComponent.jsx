@@ -1,5 +1,6 @@
 import React from "react";
 import { Col, Row } from "antd";
+import { Card } from "reactstrap";
 
 const QueueNumbersComponent = props => {
   const { bgColor, data } = props;
@@ -15,24 +16,25 @@ const QueueNumbersComponent = props => {
                 md={12}
                 // className={"d-flex justify-content-start align-items-center"}
               >
-                <div className="rounded rounded-5 border p-2">
+                <Card className="p-1 m-0 d-flex justify-content-center align-items-center">
                   <p
                     className={`${bgColor}` + ""}
                     style={{
                       fontSize: "35px",
                       paddingLeft: "auto",
                       marginBottom: 0,
+                      fontWeight: "500",
                     }}
                   >
                     {element?.unikal_number}
                   </p>
                   {/* <span>{element?.student_fio}</span> */}
-                  <span className="text-white fw-bold">
+                  <span className="font-weight-bold text-secondary">
                     {element?.student_fio.length > 30
                       ? `${element?.student_fio.slice(0, 40)}...`
                       : element?.student_fio}
                   </span>
-                </div>
+                </Card>
               </Col>
             );
           })

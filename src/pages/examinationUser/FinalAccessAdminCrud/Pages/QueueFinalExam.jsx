@@ -109,9 +109,12 @@ const QueueFinalExam = props => {
 
   const onFinishAdd = async values => {
     try {
-      const res = await reputStudentToQueueApi(values);
-      message.success(res?.data?.message);
+      const { student_passport } = values;
+      const data = { student_passport };
+      const res = await reputStudentToQueueApi(data);
+      message.success(res?.message);
       reputStudentModalHide();
+      console.log("values", values);
     } catch (error) {
       message.error(error?.message);
     }
@@ -171,12 +174,12 @@ const QueueFinalExam = props => {
                         <span className="pl-2 font-size-20">Kutishda...</span>
                       </div>
 
-                      {/* Qayta navbatga qo'yish */}
                       <div className="d-flex justify-content-start align-items-center">
                         <Tooltip title="Qayta navbatga qo'yish">
                           <span
                             onClick={reputStudentModalShow}
-                            className="text-dark cursor-pointer font-size-20"
+                            className="text-dark font-size-20"
+                            style={{ cursor: "pointer" }}
                           >
                             <i class="fas fa-user-clock"></i>
                             <span className="pl-2">Navbatga qayta qo'yish</span>
@@ -210,12 +213,8 @@ const QueueFinalExam = props => {
                           <Form
                             form={addForm}
                             onFinish={onFinishAdd}
-                            labelCol={{
-                              span: 24,
-                            }}
-                            wrapperCol={{
-                              span: 23,
-                            }}
+                            labelCol={{ span: 24 }}
+                            wrapperCol={{ span: 23 }}
                           >
                             <Form.Item
                               name="student_passport"
@@ -237,7 +236,7 @@ const QueueFinalExam = props => {
                           </Form>
                         </Modal>
                       </div>
-
+                      {/* zoom queue */}
                       <div>
                         {/* Full or min size button */}
                         <Tooltip

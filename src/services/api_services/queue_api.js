@@ -1,3 +1,5 @@
+import { message } from "antd";
+import API_V2 from "api/index_v2";
 import API from "../../api";
 
 export const getQueueList = async () => {
@@ -28,9 +30,13 @@ export const reputStudentToQueueApi = async (data, params = {}) => {
       data: data,
     });
     if (response?.data) {
-      return response?.data;
+      return response.data;
     }
   } catch (error) {
-    return error;
+    message.info(
+      "O'quvchi ma'lumotlarini qayta tekshirib so'ng qayta yuboring!",
+      5
+    );
+    throw error;
   }
 };
