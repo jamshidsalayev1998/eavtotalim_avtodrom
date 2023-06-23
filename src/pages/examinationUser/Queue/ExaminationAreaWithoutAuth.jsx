@@ -11,7 +11,7 @@ const ExaminationAreaWithoutAuth = () => {
   useEffect(() => {
     setIsLoading(true);
     axios({
-      url: "http://abs.intalim.uz/api/application-examination-area/examination-areas",
+      url: PATH_PREFIX + "/application-examination-area/examination-areas",
       method: "GET",
     })
       .then(res => {
