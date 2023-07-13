@@ -74,7 +74,6 @@ const AllStudentsIndex = props => {
       params: {
         token,
         page: page ? page : "1",
-        show_count: showCount,
         word,
       },
     }).then(response => {
@@ -419,20 +418,20 @@ const AllStudentsIndex = props => {
                     loading={loading}
                     bordered={true}
                     scroll={{ x: true, y: 600 }}
-                    pagination={false}
+                    pagination={true}
                     size="small"
                     sticky
                   />
                 </Col>
                 <Col xl={24} className="d-flex justify-content-end">
-                  <Pagination
-                    onShowSizeChange={onShowSizeChange}
-                    onChange={changePage}
-                    defaultCurrent={page}
-                    current={page}
-                    total={total}
-                    showSizeChanger
-                  />
+                  {/*<Pagination*/}
+                  {/*  onShowSizeChange={onShowSizeChange}*/}
+                  {/*  onChange={changePage}*/}
+                  {/*  defaultCurrent={page}*/}
+                  {/*  current={page}*/}
+                  {/*  total={total}*/}
+                  {/*  showSizeChanger*/}
+                  {/*/>*/}
                 </Col>
               </Row>
             </Row>

@@ -26,8 +26,9 @@ import attachment from "../../../assets/icons/online-application/attachment.png"
 import dateIcon from "../../../assets/icons/online-application/date.png";
 import pdf from "../../../assets/icons/online-application/file-pdf.png";
 import closeIcon from "../../../assets/icons/online-application/close.png";
+import {storeOnlineApplicationNew} from "../../../services/api_services/online_applications/online_application_api";
 
-const ApplyModal = ({ open, onClose, visitorTypes, organizations }) => {
+const ApplyModal = ({ open, onClose, visitorTypes, organizations,reload,setReload }) => {
   // states
   const [loading, setLoading] = useState(false);
   const [selectedVisitorTypeId, setSelectedVisitorTypeId] = useState(null);
@@ -192,6 +193,64 @@ const ApplyModal = ({ open, onClose, visitorTypes, organizations }) => {
     studentStoreForm.submit();
   };
 
+  const simpleSaveStudent = async values => {
+    const formData = new FormData();
+
+    const fileKeys = [
+      "med_file",
+      "school_license",
+      "license",
+      "school_diploma",
+      "road_safety_letter",
+    ];
+
+    for (const key in values) {
+      if (fileKeys.includes(key)) {
+        formData.append(key, values[key]?.file?.originFileObj || "");
+      } else {
+        formData.append(key, values[key] || "");
+      }
+    }
+    formData.append('student_fio' , values['last_name']+' '+values['first_name'])
+    formData.append('examination_area_id' , 21)
+
+    setLoading(true);
+
+    try {
+      const params = {};
+      const res = await storeOnlineApplicationNew(formData,{});
+      console.log('ik logg' , res?.message)
+        message.success(res?.message);
+      onClose();
+      setReload(!reload)
+
+      if (res?.message === "Success") {
+        // setReload(prevReload => !prevReload);
+
+        if (values?.typeSave === "simple") {
+          // cancelAddModal();
+        }
+      } else if (parseInt(res?.data?.status) === 2) {
+        const { validator_errors, data_has } = res?.data;
+
+        for (const field in validator_errors) {
+          const errorMessages = validator_errors[field];
+          errorMessages.forEach(errorMsg => {
+            message.error(errorMsg);
+          });
+        }
+
+        // setValidatorErrors(validator_errors);
+        // setDataHas(data_has);
+      }
+    } catch (error) {
+      message.error("Ma'lumotlar to'g'ri kiritilmadi");
+      message.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="apply-modal-student">
       <Modal
@@ -246,6 +305,7 @@ const ApplyModal = ({ open, onClose, visitorTypes, organizations }) => {
             wrapperCol={{
               span: 23,
             }}
+            onFinish={simpleSaveStudent}
           >
             <Row className="filled-data">
               <Row className="mb-4">

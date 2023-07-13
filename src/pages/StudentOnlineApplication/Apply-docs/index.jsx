@@ -9,6 +9,7 @@ import { getEduTypesForAll } from "services/api_services/edu_types_api";
 import ApplyModal from "./ApplyModal";
 import data from "./data";
 import "./style.scss";
+import {indexOnlineApplicationNew} from "../../../services/api_services/online_applications/online_application_api";
 
 const index = () => {
   // states
@@ -16,8 +17,21 @@ const index = () => {
   const [visitorTypes, setVisitorTypes] = useState([]);
   const [eduTypes, setEduTypes] = useState([]);
   const [organizations, setOrganizations] = useState([]);
+  const [applications, setApplications] = useState([]);
+  const [reload, setReload] = useState(false);
 
   // modal props datas
+  const getApplication = () => {
+    (async () => {
+      let params = {};
+      const response = await indexOnlineApplicationNew(params);
+      // setApplications(response?.data);
+      let ddd = [];
+      ddd.push(response?.data);
+      setApplications(ddd);
+      console.log('iki' , response)
+    })();
+  };
   const getVisitorTypesFunction = () => {
     (async () => {
       let params = {};
@@ -42,10 +56,11 @@ const index = () => {
   };
 
   useEffect(() => {
+    getApplication();
     getVisitorTypesFunction();
     getEduTypesFunction();
     getOrganizationsFunction();
-  }, []);
+  }, [reload]);
 
   // modal control
   const handleOpenModal = () => {
@@ -67,31 +82,27 @@ const index = () => {
     {
       title: "F.I.SH",
       width: 350,
-      dataIndex: "name",
-      key: "name",
+      render: (text, record, index) => <>{record?.final_access_student?.student_fio}</>,
     },
     {
       title: "Test markazi",
       width: 300,
-      dataIndex: "testcenter",
-      key: "address",
+      render: (text, record, index) => <>{record?.final_access_student?.examination_area?.name}</>,
     },
     {
       title: "Topshiruvchi turi",
       width: 350,
-      dataIndex: "usertype",
-      key: "age",
+      render: (text, record, index) => <>{record?.final_access_student?.visitor_type?.name}</>,
     },
     {
       title: "Ta`lim turi",
       dataIndex: "edutype",
-      key: "address",
+      render: (text, record, index) => <>{record?.final_access_student?.edu_type?.name_for_exam}</>,
     },
     {
-      title: "To'lovlar ",
+      title: "Holati ",
       align: "center",
-      dataIndex: "payment",
-      key: "address",
+      render: (text, record, index) => <>{record?.final_access_student?.general_status_data?.name}</>,
     },
     {
       title: "Amallar",
@@ -114,7 +125,7 @@ const index = () => {
       <Card>
         <Table
           className="table-responsive table-hover"
-          dataSource={data}
+          dataSource={applications}
           columns={columns}
           scroll={{ x: true, y: 600 }}
           pagination={{ position: ["bottomRight"] }}
@@ -125,6 +136,8 @@ const index = () => {
 
       {/* HUJJAT TOPSHIRISH MODALI */}
       <ApplyModal
+          reload={reload}
+          setReload={setReload}
         visitorTypes={visitorTypes}
         open={modalOpen}
         onClose={handleCloseModal}

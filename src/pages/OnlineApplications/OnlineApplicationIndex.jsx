@@ -81,7 +81,7 @@ const ExaminationAreaComputersIndex = () => {
         values?.message,
         {}
       );
-      if (parseInt(response?.data?.status)) {
+      if (response) {
         message.success("Ariza tasdiqlandi");
         cancelAcceptModal();
         setReload(!reload);
