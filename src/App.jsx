@@ -38,6 +38,7 @@ import StudentOnlineRegistration from "pages/Students/SigupOutLogin/studentOnlin
 import ReOpenPassword from "pages/Students/SigupOutLogin/reOpenPassword";
 import StudentOnlineApplicationRoles from "roles/StudentOnlineApplicationRoles";
 import ExaminationAreaQueueWithoutAuth from "./pages/examinationUser/Queue/ExaminationAreaQueueWithoutAuth";
+import ExaminationAreaWithoutAuth from "pages/examinationUser/Queue/ExaminationAreaWithoutAuth";
 
 export const socketParam = socketIO.connect(NODEJS_SOCKET_URL);
 const languagesList = ["uz", "kiril", "qq", "ru", "en"];
@@ -174,6 +175,11 @@ const App = () => {
               <Route
                 component={StudentOnlineRegistration}
                 path="/online-registration"
+                exact
+              />{" "}
+              <Route
+                component={ExaminationAreaWithoutAuth}
+                path="/examinationAreas"
                 exact
               />{" "}
               <Route

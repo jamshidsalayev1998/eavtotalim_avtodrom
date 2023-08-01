@@ -205,6 +205,10 @@ const FinalAccessAdmin = props => {
   const edit_cashier = cashier => {
     setEditCashier(cashier);
     edit_form.setFieldsValue(cashier);
+    edit_form.setFieldValue(
+      "access_week_days",
+      JSON.parse(cashier.access_week_days ?? "[]")
+    );
     setIsEditModalVisible(true);
   };
   const onFinishEdit = values => {

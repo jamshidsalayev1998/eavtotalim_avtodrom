@@ -2,15 +2,18 @@
 
 .waitingListContainer {
   background-color: #ffdbb3; /* Bright orange */
+  background-color: #ffec3d; /* yellow */
   padding: 20px;
-  border-radius: 10px;
+  /* border-radius: 10px 0 0 10px; */
   margin-bottom: 20px;
+  /* min-height: 100vh; */
 }
 
 .accessListContainer {
   background-color: #b3e6ff; /* Bright blue */
+  background-color: #a0d911; /* yellow */
   padding: 20px;
-  border-radius: 10px;
+  /* border-radius: 0 10px 10px 0; */
   margin-bottom: 20px;
 }
 
@@ -38,9 +41,7 @@ h5 {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-
 /* Adjust the styles as needed to match your design preferences */
-
 
 /*.largeElementContainer {*/
 /*  position: fixed;*/
@@ -82,7 +83,6 @@ h5 {
 /*  }*/
 /*}*/
 
-
 .largeElementContainer {
   position: fixed;
   top: 50%;
@@ -108,4 +108,3 @@ h5 {
     transform: translate(-50%, -50%) scale(1);
   }
 }
-
