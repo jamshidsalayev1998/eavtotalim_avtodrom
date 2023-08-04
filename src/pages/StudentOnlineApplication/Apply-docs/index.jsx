@@ -1,15 +1,12 @@
-import { Button, Col, Row, Select, Table } from "antd";
+import { Button, Col, Empty, Row, Select, Table } from "antd";
 import React, { useEffect, useState } from "react";
 import { Card } from "reactstrap";
-import {
-  getOrganizations,
-  getVisitorTypes,
-} from "services/api_services/administrator_students_api";
+import { getVisitorTypes } from "services/api_services/administrator_students_api";
 import { getEduTypesForAll } from "services/api_services/edu_types_api";
 import ApplyModal from "./ApplyModal";
-import data from "./data";
 import "./style.scss";
-import {indexOnlineApplicationNew} from "../../../services/api_services/online_applications/online_application_api";
+import { indexOnlineApplicationNew } from "../../../services/api_services/online_applications/online_application_api";
+import { getOrganizationsWithoutAuth } from "services/api_services/organization_info";
 
 const index = () => {
   // states
@@ -29,7 +26,7 @@ const index = () => {
       let ddd = [];
       ddd.push(response?.data);
       setApplications(ddd);
-      console.log('iki' , response)
+      console.log("iki", response);
     })();
   };
   const getVisitorTypesFunction = () => {
@@ -48,7 +45,7 @@ const index = () => {
   };
   const getOrganizationsFunction = () => {
     (async () => {
-      const orgResp = await getOrganizations({ show_count: "all" });
+      const orgResp = await getOrganizationsWithoutAuth();
       if (orgResp) {
         setOrganizations(orgResp?.data);
       }
@@ -82,27 +79,37 @@ const index = () => {
     {
       title: "F.I.SH",
       width: 350,
-      render: (text, record, index) => <>{record?.final_access_student?.student_fio}</>,
+      render: (text, record, index) => (
+        <>{record?.final_access_student?.student_fio}</>
+      ),
     },
     {
       title: "Test markazi",
       width: 300,
-      render: (text, record, index) => <>{record?.final_access_student?.examination_area?.name}</>,
+      render: (text, record, index) => (
+        <>{record?.final_access_student?.examination_area?.name}</>
+      ),
     },
     {
       title: "Topshiruvchi turi",
       width: 350,
-      render: (text, record, index) => <>{record?.final_access_student?.visitor_type?.name}</>,
+      render: (text, record, index) => (
+        <>{record?.final_access_student?.visitor_type?.name}</>
+      ),
     },
     {
       title: "Ta`lim turi",
       dataIndex: "edutype",
-      render: (text, record, index) => <>{record?.final_access_student?.edu_type?.name_for_exam}</>,
+      render: (text, record, index) => (
+        <>{record?.final_access_student?.edu_type?.name_for_exam}</>
+      ),
     },
     {
       title: "Holati ",
       align: "center",
-      render: (text, record, index) => <>{record?.final_access_student?.general_status_data?.name}</>,
+      render: (text, record, index) => (
+        <>{record?.final_access_student?.general_status_data?.name}</>
+      ),
     },
     {
       title: "Amallar",
@@ -123,21 +130,35 @@ const index = () => {
       </Card>
       {/* ARIZALAR JADVALI */}
       <Card>
-        <Table
-          className="table-responsive table-hover"
-          dataSource={applications}
-          columns={columns}
-          scroll={{ x: true, y: 600 }}
-          pagination={{ position: ["bottomRight"] }}
-          size="small"
-          sticky
-        />
+        {applications?.length > 1 ? (
+          <Table
+            className="table-responsive table-hover"
+            dataSource={applications}
+            columns={columns}
+            scroll={{ x: true, y: 600 }}
+            pagination={{ position: ["bottomRight"] }}
+            size="small"
+            sticky
+          />
+        ) : (
+          <Empty
+            image={Empty.PRESENTED_IMAGE_SIMPLE}
+            imageStyle={{
+              height: 80,
+            }}
+            description={<span>Topshirilgan arizalar mavjud emas !</span>}
+          >
+            <Button type="primary" onClick={handleOpenModal}>
+              Ariza yaratish
+            </Button>
+          </Empty>
+        )}
       </Card>
 
       {/* HUJJAT TOPSHIRISH MODALI */}
       <ApplyModal
-          reload={reload}
-          setReload={setReload}
+        reload={reload}
+        setReload={setReload}
         visitorTypes={visitorTypes}
         open={modalOpen}
         onClose={handleCloseModal}
