@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col} from "reactstrap";
+import { Row, Col } from "reactstrap";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
 import { withTranslation, useTranslation } from "react-i18next";
-import { PATH_PREFIX } from "Utils/AppVariables";
 import { DataLoader } from "pages/Loaders/Loaders";
 import { Select, Input } from "antd";
 import { Table, Thead, Tbody, Tr, Th, Td } from "react-super-responsive-table";
 import PaginationComponent from "react-reactstrap-pagination";
+import { PATH_PREFIX } from "Utils/AppVariables";
 
 const GroupPaymentConfirmedsIndex = ({}) => {
   const { Option } = Select;
@@ -64,7 +64,7 @@ const GroupPaymentConfirmedsIndex = ({}) => {
         group_id,
         word,
         payment_status: "1",
-        type:'first'
+        type: "first",
       },
     }).then(res => {
       if (res?.data?.status == "1") {
@@ -89,7 +89,7 @@ const GroupPaymentConfirmedsIndex = ({}) => {
     set_selected_group_id("all");
     localStorage.setItem(
       window.location.pathname + "-no-allowed-default-group-id",
-      'all'
+      "all"
     );
     set_groups([]);
     set_selected_organization_id(element_id);
@@ -99,13 +99,13 @@ const GroupPaymentConfirmedsIndex = ({}) => {
     );
   };
 
-  const change_group = (element_id) => {
+  const change_group = element_id => {
     set_selected_group_id(element_id);
     localStorage.setItem(
       window.location.pathname + "-no-allowed-default-group-id",
       element_id
     );
-  }
+  };
 
   return (
     <>
@@ -117,9 +117,12 @@ const GroupPaymentConfirmedsIndex = ({}) => {
             style={{ width: "100%" }}
             placeholder="Avtomaktab"
             optionFilterProp="children"
-            onChange={e => {change_organization_id(e); setpage(1)}}
+            onChange={e => {
+              change_organization_id(e);
+              setpage(1);
+            }}
             defaultValue="all"
-            value={organization_id != 'all' ? Number(organization_id) :'all'}
+            value={organization_id != "all" ? Number(organization_id) : "all"}
             filterOption={(input, option) =>
               option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
             }
@@ -145,7 +148,10 @@ const GroupPaymentConfirmedsIndex = ({}) => {
             allowClear
             style={{ width: "100%" }}
             defaultValue={word}
-            onChange={e => {change_word(e?.target?.value); setpage(1)}}
+            onChange={e => {
+              change_word(e?.target?.value);
+              setpage(1);
+            }}
           />
         </Col>
       </Row>
@@ -178,7 +184,11 @@ const GroupPaymentConfirmedsIndex = ({}) => {
                       <NavLink
                         to={`/cashier/groups-payments/confirmed/${element?.id}`}
                       >
-                        {element?.group?.name_uz || element?.group?.name_kiril || element?.group?.name_ru || element?.group?.name_qq || element?.group?.name_en}
+                        {element?.group?.name_uz ||
+                          element?.group?.name_kiril ||
+                          element?.group?.name_ru ||
+                          element?.group?.name_qq ||
+                          element?.group?.name_en}
                       </NavLink>
                     </Td>
                     <Td>
@@ -200,7 +210,10 @@ const GroupPaymentConfirmedsIndex = ({}) => {
               <select
                 className="custom-select mx-2"
                 value={show_count}
-                onChange={e => {setshow_count(e.target.value); setpage(1);}}
+                onChange={e => {
+                  setshow_count(e.target.value);
+                  setpage(1);
+                }}
               >
                 <option value="10">10</option>
                 <option value="20">20</option>

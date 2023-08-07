@@ -800,5 +800,13 @@
   "Belgilanmagan javoblar": "Нерешенные тесты",
   "Noto'g'ri javoblar": "Неправильные ответы",
   "To'g'ri javoblar": "Правильные ответы",
-  "Tabriklaymiz siz testdan muvofaqiyatli o'tdingiz!": "Поздравляем вы успешно прошли тест!"
+  "Tabriklaymiz siz testdan muvofaqiyatli o'tdingiz!": "Поздравляем вы успешно прошли тест!",
+  "contracts": "Контракты",
+  "autodrome": "Автодром",
+  "new": "Новый",
+  "confirmed": "Подтверждено",
+  "rejected": "Отклонено",
+  "confirm": "Подтверждить",
+  "reject": "Отклонтиь",
+  "confirmed_archive": "Подтверждено и заархивировано"
 }

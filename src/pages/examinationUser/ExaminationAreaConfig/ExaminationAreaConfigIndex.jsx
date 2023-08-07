@@ -5,7 +5,7 @@ import {
   getExaminationAreaConfig,
   storeExaminationAreaConfig,
 } from "../../../services/api_services/examination_area_config_api";
-import { PATH_PREFIX_FILE } from "../../../Utils/AppVariables";
+import { PATH_PREFIX_FILE } from "Utils/AppVariables";
 
 const ExaminationAreaConfigIndex = () => {
   const [form] = Form.useForm();

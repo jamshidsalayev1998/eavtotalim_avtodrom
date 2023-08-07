@@ -3,3 +3,4 @@ export const IS_TEST_PROCESS_SETTINGS = "IS_TEST_PROCESS_SETTINGS";
 export const IS_REPORTS = "IS_REPORTS";
 export const IS_USERS = "IS_USERS";
 export const IS_SETTINGS = "IS_SETTINGS";
+export const IS_CONTRACT = "IS_CONTRACT";

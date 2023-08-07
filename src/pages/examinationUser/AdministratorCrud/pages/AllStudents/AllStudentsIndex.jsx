@@ -16,7 +16,6 @@ import {
   Drawer,
 } from "antd";
 import axios from "axios";
-import { PATH_PREFIX, PATH_PREFIX_V2 } from "../../../../../Utils/AppVariables";
 import useDebounce from "../../../../../components/CustomHooks/useDebounce";
 import QRCode from "qrcode";
 import QrCodeToPrint from "./QrCodeToPrint";
@@ -31,6 +30,7 @@ import {
 import { element } from "prop-types";
 import MainContext from "../../../../../Context/MainContext";
 import { deleteStudentApplivation } from "services/api_services/final_access_student/final_accesss_student_api";
+import { PATH_PREFIX_V2 } from "Utils/AppVariables";
 
 const AllStudentsIndex = props => {
   const mainContext = useContext(MainContext);

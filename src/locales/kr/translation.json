@@ -777,7 +777,13 @@
   "Belgilanmagan javoblar": "Белгиланмаган жавоблар",
   "Noto'g'ri javoblar": "Нотўғри жавоблар",
   "To'g'ri javoblar": "Тўғри жавоблар",
-  "Tabriklaymiz siz testdan muvofaqiyatli o'tdingiz!": "Табриклаймиз сиз тестдан мувофақиятли ўтдингиз!"
-
-
+  "Tabriklaymiz siz testdan muvofaqiyatli o'tdingiz!": "Табриклаймиз сиз тестдан мувофақиятли ўтдингиз!",
+  "contracts": "Шартномалар",
+  "autodrome": "Aвтодром",
+  "new": "Янги",
+  "confirmed": "Тасдиқланган",
+  "rejected": "Кайтарилган",
+  "confirm": "Тасдиқлаш",
+  "reject": "Қайтариш",
+  "confirmed_archive": "Тасдикланган va архивга ўтган"
 }

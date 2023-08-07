@@ -392,7 +392,13 @@
   "Elektron jurnal o’zgartirish": "Electronic journal modification",
   "Bo'sh holat darsga qatnashgan": "Attended class",
   "Sababli darsga qatnashmagan": "Not attended reasonably to class",
-  "Sababsiz darsga qatnashmagan": "Not attended to class for no reason"
-  
-
+  "Sababsiz darsga qatnashmagan": "Not attended to class for no reason",
+  "contracts": "Contracts",
+  "autodrome": "Autodrome",
+  "new": "New",
+  "confirmed": "Confirmed",
+  "rejected": "Rejected",
+  "confirm": "Confirm",
+  "reject": "Reject",
+  "confirmed_archive": "Confirmed and archived"
 }

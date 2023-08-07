@@ -3,11 +3,7 @@ import { Card, CardBody, Container, Badge } from "reactstrap";
 import axios from "axios";
 import { NavLink, useHistory } from "react-router-dom";
 import { withTranslation, useTranslation } from "react-i18next";
-import {
-  PATH_PREFIX,
-  PATH_PREFIX_FILE,
-  PATH_PREFIX_V2,
-} from "Utils/AppVariables";
+
 import {
   Modal,
   Button,
@@ -33,6 +29,7 @@ import { getEduTypesForAll } from "../../../services/api_services/edu_types_api"
 import { RiArrowUpDownLine } from "react-icons/ri";
 import { TbHandClick } from "react-icons/tb";
 import { PlusCircleOutlined } from "@ant-design/icons";
+import { PATH_PREFIX_FILE } from "Utils/AppVariables";
 
 const ExaminationAreaSensorsIndex = props => {
   const { Option } = Select;

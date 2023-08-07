@@ -15,9 +15,9 @@ import user1 from "../../../assets/images/userProfile2.jpg";
 import MainContext from "../../../Context/MainContext";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/src/sweetalert2.scss";
-import { PATH_PREFIX } from "Utils/AppVariables";
 import { useTranslation } from "react-i18next";
 import { Form, Input, Modal } from "antd";
+import { PATH_PREFIX } from "Utils/AppVariables";
 
 const ProfileMenu = props => {
   const { t } = useTranslation();

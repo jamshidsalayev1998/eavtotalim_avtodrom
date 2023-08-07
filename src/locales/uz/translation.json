@@ -813,6 +813,14 @@
 "Workbook":"Mehnat daftarcha",
 "083 Form":"083 Forma",
 "Upload":"Yuklash",
-"Clear":"Tozalash"
+"Clear":"Tozalash",
+  "contracts": "Shartnomalar",
+  "autodrome": "Avtodrom",
+  "new": "Yangi",
+  "confirmed": "Tasdiqlangan",
+  "rejected": "Qaytarilgan",
+  "confirm": "Tasdiqlash",
+  "reject": "Qaytarish",
+  "confirmed_archive": "Tasdiqlangan va arxivga o'tgan"
 }
 

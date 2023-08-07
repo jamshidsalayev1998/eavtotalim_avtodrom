@@ -2,12 +2,7 @@ import React, { useContext, useRef } from "react";
 import "./style.scss";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import {
-  PATH_PREFIX,
-  PATH_PREFIX_FILE,
-  PATH_PREFIX_FILE_WITHOUT_SLESH,
-  PATH_PREFIX_INTALIM_TEST_FILES,
-} from "Utils/AppVariables";
+
 import {
   Modal,
   Button,
@@ -46,6 +41,11 @@ import { FaSignOutAlt } from "react-icons/fa";
 import { DotChartOutlined } from "@ant-design/icons";
 import { FcApproval } from "react-icons/fc";
 import exit from "../../assets/images/exit.png";
+import {
+  PATH_PREFIX,
+  PATH_PREFIX_FILE,
+  PATH_PREFIX_FILE_WITHOUT_SLESH,
+} from "Utils/AppVariables";
 
 const TestComponent = ({
   settest_time,

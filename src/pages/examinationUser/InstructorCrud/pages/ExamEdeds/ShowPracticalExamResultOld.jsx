@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useHistory, useRouteMatch } from "react-router";
 import { getExaminationAreaSensorsForInstructor } from "../../../../../services/api_services/examination_area_instructor";
-import { PATH_PREFIX_FILE } from "../../../../../Utils/AppVariables";
+import { PATH_PREFIX_FILE } from "Utils/AppVariables";
 import { getStudentPracticalExamResult } from "../../../../../services/api_services/student_practical_exam_result";
 import "./showPracticalExamResultStyle.css";
 import { Button, Col, Row } from "antd";

@@ -15,9 +15,9 @@ import {
   Button,
 } from "antd";
 import axios from "axios";
-import { PATH_PREFIX } from "../../../Utils/AppVariables";
 import styleAction from "./style.module.css";
 import moment from "moment";
+import { PATH_PREFIX } from "Utils/AppVariables";
 
 const Administrator = props => {
   const [add_form] = Form.useForm();

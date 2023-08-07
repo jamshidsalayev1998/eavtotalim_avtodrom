@@ -3,7 +3,6 @@ import { Card, CardBody, Container, Badge } from "reactstrap";
 import axios from "axios";
 import { NavLink, useHistory } from "react-router-dom";
 import { withTranslation, useTranslation } from "react-i18next";
-import { PATH_PREFIX } from "Utils/AppVariables";
 import {
   Modal,
   Button,

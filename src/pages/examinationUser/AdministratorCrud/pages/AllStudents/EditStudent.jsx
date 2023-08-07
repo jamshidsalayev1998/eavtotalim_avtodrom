@@ -17,7 +17,6 @@ import {
   Button,
 } from "antd";
 import axios from "axios";
-import { PATH_PREFIX } from "../../../../../Utils/AppVariables";
 import MaskedInput from "antd-mask-input";
 import { useHistory, useRouteMatch } from "react-router";
 import {

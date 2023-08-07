@@ -6,12 +6,10 @@ import { useDispatch } from "react-redux";
 import { isEmpty } from "lodash";
 import { withTranslation, useTranslation } from "react-i18next";
 import MainContext from "Context/MainContext";
-import {
-  PATH_PREFIX,
-  PATH_PREFIX_FILE_WITHOUT_SLESH,
-} from "Utils/AppVariables";
+
 import { DataLoader } from "pages/Loaders/Loaders";
 import { Button, Switch, Select, Table, Tag, Space } from "antd";
+import { PATH_PREFIX } from "Utils/AppVariables";
 
 const ComeExaminationSendGroupStudents = props => {
   let match = useRouteMatch("/come-examination/come-groups/:id");

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import CountDownTimer from "../Students/StudentTests/CountDownTimer";
-import { PATH_PREFIX } from "Utils/AppVariables";
 import "./style.scss";
 import TestComponent from "./testComponent";
 import TimeBarCircle from "./timeBar";
@@ -12,6 +11,7 @@ import { GLOBAL_REFRESH } from "store/ActionTypes/actionTypes";
 import { Button, Col, Divider, Modal, Row, Progress } from "antd";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
+import { PATH_PREFIX } from "Utils/AppVariables";
 
 const FinalExamDashboard = () => {
   const { t } = useTranslation();

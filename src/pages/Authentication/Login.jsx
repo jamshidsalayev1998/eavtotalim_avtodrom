@@ -21,10 +21,10 @@ import { useTranslation } from "react-i18next";
 import { message, Spin, Tooltip } from "antd";
 // import {fileServerReadKey} from "../../services/api_services/file_server/file_server_function";
 import axios from "axios";
-import { PATH_PREFIX } from "../../Utils/AppVariables";
 import { LoopCircleLoading } from "react-loadingg";
 import { RiComputerLine } from "react-icons/ri";
 import queueIcon from "../../assets/icons/queue/queue-icon-blue.png";
+import { PATH_PREFIX } from "Utils/AppVariables";
 
 const languagesList = ["uz", "kiril", "qq", "ru", "en"];
 

@@ -18,7 +18,6 @@ import QRCode from "qrcode";
 import ReactToPrint from "react-to-print";
 import { NavLink } from "react-router-dom";
 import useDebounce from "../../../../../components/CustomHooks/useDebounce";
-import { PATH_PREFIX } from "../../../../../Utils/AppVariables";
 import { getAllStudentsForAdministrator } from "../../../../../services/api_services/administrator_students_api";
 import { ExportToExcel } from "../../../../../components/ExcelExport/ExportToExcel";
 

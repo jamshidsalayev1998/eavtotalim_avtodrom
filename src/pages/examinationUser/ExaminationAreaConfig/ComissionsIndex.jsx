@@ -2,11 +2,8 @@ import React, {useState, useEffect} from "react";
 import {Card, Container} from "reactstrap";
 import {Row, Col, Form, Input, Upload, Button, message} from "antd";
 import {
-    getExaminationAreaComissions,
-    getExaminationAreaConfig, storeExaminationAreaComissions,
-    storeExaminationAreaConfig,
+    getExaminationAreaComissions, storeExaminationAreaComissions,
 } from "../../../services/api_services/examination_area_config_api";
-import {PATH_PREFIX_FILE} from "../../../Utils/AppVariables";
 
 const ComissionsIndex = () => {
     const [form] = Form.useForm();

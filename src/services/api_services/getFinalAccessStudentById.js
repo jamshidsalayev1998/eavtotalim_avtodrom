@@ -1,6 +1,4 @@
 import axios from "axios";
-import { PATH_PREFIX } from "Utils/AppVariables";
-import { message } from "antd";
 import API from "../../api";
 
 export const getFinalAccessStudentById = async studentId => {

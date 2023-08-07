@@ -3,7 +3,6 @@ import { Badge } from "reactstrap";
 import axios from "axios";
 import { NavLink, useHistory } from "react-router-dom";
 import { withTranslation, useTranslation } from "react-i18next";
-import { PATH_PREFIX } from "Utils/AppVariables";
 import {
   Select,
   Input,
@@ -19,6 +18,7 @@ import {
 } from "antd";
 import PaginationComponent from "react-reactstrap-pagination";
 import useDebounce from "../../../../../components/CustomHooks/useDebounce";
+import { PATH_PREFIX } from "Utils/AppVariables";
 
 const NotAllowedSeparatelyAllowStudentsTable = ({}) => {
   const { Option } = Select;

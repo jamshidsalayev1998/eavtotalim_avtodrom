@@ -3,11 +3,11 @@ import { Row, Col } from "reactstrap";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
 import { withTranslation, useTranslation } from "react-i18next";
-import { PATH_PREFIX } from "Utils/AppVariables";
 import { DataLoader } from "pages/Loaders/Loaders";
 import { Select, Input } from "antd";
 import { Table, Thead, Tbody, Tr, Th, Td } from "react-super-responsive-table";
 import PaginationComponent from "react-reactstrap-pagination";
+import { PATH_PREFIX } from "Utils/AppVariables";
 
 const NoAllowedStudentsTable = ({}) => {
   const { Option } = Select;

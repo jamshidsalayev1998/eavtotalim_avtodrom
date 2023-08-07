@@ -3,7 +3,6 @@ import { Badge } from "reactstrap";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
 import { withTranslation, useTranslation } from "react-i18next";
-import { PATH_PREFIX } from "Utils/AppVariables";
 import {
   Select,
   Input,
@@ -25,6 +24,7 @@ import {
   printToCheckSeparatelyStudentAllow,
   showSeparatelyStudentAllow,
 } from "../../../../../services/api_services/separately_student_allow_api";
+import { PATH_PREFIX } from "Utils/AppVariables";
 
 const AllowedSeparatelyAllowStudentsTable = ({}) => {
   const { Option } = Select;

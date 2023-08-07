@@ -6,7 +6,7 @@ import {
   IS_TEST_PROCESS_SETTINGS,
   IS_REPORTS,
   IS_USERS,
-  IS_SETTINGS,
+  IS_SETTINGS, IS_CONTRACT,
 } from "store/sidebar/actions";
 import MainContext from "Context/MainContext";
 import { useSelector, useDispatch } from "react-redux";
@@ -653,6 +653,42 @@ const ExaminationUserLinks = props => {
                   >
                     <i className="fas fa-chalkboard-teacher"></i>
                     <span>{t("Instruktorlar")}</span>
+                  </Link>
+                </li>
+              </div>
+            }
+
+            {/* Shartnomalar */}
+            <li
+              className="main_link_sidebar"
+              name="contract"
+              onClick={() => toggleMenuBox(IS_CONTRACT)}
+            >
+              {t("contracts")}
+              <i
+                className="fas fa-chevron-right"
+                style={
+                  sidebarState.contract
+                    ? { transform: "rotate(0deg)" }
+                    : { transform: "rotate(90deg)" }
+                }
+              ></i>
+            </li>
+            {
+              <div
+                className={
+                  sidebarState.contract
+                    ? "panel-collapse panel-close"
+                    : "panel-collapse"
+                }
+              >
+                <li className="" name="autodrome">
+                  <Link
+                    to="/autodrome"
+                    className="waves-effect"
+                  >
+                    <i className="fa fa-chart-line" />
+                    <span>{t("autodrome")}</span>
                   </Link>
                 </li>
               </div>

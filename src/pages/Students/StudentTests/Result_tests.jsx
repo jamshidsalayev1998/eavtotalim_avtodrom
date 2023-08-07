@@ -8,7 +8,7 @@ import styles from './style.module.scss';
 import bg_brand from 'assets/images/bg_brand.png';
 import { generateTestResultBtns, getColor } from '../services';
 import { Modal } from 'antd';
-import {PATH_PREFIX_FILE} from "../../../Utils/AppVariables";
+import {PATH_PREFIX_FILE} from "Utils/AppVariables";
 
 const ResultTest = ({ data, displayingVariants }) => {
 

@@ -4,11 +4,11 @@ import { withTranslation } from "react-i18next";
 
 import { Row, Col, Select, Input, Pagination, message } from "antd";
 import axios from "axios";
-import { PATH_PREFIX } from "../../../Utils/AppVariables";
 import { DataLoader } from "../../Loaders/Loaders";
 import useDebounce from "../../../components/CustomHooks/useDebounce";
 import DisplayPageIndexTable from "./DisplayPageIndexTable";
 import MainContext from "../../../Context/MainContext";
+import { PATH_PREFIX } from "Utils/AppVariables";
 
 const DisplayPageIndex = props => {
   const [data, setData] = useState([]);

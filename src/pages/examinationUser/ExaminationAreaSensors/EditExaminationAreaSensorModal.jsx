@@ -10,7 +10,6 @@ import {
   Select,
   Checkbox,
 } from "antd";
-import { PATH_PREFIX, PATH_PREFIX_FILE } from "../../../Utils/AppVariables";
 import { updateExaminationAreaSensor } from "../../../services/api_services/examination_area_sensors";
 import { getEduTypesForAll } from "../../../services/api_services/edu_types_api";
 

@@ -3,7 +3,6 @@ import { Row, Col } from "reactstrap";
 import axios from "axios";
 import { NavLink, useHistory } from "react-router-dom";
 import { withTranslation, useTranslation } from "react-i18next";
-import { PATH_PREFIX } from "Utils/AppVariables";
 import { DataLoader } from "pages/Loaders/Loaders";
 import { Select, Input, Modal, Form, message, Button } from "antd";
 import { Table, Thead, Tbody, Tr, Th, Td } from "react-super-responsive-table";
@@ -12,6 +11,7 @@ import useDebounce from "../../../../components/CustomHooks/useDebounce";
 import "./style.css";
 import { getExaminationPaymentType } from "../../../../services/api_services/examination_payment_types";
 import { getStudentsForCashier } from "../../../../services/api_services/cashier_helper_api";
+import { PATH_PREFIX } from "Utils/AppVariables";
 
 const StudentPaymentNotConfirmedsIndex = ({ firstTabLoading }) => {
   const { Option } = Select;

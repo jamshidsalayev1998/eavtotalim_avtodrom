@@ -4,6 +4,7 @@ const {
   IS_REPORTS,
   IS_USERS,
   IS_SETTINGS,
+  IS_CONTRACT
 } = require("./actions");
 
 const initialValues = {
@@ -12,6 +13,7 @@ const initialValues = {
   reports: true,
   users: true,
   settings: true,
+  contract: false
 };
 
 export const sidebar_content = (state = initialValues, action) => {
@@ -31,6 +33,10 @@ export const sidebar_content = (state = initialValues, action) => {
         ...state,
         reports: !state.reports,
       };
+    case IS_CONTRACT: return {
+      ...state,
+      contract:  !state.contract
+    }
     case IS_USERS:
       return {
         ...state,

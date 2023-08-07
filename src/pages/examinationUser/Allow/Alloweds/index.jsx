@@ -5,7 +5,6 @@ import { NavLink, useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { withTranslation, useTranslation } from "react-i18next";
 import MainContext from "Context/MainContext";
-import { PATH_PREFIX } from "Utils/AppVariables";
 import { DataLoader } from "pages/Loaders/Loaders";
 import { Table, Thead, Tbody, Tr, Th, Td } from "react-super-responsive-table";
 import { Modal, Button, Select, Tabs } from "antd";

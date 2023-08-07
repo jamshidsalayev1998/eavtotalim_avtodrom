@@ -32,13 +32,13 @@ import ThemeContext from "./Context/ThemeContext";
 import ComputerSettingsPage from "./pages/examinationUser/Computers/Config/ComputerSettingsPage";
 import UserComputerConfigPage from "./pages/examinationUser/Computers/Config/UserComputerConfigPage";
 import socketIO from "socket.io-client";
-import { NODEJS_SOCKET_URL } from "./Utils/AppVariables";
 import SignUpAndForgetPassword from "pages/Students/SigupOutLogin/signUp_and_forgetPassword";
 import StudentOnlineRegistration from "pages/Students/SigupOutLogin/studentOnlineRegistration";
 import ReOpenPassword from "pages/Students/SigupOutLogin/reOpenPassword";
 import StudentOnlineApplicationRoles from "roles/StudentOnlineApplicationRoles";
 import ExaminationAreaQueueWithoutAuth from "./pages/examinationUser/Queue/ExaminationAreaQueueWithoutAuth";
 import ExaminationAreaWithoutAuth from "pages/examinationUser/Queue/ExaminationAreaWithoutAuth";
+import { NODEJS_SOCKET_URL } from "Utils/AppVariables";
 
 export const socketParam = socketIO.connect(NODEJS_SOCKET_URL);
 const languagesList = ["uz", "kiril", "qq", "ru", "en"];

@@ -5,7 +5,6 @@ import {
   faceRecognition,
   loginByComputerKey,
 } from "../../../../services/api_services/auth/login_computer_api";
-import { PATH_PREFIX_FILE } from "../../../../Utils/AppVariables";
 import { Button, message, Result, notification, Alert } from "antd";
 import MainContext from "../../../../Context/MainContext";
 import { useHistory } from "react-router";
@@ -20,6 +19,7 @@ import { TbFaceId, TbHandClick } from "react-icons/tb";
 import GoBackWithText from "components/Common/GoBackWithText";
 import defaultLogo from "assets/images/logo-blue-big.png";
 import { Card } from "reactstrap";
+import { PATH_PREFIX_FILE } from "Utils/AppVariables";
 
 const WebcamComponent = () => <Webcam />;
 const videoConstraints = {

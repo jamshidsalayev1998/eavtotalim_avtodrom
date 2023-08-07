@@ -7,7 +7,6 @@ import {
   getMonitoringData,
   getMonitoringResultData,
 } from "../../../../../services/api_services/instructor_student_api";
-import { PATH_PREFIX_FILE } from "../../../../../Utils/AppVariables";
 import ReloadOutlined from "@ant-design/icons/lib/icons/ReloadOutlined";
 
 const InstructorMonitoringPage = props => {

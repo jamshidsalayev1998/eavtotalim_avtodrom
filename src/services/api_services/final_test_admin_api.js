@@ -1,6 +1,3 @@
-import axios from "axios";
-import { PATH_PREFIX } from "Utils/AppVariables";
-import { message } from "antd";
 import API from "../../api";
 import API_V2 from "api/index_v2";
 

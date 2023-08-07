@@ -67,6 +67,7 @@ import ReportsIndexByOrganizations from "../pages/Reports/ByOrganization/Reports
 import OnlineApplicationIndex from "../pages/OnlineApplications/OnlineApplicationIndex";
 import index from "pages/StudentOnlineApplication/Apply-docs";
 import ComissionsIndex from "../pages/examinationUser/ExaminationAreaConfig/ComissionsIndex";
+import Autodrome from "../pages/Autodrome";
 // import PracticalTestResult from "../pages/PracticalTestResult/PracticalTestResult";
 
 const userRoutes = [
@@ -282,6 +283,10 @@ const examinationUserRoutes = [
     path: "/final-access-admin/exam-process",
     component: ExamProcessStudents,
   },
+  {
+    path: '/autodrome',
+    component: Autodrome
+  }
 ];
 
 const finalyExamination = [

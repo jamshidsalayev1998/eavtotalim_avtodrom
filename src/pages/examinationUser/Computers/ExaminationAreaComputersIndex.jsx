@@ -20,11 +20,6 @@ import {
 import styleAction from "./style.module.css";
 import CreateExaminationAreaComputer from "./modals/CreateExaminationAreaComputer";
 import EditExaminationAreaComputer from "./modals/EditExaminationAreaComputer";
-import {
-  PATH_PREFIX,
-  PATH_PREFIX_FILE,
-  PATH_PREFIX_FILE_WITHOUT_SLESH,
-} from "../../../Utils/AppVariables";
 
 const ExaminationAreaComputersIndex = () => {
   const [addForm] = Form.useForm();

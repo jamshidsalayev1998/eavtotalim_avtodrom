@@ -3,13 +3,13 @@ import { Row, Col, Badge } from "reactstrap";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
 import { withTranslation, useTranslation } from "react-i18next";
-import { PATH_PREFIX } from "Utils/AppVariables";
 import { DataLoader } from "pages/Loaders/Loaders";
 import { Select, Modal, Button, TimePicker, Input } from "antd";
 import { Table, Thead, Tbody, Tr, Th, Td } from "react-super-responsive-table";
 import PaginationComponent from "react-reactstrap-pagination";
 import moment from "moment";
 import Swal from "sweetalert2";
+import { PATH_PREFIX } from "Utils/AppVariables";
 
 const NoAcceptedComeGroupsTable = () => {
   const { Option } = Select;

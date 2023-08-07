@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Card, CardBody, Container } from "reactstrap";
 import axios from "axios";
-import {useHistory, useLocation, useRouteMatch} from "react-router-dom";
+import { useHistory, useLocation, useRouteMatch } from "react-router-dom";
 import { withTranslation, useTranslation } from "react-i18next";
-import { PATH_PREFIX } from "Utils/AppVariables";
 import { DataLoader } from "pages/Loaders/Loaders";
 import { Table } from "antd";
 import Swal from "sweetalert2";
 import ResubmitFinalTestPrintComponent from "./ResubmitFinalTestPrintComponent";
+import { PATH_PREFIX } from "Utils/AppVariables";
 
 const ResubmitShowAllowedStudent = ({}) => {
   let match = useRouteMatch("/come-examination/resubmit/allowed-students/:id");
@@ -22,7 +22,7 @@ const ResubmitShowAllowedStudent = ({}) => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [selected_keys, set_selected_keys] = useState([]);
-    const location = useLocation();
+  const location = useLocation();
   useEffect(() => {
     // alert('sdsd')
     const token = localStorage.getItem("token");
@@ -150,11 +150,11 @@ const ResubmitShowAllowedStudent = ({}) => {
                   </span>
                   <h5 className="text-dark">
                     {" "}
-                    <b>"{location?.state?.groupName}"</b> guruhidan testga ruhsat
-                    berilgan o'quvchilarga login parol berish
+                    <b>"{location?.state?.groupName}"</b> guruhidan testga
+                    ruhsat berilgan o'quvchilarga login parol berish
                   </h5>
                 </div>
-                <div style={{display:'flex'}}>
+                <div style={{ display: "flex" }}>
                   <span className="ml-2 mr-2">
                     <b>{selected_keys?.length}</b> ta
                   </span>

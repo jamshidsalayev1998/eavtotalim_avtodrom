@@ -1,18 +1,12 @@
-import React, { useState, useEffect, useContext } from "react";
-import { Card, CardBody, Container, Row, Col, Badge } from "reactstrap";
-import axios from "axios";
-import { NavLink, useHistory } from "react-router-dom";
+import React, { useState, useContext } from "react";
+import { Card, CardBody, Container } from "reactstrap";
+import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { withTranslation, useTranslation } from "react-i18next";
 import MainContext from "Context/MainContext";
-import { PATH_PREFIX } from "Utils/AppVariables";
-import { DataLoader } from "pages/Loaders/Loaders";
-import { Table, Thead, Tbody, Tr, Th, Td } from "react-super-responsive-table";
-import { Modal, Button, Select, Tabs } from "antd";
-import Swal from "sweetalert2";
+import { Select, Tabs } from "antd";
 import GroupPaymentNotConfirmedsIndex from "./GroupPaymentTables/GroupPaymentNotConfirmedsIndex";
 import GroupPaymentConfirmedsIndex from "./GroupPaymentTables/GroupPaymentConfirmedsIndex";
-
 
 const GroupPaymentsIndex = props => {
   const { TabPane } = Tabs;
@@ -24,11 +18,12 @@ const GroupPaymentsIndex = props => {
   const { t } = useTranslation();
   const [isLoading, setIsLoading] = useState(false);
 
-
-  const [default_tab , set_default_tab] = useState(localStorage.getItem(window.location.pathname+'-default-tab'));
-  const change_tab = (key) => {
-    localStorage.setItem(window.location.pathname+'-default-tab' , key);
-  }
+  const [default_tab, set_default_tab] = useState(
+    localStorage.getItem(window.location.pathname + "-default-tab")
+  );
+  const change_tab = key => {
+    localStorage.setItem(window.location.pathname + "-default-tab", key);
+  };
   return (
     <>
       <div className="page-content">
@@ -36,13 +31,17 @@ const GroupPaymentsIndex = props => {
           <Card>
             <CardBody>
               <div className="top-organizations">
-                <h5 className="text-dark">{t("Guruhlarni to`lovlarini tasdiqlash")}</h5>
-
+                <h5 className="text-dark">
+                  {t("Guruhlarni to`lovlarini tasdiqlash")}
+                </h5>
               </div>
               <div className="crypto-buy-sell-nav mt-3">
-                <Tabs defaultActiveKey={default_tab?default_tab:'1'} onChange={change_tab}>
+                <Tabs
+                  defaultActiveKey={default_tab ? default_tab : "1"}
+                  onChange={change_tab}
+                >
                   <TabPane tab="Tasdiqlanmaganlar" key="1">
-                      <GroupPaymentNotConfirmedsIndex />
+                    <GroupPaymentNotConfirmedsIndex />
                   </TabPane>
                   <TabPane tab="Tasdiqlanganlar" key="2">
                     <GroupPaymentConfirmedsIndex />

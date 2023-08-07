@@ -19,7 +19,6 @@ import "./print/print.css";
 import ReactToPrint from "react-to-print";
 import { sendStudentResultBySms } from "../../../services/api_services/send_student_result_by_sms_api";
 import axios from "axios";
-import { PATH_PREFIX_V2 } from "Utils/AppVariables";
 import { sendStudentTheorioticalReexam } from "services/api_services/send_student_theoriotical_reexam";
 import { sendStudentPracticalReexam } from "services/api_services/send_student_practical_reeam";
 

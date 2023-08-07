@@ -3,7 +3,6 @@ import { Card, CardBody, Container } from "reactstrap";
 import axios from "axios";
 import { useHistory, useRouteMatch } from "react-router-dom";
 import { withTranslation, useTranslation } from "react-i18next";
-import { PATH_PREFIX } from "Utils/AppVariables";
 import { DataLoader } from "pages/Loaders/Loaders";
 import {
   Table,
@@ -16,6 +15,7 @@ import {
   message,
 } from "antd";
 import Swal from "sweetalert2";
+import { PATH_PREFIX } from "Utils/AppVariables";
 
 const GroupPaymentConfirmedShow = ({}) => {
   let match = useRouteMatch("/cashier/groups-payments/confirmed/:id");

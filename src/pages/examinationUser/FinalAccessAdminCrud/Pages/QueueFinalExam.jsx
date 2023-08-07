@@ -17,7 +17,6 @@ import {
 } from "antd";
 import axios from "axios";
 import MainContext from "../../../../Context/MainContext";
-import { PATH_PREFIX } from "../../../../Utils/AppVariables";
 import { DataLoader } from "../../../Loaders/Loaders";
 import QueuePageIndexTable from "./QueuePageIndexTable";
 import {

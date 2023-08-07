@@ -723,6 +723,13 @@
   "Rooms are not available": "Bólmeler joq",
   "Comment": "Túsindirme",
   "all needed pay":"Jami to`lanishi kerak",
-  "Pul qaytarish": "Pul qaytarish (Chetlashtirish)"
-
+  "Pul qaytarish": "Pul qaytarish (Chetlashtirish)",
+  "contracts": "Shartnomalar",
+  "autodrome": "Avtodrom",
+  "new": "Yangi",
+  "confirmed": "Tasdiqlangan",
+  "rejected": "Qaytarilgan",
+  "confirm": "Tasdiqlash",
+  "reject": "Qaytarish",
+  "confirmed_archive": "Tasdiqlangan va arxivga o'tgan"
 }

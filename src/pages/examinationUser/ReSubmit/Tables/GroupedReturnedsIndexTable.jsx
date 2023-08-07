@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
-import {Row, Col, Badge} from "reactstrap";
+import { Row, Col, Badge } from "reactstrap";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
 import { withTranslation, useTranslation } from "react-i18next";
-import { PATH_PREFIX } from "Utils/AppVariables";
 import { DataLoader } from "pages/Loaders/Loaders";
 import { Select, Input } from "antd";
 import { Table, Thead, Tbody, Tr, Th, Td } from "react-super-responsive-table";
 import PaginationComponent from "react-reactstrap-pagination";
+import { PATH_PREFIX } from "Utils/AppVariables";
 
 const GroupedReturnedsIndexTable = ({}) => {
   const { Option } = Select;
@@ -63,7 +63,7 @@ const GroupedReturnedsIndexTable = ({}) => {
         organization_id,
         group_id,
         word,
-        type:'resubmit'
+        type: "resubmit",
       },
     }).then(res => {
       if (res?.data?.status == "1") {
@@ -88,7 +88,7 @@ const GroupedReturnedsIndexTable = ({}) => {
     set_selected_group_id("all");
     localStorage.setItem(
       window.location.pathname + "-no-allowed-default-group-id",
-      'all'
+      "all"
     );
     set_groups([]);
     set_selected_organization_id(element_id);
@@ -98,13 +98,13 @@ const GroupedReturnedsIndexTable = ({}) => {
     );
   };
 
-  const change_group = (element_id) => {
+  const change_group = element_id => {
     set_selected_group_id(element_id);
     localStorage.setItem(
       window.location.pathname + "-no-allowed-default-group-id",
       element_id
     );
-  }
+  };
 
   return (
     <>
@@ -116,9 +116,12 @@ const GroupedReturnedsIndexTable = ({}) => {
             style={{ width: "100%" }}
             placeholder="Avtomaktab"
             optionFilterProp="children"
-            onChange={e => {change_organization_id(e); setpage(1)}}
+            onChange={e => {
+              change_organization_id(e);
+              setpage(1);
+            }}
             defaultValue="all"
-            value={organization_id != 'all' ? Number(organization_id) :'all'}
+            value={organization_id != "all" ? Number(organization_id) : "all"}
             filterOption={(input, option) =>
               option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
             }
@@ -144,7 +147,10 @@ const GroupedReturnedsIndexTable = ({}) => {
             allowClear
             style={{ width: "100%" }}
             defaultValue={word}
-            onChange={e => {change_word(e?.target?.value); setpage(1)}}
+            onChange={e => {
+              change_word(e?.target?.value);
+              setpage(1);
+            }}
           />
         </Col>
       </Row>
@@ -162,7 +168,9 @@ const GroupedReturnedsIndexTable = ({}) => {
                 </Th>
                 <Th data-priority="3">Guruh</Th>
                 <Th data-priority="3">Kelish sanasi va vaqti</Th>
-                <Th data-priority="3" className={'last-td'}>Holati</Th>
+                <Th data-priority="3" className={"last-td"}>
+                  Holati
+                </Th>
               </Tr>
             </Thead>
             <Tbody>
@@ -176,7 +184,11 @@ const GroupedReturnedsIndexTable = ({}) => {
                     </Td>
                     <Td>
                       <NavLink
-                        to={element?.status == 1 ? `/come-examination/resubmit/no-allow-students/${element?.id}`:`/come-examination/resubmit/allowed-students/${element?.id}`}
+                        to={
+                          element?.status == 1
+                            ? `/come-examination/resubmit/no-allow-students/${element?.id}`
+                            : `/come-examination/resubmit/allowed-students/${element?.id}`
+                        }
                       >
                         {element?.name}
                       </NavLink>
@@ -186,12 +198,13 @@ const GroupedReturnedsIndexTable = ({}) => {
                       {element?.access_start_date} ({element?.access_start_time}
                       )
                     </Td>
-                      <Td>
-                          {
-                              element?.status == 1 ?
-                                  <Badge color={'warning'}>Ruxsat berilmagan</Badge>:<Badge color={'success'}>Ruxsat berilgan</Badge>
-                          }
-                      </Td>
+                    <Td>
+                      {element?.status == 1 ? (
+                        <Badge color={"warning"}>Ruxsat berilmagan</Badge>
+                      ) : (
+                        <Badge color={"success"}>Ruxsat berilgan</Badge>
+                      )}
+                    </Td>
                   </Tr>
                 );
               })}
@@ -207,7 +220,10 @@ const GroupedReturnedsIndexTable = ({}) => {
               <select
                 className="custom-select mx-2"
                 value={show_count}
-                onChange={e => {setshow_count(e.target.value); setpage(1);}}
+                onChange={e => {
+                  setshow_count(e.target.value);
+                  setpage(1);
+                }}
               >
                 <option value="10">10</option>
                 <option value="20">20</option>
