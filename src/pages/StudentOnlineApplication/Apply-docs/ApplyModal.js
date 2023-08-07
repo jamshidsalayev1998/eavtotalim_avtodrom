@@ -26,9 +26,16 @@ import attachment from "../../../assets/icons/online-application/attachment.png"
 import dateIcon from "../../../assets/icons/online-application/date.png";
 import pdf from "../../../assets/icons/online-application/file-pdf.png";
 import closeIcon from "../../../assets/icons/online-application/close.png";
-import {storeOnlineApplicationNew} from "../../../services/api_services/online_applications/online_application_api";
+import { storeOnlineApplicationNew } from "../../../services/api_services/online_applications/online_application_api";
 
-const ApplyModal = ({ open, onClose, visitorTypes, organizations,reload,setReload }) => {
+const ApplyModal = ({
+  open,
+  onClose,
+  visitorTypes,
+  organizations,
+  reload,
+  setReload,
+}) => {
   // states
   const [loading, setLoading] = useState(false);
   const [selectedVisitorTypeId, setSelectedVisitorTypeId] = useState(null);
@@ -42,6 +49,8 @@ const ApplyModal = ({ open, onClose, visitorTypes, organizations,reload,setReloa
   const [selectedOption, setSelectedOption] = useState(null);
   const [selectedEduTypeId, setSelectedEduTypeId] = useState(null);
   const [age, setAge] = useState(null);
+
+  console.log("organizations", organizations);
 
   const dateFormat = "DD-MM-YYYY";
   //   form
@@ -211,18 +220,21 @@ const ApplyModal = ({ open, onClose, visitorTypes, organizations,reload,setReloa
         formData.append(key, values[key] || "");
       }
     }
-    formData.append('student_fio' , values['last_name']+' '+values['first_name'])
-    formData.append('examination_area_id' , 21)
+    formData.append(
+      "student_fio",
+      values["last_name"] + " " + values["first_name"]
+    );
+    formData.append("examination_area_id", 21);
 
     setLoading(true);
 
     try {
       const params = {};
-      const res = await storeOnlineApplicationNew(formData,{});
-      console.log('ik logg' , res?.message)
-        message.success(res?.message);
+      const res = await storeOnlineApplicationNew(formData, {});
+      console.log("ik logg", res?.message);
+      message.success(res?.message);
       onClose();
-      setReload(!reload)
+      setReload(!reload);
 
       if (res?.message === "Success") {
         // setReload(prevReload => !prevReload);
@@ -575,13 +587,7 @@ const ApplyModal = ({ open, onClose, visitorTypes, organizations,reload,setReloa
                     >
                       {organizations?.map((element, index) => {
                         return (
-                          <Option value={element?.id}>
-                            {element?.name_uz ||
-                              element?.name_ru ||
-                              element?.name_kiril ||
-                              element?.name_qq ||
-                              element?.name_en}
-                          </Option>
+                          <Option value={element?.id}>{element?.name}</Option>
                         );
                       })}
                     </Select>
