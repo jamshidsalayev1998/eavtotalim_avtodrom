@@ -76,13 +76,13 @@ const TestComponent = ({
       image: uzFlag,
       functionalKey: "F2",
     },
-    {
-      id: 5,
-      value: "qq",
-      language: "Qaraqalpaqsha",
-      image: qqFlag,
-      functionalKey: "F3",
-    },
+    // {
+    //   id: 5,
+    //   value: "qq",
+    //   language: "Qaraqalpaqsha",
+    //   image: qqFlag,
+    //   functionalKey: "F3",
+    // },
     {
       id: 2,
       value: "ru",
