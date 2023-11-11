@@ -61,6 +61,7 @@ const App = () => {
   const [computerKey, setComputerKey] = useState(
     localStorage.getItem("computer_key")
   );
+  const [type, setType] = useState("")
 
   axios.interceptors.response.use(
     response => {
@@ -100,6 +101,7 @@ const App = () => {
           setVerifyLoading(true);
           setAuth(true);
           setProfession(res?.data?.profession);
+          setType(res?.data?.profession?.examination_area?.type)
           // setName(res?.data?.name)
           if (
             languagesList.includes(res?.data?.app_lang) &&
@@ -236,6 +238,8 @@ const App = () => {
               additional,
               setAdditional,
               profession,
+              setType,
+              type,
             }}
           >
             <Router>

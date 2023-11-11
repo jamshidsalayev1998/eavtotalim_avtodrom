@@ -16,7 +16,7 @@ const ExaminationUserLinks = props => {
 
   const layout = useSelector(state => state.Layout);
 
-  const { role, user_type, profession } = useContext(MainContext);
+  const { role, user_type, type } = useContext(MainContext);
   const dispatch = useDispatch();
   const sidebarState = useSelector(state => state.sidebar_content);
 
@@ -24,7 +24,6 @@ const ExaminationUserLinks = props => {
     dispatch({ type: action_type });
   };
 
-  console.log("kkkkkkkkkkkkkkkk", profession);
 
   if (layout.leftMenu) {
     return (
@@ -37,275 +36,300 @@ const ExaminationUserLinks = props => {
               : null
           }
         >
-          <ul className="metismenu list-unstyled" id="side-menu">
-            <li className="" name="asosiy">
-              <Link to="/" className="waves-effect">
-                <i className="fas fa-home" />
-                <span>{t("Bosh sahifa")}</span>
-              </Link>
-            </li>
-            <li className="" name="Guruh bo`yicha keluvchilar">
-              <Link to="/come-examination/come-groups" className="waves-effect">
-                <i className="fas fa-walking"></i>
-                <span>{t("Guruh bo`yicha keluvchilar")}</span>
-              </Link>
-            </li>
+          {type == 1 ? (
+            <ul className="metismenu list-unstyled" id="side-menu">
+              <li className="" name="asosiy">
+                <Link to="/" className="waves-effect">
+                  <i className="fas fa-home" />
+                  <span>{t("Bosh sahifa")}</span>
+                </Link>
+              </li>
+              <li className="" name="Guruh bo`yicha keluvchilar">
+                <Link to="/come-examination/come-groups" className="waves-effect">
+                  <i className="fas fa-walking"></i>
+                  <span>{t("Guruh bo`yicha keluvchilar")}</span>
+                </Link>
+              </li>
 
-            <li className="" name="asosiy">
-              <Link
-                to="/come-examination/allow-students"
-                className="waves-effect"
-              >
-                <i className="fas fa-spell-check"></i>
-                <span>{t("Testga ruhsat berish (Guruhlar bo`yicha)")}</span>
-              </Link>
-            </li>
+              <li className="" name="asosiy">
+                <Link
+                  to="/come-examination/allow-students"
+                  className="waves-effect"
+                >
+                  <i className="fas fa-spell-check"></i>
+                  <span>{t("Testga ruhsat berish (Guruhlar bo`yicha)")}</span>
+                </Link>
+              </li>
 
-            <li className="" name="asosiy">
-              <Link
-                to="/come-examination/allow-students/separately"
-                className="waves-effect"
-              >
-                <i className="fas fa-user-check"></i>
-                <span>{t("Testga ruxsat berish (O`quvchilar bo`yicha)")}</span>
-              </Link>
-            </li>
+              <li className="" name="asosiy">
+                <Link
+                  to="/come-examination/allow-students/separately"
+                  className="waves-effect"
+                >
+                  <i className="fas fa-user-check"></i>
+                  <span>{t("Testga ruxsat berish (O`quvchilar bo`yicha)")}</span>
+                </Link>
+              </li>
 
-            <li className="" name="asosiy">
-              <Link
-                to="/examination-administrator/all-students"
-                className="waves-effect"
-              >
-                <i className="fas fa-users"></i>
-                <span>{t("Barcha keluvchilar")}</span>
-              </Link>
-            </li>
+              <li className="" name="asosiy">
+                <Link
+                  to="/examination-administrator/all-students"
+                  className="waves-effect"
+                >
+                  <i className="fas fa-users"></i>
+                  <span>{t("Barcha keluvchilar")}</span>
+                </Link>
+              </li>
 
-            <li className="" name="asosiy">
-              <Link to="/cashier/student-payments" className="waves-effect">
-                <i className="fas fa-hand-holding-usd"></i>
-                <span>O`quvchilarga to`lovni tasdiqlash (Nazariy)</span>
-              </Link>
-            </li>
+              <li className="" name="asosiy">
+                <Link to="/cashier/student-payments" className="waves-effect">
+                  <i className="fas fa-hand-holding-usd"></i>
+                  <span>O`quvchilarga to`lovni tasdiqlash (Nazariy)</span>
+                </Link>
+              </li>
 
-            <li className="" name="asosiy">
-              <Link
-                to="/cashier/student-payments-practical"
-                className="waves-effect"
-              >
-                <i className="fas fa-hand-holding-usd"></i>
-                <span>O`quvchilarga to`lovni tasdiqlash (Amaliy)</span>
-              </Link>
-            </li>
+              <li className="" name="asosiy">
+                <Link
+                  to="/cashier/student-payments-practical"
+                  className="waves-effect"
+                >
+                  <i className="fas fa-hand-holding-usd"></i>
+                  <span>O`quvchilarga to`lovni tasdiqlash (Amaliy)</span>
+                </Link>
+              </li>
 
-            <li className="" name="asosiy">
-              <Link
-                to="/examination-instructor/exam-ended-students"
-                className="waves-effect"
-              >
-                <i className="fas fa-child"></i>
-                <span>Amaliy topshirganlar</span>
-              </Link>
-            </li>
+              <li className="" name="asosiy">
+                <Link
+                  to="/examination-instructor/exam-ended-students"
+                  className="waves-effect"
+                >
+                  <i className="fas fa-child"></i>
+                  <span>Amaliy topshirganlar</span>
+                </Link>
+              </li>
 
-            <li className="" name="asosiy">
-              <Link
-                to="/examination-administrator/all-online-applications"
-                className="waves-effect"
-              >
-                <i className="far fa-id-card"></i>
-                <span>Online arizalar</span>
-              </Link>
-            </li>
+              <li className="" name="asosiy">
+                <Link
+                  to="/examination-administrator/all-online-applications"
+                  className="waves-effect"
+                >
+                  <i className="far fa-id-card"></i>
+                  <span>Online arizalar</span>
+                </Link>
+              </li>
 
-            <li className="" name="asosiy">
-              <Link
-                to="/final-access-admin/exam-process"
-                className="waves-effect"
-              >
-                <i className="fas fa-network-wired"></i>
-                <span>Test topshirish jarayonidagilar</span>
-              </Link>
-            </li>
+              <li className="" name="asosiy">
+                <Link
+                  to="/final-access-admin/exam-process"
+                  className="waves-effect"
+                >
+                  <i className="fas fa-network-wired"></i>
+                  <span>Test topshirish jarayonidagilar</span>
+                </Link>
+              </li>
 
-            <li className="" name="asosiy">
-              <Link
-                to="/examination-instructor/monitoring-page"
-                className="waves-effect"
-              >
-                <i className="fas fa-server"></i>
-                <span>Monitoring sahifasi</span>
-              </Link>
-            </li>
+              <li className="" name="asosiy">
+                <Link
+                  to="/examination-instructor/monitoring-page"
+                  className="waves-effect"
+                >
+                  <i className="fas fa-server"></i>
+                  <span>Monitoring sahifasi</span>
+                </Link>
+              </li>
 
-            <li className="" name="asosiy">
-              <Link
-                to="/examination-administrator/certificate"
-                className="waves-effect"
-              >
-                <i className="fas fa-certificate"></i>
-                <span>{t("Sertifikatlar")}</span>
-              </Link>
-            </li>
+              <li className="" name="asosiy">
+                <Link
+                  to="/examination-administrator/certificate"
+                  className="waves-effect"
+                >
+                  <i className="fas fa-certificate"></i>
+                  <span>{t("Sertifikatlar")}</span>
+                </Link>
+              </li>
 
-            <li className="" name="asosiy">
-              <Link
-                to="/examination/display-page-index"
-                className="waves-effect"
-              >
-                <i className="fas fa-bullhorn"></i>
-                <span>{t("E`lon sahifasi")}</span>
-              </Link>
-            </li>
+              <li className="" name="asosiy">
+                <Link
+                  to="/examination/display-page-index"
+                  className="waves-effect"
+                >
+                  <i className="fas fa-bullhorn"></i>
+                  <span>{t("E`lon sahifasi")}</span>
+                </Link>
+              </li>
 
-            <li className="" name="asosiy">
-              <Link to="/examination/queue-display" className="waves-effect">
-                <i className="fas fa-people-arrows"></i>
-                <span>Navbat</span>
-              </Link>
-            </li>
+              <li className="" name="asosiy">
+                <Link to="/examination/queue-display" className="waves-effect">
+                  <i className="fas fa-people-arrows"></i>
+                  <span>Navbat</span>
+                </Link>
+              </li>
 
-            <li className="" name="asosiy">
-              <Link
-                to="/examination-instructor/students"
-                className="waves-effect"
-              >
-                <i className="fas fa-users"></i>
-                <span>Barcha topshiruvchilar</span>
-              </Link>
-            </li>
+              <li className="" name="asosiy">
+                <Link
+                  to="/examination-instructor/students"
+                  className="waves-effect"
+                >
+                  <i className="fas fa-users"></i>
+                  <span>Barcha topshiruvchilar</span>
+                </Link>
+              </li>
 
-            <li className="" name="asosiy">
-              <Link
-                to="/examination-instructor/merged-students"
-                className="waves-effect"
-              >
-                <span className="d-flex position-relative">
-                  <i className="fas fa-car-alt">+</i>
-                </span>
-                <span>Avtomobilga biriktirilganlar</span>
-              </Link>
-            </li>
+              <li className="" name="asosiy">
+                <Link
+                  to="/examination-instructor/merged-students"
+                  className="waves-effect"
+                >
+                  <span className="d-flex position-relative">
+                    <i className="fas fa-car-alt">+</i>
+                  </span>
+                  <span>Avtomobilga biriktirilganlar</span>
+                </Link>
+              </li>
 
-            <li className="" name="asosiy">
-              <Link to="/examination/result-groups" className="waves-effect">
-                <i className="fas fa-spell-check"></i>
-                <span>{t("Test natijasi")}</span>
-              </Link>
-            </li>
+              <li className="" name="asosiy">
+                <Link to="/examination/result-groups" className="waves-effect">
+                  <i className="fas fa-spell-check"></i>
+                  <span>{t("Test natijasi")}</span>
+                </Link>
+              </li>
 
-            <li className="" name="asosiy">
-              <Link
-                to="/examination-director/payment-report"
-                className="waves-effect"
-              >
-                <i className="fas fa-wallet"></i>
-                <span>To'lovlar hisoboti </span>
-              </Link>
-            </li>
+              <li className="" name="asosiy">
+                <Link
+                  to="/examination-director/payment-report"
+                  className="waves-effect"
+                >
+                  <i className="fas fa-wallet"></i>
+                  <span>To'lovlar hisoboti </span>
+                </Link>
+              </li>
 
-            <li className="" name="asosiy">
-              <Link
-                to="/examination-director/reports-by-organizations"
-                className="waves-effect"
-              >
-                <i className="far fa-file-excel"></i>
-                <span>Avtomaktablar bo'yicha hisobot</span>
-              </Link>
-            </li>
+              <li className="" name="asosiy">
+                <Link
+                  to="/examination-director/reports-by-organizations"
+                  className="waves-effect"
+                >
+                  <i className="far fa-file-excel"></i>
+                  <span>Avtomaktablar bo'yicha hisobot</span>
+                </Link>
+              </li>
 
-            <li className="" name="asosiy">
-              <Link to="pages-404" className="waves-effect">
-                <i className="far fa-file-excel"></i>
-                <span>Ta'lim turi bo'yicha hisobot</span>
-              </Link>
-            </li>
+              <li className="" name="asosiy">
+                <Link to="pages-404" className="waves-effect">
+                  <i className="far fa-file-excel"></i>
+                  <span>Ta'lim turi bo'yicha hisobot</span>
+                </Link>
+              </li>
 
-            <li className="" name="asosiy">
-              <Link to="pages-404" className="waves-effect">
-                <i className="far fa-file-excel"></i>
-                <span>Ta'lim turi umumiy</span>
-              </Link>
-            </li>
+              <li className="" name="asosiy">
+                <Link to="pages-404" className="waves-effect">
+                  <i className="far fa-file-excel"></i>
+                  <span>Ta'lim turi umumiy</span>
+                </Link>
+              </li>
 
-            <li className="" name="asosiy">
-              <Link to="/examination-director/cashier" className="waves-effect">
-                <i className="fa fa-money-bill" />
-                <span>{t("Kassirlar")}</span>
-              </Link>
-            </li>
+              <li className="" name="asosiy">
+                <Link to="/examination-director/cashier" className="waves-effect">
+                  <i className="fa fa-money-bill" />
+                  <span>{t("Kassirlar")}</span>
+                </Link>
+              </li>
 
-            <li className="" name="asosiy">
-              <Link
-                to="/examination-director/final-access-admin"
-                className="waves-effect"
-              >
-                <i className="fas fa-user-shield"></i>
-                <span>{t("Testga ruxsat beruvchi admin")}</span>
-              </Link>
-            </li>
+              <li className="" name="asosiy">
+                <Link
+                  to="/examination-director/final-access-admin"
+                  className="waves-effect"
+                >
+                  <i className="fas fa-user-shield"></i>
+                  <span>{t("Testga ruxsat beruvchi admin")}</span>
+                </Link>
+              </li>
 
-            <li className="" name="asosiy">
-              <Link
-                to="/examination-director/administrator"
-                className="waves-effect"
-              >
-                <i className="fas fa-id-badge"></i>
-                <span>{t("Administrator")}</span>
-              </Link>
-            </li>
+              <li className="" name="asosiy">
+                <Link
+                  to="/examination-director/administrator"
+                  className="waves-effect"
+                >
+                  <i className="fas fa-id-badge"></i>
+                  <span>{t("Administrator")}</span>
+                </Link>
+              </li>
 
-            <li className="" name="asosiy">
-              <Link to="/examination-area/instructors" className="waves-effect">
-                <i className="fas fa-chalkboard-teacher"></i>
-                <span>{t("Instruktorlar")}</span>
-              </Link>
-            </li>
+              <li className="" name="asosiy">
+                <Link to="/examination-area/instructors" className="waves-effect">
+                  <i className="fas fa-chalkboard-teacher"></i>
+                  <span>{t("Instruktorlar")}</span>
+                </Link>
+              </li>
 
-            <li className="" name="asosiy">
-              <Link
-                to="/examination-area/payment-types"
-                className="waves-effect"
-              >
-                <i className="fa fa-credit-card" />
-                <span>{t("To'lov turlari")}</span>
-              </Link>
-            </li>
+              <li className="" name="asosiy">
+                <Link
+                  to="/examination-area/payment-types"
+                  className="waves-effect"
+                >
+                  <i className="fa fa-credit-card" />
+                  <span>{t("To'lov turlari")}</span>
+                </Link>
+              </li>
 
-            <li className="" name="asosiy">
-              <Link to="/examination-area/cars" className="waves-effect">
-                <i className="fa fa-car" />
-                <span>{t("Avtomobillar")}</span>
-              </Link>
-            </li>
+              <li className="" name="asosiy">
+                <Link to="/examination-area/cars" className="waves-effect">
+                  <i className="fa fa-car" />
+                  <span>{t("Avtomobillar")}</span>
+                </Link>
+              </li>
 
-            <li className="" name="asosiy">
-              <Link
-                to="/examination-director/computers"
-                className="waves-effect"
-              >
-                <i className="fa fa-desktop" />
-                <span>{t("Kompyuterlar")}</span>
-              </Link>
-            </li>
+              <li className="" name="asosiy">
+                <Link
+                  to="/examination-director/computers"
+                  className="waves-effect"
+                >
+                  <i className="fa fa-desktop" />
+                  <span>{t("Kompyuterlar")}</span>
+                </Link>
+              </li>
 
-            <li className="" name="asosiy">
-              <Link to="/examination-area/sensors" className="waves-effect">
-                <i className="fa fa-camera-retro" />
-                <span>{t("Sensorlar")}</span>
-              </Link>
-            </li>
+              <li className="" name="asosiy">
+                <Link to="/examination-area/sensors" className="waves-effect">
+                  <i className="fa fa-camera-retro" />
+                  <span>{t("Sensorlar")}</span>
+                </Link>
+              </li>
 
-            <li className="" name="asosiy">
-              <Link
-                to="/examination-director/examination-area-config"
-                className="waves-effect"
-              >
-                <i className="fas fa-user-cog"></i>
-                <span>{t("Profil")}</span>
-              </Link>
-            </li>
-          </ul>
+              <li className="" name="asosiy">
+                <Link
+                  to="/examination-director/examination-area-config"
+                  className="waves-effect"
+                >
+                  <i className="fas fa-user-cog"></i>
+                  <span>{t("Profil")}</span>
+                </Link>
+              </li>
+
+              <li className="" name="autodrome">
+                <Link
+                  to="/autodrome"
+                  className="waves-effect"
+                >
+                  <i className="fa fa-chart-line" />
+                  <span>{t("autodrome")}</span>
+                </Link>
+              </li>
+            </ul>
+
+          ) : (
+            <ul className="metismenu list-unstyled" id="side-menu">
+              <li className="" name="autodrome">
+                <Link
+                  to="/autodrome"
+                  className="waves-effect"
+                >
+                  <i className="fa fa-chart-line" />
+                  <span>{t("autodrome")}</span>
+                </Link>
+              </li>
+            </ul>
+          )}
         </div>
       </>
     );
@@ -313,7 +337,7 @@ const ExaminationUserLinks = props => {
     return (
       <>
         <div id="sidebar-menu">
-          {profession?.examination_area?.type == 1 ? (
+          {type == 1 ? (
             <ul className="metismenu list-unstyled" id="side-menu">
               {/* ASOSIY SAHIFA */}
               <li className="" name="asosiy">

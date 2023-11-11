@@ -38,6 +38,7 @@ const Login = () => {
     setUserType,
     setIsStudent,
     additional,
+    setType,
     setAdditional,
   } = useContext(MainContext);
   const history = useHistory();
@@ -81,6 +82,7 @@ const Login = () => {
         setRegion_id(String(profession?.region_id));
         setUserType(String(response?.data?.user?.online));
         setAdditional(response?.data?.user?.additional);
+        setType(response?.data?.profession?.examination_area?.type)
 
         const tempRole = parseInt(role);
         if (![13, 15, 16, 17, 18, 19, 23].includes(tempRole)) {
