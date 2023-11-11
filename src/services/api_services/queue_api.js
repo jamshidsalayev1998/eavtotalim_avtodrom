@@ -34,8 +34,7 @@ export const reputStudentToQueueApi = async (data, params = {}) => {
     }
   } catch (error) {
     message.info(
-      "O'quvchi ma'lumotlarini qayta tekshirib so'ng qayta yuboring!",
-      5
+      "O'quvchi ma'lumotlarini qayta tekshirib so'ng qayta yuboring!"
     );
     throw error;
   }
