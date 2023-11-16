@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Link, NavLink } from "react-router-dom";
 import { Table, Tbody, Th, Thead, Tr } from "react-super-responsive-table";
 import { PATH_PREFIX_FILE, PATH_PREFIX_V2 } from "../../Utils/AppVariables";
 import { useTranslation } from "react-i18next";
