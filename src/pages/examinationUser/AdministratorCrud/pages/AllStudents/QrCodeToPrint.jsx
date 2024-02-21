@@ -3,6 +3,7 @@ import { Badge, Button, Card, CardBody, Container } from "reactstrap";
 import { withTranslation } from "react-i18next";
 import ReactToPrint from "react-to-print";
 import toPrintCss from "./toPrint.module.css";
+import { Image } from "antd"
 // import path from "path"
 const data = "<html><body>salom</body></html>";
 
@@ -17,8 +18,8 @@ const QrCodeToPrint = ({ src, selectedStudent }) => {
     );
     mywindow.document.write(
       "<style>" +
-        "@media print{ @page { size: 10;margin:0}} body{font-size: 11px !important;}" +
-        "</style>"
+      "@media print{ @page { size: 10;margin:0}} body{font-size: 11px !important;}" +
+      "</style>"
     );
     mywindow.document.write("</head><body >");
     mywindow.document.write(`<div style="padding: 0;margin: 0"  >
@@ -38,11 +39,10 @@ const QrCodeToPrint = ({ src, selectedStudent }) => {
                 <p><b>Pasport:</b> ${selectedStudent?.student_passport}</p>
                  
                      <p><b>Test topshirish
-                    holati:</b> ${
-                      selectedStudent?.type == "resubmit"
-                        ? "Qayta topshirish"
-                        : "Birinchi marta"
-                    }</p>
+                    holati:</b> ${selectedStudent?.type == "resubmit"
+        ? "Qayta topshirish"
+        : "Birinchi marta"
+      }</p>
           
                 </div>
                 <div style="text-align: center">
@@ -63,6 +63,7 @@ const QrCodeToPrint = ({ src, selectedStudent }) => {
     <>
       <div className="border rounded">
         <div className={"pl-3 pt-3"}>
+          <h3>{selectedStudent?.id}</h3>
           <p>
             <b>F.I.O:</b> {selectedStudent?.student_fio}
           </p>
@@ -132,6 +133,10 @@ const QrCodeToPrint = ({ src, selectedStudent }) => {
       >
         <i className={"fa fa-print text-dark"}></i>
       </Button>
+      <Image
+        style={{width:'100%'}}
+        src={selectedStudent?.image}
+      />
     </>
   );
 };
