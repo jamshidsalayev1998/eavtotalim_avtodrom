@@ -445,7 +445,7 @@ const AddStudentModal = props => {
               </span>
             </Divider>
             {/* visitor type */}
-            <Col xl={8}>
+            <Col xl={6}>
               <Form.Item
                 label="Topshiruvchi turi"
                 name="visitor_type_id"
@@ -493,7 +493,7 @@ const AddStudentModal = props => {
             </Col>
 
             {/* talim turi */}
-            <Col xl={8}>
+            <Col xl={6}>
               <Form.Item
                 label="Ta`lim turi"
                 tooltip={{
@@ -561,7 +561,7 @@ const AddStudentModal = props => {
             </Col>
 
             {/* passport */}
-            <Col xl={8}>
+            <Col xl={6}>
               <Form.Item
                 name="student_passport"
                 label="Pasport seria va raqami"
@@ -582,6 +582,46 @@ const AddStudentModal = props => {
                 />
               </Form.Item>
             </Col>
+            <Col xl={6}>
+              <Form.Item
+
+                label="Tug'ilgan sanasi"
+                name="birthday"
+                rules={[
+                  {
+                    required:
+                      resultStatus === 1
+                        ? true
+                        : resultStatus === 2
+                        ? false
+                        : false,
+                    message: "Tug'ilgan sanasini kiriting!",
+                  },
+                ]}
+              >
+                <DatePicker
+                  format={dateFormat}
+                  placeholder="Tug'ilgan sanani tanlang"
+                  disabled={
+                    resultStatus === 1
+                      ? false
+                      : resultStatus === 2
+                      ? false
+                      : true
+                  }
+                  disabledDate={current =>
+                    current && current.year() > new Date().getFullYear() - age
+                  }
+                  className={"w-100"}
+                  defaultPickerValue={moment(
+                    new Date().getTime() - 86400 * 1000 * 365 * age
+                  )}
+                  style={{
+                    width: "100%",
+                  }}
+                />
+              </Form.Item>
+            </Col>
 
             <Row
               className={
@@ -594,47 +634,6 @@ const AddStudentModal = props => {
                   : "d-none"
               }
             >
-              {/* birth date */}
-              <Col xl={6}>
-                <Form.Item
-                  label="Tug'ilgan sanasi"
-                  name="birthday"
-                  rules={[
-                    {
-                      required:
-                        resultStatus === 1
-                          ? true
-                          : resultStatus === 2
-                          ? false
-                          : false,
-                      message: "Tug'ilgan sanasini kiriting!",
-                    },
-                  ]}
-                >
-                  <DatePicker
-                    format={dateFormat}
-                    placeholder="Tug'ilgan sanani tanlang"
-                    disabled={
-                      resultStatus === 1
-                        ? false
-                        : resultStatus === 2
-                        ? false
-                        : true
-                    }
-                    disabledDate={current =>
-                      current && current.year() > new Date().getFullYear() - age
-                    }
-                    className={"w-100"}
-                    defaultPickerValue={moment(
-                      new Date().getTime() - 86400 * 1000 * 365 * age
-                    )}
-                    style={{
-                      width: "100%",
-                    }}
-                  />
-                </Form.Item>
-              </Col>
-
               {/* familyasi */}
               <Col xl={6}>
                 <Form.Item
@@ -653,17 +652,12 @@ const AddStudentModal = props => {
                   ]}
                 >
                   <Input
+
                     ref={inputTagRef}
                     allowClear={true}
                     style={{ width: "100%" }}
                     placeholder="Familiya"
-                    disabled={
-                      resultStatus === 1
-                        ? false
-                        : resultStatus === 2
-                        ? false
-                        : true
-                    }
+                    disabled={true}
                   />
                 </Form.Item>
               </Col>
@@ -688,13 +682,7 @@ const AddStudentModal = props => {
                   <Input
                     allowClear={true}
                     style={{ width: "100%" }}
-                    disabled={
-                      resultStatus === 1
-                        ? false
-                        : resultStatus === 2
-                        ? false
-                        : true
-                    }
+                    disabled={true}
                     placeholder="Ism"
                   />
                 </Form.Item>
@@ -721,13 +709,7 @@ const AddStudentModal = props => {
                     allowClear={true}
                     style={{ width: "100%" }}
                     placeholder="Otasining ismi"
-                    disabled={
-                      resultStatus === 1
-                        ? false
-                        : resultStatus === 2
-                        ? false
-                        : true
-                    }
+                    disabled={true}
                   />
                 </Form.Item>
               </Col>
@@ -874,7 +856,7 @@ const AddStudentModal = props => {
               )}
 
               {examinationAreaId !== 23 ? (
-                <Col xl={6}>
+                <Col xl={12}>
                   <Form.Item
                     label="Ta`lim tashkiloti"
                     name="organization_id"
