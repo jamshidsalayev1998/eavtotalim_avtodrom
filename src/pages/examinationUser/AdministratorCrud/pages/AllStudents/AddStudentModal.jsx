@@ -14,7 +14,6 @@ import {
   Upload,
   Spin,
   Divider,
-  Image
 } from "antd";
 import InputMask from "react-input-mask";
 import moment from "moment";
@@ -26,13 +25,11 @@ import {
 import { FilePdfOutlined, InfoCircleOutlined } from "@ant-design/icons";
 import MainContext from "../../../../../Context/MainContext";
 import { debounce } from "lodash";
-import { getPersonInfo } from "services/api_services/mspd/mspd_api";
 
 const { Option } = Select;
 
 const AddStudentModal = props => {
   const mainContext = useContext(MainContext);
-  // console.log('uy' , context);
   const examinationAreaId = mainContext?.profession?.examination_area_id;
   useEffect(() => {
     window.addEventListener("keyup", event => {
@@ -100,9 +97,6 @@ const AddStudentModal = props => {
   const [resultZero, setResultZero] = useState(null);
   const [resultOne, setResultOne] = useState(null);
   const [resultTwo, setResultTwo] = useState(null);
-  const [studentMspdData, setStudentMspdData] = useState(undefined);
-  const [birthday, setBirthday] = useState(undefined);
-  const [studentImage, setStudentImage] = useState('');
 
   const dateFormat = "DD-MM-YYYY";
 
@@ -186,7 +180,7 @@ const AddStudentModal = props => {
       ),
       zIndex: 1006,
       width: 800,
-      onOk() { },
+      onOk() {},
     });
   };
 
@@ -248,17 +242,10 @@ const AddStudentModal = props => {
       "school_diploma",
       "road_safety_letter",
     ];
-    const dateKeys = [
-      "license_date",
-      "school_license_date",
-      "med_file_date"
-    ];
 
     for (const key in values) {
       if (fileKeys.includes(key)) {
         formData.append(key, values[key]?.file?.originFileObj || "");
-      } else if (dateKeys.includes(key)) {
-        formData.append(key, moment(values[key]).format('YYYY-MM-DD'))
       } else {
         formData.append(key, values[key] || "");
       }
@@ -380,39 +367,6 @@ const AddStudentModal = props => {
     setRoadSafetyFileLetterList(newRoadSafetyFileLetterList);
   };
 
-  console.log('birthday', birthday);
-  const handlePersonInfo = async () => {
-    setLoading(true);
-    console.log('dasdasd');
-    try {
-      setStudentMspdData(undefined);
-      studentStoreForm.setFieldsValue({
-        last_name: '',
-        first_name: '',
-        middle_name: '',
-      });
-      setStudentImage('')
-      const responsePersonInfo = await getPersonInfo(studentStoreForm.getFieldValue('student_passport'), moment(studentStoreForm.getFieldValue('birthday')).format('YYYY-MM-DD'), {})
-      if (responsePersonInfo?.status == 1) {
-        message.success('Topildi')
-        setStudentMspdData(responsePersonInfo?.data?.data);
-        studentStoreForm.setFieldsValue({
-          last_name: responsePersonInfo?.data?.data?.last_name,
-          first_name: responsePersonInfo?.data?.data?.first_name,
-          middle_name: responsePersonInfo?.data?.data?.middle_name,
-        });
-        setStudentImage(responsePersonInfo?.data?.data?.image)
-
-      }
-      else {
-        message.warning('Topilmadi')
-      }
-    } catch (error) {
-      message.error(error)
-    }
-    setLoading(false);
-  }
-
   return (
     <Modal
       zIndex={1005}
@@ -490,7 +444,7 @@ const AddStudentModal = props => {
               </span>
             </Divider>
             {/* visitor type */}
-            <Col xl={6}>
+            <Col xl={8}>
               <Form.Item
                 label="Topshiruvchi turi"
                 name="visitor_type_id"
@@ -538,7 +492,7 @@ const AddStudentModal = props => {
             </Col>
 
             {/* talim turi */}
-            <Col xl={6}>
+            <Col xl={8}>
               <Form.Item
                 label="Ta`lim turi"
                 tooltip={{
@@ -606,7 +560,7 @@ const AddStudentModal = props => {
             </Col>
 
             {/* passport */}
-            <Col xl={6}>
+            <Col xl={8}>
               <Form.Item
                 name="student_passport"
                 label="Pasport seria va raqami"
@@ -627,75 +581,60 @@ const AddStudentModal = props => {
                 />
               </Form.Item>
             </Col>
-            <Col xl={6}>
-              <Form.Item
-
-                label="Tug'ilgan sanasi"
-                name="birthday"
-                rules={[
-                  {
-                    required:
-                      resultStatus === 1
-                        ? true
-                        : resultStatus === 2
-                          ? false
-                          : false,
-                    message: "Tug'ilgan sanasini kiriting!",
-                  },
-                ]}
-              >
-                <DatePicker
-                  format={dateFormat}
-                  placeholder="Tug'ilgan sanani tanlang"
-                  disabled={
-                    resultStatus === 1
-                      ? false
-                      : resultStatus === 2
-                        ? false
-                        : true
-                  }
-                  disabledDate={current =>
-                    current && current.year() > new Date().getFullYear() - age
-                  }
-                  className={"w-100"}
-                  defaultPickerValue={moment(
-                    new Date().getTime() - 86400 * 1000 * 365 * age
-                  )}
-                  style={{
-                    width: "100%",
-                  }}
-                  onChange={e => setBirthday(e)}
-                />
-              </Form.Item>
-            </Col>
 
             <Row
               className={
                 resultStatus === 1
                   ? ""
                   : resultStatus === 2
-                    ? "d-none"
-                    : resultStatus === 0
-                      ? "d-none"
-                      : "d-none"
+                  ? "d-none"
+                  : resultStatus === 0
+                  ? "d-none"
+                  : "d-none"
               }
             >
-              {/* familyasi */}
-              <Col xl={24}>
-                <Button type="primary" style={{ width: '100%' }} loading={loading} onClick={handlePersonInfo}>Shaxsiy ma`lumotlarni olish</Button>
-              </Col>
-              <Col xl={3}>
+              {/* birth date */}
+              <Col xl={6}>
                 <Form.Item
-                  label="Rasm"
-                  name="image"
-
+                  label="Tug'ilgan sanasi"
+                  name="birthday"
+                  rules={[
+                    {
+                      required:
+                        resultStatus === 1
+                          ? true
+                          : resultStatus === 2
+                          ? false
+                          : false,
+                      message: "Tug'ilgan sanasini kiriting!",
+                    },
+                  ]}
                 >
-                  <Image
-                    width={100}
-                    src={studentImage}
+                  <DatePicker
+                    format={dateFormat}
+                    placeholder="Tug'ilgan sanani tanlang"
+                    disabled={
+                      resultStatus === 1
+                        ? false
+                        : resultStatus === 2
+                        ? false
+                        : true
+                    }
+                    disabledDate={current =>
+                      current && current.year() > new Date().getFullYear() - age
+                    }
+                    className={"w-100"}
+                    defaultPickerValue={moment(
+                      new Date().getTime() - 86400 * 1000 * 365 * age
+                    )}
+                    style={{
+                      width: "100%",
+                    }}
                   />
                 </Form.Item>
               </Col>
+
+              {/* familyasi */}
               <Col xl={6}>
                 <Form.Item
                   label="Familiya"
@@ -706,8 +645,8 @@ const AddStudentModal = props => {
                         resultStatus === 1
                           ? true
                           : resultStatus === 2
-                            ? false
-                            : false,
+                          ? false
+                          : false,
                       message: "O`quvchi familiyasini kiriting!",
                     },
                   ]}
@@ -717,7 +656,13 @@ const AddStudentModal = props => {
                     allowClear={true}
                     style={{ width: "100%" }}
                     placeholder="Familiya"
-                    disabled={true}
+                    disabled={
+                      resultStatus === 1
+                        ? false
+                        : resultStatus === 2
+                        ? false
+                        : true
+                    }
                   />
                 </Form.Item>
               </Col>
@@ -733,8 +678,8 @@ const AddStudentModal = props => {
                         resultStatus === 1
                           ? true
                           : resultStatus === 2
-                            ? false
-                            : false,
+                          ? false
+                          : false,
                       message: "O`quvchi ismini kiriting!",
                     },
                   ]}
@@ -742,7 +687,13 @@ const AddStudentModal = props => {
                   <Input
                     allowClear={true}
                     style={{ width: "100%" }}
-                    disabled={true}
+                    disabled={
+                      resultStatus === 1
+                        ? false
+                        : resultStatus === 2
+                        ? false
+                        : true
+                    }
                     placeholder="Ism"
                   />
                 </Form.Item>
@@ -759,8 +710,8 @@ const AddStudentModal = props => {
                         resultStatus === 1
                           ? true
                           : resultStatus === 2
-                            ? false
-                            : false,
+                          ? false
+                          : false,
                       message: "Otasining ismini kiriting!",
                     },
                   ]}
@@ -769,7 +720,13 @@ const AddStudentModal = props => {
                     allowClear={true}
                     style={{ width: "100%" }}
                     placeholder="Otasining ismi"
-                    disabled={true}
+                    disabled={
+                      resultStatus === 1
+                        ? false
+                        : resultStatus === 2
+                        ? false
+                        : true
+                    }
                   />
                 </Form.Item>
               </Col>
@@ -785,8 +742,8 @@ const AddStudentModal = props => {
                         resultStatus === 1
                           ? true
                           : resultStatus === 2
-                            ? false
-                            : false,
+                          ? false
+                          : false,
                       message: "O`quvchi telefon raqamini kiriting!",
                     },
                   ]}
@@ -799,8 +756,8 @@ const AddStudentModal = props => {
                       resultStatus === 1
                         ? false
                         : resultStatus === 2
-                          ? false
-                          : true
+                        ? false
+                        : true
                     }
                   />
                 </Form.Item>
@@ -818,8 +775,8 @@ const AddStudentModal = props => {
                           resultStatus === 1
                             ? true
                             : resultStatus === 2
-                              ? false
-                              : false,
+                            ? false
+                            : false,
                         message: "Holatini tanlang!",
                       },
                     ]}
@@ -831,8 +788,8 @@ const AddStudentModal = props => {
                         resultStatus === 1
                           ? false
                           : resultStatus === 2
-                            ? false
-                            : true
+                          ? false
+                          : true
                       }
                     >
                       <Option value={"first"}>Birinchi marta</Option>
@@ -854,8 +811,8 @@ const AddStudentModal = props => {
                           resultStatus === 1
                             ? true
                             : resultStatus === 2
-                              ? false
-                              : false,
+                            ? false
+                            : false,
                         message: "Holatini tanlang!",
                       },
                     ]}
@@ -867,8 +824,8 @@ const AddStudentModal = props => {
                         resultStatus === 1
                           ? false
                           : resultStatus === 2
-                            ? false
-                            : true
+                          ? false
+                          : true
                       }
                     >
                       <Option value={"both"}>Ikkalasi</Option>
@@ -891,8 +848,8 @@ const AddStudentModal = props => {
                           resultStatus === 1
                             ? true
                             : resultStatus === 2
-                              ? false
-                              : false,
+                            ? false
+                            : false,
                         message: "Guruhni kiriting!",
                       },
                     ]}
@@ -905,8 +862,8 @@ const AddStudentModal = props => {
                         resultStatus === 1
                           ? false
                           : resultStatus === 2
-                            ? false
-                            : true
+                          ? false
+                          : true
                       }
                     />
                   </Form.Item>
@@ -926,8 +883,8 @@ const AddStudentModal = props => {
                           resultStatus === 1
                             ? true
                             : resultStatus === 2
-                              ? false
-                              : false,
+                            ? false
+                            : false,
                         message: "Ta`lim tashkilotini tanlang!",
                       },
                     ]}
@@ -945,8 +902,8 @@ const AddStudentModal = props => {
                         resultStatus === 1
                           ? false
                           : resultStatus === 2
-                            ? false
-                            : true
+                          ? false
+                          : true
                       }
                     >
                       {organizations.map((element, index) => {
@@ -995,8 +952,8 @@ const AddStudentModal = props => {
                                 resultStatus === 1
                                   ? true
                                   : resultStatus === 2
-                                    ? false
-                                    : false,
+                                  ? false
+                                  : false,
                               message: "Tibbiy ma`lumotnoma raqamini kiriting!",
                             },
                           ]}
@@ -1010,8 +967,8 @@ const AddStudentModal = props => {
                               resultStatus === 1
                                 ? false
                                 : resultStatus === 2
-                                  ? false
-                                  : true
+                                ? false
+                                : true
                             }
                           />
                         </Form.Item>
@@ -1027,8 +984,8 @@ const AddStudentModal = props => {
                                 resultStatus === 1
                                   ? true
                                   : resultStatus === 2
-                                    ? false
-                                    : false,
+                                  ? false
+                                  : false,
                               message: "Tibbiy ma'lumotnoma sanasini kiriting!",
                             },
                           ]}
@@ -1040,8 +997,8 @@ const AddStudentModal = props => {
                               resultStatus === 1
                                 ? false
                                 : resultStatus === 2
-                                  ? false
-                                  : true
+                                ? false
+                                : true
                             }
                             style={{
                               width: "100%",
@@ -1060,8 +1017,8 @@ const AddStudentModal = props => {
                                 resultStatus === 1
                                   ? true
                                   : resultStatus === 2
-                                    ? false
-                                    : false,
+                                  ? false
+                                  : false,
                               message:
                                 "Tibbiy ma`lumotnoma nusxasini kiriting!",
                             },
@@ -1099,8 +1056,8 @@ const AddStudentModal = props => {
                                 resultStatus === 1
                                   ? true
                                   : resultStatus === 2
-                                    ? false
-                                    : false,
+                                  ? false
+                                  : false,
                               message: "Guvohnoma raqamini kiriting!",
                             },
                           ]}
@@ -1114,8 +1071,8 @@ const AddStudentModal = props => {
                               resultStatus === 1
                                 ? false
                                 : resultStatus === 2
-                                  ? false
-                                  : true
+                                ? false
+                                : true
                             }
                           />
                         </Form.Item>
@@ -1131,8 +1088,8 @@ const AddStudentModal = props => {
                                 resultStatus === 1
                                   ? true
                                   : resultStatus === 2
-                                    ? false
-                                    : false,
+                                  ? false
+                                  : false,
                               message: "Guvohnoma sanasini kiriting!",
                             },
                           ]}
@@ -1144,8 +1101,8 @@ const AddStudentModal = props => {
                               resultStatus === 1
                                 ? false
                                 : resultStatus === 2
-                                  ? false
-                                  : true
+                                ? false
+                                : true
                             }
                             style={{
                               width: "100%",
@@ -1164,8 +1121,8 @@ const AddStudentModal = props => {
                                 resultStatus === 1
                                   ? true
                                   : resultStatus === 2
-                                    ? false
-                                    : false,
+                                  ? false
+                                  : false,
                               message:
                                 "Avtomaktab tomonidan berilgan guvohnoma!",
                             },
@@ -1203,8 +1160,8 @@ const AddStudentModal = props => {
                                 resultStatus === 1
                                   ? true
                                   : resultStatus === 2
-                                    ? false
-                                    : false,
+                                  ? false
+                                  : false,
                               message: "Mavjud guvohnoma raqamini kiriting!",
                             },
                           ]}
@@ -1218,8 +1175,8 @@ const AddStudentModal = props => {
                               resultStatus === 1
                                 ? false
                                 : resultStatus === 2
-                                  ? false
-                                  : true
+                                ? false
+                                : true
                             }
                           />
                         </Form.Item>
@@ -1235,8 +1192,8 @@ const AddStudentModal = props => {
                                 resultStatus === 1
                                   ? true
                                   : resultStatus === 2
-                                    ? false
-                                    : false,
+                                  ? false
+                                  : false,
                               message: "Mavjud guvohnoma sanasini kiriting!",
                             },
                           ]}
@@ -1248,8 +1205,8 @@ const AddStudentModal = props => {
                               resultStatus === 1
                                 ? false
                                 : resultStatus === 2
-                                  ? false
-                                  : true
+                                ? false
+                                : true
                             }
                             style={{
                               width: "100%",
@@ -1268,8 +1225,8 @@ const AddStudentModal = props => {
                                 resultStatus === 1
                                   ? true
                                   : resultStatus === 2
-                                    ? false
-                                    : false,
+                                  ? false
+                                  : false,
                               message: "Mavjud guvohnoma nusxasi!",
                             },
                           ]}
@@ -1307,8 +1264,8 @@ const AddStudentModal = props => {
                                 resultStatus === 1
                                   ? true
                                   : resultStatus === 2
-                                    ? false
-                                    : false,
+                                  ? false
+                                  : false,
                               message: "Diplom raqamini kiriting!",
                             },
                           ]}
@@ -1322,8 +1279,8 @@ const AddStudentModal = props => {
                               resultStatus === 1
                                 ? false
                                 : resultStatus === 2
-                                  ? false
-                                  : true
+                                ? false
+                                : true
                             }
                           />
                         </Form.Item>
@@ -1339,8 +1296,8 @@ const AddStudentModal = props => {
                                 resultStatus === 1
                                   ? true
                                   : resultStatus === 2
-                                    ? false
-                                    : false,
+                                  ? false
+                                  : false,
                               message: "Diplom sanasini kiriting!",
                             },
                           ]}
@@ -1352,8 +1309,8 @@ const AddStudentModal = props => {
                               resultStatus === 1
                                 ? false
                                 : resultStatus === 2
-                                  ? false
-                                  : true
+                                ? false
+                                : true
                             }
                             style={{
                               width: "100%",
@@ -1372,8 +1329,8 @@ const AddStudentModal = props => {
                                 resultStatus === 1
                                   ? true
                                   : resultStatus === 2
-                                    ? false
-                                    : false,
+                                  ? false
+                                  : false,
                               message: "Muassasa tomonidan berilgan diplom!",
                             },
                           ]}
@@ -1388,8 +1345,8 @@ const AddStudentModal = props => {
                               resultStatus === 1
                                 ? false
                                 : resultStatus === 2
-                                  ? false
-                                  : true
+                                ? false
+                                : true
                             }
                             locale={true}
                             accept=".pdf"
@@ -1417,8 +1374,8 @@ const AddStudentModal = props => {
                                 resultStatus === 1
                                   ? true
                                   : resultStatus === 2
-                                    ? false
-                                    : false,
+                                  ? false
+                                  : false,
                               message: "Diplom raqamini kiriting!",
                             },
                           ]}
@@ -1432,8 +1389,8 @@ const AddStudentModal = props => {
                               resultStatus === 1
                                 ? false
                                 : resultStatus === 2
-                                  ? false
-                                  : true
+                                ? false
+                                : true
                             }
                           />
                         </Form.Item>
@@ -1449,8 +1406,8 @@ const AddStudentModal = props => {
                                 resultStatus === 1
                                   ? true
                                   : resultStatus === 2
-                                    ? false
-                                    : false,
+                                  ? false
+                                  : false,
                               message:
                                 "DYHXX tomonidan berilgan xat sanasini kiriting!",
                             },
@@ -1463,8 +1420,8 @@ const AddStudentModal = props => {
                               resultStatus === 1
                                 ? false
                                 : resultStatus === 2
-                                  ? false
-                                  : true
+                                ? false
+                                : true
                             }
                             style={{
                               width: "100%",
@@ -1483,8 +1440,8 @@ const AddStudentModal = props => {
                                 resultStatus === 1
                                   ? true
                                   : resultStatus === 2
-                                    ? false
-                                    : false,
+                                  ? false
+                                  : false,
                               message: "DYHXX tomonidan berilgan xat!",
                             },
                           ]}
@@ -1539,8 +1496,8 @@ const AddStudentModal = props => {
           <Row>
             {validatorErrors
               ? Object.entries(validatorErrors).map(([key, subject], i) => (
-                <Alert className={"w-100"} message={subject} type={"error"} />
-              ))
+                  <Alert className={"w-100"} message={subject} type={"error"} />
+                ))
               : ""}
           </Row>
           {dataHas ? (
@@ -1605,26 +1562,26 @@ const AddStudentModal = props => {
               resultStatus === 1
                 ? "d-flex"
                 : resultStatus === 2
-                  ? "d-flex"
-                  : resultStatus === 0
-                    ? "d-flex"
-                    : "d-none"
+                ? "d-flex"
+                : resultStatus === 0
+                ? "d-flex"
+                : "d-none"
             }
             message={
               resultStatus === 1
                 ? resultOne
                 : resultStatus === 2
-                  ? resultTwo
-                  : resultStatus === 0
-                    ? resultZero
-                    : ""
+                ? resultTwo
+                : resultStatus === 0
+                ? resultZero
+                : ""
             }
             type={
               resultStatus === 1
                 ? "success"
                 : resultStatus === 2
-                  ? "warning"
-                  : "error"
+                ? "warning"
+                : "error"
             }
             showIcon
           />

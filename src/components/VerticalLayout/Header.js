@@ -68,7 +68,7 @@ const Header = props => {
 
   // theme context
   const { theme, toggleTheme } = useContext(ThemeContext);
-  console.log(theme);
+  // console.log(theme);
 
   return (
     <React.Fragment>

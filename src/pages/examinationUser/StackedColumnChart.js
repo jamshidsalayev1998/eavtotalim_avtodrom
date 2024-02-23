@@ -1,45 +1,42 @@
-import React, { Component } from "react"
-import ReactApexChart from "react-apexcharts"
+import React, { Component } from "react";
+import ReactApexChart from "react-apexcharts";
 
 class StackedColumnChart extends Component {
   constructor(props) {
-    super(props)
-    console.log(props)
-    this.state = {}
-    console.log('jjj',props)
+    super(props);
+    this.state = {};
   }
 
   render() {
     const series = [
       {
         name: "O'tganlar",
-        data: this.props?.data?.count_statuses?.by_month?.successeds
+        data: this.props?.data?.count_statuses?.by_month?.successeds,
       },
       {
         name: "Qaytganlar",
-        data: this.props?.data?.count_statuses?.by_month?.returneds
-      }
-    ]
+        data: this.props?.data?.count_statuses?.by_month?.returneds,
+      },
+    ];
 
     const options = {
       chart: {
         stacked: !0,
         toolbar: {
-          show: 1
+          show: 1,
         },
         zoom: {
-          enabled: !0
-        }
+          enabled: !0,
+        },
       },
       plotOptions: {
         bar: {
           horizontal: !1,
-          columnWidth: "15%"
-          // endingShape: "rounded"
-        }
+          columnWidth: "15%",
+        },
       },
       dataLabels: {
-        enabled: !1
+        enabled: !1,
       },
       xaxis: {
         show: true,
@@ -55,31 +52,47 @@ class StackedColumnChart extends Component {
           "Sep",
           "Oct",
           "Nov",
-          "Dec"
+          "Dec",
         ],
         labels: {
-          show: true
-        }
+          show: true,
+        },
       },
       colors: ["#73d13d", "#ff4d4f"],
       legend: {
-        position: "bottom"
+        position: "bottom",
       },
       fill: {
-        opacity: 1
-      }
-    }
+        opacity: 1,
+      },
+    };
     return (
-      <React.Fragment>
+      <>
         <ReactApexChart
           options={options}
           series={series}
           type="bar"
-          height="359"
+          height="245"
         />
-      </React.Fragment>
-    )
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: 60,
+            marginTop: -15,
+          }}
+        >
+          <p className="small-title">
+            {this.props?.data?.count_statuses?.succesed_count} ta
+          </p>
+          <p className="small-title">
+            {this.props?.data?.count_statuses?.returned_count} ta
+          </p>
+        </div>
+      </>
+    );
   }
 }
 
-export default StackedColumnChart
+export default StackedColumnChart;

@@ -6,6 +6,7 @@ import {
 } from "../../../../../services/api_services/instructor_student_api";
 import { message, Table } from "antd";
 import StudentCarMargeModal from "./StudentCarMargeModal";
+import { useQuery } from "react-query";
 
 const ExaminationInstructorAllStudents = ({}) => {
   const [data, setData] = useState();
@@ -14,41 +15,102 @@ const ExaminationInstructorAllStudents = ({}) => {
   const [selectedStudent, setSelectedStudent] = useState(null);
   const [reload, setReload] = useState(false);
   const [examinationArea, setExaminationArea] = useState();
+
+  useEffect(() => {
+    setIsLoading(true);
+    (async () => {
+      // let filters = [
+      //   {
+      //     fieldKey: "exam_result",
+      //     value: "1",
+      //   },
+      //   {
+      //     fieldKey: "practical_payment_status",
+      //     value: 1,
+      //   },
+      // ];
+      // let params = {
+      //   merged_status: "unMerged",
+      //   filters: JSON.stringify(filters),
+      // };
+      // setData(contributors?.data?.data?.data);
+      // const response = await getAllStudents(params);
+      // if (response?.data?.status == 1) {
+      // }
+      // if (response?.data?.status == 0) {
+      //   message.error(response?.data?.message);
+      // }
+      setIsLoading(false);
+    })();
+    getExaminationArea().then(r => {});
+  }, [reload]);
+
+  let filters = [
+    {
+      fieldKey: "exam_result",
+      value: "1",
+    },
+    {
+      fieldKey: "practical_payment_status",
+      value: 1,
+    },
+  ];
+  let params = {
+    merged_status: "unMerged",
+    filters: JSON.stringify(filters),
+  };
+
+  const { data: contributors } = useQuery("contributorsData", () =>
+    getAllStudents(params)
+  );
+
   const columns = [
     {
       title: "№",
+      dataIndex: "index",
+      key: "index",
       render: (text, record, index) => index + 1,
       width: 40,
       align: "center",
     },
     {
-      title: "F.I.O",
+      title: <div className="text-center">F.I.O</div>,
       dataIndex: "student_fio",
       key: "student_fio",
+      render: (text, row) => <p className="small-title">{row?.student_fio}</p>,
     },
     {
-      title: "Pasport",
+      title: <div className="text-center">Passport</div>,
       dataIndex: "student_passport",
+      align: "center",
+      render: (text, row) => (
+        <p className="small-title">{row?.student_passport}</p>
+      ),
     },
     {
-      title: "Ta`lim turi",
-      render: (index, element) => <>{element?.edu_type?.short_name_en}</>,
+      title: <div className="text-center">Ta'lim turi</div>,
+      align: "center",
+      render: (text, row) => (
+        <p className="small-title">{row?.edu_type?.short_name_en}</p>
+      ),
     },
     {
       title: "Haydaydigan moshinalar soni",
-      render: (index, element) => (
-        <>{element?.edu_type_car_access?.car_count}</>
+      align: "center",
+      render: (text, row) => (
+        <p className="small-title">{row?.edu_type_car_access?.car_count}</p>
       ),
     },
     {
       title: "Haydagan moshinalar soni",
-      render: (index, element) => (
-        <>{element?.final_practical_test_records_count}</>
+      align: "center",
+      render: (text, row) => (
+        <p className="small-title">{row?.final_practical_test_records_count}</p>
       ),
     },
     {
       title: "Avtomobilga birlashtirish",
-      className: "last-td",
+      align: "center",
       render: (index, element) => (
         <>
           <button
@@ -62,38 +124,12 @@ const ExaminationInstructorAllStudents = ({}) => {
       ),
     },
   ];
+
   const getExaminationArea = async () => {
     const res = await instructorMyExaminationArea();
     setExaminationArea(res?.data);
   };
-  useEffect(() => {
-    setIsLoading(true);
-    (async () => {
-      let filters = [
-        {
-          fieldKey: "exam_result",
-          value: "1",
-        },
-        {
-          fieldKey: "practical_payment_status",
-          value: 1,
-        },
-      ];
-      let params = {
-        merged_status: "unMerged",
-        filters: JSON.stringify(filters),
-      };
-      const response = await getAllStudents(params);
-      if (response?.data?.status == 1) {
-        setData(response?.data?.data?.data);
-      }
-      if (response?.data?.status == 0) {
-        message.error(response?.data?.message);
-      }
-      setIsLoading(false);
-    })();
-    getExaminationArea().then(r => {});
-  }, [reload]);
+
   const selectStudent = element => {
     setSelectedStudent(element);
     setIsModalVisible(true);
@@ -109,30 +145,35 @@ const ExaminationInstructorAllStudents = ({}) => {
         reload={reload}
         setReload={setReload}
       />
-      <div className="page-content">
-        <Container fluid>
-          <Card>
-            <div className="top-organizations d-flex justify-content-between">
-              <h5 className="text-dark">Barcha topshiruvchilar</h5>
-              <div className={"d-flex"}>
-                {/*<button className={'btn btn-outline-success'} onClick={showAddModal}><i*/}
-                {/*    className={'fa fa-plus'}></i> Qo`shish*/}
-                {/*</button>*/}
-              </div>
+      <div className="content-layout">
+        <Card>
+          {isLoading ? (
+            <div>
+              <h1>Loading</h1>
             </div>
-            <div className="crypto-buy-sell-nav mt-3">
+          ) : (
+            <>
+              <p className="big-title" style={{ margin: 0 }}>
+                Barcha topshiruvchilar
+              </p>
               <Table
-                pagination={false}
-                dataSource={data}
+                dataSource={contributors?.data?.data?.data}
                 columns={columns}
-                bordered={true}
-                scroll={{ x: true, y: 600 }}
-                size="small"
-                sticky
+                style={{
+                  marginTop: 20,
+                  height: "calc(100vh - 190px)",
+                }}
+                pagination={{
+                  pageSize: 10,
+                }}
+                scroll={{
+                  x: 1200,
+                  y: "60vh",
+                }}
               />
-            </div>
-          </Card>
-        </Container>
+            </>
+          )}
+        </Card>
       </div>
     </>
   );

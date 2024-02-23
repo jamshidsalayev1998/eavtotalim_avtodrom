@@ -16,6 +16,38 @@ body > iframe {
   position: relative;
 }
 
+.content-layout {
+  padding-top: 80px;
+  padding-bottom: 0;
+  padding-left: 10px;
+  padding-right: 10px;
+  min-height: 700px !important;
+}
+
+.content-layout .card {
+  border-radius: 12px !important;
+  padding: 15px !important;
+  box-shadow: none !important;
+  box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 12px !important;
+}
+.big-title {
+  font-size: 15px;
+  color: rgba(0, 0, 0, 0.718);
+  font-weight: 900;
+  text-transform: uppercase;
+}
+.medium-title {
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.655);
+  font-weight: 500;
+}
+.small-title {
+  font-size: 12px;
+  color: gray;
+  font-weight: 100;
+  margin: 0 !important;
+}
+
 @media print {
   .student_document_print {
     display: none !important;
@@ -244,9 +276,13 @@ video:focus {
   border-radius: 8px !important;
 }
 .ant-input-affix-wrapper
-  .ant-input:not(.ant-input-disabled).ant-input:not(.ant-input-borderless).ant-input-lg,
+  .ant-input:not(.ant-input-disabled).ant-input:not(
+    .ant-input-borderless
+  ).ant-input-lg,
 .ant-input-affix-wrapper
-  .ant-input:not(.ant-input-disabled).ant-input:not(.ant-input-borderless).ant-input-sm,
+  .ant-input:not(.ant-input-disabled).ant-input:not(
+    .ant-input-borderless
+  ).ant-input-sm,
 .ant-input-affix-wrapper-lg
   .ant-input:not(.ant-input-disabled).ant-input:not(.ant-input-borderless),
 .ant-input-affix-wrapper-sm
@@ -273,4 +309,93 @@ video:focus {
 }
 .ant-tooltip-inner {
   border-radius: 8px !important;
+}
+/* Customize the font size of the entire table */
+.ant-table {
+  border: 1px solid #eff2f7;
+  border-radius: 8px !important;
+  font-family: "Rubik", "Helvetica", "Arial", serif !important;
+}
+
+.ant-table .item-link {
+  text-decoration: none !important;
+}
+
+.ant-table-tbody {
+  border-radius: 8px !important;
+}
+
+/* Customize the font size of the table header cells */
+.ant-table-thead th {
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  border: 1px solid #eff2f7;
+  padding: 5px !important;
+  color: #3f4254 !important;
+}
+
+/* Customize the font size of the table body cells */
+.ant-table-tbody td {
+  font-size: 13px;
+  font-family: "Rubik", "Helvetica", "Arial", serif !important;
+  border: 1px solid #eff2f7;
+}
+
+.ant-table-row td {
+  padding: 6px 8px !important;
+}
+
+/* simple table */
+.table {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.table-bordered th {
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  border: 1px solid #eff2f7 !important;
+  padding: 5px !important;
+}
+
+.table-bordered th,
+.table-bordered td {
+  font-size: 13px !important;
+  font-family: "Rubik", "Helvetica", "Arial", serif !important;
+  border: 1px solid #eff2f7 !important;
+}
+.btnHover {
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+.btnHover button {
+  font-size: 13px;
+  color: #fff;
+  overflow: hidden;
+  font-weight: 900;
+  background-color: #3b6fb0;
+  border: none;
+  padding: 10px 25px;
+  cursor: pointer;
+  border-radius: 5px;
+  width: 100%;
+}
+.btnHover button::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    95deg,
+    transparent,
+    rgb(255, 255, 255, 0.397),
+    transparent
+  );
+  transition: 0.7s;
+}
+.btnHover button:hover::after {
+  left: 100%;
 }

@@ -31,10 +31,10 @@ import { element } from "prop-types";
 import MainContext from "../../../../../Context/MainContext";
 import { deleteStudentApplivation } from "services/api_services/final_access_student/final_accesss_student_api";
 import { PATH_PREFIX_V2 } from "Utils/AppVariables";
+import { useQuery } from "react-query";
 
-const AllStudentsIndex = props => {
+const AllStudentsIndex = () => {
   const mainContext = useContext(MainContext);
-  // console.log('uy' , context);
   const examinationAreaId = mainContext?.profession?.examination_area_id;
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -65,28 +65,58 @@ const AllStudentsIndex = props => {
     setOpen(false);
   };
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    setLoading(true);
-    axios({
-      url: PATH_PREFIX_V2 + "/examination-administrator/students",
+  const token = localStorage.getItem("token");
+
+  const {
+    isLoading,
+    error,
+    data: userData,
+  } = useQuery("userData", () =>
+    axios.get(`${PATH_PREFIX_V2}/examination-administrator/students`, {
       method: "GET",
       params: {
         token,
         page: page ? page : "1",
         word,
       },
-    }).then(response => {
-      if (response?.data?.message === "Success") {
-        setData(response?.data?.data);
-        setTotal(response?.data?.data?.total);
-        setPage(response?.data?.data?.current_page);
-        setLoading(false);
-      } else {
-        setLoading(false);
-        message.error("Xatolik!");
-      }
-    });
+    })
+  );
+
+  // if (userData?.data?.message === "Success") {
+  //   setData(userData?.data?.data);
+  //   setTotal(userData?.data?.data?.total);
+  //   setPage(userData?.data?.data?.current_page);
+  //   setLoading(false);
+  // } else {
+  //   setLoading(false);
+  //   message.error("Xatolik!");
+  // }
+
+  useEffect(() => {
+    // const token = localStorage.getItem("token");
+    setLoading(true);
+    setLoading(false);
+    setTotal(userData?.data?.data?.total);
+    setPage(userData?.data?.data?.current_page);
+    // axios({
+    //   url: PATH_PREFIX_V2 + "/examination-administrator/students",
+    //   method: "GET",
+    //   params: {
+    //     token,
+    //     page: page ? page : "1",
+    //     word,
+    //   },
+    // }).then(response => {
+    //   if (response?.data?.message === "Success") {
+    //     setData(response?.data?.data);
+    //     setTotal(response?.data?.data?.total);
+    //     setPage(response?.data?.data?.current_page);
+    //     setLoading(false);
+    //   } else {
+    //     setLoading(false);
+    //     message.error("Xatolik!");
+    //   }
+    // });
     window.addEventListener("keyup", event => {
       if (event?.code === "F2") {
         if (location?.pathname === "/examination-administrator/students") {
@@ -199,17 +229,27 @@ const AllStudentsIndex = props => {
       dataIndex: "index",
       key: "index",
       render: (text, record, index) => index + 1,
-      width: 60,
+      width: 40,
       align: "center",
     },
     {
       title: <div className="text-center">F.I.O</div>,
-      render: (index, element) => <>{element?.student_fio}</>,
+      render: (index, element) => (
+        <>
+          <p className="small-title" style={{ height: "10%" }}>
+            {element?.student_fio}
+          </p>
+        </>
+      ),
       width: 200,
     },
     {
       title: <div className="text-center">Ta`lim turi</div>,
-      render: (index, element) => <>{element?.edu_type?.short_name}</>,
+      render: (index, element) => (
+        <>
+          <p className="small-title">{element?.edu_type?.short_name}</p>
+        </>
+      ),
     },
     {
       title: "Holati",
@@ -217,9 +257,19 @@ const AllStudentsIndex = props => {
       render: (index, element) => (
         <>
           {element?.type === "resubmit" ? (
-            <Badge color={"warning"}>Qayta</Badge>
+            <Badge
+              color={"warning"}
+              style={{ padding: 7, fontSize: 8, width: "100%" }}
+            >
+              Qayta
+            </Badge>
           ) : (
-            <Badge color={"primary"}>Birinchi</Badge>
+            <Badge
+              color={"primary"}
+              style={{ padding: 7, fontSize: 8, width: "100%" }}
+            >
+              Birinchi
+            </Badge>
           )}
         </>
       ),
@@ -233,9 +283,19 @@ const AllStudentsIndex = props => {
           render: (index, element) => (
             <>
               {parseInt(element?.payment_status) ? (
-                <Badge color={"success"}>qilingan</Badge>
+                <Badge
+                  color={"success"}
+                  style={{ padding: 7, fontSize: 8, width: "100%" }}
+                >
+                  qilingan
+                </Badge>
               ) : (
-                <Badge color={"danger"}>qilinmagan</Badge>
+                <Badge
+                  color={"danger"}
+                  style={{ padding: 7, fontSize: 8, width: "100%" }}
+                >
+                  qilinmagan
+                </Badge>
               )}
             </>
           ),
@@ -246,9 +306,19 @@ const AllStudentsIndex = props => {
           render: (index, element) => (
             <>
               {parseInt(element?.practical_payment_status) ? (
-                <Badge color={"success"}>qilingan</Badge>
+                <Badge
+                  color={"success"}
+                  style={{ padding: 7, fontSize: 8, width: "100%" }}
+                >
+                  qilingan
+                </Badge>
               ) : (
-                <Badge color={"danger"}>qilinmagan</Badge>
+                <Badge
+                  color={"danger"}
+                  style={{ padding: 7, fontSize: 8, width: "100%" }}
+                >
+                  qilinmagan
+                </Badge>
               )}
             </>
           ),
@@ -268,11 +338,26 @@ const AllStudentsIndex = props => {
               ) : (
                 <>
                   {parseInt(element?.exam_result) === 1 ? (
-                    <Badge color={"success"}>O`tgan</Badge>
+                    <Badge
+                      color={"success"}
+                      style={{ padding: 7, fontSize: 8, width: "100%" }}
+                    >
+                      O`tgan
+                    </Badge>
                   ) : parseInt(element?.exam_result) === 0 ? (
-                    <Badge color={"danger"}>Yiqilgan</Badge>
+                    <Badge
+                      color={"danger"}
+                      style={{ padding: 7, fontSize: 8, width: "100%" }}
+                    >
+                      Yiqilgan
+                    </Badge>
                   ) : (
-                    <Badge color={"warning"}>Topshirmagan</Badge>
+                    <Badge
+                      color={"warning"}
+                      style={{ padding: 7, fontSize: 8, width: "100%" }}
+                    >
+                      Topshirmagan
+                    </Badge>
                   )}
                 </>
               )}
@@ -285,11 +370,26 @@ const AllStudentsIndex = props => {
           render: (index, element) => (
             <>
               {parseInt(element?.practical_exam_result) === 1 ? (
-                <Badge color={"success"}>O`tgan</Badge>
+                <Badge
+                  color={"success"}
+                  style={{ padding: 7, fontSize: 8, width: "100%" }}
+                >
+                  O`tgan
+                </Badge>
               ) : parseInt(element?.practical_exam_result) === 0 ? (
-                <Badge color={"danger"}>Yiqilgan</Badge>
+                <Badge
+                  color={"danger"}
+                  style={{ padding: 7, fontSize: 8, width: "100%" }}
+                >
+                  Yiqilgan
+                </Badge>
               ) : (
-                <Badge color={"warning"}>Topshirmagan</Badge>
+                <Badge
+                  color={"warning"}
+                  style={{ padding: 7, fontSize: 8, width: "100%" }}
+                >
+                  Topshirmagan
+                </Badge>
               )}
             </>
           ),
@@ -297,20 +397,21 @@ const AllStudentsIndex = props => {
       ],
     },
     {
-      title: "Umumiy holat",
+      title: <div className="text-center">Umumiy holat</div>,
       render: (index, element) => (
         <>
-          {parseInt(examinationAreaId) === 23
-            ? element?.general_status_data?.additional_name
-            : element?.general_status_data?.name}
+          <p className="small-title">
+            {parseInt(examinationAreaId) === 23
+              ? element?.general_status_data?.additional_name
+              : element?.general_status_data?.name}
+          </p>
         </>
       ),
-      width: "120",
+      width: 250,
     },
     {
       title: "Qr code",
       align: "center",
-      width: 200,
       render: (record, index) => (
         <i
           onClick={() => handleRowClick(record, index)}
@@ -345,7 +446,6 @@ const AllStudentsIndex = props => {
               cancelText={"Bekor qilish"}
             >
               <span style={{ color: "#f5222d", cursor: "pointer" }}>
-                {" "}
                 <i className="bx bxs-trash"></i>
               </span>
             </Popconfirm>
@@ -369,83 +469,68 @@ const AllStudentsIndex = props => {
         focusRefElement={focusRefElement}
       />
 
-      <div className="page-content">
-        <Container fluid>
-          <Card>
-            <div className="d-flex justify-content-between align-items-center">
-              <h5>Barcha keluvchilar </h5>
-              <div className={"d-flex"}>
-                {/* <NavLink to={urlStudentAdd}>
-                    <Button color="success" outline>
-                      + Qo'shish sahifasi{" "}
-                      <span className={"keyboard-style"}>F2</span>
-                    </Button>
-                  </NavLink> */}
-                <div className={"d-flex ml-2"}>
-                  <Button
-                    color="success"
-                    outline
-                    onClick={() => openAddModal()}
-                  >
-                    <span className="mr-2">+ Qo'shish oynasi</span>
-                    <span className={"keyboard-style"}>F4</span>
-                  </Button>
+      <div className="content-layout">
+        <Card>
+          {isLoading ? (
+            <div>
+              <h1>Kuting...</h1>
+            </div>
+          ) : (
+            <>
+              <div className="tableHeader">
+                <p className="big-title" style={{ margin: 0 }}>
+                  Barcha keluvchilar
+                </p>
+
+                <div className="windowsAdd">
+                  <Input
+                    placeholder="Search..."
+                    allowClear
+                    onChange={e => changeWord(e?.target?.value)}
+                    style={{ padding: 8 }}
+                  />
+
+                  <div className={"btnHover"}>
+                    <button onClick={() => openAddModal()}>
+                      + Qo'shish oynasi
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <Row gutter={[0, 16]}>
-              <Col xl={24}>
-                <Col xl={6}>
-                  <Input
-                    allowClear={true}
-                    onChange={e => changeWord(e?.target?.value)}
-                  />
-                </Col>
-              </Col>
+              <Table
+                columns={
+                  parseInt(examinationAreaId) === 23
+                    ? columns.filter(columnFilter => {
+                        return columnFilter?.title !== "To'lov";
+                      })
+                    : columns
+                }
+                dataSource={userData?.data?.data}
+                style={{
+                  marginTop: 20,
+                  height: "calc(100vh - 197px)",
+                }}
+                pagination={{
+                  pageSize: 10,
+                }}
+                scroll={{
+                  x: 1200,
+                  y: "58vh",
+                }}
+              />
+            </>
+          )}
+        </Card>
 
-              <Row gutter={[0, 16]}>
-                <Col xl={24}>
-                  <Table
-                    columns={
-                      parseInt(examinationAreaId) === 23
-                        ? columns.filter(columnFilter => {
-                            return columnFilter?.title !== "To'lov";
-                          })
-                        : columns
-                    }
-                    dataSource={data}
-                    loading={loading}
-                    bordered={true}
-                    scroll={{ x: true, y: 600 }}
-                    pagination={true}
-                    size="small"
-                    sticky
-                  />
-                </Col>
-                <Col xl={24} className="d-flex justify-content-end">
-                  {/*<Pagination*/}
-                  {/*  onShowSizeChange={onShowSizeChange}*/}
-                  {/*  onChange={changePage}*/}
-                  {/*  defaultCurrent={page}*/}
-                  {/*  current={page}*/}
-                  {/*  total={total}*/}
-                  {/*  showSizeChanger*/}
-                  {/*/>*/}
-                </Col>
-              </Row>
-            </Row>
-          </Card>
-
-          <Drawer
-            title="Basic Drawer"
-            placement="right"
-            onClose={onClose}
-            open={open}
-          >
-            <QrCodeToPrint src={src} selectedStudent={selectedStudent} />
-          </Drawer>
-        </Container>
+        <Drawer
+          title="Basic Drawer"
+          placement="right"
+          onClose={onClose}
+          open={open}
+        >
+          <QrCodeToPrint src={src} selectedStudent={selectedStudent} />
+        </Drawer>
       </div>
     </>
   );

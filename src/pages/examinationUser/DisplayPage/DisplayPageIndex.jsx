@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Card, CardBody, Container } from "reactstrap";
 import { withTranslation } from "react-i18next";
+import { useQuery } from "react-query";
 
 import { Row, Col, Select, Input, Pagination, message } from "antd";
 import axios from "axios";
@@ -12,66 +13,64 @@ import { PATH_PREFIX } from "Utils/AppVariables";
 
 const DisplayPageIndex = props => {
   const [data, setData] = useState([]);
-  const [isloading, setIsloading] = useState(false);
   const { hasLayout, setHasLayout } = useContext(MainContext);
   const [reload, setReload] = useState(false);
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    // setIsloading(true)
-    axios({
-      url: PATH_PREFIX + "/examination-user/results-by-student-for-display",
-      method: "GET",
-      params: {
-        token,
-      },
-    }).then(response => {
-      if (response?.data?.status == 1) {
-        setData(response?.data?.data);
-        // setIsloading(false)
+  const token = localStorage.getItem("token");
+
+  const {
+    isLoading,
+    error,
+    data: announcement,
+  } = useQuery("announcementData", () =>
+    axios.get(
+      `${PATH_PREFIX}/examination-user/results-by-student-for-display`,
+      {
+        method: "GET",
+        params: {
+          token,
+        },
       }
-    });
-    setTimeout(() => {
-      setReload(!reload);
-    }, 5000);
-  }, [reload]);
+    )
+  );
+
+  // useEffect(() => {
+  //   setData(announcement?.data?.data);
+  //   // setTimeout(() => {
+  //   //   setReload(!reload);
+  //   // }, 5000);
+  // }, []);
 
   return (
     <>
-      <div
-        className="page-content"
-        style={!hasLayout ? { padding: "1px" } : {}}
-      >
-        <Container fluid style={!hasLayout ? { padding: "1px" } : {}}>
-          <Card>
-            <div className="d-flex justify-content-between">
-              <h5 className="text-dark">E'lon sahifasi</h5>
-              <button
-                className="btn btn-outline-light"
-                onClick={() => setHasLayout(!hasLayout)}
-              >
-                <i
-                  className={hasLayout ? `fa fa-expand` : `fa fa-compress`}
-                  aria-hidden="true"
-                ></i>
-              </button>
+      <div className="content-layout">
+        <Card>
+          {isLoading ? (
+            <div>
+              <h1>Loading</h1>
             </div>
-            <div className="crypto-buy-sell-nav mt-3">
-              {!isloading ? (
-                <Row>
-                  <Col xl={24}>
-                    <DisplayPageIndexTable tableData={data} />
-                  </Col>
-                </Row>
-              ) : (
-                <DataLoader />
-              )}
-              <Row className="d-flex justify-content-end mt-2">
-                {/*<Pagination defaultCurrent={1} current={params.page} defaultPageSize={10}   total={total} onChange={e => select_page(e)} onShowSizeChange={(page , e) => show_count_change(e)} />*/}
-              </Row>
-            </div>
-          </Card>
-        </Container>
+          ) : (
+            <>
+              <div className="d-flex justify-content-between align-items-center">
+                <p className="big-title" style={{ margin: 0 }}>
+                  E'lon sahifasi
+                </p>
+                <button
+                  className="btn btn-outline-light"
+                  onClick={() => setHasLayout(!hasLayout)}
+                >
+                  <i
+                    className={hasLayout ? `fa fa-expand` : `fa fa-compress`}
+                    aria-hidden="true"
+                  ></i>
+                </button>
+              </div>
+              <div className="crypto-buy-sell-nav mt-3">
+                <DisplayPageIndexTable tableData={announcement?.data?.data} />
+              </div>
+            </>
+          )}
+        </Card>
       </div>
     </>
   );
