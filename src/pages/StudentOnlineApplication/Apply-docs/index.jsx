@@ -6,13 +6,17 @@ import { getEduTypesForAll } from "services/api_services/edu_types_api";
 import ApplyModal from "./ApplyModal";
 import "./style.scss";
 import { indexOnlineApplicationNew } from "../../../services/api_services/online_applications/online_application_api";
-import { getOrganizationsWithoutAuth } from "services/api_services/organization_info";
+import {
+  getOrganizationsWithoutAuth,
+  getTestCnterWithoutAuth,
+} from "services/api_services/organization_info";
 
 const index = () => {
   // states
   const [modalOpen, setModalOpen] = useState(false);
   const [visitorTypes, setVisitorTypes] = useState([]);
   const [eduTypes, setEduTypes] = useState([]);
+  const [testCenters, setTestCenters] = useState([]);
   const [organizations, setOrganizations] = useState([]);
   const [applications, setApplications] = useState([]);
   const [reload, setReload] = useState(false);
@@ -22,13 +26,13 @@ const index = () => {
     (async () => {
       let params = {};
       const response = await indexOnlineApplicationNew(params);
-      // setApplications(response?.data);
-      let ddd = [];
-      ddd.push(response?.data);
-      setApplications(ddd);
-      console.log("iki", response);
+      if (response?.data) {
+        setApplications(response?.data?.final_access_student);
+      }
     })();
   };
+  console.log("applications", applications);
+
   const getVisitorTypesFunction = () => {
     (async () => {
       let params = {};
@@ -43,11 +47,19 @@ const index = () => {
       setEduTypes(response?.data?.data);
     })();
   };
+  const getTestCentersFunction = () => {
+    (async () => {
+      const orgResp = await getTestCnterWithoutAuth();
+      if (orgResp) {
+        setTestCenters(orgResp?.data);
+      }
+    })();
+  };
   const getOrganizationsFunction = () => {
     (async () => {
-      const orgResp = await getOrganizationsWithoutAuth();
-      if (orgResp) {
-        setOrganizations(orgResp?.data);
+      const res = await getOrganizationsWithoutAuth();
+      if (res) {
+        setOrganizations(res?.data);
       }
     })();
   };
@@ -56,6 +68,7 @@ const index = () => {
     getApplication();
     getVisitorTypesFunction();
     getEduTypesFunction();
+    getTestCentersFunction();
     getOrganizationsFunction();
   }, [reload]);
 
@@ -67,57 +80,7 @@ const index = () => {
   const handleCloseModal = () => {
     setModalOpen(false);
   };
-  const columns = [
-    {
-      title: "№",
-      dataIndex: "index",
-      key: "index",
-      render: (text, record, index) => index + 1,
-      width: 40,
-      align: "center",
-    },
-    {
-      title: "F.I.SH",
-      width: 350,
-      render: (text, record, index) => (
-        <>{record?.final_access_student?.student_fio}</>
-      ),
-    },
-    {
-      title: "Test markazi",
-      width: 300,
-      render: (text, record, index) => (
-        <>{record?.final_access_student?.examination_area?.name}</>
-      ),
-    },
-    {
-      title: "Topshiruvchi turi",
-      width: 350,
-      render: (text, record, index) => (
-        <>{record?.final_access_student?.visitor_type?.name}</>
-      ),
-    },
-    {
-      title: "Ta`lim turi",
-      dataIndex: "edutype",
-      render: (text, record, index) => (
-        <>{record?.final_access_student?.edu_type?.name_for_exam}</>
-      ),
-    },
-    {
-      title: "Holati ",
-      align: "center",
-      render: (text, record, index) => (
-        <>{record?.final_access_student?.general_status_data?.name}</>
-      ),
-    },
-    {
-      title: "Amallar",
-      align: "center",
-      key: "address",
-      width: 120,
-    },
-  ];
+
   return (
     <div className="page-content apply">
       <Card className="mb-3">
@@ -130,29 +93,23 @@ const index = () => {
       </Card>
       {/* ARIZALAR JADVALI */}
       <Card>
-        {applications?.length > 1 ? (
-          <Table
-            className="table-responsive table-hover"
-            dataSource={applications}
-            columns={columns}
-            scroll={{ x: true, y: 600 }}
-            pagination={{ position: ["bottomRight"] }}
-            size="small"
-            sticky
-          />
-        ) : (
-          <Empty
-            image={Empty.PRESENTED_IMAGE_SIMPLE}
-            imageStyle={{
-              height: 80,
-            }}
-            description={<span>Topshirilgan arizalar mavjud emas !</span>}
-          >
-            <Button type="primary" onClick={handleOpenModal}>
-              Ariza yaratish
-            </Button>
-          </Empty>
-        )}
+        <table>
+          <tr key="">
+            <th>Topshiruvchi turi</th>
+            <th>Ta'lim turi</th>
+            <th>Imtihon olish markazi</th>
+            <th>Holati</th>
+          </tr>
+
+          <tbody>
+            <tr key="">
+              <td>{applications?.visitor_type?.name}</td>
+              <td>{applications?.edu_type?.short_name}</td>
+              <td>{applications?.examination_area?.name}</td>
+              <td>{applications?.general_status_data?.name}</td>
+            </tr>
+          </tbody>
+        </table>
       </Card>
 
       {/* HUJJAT TOPSHIRISH MODALI */}
@@ -162,6 +119,7 @@ const index = () => {
         visitorTypes={visitorTypes}
         open={modalOpen}
         onClose={handleCloseModal}
+        testCenters={testCenters}
         organizations={organizations}
       />
     </div>

@@ -32,6 +32,7 @@ const ApplyModal = ({
   open,
   onClose,
   visitorTypes,
+  testCenters,
   organizations,
   reload,
   setReload,
@@ -50,6 +51,7 @@ const ApplyModal = ({
   const [selectedEduTypeId, setSelectedEduTypeId] = useState(null);
   const [age, setAge] = useState(null);
 
+  console.log("testCenters", testCenters);
   console.log("organizations", organizations);
 
   const dateFormat = "DD-MM-YYYY";
@@ -216,22 +218,38 @@ const ApplyModal = ({
     for (const key in values) {
       if (fileKeys.includes(key)) {
         formData.append(key, values[key]?.file?.originFileObj || "");
-      } else {
-        formData.append(key, values[key] || "");
       }
     }
+    formData.append("student_passport", values["student_passport"]);
+    formData.append("edu_type_id", values["edu_type_id"]);
+    formData.append("visitor_type_id", values["visitor_type_id"]);
+    formData.append(
+      "birthday",
+      moment(values["birthday"], "YYYY-MM-DD").format("YYYY-MM-DD")
+    );
+    formData.append("group", values["group"]);
+    formData.append("organization_id", values["organization_id"]);
+    formData.append("examination_area_id", values["examination_area_id"]);
+    formData.append("student_phone", values["student_phone"]);
     formData.append(
       "student_fio",
       values["last_name"] + " " + values["first_name"]
     );
-    formData.append("examination_area_id", 21);
+    formData.append("med_file_number", values["med_file_number"]);
+    formData.append(
+      "med_file_date",
+      moment(values["med_file_date"], "YYYY-MM-DD").format("YYYY-MM-DD")
+    );
+    formData.append("school_license_number", values["school_license_number"]);
+    formData.append(
+      "school_license_date",
+      moment(values["school_license_date"], "YYYY-MM-DD").format("YYYY-MM-DD")
+    );
 
     setLoading(true);
 
     try {
-      const params = {};
       const res = await storeOnlineApplicationNew(formData, {});
-      console.log("ik logg", res?.message);
       message.success(res?.message);
       onClose();
       setReload(!reload);
@@ -251,9 +269,6 @@ const ApplyModal = ({
             message.error(errorMsg);
           });
         }
-
-        // setValidatorErrors(validator_errors);
-        // setDataHas(data_has);
       }
     } catch (error) {
       message.error("Ma'lumotlar to'g'ri kiritilmadi");
@@ -278,8 +293,8 @@ const ApplyModal = ({
           </div>
         }
         centered
-        visible={open}
-        onOk={onClose}
+        open={open}
+        onOk={false}
         onCancel={onClose}
         zIndex={1005}
         width={1328}
@@ -440,9 +455,9 @@ const ApplyModal = ({
                         current.year() > new Date().getFullYear() - age
                       }
                       className={"w-100"}
-                      defaultPickerValue={moment(
-                        new Date().getTime() - 86400 * 1000 * 365 * age
-                      )}
+                      // defaultPickerValue={moment(
+                      //   new Date().getTime() - 86400 * 1000 * 365 * age
+                      // )}
                       style={{
                         width: "100%",
                       }}
@@ -546,22 +561,6 @@ const ApplyModal = ({
                   </Form.Item>
                 </Col>
 
-                {/* Guruh */}
-                <Col xl={6}>
-                  <Form.Item
-                    label="Guruh"
-                    name="group"
-                    rules={[
-                      {
-                        required: true,
-                        message: "Guruhni kiriting!",
-                      },
-                    ]}
-                  >
-                    <Input placeholder="Guruhni kiriting" allowClear={true} />
-                  </Form.Item>
-                </Col>
-
                 {/* talim tashkiloti */}
                 <Col xl={6}>
                   <Form.Item
@@ -586,6 +585,54 @@ const ApplyModal = ({
                       suffixIcon={<img src={down} />}
                     >
                       {organizations?.map((element, index) => {
+                        return (
+                          <Option value={element?.id}>{element?.name}</Option>
+                        );
+                      })}
+                    </Select>
+                  </Form.Item>
+                </Col>
+
+                {/* Guruh */}
+                <Col xl={6}>
+                  <Form.Item
+                    label="Guruh"
+                    name="group"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Guruhni kiriting!",
+                      },
+                    ]}
+                  >
+                    <Input placeholder="Guruhni kiriting" allowClear={true} />
+                  </Form.Item>
+                </Col>
+
+                {/* test markazi */}
+                <Col xl={6}>
+                  <Form.Item
+                    label="Imtihon olish markazi"
+                    name="examination_area_id"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Imtihon olish markazini tanlang!",
+                      },
+                    ]}
+                  >
+                    <Select
+                      showSearch
+                      placeholder="Imtihon olish markazini tanlang"
+                      optionFilterProp="children"
+                      filterOption={(input, option) =>
+                        option?.children
+                          ?.toLowerCase()
+                          ?.includes(input?.toLowerCase())
+                      }
+                      suffixIcon={<img src={down} />}
+                    >
+                      {testCenters?.map((element, index) => {
                         return (
                           <Option value={element?.id}>{element?.name}</Option>
                         );
