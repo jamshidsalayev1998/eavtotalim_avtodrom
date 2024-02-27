@@ -7,18 +7,14 @@ import "./i18n";
 import "antd/dist/antd.css";
 import "sweetalert2/src/sweetalert2.scss";
 import { Provider } from "react-redux";
-import store from "./store";
-import { QueryClient, QueryClientProvider } from "react-query";
 
-const queryClient = new QueryClient();
+import store from "./store";
 
 const app = (
   <Provider store={store}>
-    <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </QueryClientProvider>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </Provider>
 );
 

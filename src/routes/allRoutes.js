@@ -68,7 +68,6 @@ import OnlineApplicationIndex from "../pages/OnlineApplications/OnlineApplicatio
 import index from "pages/StudentOnlineApplication/Apply-docs";
 import ComissionsIndex from "../pages/examinationUser/ExaminationAreaConfig/ComissionsIndex";
 import Autodrome from "../pages/Autodrome";
-import LastVisited from "pages/LastVisited";
 // import PracticalTestResult from "../pages/PracticalTestResult/PracticalTestResult";
 
 const userRoutes = [
@@ -87,10 +86,6 @@ const examinationUserRoutes = [
   {
     path: "/",
     component: ExamDashboard,
-  },
-  {
-    path: "/last-visited",
-    component: LastVisited,
   },
   {
     path: "/come-examination/come-groups",
@@ -200,7 +195,7 @@ const examinationUserRoutes = [
     path: "/examination-director/examination-area-config",
     component: ExaminationAreaConfigIndex,
   },
-  {
+    {
     path: "/examination-director/comissions",
     component: ComissionsIndex,
   },
@@ -289,9 +284,9 @@ const examinationUserRoutes = [
     component: ExamProcessStudents,
   },
   {
-    path: "/autodrome",
-    component: Autodrome,
-  },
+    path: '/autodrome',
+    component: Autodrome
+  }
 ];
 
 const finalyExamination = [

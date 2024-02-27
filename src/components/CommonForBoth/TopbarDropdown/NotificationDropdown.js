@@ -69,6 +69,7 @@ const NotificationDropdown = props => {
               </Col>
               <div className="col-auto">
                 <Link to="/user/notifications" className="small">
+                  {" "}
                   Barchasini ko'rish
                 </Link>
               </div>

@@ -61,7 +61,7 @@ const App = () => {
   const [computerKey, setComputerKey] = useState(
     localStorage.getItem("computer_key")
   );
-  const [type, setType] = useState("");
+  const [type, setType] = useState("")
 
   axios.interceptors.response.use(
     response => {
@@ -101,7 +101,7 @@ const App = () => {
           setVerifyLoading(true);
           setAuth(true);
           setProfession(res?.data?.profession);
-          setType(res?.data?.profession?.examination_area?.type);
+          setType(res?.data?.profession?.examination_area?.type)
           // setName(res?.data?.name)
           if (
             languagesList.includes(res?.data?.app_lang) &&
@@ -173,22 +173,22 @@ const App = () => {
                 component={SignUpAndForgetPassword}
                 path="/online-application-select-need"
                 exact
-              />
+              />{" "}
               <Route
                 component={StudentOnlineRegistration}
                 path="/online-registration"
                 exact
-              />
+              />{" "}
               <Route
                 component={ExaminationAreaWithoutAuth}
                 path="/examinationAreas"
                 exact
-              />
+              />{" "}
               <Route
                 component={ExaminationAreaQueueWithoutAuth}
                 path="/queue/:examinationAreaId"
                 exact
-              />
+              />{" "}
               <Route component={ReOpenPassword} path="/reopen-password" exact />
               <Redirect
                 to={
@@ -214,7 +214,7 @@ const App = () => {
   const toggleTheme = () =>
     theme === "blue" ? setTheme("red") : setTheme("blue");
   return (
-    <>
+    <React.Fragment>
       <div>
         <ThemeContext.Provider value={{ theme, toggleTheme }}>
           <MainContext.Provider
@@ -255,7 +255,7 @@ const App = () => {
           </MainContext.Provider>
         </ThemeContext.Provider>
       </div>
-    </>
+    </React.Fragment>
   );
 };
 

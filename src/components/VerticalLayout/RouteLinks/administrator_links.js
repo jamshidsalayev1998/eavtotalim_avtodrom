@@ -19,7 +19,7 @@ const AdministratorLinks = props => {
 
   if (layout.leftMenu) {
     return (
-      <>
+      <React.Fragment>
         <div
           id="sidebar-menu"
           style={
@@ -43,11 +43,11 @@ const AdministratorLinks = props => {
             </li>
           </ul>
         </div>
-      </>
+      </React.Fragment>
     );
   } else {
     return (
-      <>
+      <React.Fragment>
         <div
           id="sidebar-menu"
           style={
@@ -115,7 +115,7 @@ const AdministratorLinks = props => {
             </li>
           </ul>
         </div>
-      </>
+      </React.Fragment>
     );
   }
 };

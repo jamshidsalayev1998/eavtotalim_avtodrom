@@ -1,11 +1,11 @@
-import React, { Component } from "react";
-import ReactApexChart from "react-apexcharts";
-import "./dashboard.scss";
+import React, { Component } from "react"
+import ReactApexChart from "react-apexcharts"
+import "./dashboard.scss"
 
 class ApexRadial extends Component {
   constructor(props) {
-    super(props);
-    // console.log(props)
+    super(props)
+    console.log(props)
     this.state = {
       options: {
         plotOptions: {
@@ -23,7 +23,7 @@ class ApexRadial extends Component {
                 fontSize: "16px",
                 color: void 0,
                 formatter: function (e) {
-                  return e + "%";
+                  return e + "%"
                 },
               },
             },
@@ -46,26 +46,22 @@ class ApexRadial extends Component {
         },
         labels: ["Eng ko`p topshirilgan oyga nisbatan"],
       },
-      series: [
-        (props?.data?.count_statuses?.this_month /
-          props?.data?.count_statuses?.most_month) *
-          100 || 0,
-      ],
-    };
+      series: [props?.data?.count_statuses?.this_month/props?.data?.count_statuses?.most_month*100],
+    }
   }
 
   render() {
     return (
-      <>
+      <React.Fragment>
         <ReactApexChart
           options={this.state.options}
           series={this.state.series}
           type="radialBar"
           height="190"
         />
-      </>
-    );
+      </React.Fragment>
+    )
   }
 }
 
-export default ApexRadial;
+export default ApexRadial

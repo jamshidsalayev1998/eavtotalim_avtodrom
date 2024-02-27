@@ -27,46 +27,28 @@ import PoweroffOutlined from "@ant-design/icons/lib/icons/PoweroffOutlined";
 import MainContext from "../../Context/MainContext";
 import { parse } from "echarts/extension-src/dataTool/gexf";
 import { PATH_PREFIX } from "Utils/AppVariables";
-import styles from "./index.module.sass";
-import { Fade } from "react-awesome-reveal";
-import { useQuery } from "react-query";
-import { useMemo } from "react";
 
 const ExamDashboard = props => {
   const [modal, setmodal] = useState(false);
-  // const [data, setData] = useState();
+  const token = localStorage.getItem("token");
+  const [data, setData] = useState();
   const [reload, setReload] = useState(false);
   const mainContext = useContext(MainContext);
+  console.log("con", mainContext);
 
-  const token = localStorage.getItem("token");
-
-  const {
-    isLoading,
-    error,
-    data: data2,
-  } = useQuery("data2Data", () =>
-    axios.get(`${PATH_PREFIX}/examination-director/dashboard`, {
+  useEffect(() => {
+    axios({
+      url: PATH_PREFIX + "/examination-director/dashboard",
       method: "GET",
       params: {
         token,
       },
-    })
-  );
-
-  // useEffect(() => {
-    // axios({
-    //   url: PATH_PREFIX + "/examination-director/dashboard",
-    //   method: "GET",
-    //   params: {
-    //     token,
-    //   },
-    // }).then(res => {
-    //   if (parseInt(res?.data?.status) === 1) {
-    //   }
-    // });
-    // setData(data2?.data?.data);
-  // }, [reload]);
-
+    }).then(res => {
+      if (parseInt(res?.data?.status) === 1) {
+        setData(res?.data?.data);
+      }
+    });
+  }, [reload]);
   const changeStatusWork = () => {
     (async () => {
       const response = await changeExaminationAreaStatus();
@@ -78,22 +60,21 @@ const ExamDashboard = props => {
   };
   const reports = [
     {
-      title: "Topshirganlar",
+      title: "Test topshirganlar",
       iconClass: "bx-copy-alt",
-      description: data2?.data?.data?.count_statuses?.all_count,
+      description: data?.count_statuses?.all_count,
     },
     {
       title: "O'tganlar",
       iconClass: "bx bx-comment-minus",
-      description: data2?.data?.data?.count_statuses?.succesed_count,
+      description: data?.count_statuses?.succesed_count,
     },
     {
       title: "Qaytganlar",
       iconClass: "bx bx-rotate-left",
-      description: data2?.data?.data?.count_statuses?.returned_count,
+      description: data?.count_statuses?.returned_count,
     },
   ];
-
   const email = [
     { title: "Week", linkto: "#", isActive: false },
     { title: "Month", linkto: "#", isActive: false },
@@ -101,132 +82,18 @@ const ExamDashboard = props => {
   ];
 
   return (
-    <>
-      <div className="content-layout">
-        <div className={styles.dash}>
-          <div>
-            <WelcomeComp data={data2?.data?.data} />
-            <MonthlyEarning data={data2?.data?.data} />
-          </div>
-          <Fade
-            delay={150}
-            triggerOnce={true}
-            direction={"right"}
-            className={styles.dash__static}
-          >
-            <div>
-              <p className="big-title">
-                {data2?.data?.data?.this_year} - yildagi oylik kelganlar
-              </p>
-              {data2?.data?.data && (
-                <StackedColumnChart data={data2?.data?.data} />
-              )}
-              <div>
-                <div className={styles.dash__cards}>
-                  {reports.map((report, key) => (
-                    <div key={"_col_" + key} className={styles.dash__card}>
-                      <p className="medium-title">{report.title}</p>
-                      <p className="small-title">{report.description}</p>
-                      <i
-                        className={
-                          "bx " + report.iconClass + " font-size-24 small-title"
-                        }
-                      />
-                    </div>
-                  ))}
-                  {parseInt(mainContext?.role) === 13 ? (
-                    <div>
-                      <div>
-                        <div
-                          style={{
-                            color: parseInt(
-                              data2?.data?.data?.examination_area?.status_work
-                            )
-                              ? "black"
-                              : "red",
-                            textAlign: "center",
-                          }}
-                          className={`${styles.dash__active} medium-title`}
-                        >
-                          <p>
-                            {parseInt(
-                              data2?.data?.data?.examination_area?.status_work
-                            )
-                              ? "Tizim faol holatda"
-                              : "Tizim faol holat emas"}
-                          </p>
-
-                          <Tooltip
-                            placement={"top"}
-                            title={
-                              parseInt(
-                                data2?.data?.data?.examination_area?.status_work
-                              )
-                                ? "Tizimni o'chirish"
-                                : "Tizimni yoqish"
-                            }
-                          >
-                            <Popconfirm
-                              placement={"left"}
-                              onConfirm={changeStatusWork}
-                              okText={
-                                parseInt(
-                                  data2?.data?.data?.examination_area
-                                    ?.status_work
-                                )
-                                  ? "O'chirish"
-                                  : "Yoqish"
-                              }
-                              cancelText={"Bekor qilish"}
-                              title={
-                                parseInt(
-                                  data2?.data?.data?.examination_area
-                                    ?.status_work
-                                )
-                                  ? "Tizimni o'chirasizmi?"
-                                  : "Tizimni yoqasizmi?"
-                              }
-                            >
-                              <div
-                                className="mini-stat-icon avatar-sm rounded-circle  align-self-center"
-                                style={{
-                                  cursor: "pointer",
-                                  display: "flex",
-                                  alignItems: "center",
-                                  justifyContent: "center",
-                                  width: "100%",
-                                }}
-                              >
-                                <span
-                                  style={{
-                                    backgroundColor: "blue",
-                                    width: 40,
-                                    height: 40,
-                                    display: "flex",
-                                    alignItems: "center",
-                                    justifyContent: "center",
-                                    color: "#fff",
-                                    borderRadius: "50%",
-                                  }}
-                                >
-                                  <PoweroffOutlined />
-                                </span>
-                              </div>
-                            </Popconfirm>
-                          </Tooltip>
-                        </div>
-                      </div>
-                    </div>
-                  ) : (
-                    ""
-                  )}
-                </div>
-              </div>
-            </div>
-          </Fade>
-        </div>
-        {/* <Col xl="8">
+    <React.Fragment>
+      <div className="page-content">
+        <Container fluid>
+          {/* Render Breadcrumb */}
+          <Row>
+            <Col xl="4">
+              <WelcomeComp data={data} />
+              <MonthlyEarning data={data} />
+            </Col>
+            <Col xl="8">
               <Row>
+                {/* Reports Render */}
                 {reports.map((report, key) => (
                   <Col md="3" key={"_col_" + key}>
                     <Card className="mini-stats-wid">
@@ -322,13 +189,15 @@ const ExamDashboard = props => {
                   {data && <StackedColumnChart data={data} />}
                 </CardBody>
               </Card>
-            </Col> */}
+            </Col>
+          </Row>
 
-        <div>
-          {data2?.data?.data && <LatestTranaction data={data2?.data?.data} />}
-        </div>
+          <Row>
+            <Col lg="12">{data && <LatestTranaction data={data} />}</Col>
+          </Row>
+        </Container>
       </div>
-    </>
+    </React.Fragment>
   );
 };
 

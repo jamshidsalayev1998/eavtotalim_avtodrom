@@ -18,10 +18,11 @@ const ExaminationAreaQueueWithoutAuthOld = () => {
         await setFreeComputersData(response?.freeComputersData);
     }, []);
     useEffect(() => {
+
         const eventName = 'queue_event_' + match?.params?.id;
         socketParam.on(eventName, data => {
             if (data?.type === 'new_student') {
-                const freeComputersCount = parseInt(freeComputersData) || 0;
+                const freeComputersCount = parseInt(freeComputersData) || 0; // Parsing with fallback value
                 console.log('free computer count', freeComputersCount);
                 console.log('lengthlimited', limitedQueueData.length);
                 if (freeComputersCount > limitedQueueData.length) {

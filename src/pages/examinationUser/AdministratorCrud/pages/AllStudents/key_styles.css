@@ -17,27 +17,3 @@
   background-color: #f0f0f0;
   font-weight: bold;
 }
-.tableHeader {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.windowsAdd {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-@media (max-width: 767px) {
-  .tableHeader {
-    display: block;
-  }
-  .tableHeader p {
-    text-align: center;
-  }
-  .windowsAdd {
-    margin-top: 20px;
-  }
-  .windowsAdd button{
-    font-size: 10px;
-  }
-}
