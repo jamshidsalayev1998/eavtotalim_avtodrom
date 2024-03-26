@@ -55,62 +55,98 @@ const Login = () => {
     formdata.append("username", username);
     formdata.append("password", password);
 
-    const key = localStorage.getItem("computer_key");
-    const params = key ? { computer_key: key } : {};
-
-    setLoading(true);
-
-    try {
-      const response = await axios.post(PATH_PREFIX + "/login", formdata, {
-        params,
-      });
-
-      if (response?.data?.access_token) {
-        const {
-          access_token,
-          user: { name, role, profession },
-          category_id,
-        } = response.data;
-
-        localStorage.setItem("token", access_token);
-        localStorage.setItem("user_profile_name", name);
-        sessionStorage.setItem("isnotif", true);
-
-        setAuth(true);
-        setCategory_id(category_id);
-        setRole(String(role));
-        setRegion_id(String(profession?.region_id));
-        setUserType(String(response?.data?.user?.online));
-        setAdditional(response?.data?.user?.additional);
-        setType(response?.data?.profession?.examination_area?.type)
-
-        const tempRole = parseInt(role);
-        if (![13, 15, 16, 17, 18, 19, 23].includes(tempRole)) {
-          localStorage.removeItem("token");
-          message.warning(
-            <>
-              Siz Avto intalim tizimidan foydalanishingiz mumkin <br />
-              <a href="http://avto.intalim.uz/login">
-                Avto intalim tizimiga o'tish{" "}
-                <i className="fas fa-external-link-alt ml-2"></i>
-              </a>
-            </>
-          );
-        } else {
-          history.push("/");
+    return await API.post("/login", formdata)
+      .then(response => {
+        if (response?.data?.access_token) {
+          const token = response.data.access_token;
+          localStorage.setItem("token", token);
+          localStorage.setItem("user_profile_name", response?.data?.user?.name);
+          setAuth(true);
+          setCategory_id(response?.data?.category_id);
+          setRole(String(response?.data?.user?.role));
+          setUserType(String(response?.data?.user?.online));
+          if (
+            (response?.data?.user?.role === "5" ||
+              response?.data?.user?.role === 5) &&
+            languagesList.includes(response?.data?.user?.app_lang)
+          ) {
+            setIsStudent(true);
+          } else if (
+            (response?.data?.user?.role === "5" ||
+              response?.data?.user?.role === 5) &&
+            !languagesList.includes(response?.data?.user?.app_lang)
+          ) {
+            setIsStudent(false);
+            history.push("/defaultlanguage");
+          } else {
+            history.push("/");
+          }
         }
-      } else if (parseInt(response?.data?.status) === 0) {
-        message.error(response?.data?.message);
-      }
-    } catch (error) {
-      if (error?.response?.data?.error) {
+      })
+      .catch(error => {
         message.error(error?.response?.data?.error);
-      } else {
-        message.error("Server bilan aloqa yo'q");
-      }
-    } finally {
-      setLoading(false);
-    }
+      });
+    // const formdata = new FormData();
+    // formdata.append("username", username);
+    // formdata.append("password", password);
+
+    // const key = localStorage.getItem("computer_key");
+    // const params = key ? { computer_key: key } : {};
+
+    // setLoading(true);
+
+    // try {
+    //   const response = await axios.post(PATH_PREFIX + "/login", formdata, {
+    //     params,
+    //   });
+    //   console.log(response);
+
+    //   if (response?.data?.access_token) {
+    //     const {
+    //       access_token,
+    //       user: { name, role, profession },
+    //       category_id,
+    //     } = response.data;
+
+    //     localStorage.setItem("token", access_token);
+    //     localStorage.setItem("user_profile_name", name);
+    //     sessionStorage.setItem("isnotif", true);
+
+    //     setAuth(true);
+    //     setCategory_id(category_id);
+    //     setRole(String(role));
+    //     setRegion_id(String(profession?.region_id));
+    //     setUserType(String(response?.data?.user?.online));
+    //     setAdditional(response?.data?.user?.additional);
+    //     setType(response?.data?.profession?.examination_area?.type);
+
+    //     const tempRole = parseInt(role);
+    //     if (![13, 15, 16, 17, 18, 19, 23].includes(tempRole)) {
+    //       localStorage.removeItem("token");
+    //       message.warning(
+    //         <>
+    //           Siz Avto intalim tizimidan foydalanishingiz mumkin <br />
+    //           <a href="http://avto.intalim.uz/login">
+    //             Avto intalim tizimiga o'tish{" "}
+    //             <i className="fas fa-external-link-alt ml-2"></i>
+    //           </a>
+    //         </>
+    //       );
+    //     } else {
+    //       history.push("/");
+    //     }
+    //   } else if (parseInt(response?.data?.status) === 0) {
+    //     message.error(response?.data?.message);
+    //   }
+    // } catch (error) {
+    //   if (error?.response?.data?.error) {
+    //     message.error(error?.response?.data?.error);
+    //   } else {
+    //     message.error("Server bilan aloqa yo'q");
+    //   }
+    // } finally {
+    //   setLoading(false);
+    // }
   };
 
   const checkFs = () => {
