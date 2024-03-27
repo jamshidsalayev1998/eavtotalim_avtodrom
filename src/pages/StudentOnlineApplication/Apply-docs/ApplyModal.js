@@ -51,8 +51,8 @@ const ApplyModal = ({
   const [selectedEduTypeId, setSelectedEduTypeId] = useState(null);
   const [age, setAge] = useState(null);
 
-  console.log("testCenters", testCenters);
-  console.log("organizations", organizations);
+  // console.log("testCenters", testCenters);
+  // console.log("organizations", organizations);
 
   const dateFormat = "DD-MM-YYYY";
   //   form
@@ -156,6 +156,7 @@ const ApplyModal = ({
 
     permanents: [2, 5],
   };
+
   const maskInputNumber = {
     mask: "(99) 9999999",
     maskChar: "_",
@@ -173,26 +174,30 @@ const ApplyModal = ({
       onSuccess("ok");
     }, 0);
   };
+
   const onChangeMedFile = ({ fileList: newFileList }) => {
-    setFileList([]);
     setFileList(newFileList);
   };
+
   const onChangeSchoolLicenseFile = ({
     schoolLicenseList: newSchoolLicenseList,
   }) => {
     setSchoolLicenseList([]);
     setSchoolLicenseList(newSchoolLicenseList);
   };
+
   const onChangeLicenseFile = ({ licenseList: newLicenseList }) => {
     setLicenseList([]);
     setLicenseList(newLicenseList);
   };
+
   const onChangeSchoolDiplomaFile = ({
     schoolDiplomaList: newSchoolDiplomaList,
   }) => {
     setSchoolDiplomaList([]);
     setSchoolDiplomaList(newSchoolDiplomaList);
   };
+
   const onChangeRoadSafetyLetterFile = ({
     roadSafetyFileLetterList: newRoadSafetyFileLetterList,
   }) => {
@@ -204,51 +209,63 @@ const ApplyModal = ({
     studentStoreForm.submit();
   };
 
-  const simpleSaveStudent = async values => {
-    const formData = new FormData();
-
-    const fileKeys = [
-      "med_file",
-      "school_license",
-      "license",
-      "school_diploma",
-      "road_safety_letter",
-    ];
-
-    for (const key in values) {
-      if (fileKeys.includes(key)) {
-        formData.append(key, values[key]?.file?.originFileObj || "");
-      }
-    }
-    formData.append("student_passport", values["student_passport"]);
-    formData.append("edu_type_id", values["edu_type_id"]);
-    formData.append("visitor_type_id", values["visitor_type_id"]);
-    formData.append(
-      "birthday",
-      moment(values["birthday"], "YYYY-MM-DD").format("YYYY-MM-DD")
-    );
-    formData.append("group", values["group"]);
-    formData.append("organization_id", values["organization_id"]);
-    formData.append("examination_area_id", values["examination_area_id"]);
-    formData.append("student_phone", values["student_phone"]);
-    formData.append(
-      "student_fio",
-      values["last_name"] + " " + values["first_name"]
-    );
-    formData.append("med_file_number", values["med_file_number"]);
-    formData.append(
-      "med_file_date",
-      moment(values["med_file_date"], "YYYY-MM-DD").format("YYYY-MM-DD")
-    );
-    formData.append("school_license_number", values["school_license_number"]);
-    formData.append(
-      "school_license_date",
-      moment(values["school_license_date"], "YYYY-MM-DD").format("YYYY-MM-DD")
-    );
-
+  const onFinish = async values => {
     setLoading(true);
-
     try {
+      const formData = new FormData();
+
+      const fileKeys = [
+        "med_file",
+        "school_diploma",
+        "school_license",
+        "license",
+        "road_safety_letter",
+      ];
+
+      for (const key of fileKeys) {
+        if (fileKeys.includes(key)) {
+          formData.append(key, values[key]?.file?.originFileObj || "");
+        }
+      }
+
+      const otherKeys = [
+        "student_passport",
+        "edu_type_id",
+        "visitor_type_id",
+        "group",
+        "organization_id",
+        "examination_area_id",
+        "student_phone",
+        "med_file_number",
+        "school_license_number",
+        "school_diploma_number",
+      ];
+
+      for (const key of otherKeys) {
+        formData.append(key, values[key]);
+      }
+
+      formData.append(
+        "birthday",
+        moment(values["birthday"], "YYYY-MM-DD").format("YYYY-MM-DD")
+      );
+      formData.append(
+        "student_fio",
+        values["last_name"] + " " + values["first_name"]
+      );
+      formData.append(
+        "med_file_date",
+        moment(values["med_file_date"], "YYYY-MM-DD").format("YYYY-MM-DD")
+      );
+      formData.append(
+        "school_license_date",
+        moment(values["school_license_date"], "YYYY-MM-DD").format("YYYY-MM-DD")
+      );
+      formData.append(
+        "school_diploma_date",
+        moment(values["school_diploma_date"], "YYYY-MM-DD").format("YYYY-MM-DD")
+      );
+
       const res = await storeOnlineApplicationNew(formData, {});
       message.success(res?.message);
       onClose();
@@ -270,6 +287,7 @@ const ApplyModal = ({
           });
         }
       }
+      formData.resetFields();
     } catch (error) {
       message.error("Ma'lumotlar to'g'ri kiritilmadi");
       message.error(error);
@@ -332,7 +350,7 @@ const ApplyModal = ({
             wrapperCol={{
               span: 23,
             }}
-            onFinish={simpleSaveStudent}
+            onFinish={onFinish}
           >
             <Row className="filled-data">
               <Row className="mb-4">
@@ -649,6 +667,7 @@ const ApplyModal = ({
                     Talab etiladigan hujjatlar to'plami
                   </Col>
                 )}
+
                 {/* Tibbiy ma`lumotnoma nusxasi va tibbiy ma'lumotnoma raqami */}
                 {filetypes?.includes("med_file") && (
                   <>
@@ -665,6 +684,7 @@ const ApplyModal = ({
                         />
                       </Form.Item>
                     </Col>
+
                     {/* date */}
                     <Col xl={6}>
                       <Form.Item
@@ -686,6 +706,7 @@ const ApplyModal = ({
                         />
                       </Form.Item>
                     </Col>
+
                     {/* file */}
                     <Col xl={12}>
                       <Form.Item
@@ -693,6 +714,7 @@ const ApplyModal = ({
                         name="med_file"
                       >
                         <Upload
+                          name="med_file"
                           customRequest={dummyRequest}
                           multiple={false}
                           maxCount={1}
@@ -700,6 +722,7 @@ const ApplyModal = ({
                           onChange={onChangeMedFile}
                           locale={true}
                           accept=".pdf"
+                          listType="pdf"
                         >
                           <Button
                             icon={
@@ -738,6 +761,7 @@ const ApplyModal = ({
                         />
                       </Form.Item>
                     </Col>
+
                     {/* date */}
                     <Col xl={6}>
                       <Form.Item
@@ -759,6 +783,7 @@ const ApplyModal = ({
                         />
                       </Form.Item>
                     </Col>
+
                     {/* file */}
                     <Col xl={12}>
                       <Form.Item
@@ -885,6 +910,7 @@ const ApplyModal = ({
                         />
                       </Form.Item>
                     </Col>
+
                     {/* date */}
                     <Col xl={6}>
                       <Form.Item
@@ -906,6 +932,7 @@ const ApplyModal = ({
                         />
                       </Form.Item>
                     </Col>
+
                     {/* file */}
                     <Col xl={12}>
                       <Form.Item
@@ -913,6 +940,7 @@ const ApplyModal = ({
                         name="school_diploma"
                       >
                         <Upload
+                          name="school_diploma"
                           customRequest={dummyRequest}
                           multiple={false}
                           maxCount={1}
@@ -920,6 +948,7 @@ const ApplyModal = ({
                           onChange={onChangeSchoolDiplomaFile}
                           locale={true}
                           accept=".pdf"
+                          listType="pdf"
                         >
                           <Button
                             icon={

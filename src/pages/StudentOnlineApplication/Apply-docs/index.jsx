@@ -31,7 +31,6 @@ const index = () => {
       }
     })();
   };
-  console.log("applications", applications);
 
   const getVisitorTypesFunction = () => {
     (async () => {
@@ -40,6 +39,7 @@ const index = () => {
       setVisitorTypes(response?.data);
     })();
   };
+
   const getEduTypesFunction = () => {
     (async () => {
       let params = {};
@@ -47,6 +47,7 @@ const index = () => {
       setEduTypes(response?.data?.data);
     })();
   };
+
   const getTestCentersFunction = () => {
     (async () => {
       const orgResp = await getTestCnterWithoutAuth();
@@ -55,6 +56,7 @@ const index = () => {
       }
     })();
   };
+
   const getOrganizationsFunction = () => {
     (async () => {
       const res = await getOrganizationsWithoutAuth();
