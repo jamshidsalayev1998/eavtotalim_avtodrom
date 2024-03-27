@@ -6,7 +6,8 @@ import {
   IS_TEST_PROCESS_SETTINGS,
   IS_REPORTS,
   IS_USERS,
-  IS_SETTINGS, IS_CONTRACT,
+  IS_SETTINGS,
+  IS_CONTRACT,
 } from "store/sidebar/actions";
 import MainContext from "Context/MainContext";
 import { useSelector, useDispatch } from "react-redux";
@@ -23,7 +24,6 @@ const ExaminationUserLinks = props => {
   const toggleMenuBox = action_type => {
     dispatch({ type: action_type });
   };
-
 
   if (layout.leftMenu) {
     return (
@@ -45,7 +45,10 @@ const ExaminationUserLinks = props => {
                 </Link>
               </li>
               <li className="" name="Guruh bo`yicha keluvchilar">
-                <Link to="/come-examination/come-groups" className="waves-effect">
+                <Link
+                  to="/come-examination/come-groups"
+                  className="waves-effect"
+                >
                   <i className="fas fa-walking"></i>
                   <span>{t("Guruh bo`yicha keluvchilar")}</span>
                 </Link>
@@ -67,7 +70,9 @@ const ExaminationUserLinks = props => {
                   className="waves-effect"
                 >
                   <i className="fas fa-user-check"></i>
-                  <span>{t("Testga ruxsat berish (O`quvchilar bo`yicha)")}</span>
+                  <span>
+                    {t("Testga ruxsat berish (O`quvchilar bo`yicha)")}
+                  </span>
                 </Link>
               </li>
 
@@ -229,7 +234,10 @@ const ExaminationUserLinks = props => {
               </li>
 
               <li className="" name="asosiy">
-                <Link to="/examination-director/cashier" className="waves-effect">
+                <Link
+                  to="/examination-director/cashier"
+                  className="waves-effect"
+                >
                   <i className="fa fa-money-bill" />
                   <span>{t("Kassirlar")}</span>
                 </Link>
@@ -256,7 +264,10 @@ const ExaminationUserLinks = props => {
               </li>
 
               <li className="" name="asosiy">
-                <Link to="/examination-area/instructors" className="waves-effect">
+                <Link
+                  to="/examination-area/instructors"
+                  className="waves-effect"
+                >
                   <i className="fas fa-chalkboard-teacher"></i>
                   <span>{t("Instruktorlar")}</span>
                 </Link>
@@ -307,23 +318,16 @@ const ExaminationUserLinks = props => {
               </li>
 
               <li className="" name="autodrome">
-                <Link
-                  to="/autodrome"
-                  className="waves-effect"
-                >
+                <Link to="/autodrome" className="waves-effect">
                   <i className="fa fa-chart-line" />
                   <span>{t("autodrome")}</span>
                 </Link>
               </li>
             </ul>
-
           ) : (
             <ul className="metismenu list-unstyled" id="side-menu">
               <li className="" name="autodrome">
-                <Link
-                  to="/autodrome"
-                  className="waves-effect"
-                >
+                <Link to="/autodrome" className="waves-effect">
                   <i className="fa fa-chart-line" />
                   <span>{t("autodrome")}</span>
                 </Link>
@@ -386,7 +390,9 @@ const ExaminationUserLinks = props => {
                       className="waves-effect"
                     >
                       <i className="fas fa-spell-check"></i>
-                      <span>{t("Testga ruhsat berish (Guruhlar bo`yicha)")}</span>
+                      <span>
+                        {t("Testga ruhsat berish (Guruhlar bo`yicha)")}
+                      </span>
                     </Link>
                   </li>
 
@@ -413,7 +419,10 @@ const ExaminationUserLinks = props => {
                   </li>
 
                   <li className="" name="asosiy">
-                    <Link to="/cashier/student-payments" className="waves-effect">
+                    <Link
+                      to="/cashier/student-payments"
+                      className="waves-effect"
+                    >
                       <i className="fas fa-hand-holding-usd"></i>
                       <span>O`quvchilarga to`lovni tasdiqlash (Nazariy)</span>
                     </Link>
@@ -710,10 +719,7 @@ const ExaminationUserLinks = props => {
                   }
                 >
                   <li className="" name="autodrome">
-                    <Link
-                      to="/autodrome"
-                      className="waves-effect"
-                    >
+                    <Link to="/autodrome" className="waves-effect">
                       <i className="fa fa-chart-line" />
                       <span>{t("autodrome")}</span>
                     </Link>
@@ -774,7 +780,10 @@ const ExaminationUserLinks = props => {
                   </li>
 
                   <li className="" name="asosiy">
-                    <Link to="/examination-area/sensors" className="waves-effect">
+                    <Link
+                      to="/examination-area/sensors"
+                      className="waves-effect"
+                    >
                       <i className="fa fa-camera-retro" />
                       <span>{t("Sensorlar")}</span>
                     </Link>
@@ -827,21 +836,16 @@ const ExaminationUserLinks = props => {
                   }
                 >
                   <li className="" name="autodrome">
-                    <Link
-                      to="/autodrome"
-                      className="waves-effect"
-                    >
+                    <Link to="/autodrome" className="waves-effect">
                       <i className="fa fa-chart-line" />
                       <span>{t("autodrome")}</span>
                     </Link>
                   </li>
                 </div>
               }
-
             </ul>
           )}
         </div>
-
       </>
     );
   }

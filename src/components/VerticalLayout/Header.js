@@ -68,7 +68,6 @@ const Header = props => {
 
   // theme context
   const { theme, toggleTheme } = useContext(ThemeContext);
-  console.log(theme);
 
   return (
     <React.Fragment>
@@ -155,18 +154,6 @@ const Header = props => {
             </div>
 
             <LanguageDropdown />
-
-            <div className="dropdown d-none d-lg-inline-block ml-1 ">
-              <button
-                type="button"
-                className="btn header-item noti-icon waves-effect"
-                onClick={() => {
-                  history.push("/chats");
-                }}
-              >
-                <i className="bx bx-mail-send "></i>
-              </button>
-            </div>
 
             {/* Dark light mode */}
             {/* <div className="dropdown d-none d-lg-inline-block ml-1">
